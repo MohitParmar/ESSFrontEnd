@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Full Leave Cancellation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/ShortLeaveCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+<style type="text/css">
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ShortLeaveController">
+    <div class="container">
+        <input type="hidden" value="" id="previousMonthdate" />
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            @* Leave Application List *@
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Leave Application List</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetShortLeaveLists()">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;width:7%;">Leave Group</th>
+                                            <th style="text-align:center;">App.Date</th>
+                                            <th style="text-align:center;width:68%;">
+                                                <table class="table table-bordered table-condensed" style="padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0;">
+                                                    <tr>
+                                                        <th style="text-align:center;width:147px;">Leave Reason</th>
+                                                        <th style="text-align:center;width:46px;">Sr.No.</th>
+                                                        <th style="text-align:center;width:38px;">Type</th>
+                                                        <th style="text-align:center;width:77px;">From Date</th>
+                                                        <th style="text-align:center;width:77px;">To Date</th>
+                                                        <th style="text-align:center;width:38px;">Days</th>
+                                                        <th style="text-align:center;width:61px;">Half Day</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th style="text-align:center;width:11%;">Cancel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="ld in ldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                            <td style="text-align:center;">{{ld.releaseGroupCode}}</td>
+                                            <td style="text-align:center;">{{ld.addDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">
+                                                <table class="table table-bordered table-condensed">
+                                                    <tr ng-repeat="l in ld.leaveApplicationDetails">
+                                                        <td style="text-align:center;width:147px;">{{l.remarks}}</td>
+                                                        <td style="text-align:center;width:46px;">{{l.leaveAppItem}}</td>
+                                                        <td style="text-align:center;width:38px;">{{l.leaveTypeCode}}</td>
+                                                        <td style="text-align:center;width:77px;">{{l.fromDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="text-align:center;width:77px;">{{l.toDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="text-align:center;width:38px;">{{l.totalDays}}</td>
+                                                        <td style="text-align:center;width:61px;">
+                                                            <input type="checkbox" ng-checked="{{l.halfDayFlag}}" disabled="disabled">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger"
+                                                        ng-disabled="ld.openmonthflg === false"
+                                                        ng-click="FullLeaveCancel('{{ld.releaseGroupCode}}',{{ld.leaveAppId}})">
+                                                    <i class="icon-remove"></i>
+                                                    Cancel
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><strong>Note For Leave Group : LA - Leave Application</strong><br /></div>
+                </div>
+            </div>
+            @* Right Pane Start *@
+            <div class="col-sm-4">
+                @* Leave Balance List *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">Open</th>
+                                            <th style="text-align:center;">Availed</th>
+                                            <th style="text-align:center;">Encashed</th>
+                                            <th style="text-align:center;">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="d in data">
+                                            <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
+                                            <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
+                                            <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
+                                            <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
+                                            <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed-d.encashed}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Holiday List Of Current User *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="hld in hlddata">
+                                            <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:Left;" data-title="'Holiday Name'" id="holidayName">{{hld.holidayName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Right Pane End *@
+        </div>
+    </div>
+</div>

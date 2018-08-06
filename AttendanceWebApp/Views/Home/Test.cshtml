@@ -1,0 +1,303 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/TestCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+@*<style>
+        .paginationclass {
+            margin: 19px 28px;
+        }
+
+            .paginationclass span {
+                margin-left: 15px;
+                display: inline-block;
+            }
+
+        .pagination-controle li {
+            display: inline-block;
+        }
+
+        .pagination-controle button {
+            font-size: 12px;
+            margin-top: -26px;
+            cursor: pointer;
+        }
+
+        .pagination {
+            margin: 0px 12px !important;
+        }
+
+        .drp {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+    </style>*@
+
+<style>
+    .dropdown-submenu {
+        position: relative;
+    }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+</style>
+
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown">Tutorials<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="#">HTML</a></li>
+        <li><a href="#">CSS</a></li>
+        <li class="dropdown-submenu">
+            <a class="test" tabindex="-1" href="#">New dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">2nd level dropdown</a></li>
+                <li><a href="#">2nd level dropdown</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
+<div ng-app="myApp" ng-controller="listdata">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                @*Leave Application List  *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Application List </strong></div>
+                    <div class="panel-body" style="overflow:auto;">
+                        <div ng-init="GetLeaveRequestLists()">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-condensed table-hover" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;padding:3px;"><a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a></th>
+                                            <th style="text-align:center;padding:3px;width:56px;"><a href="" ng-click="predicate = 'addDt'; reverse=!reverse">App.Date</a></th>
+                                            <th style="text-align:center;padding:3px;width:55px;"><a href="" ng-click="predicate = 'releaseStatusCode'; reverse=!reverse">Status</a></th>
+                                            <th style="text-align:center;padding:3px;width:82px;">Remarks</th>
+                                            <th style="padding:0px;">
+                                                <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
+                                                    <tr>
+                                                        <th style="text-align:center;padding:3px;width:82px;">Leave Reason</th>
+                                                        <th style="text-align:center;padding:3px;width:45px;">Sr no.</th>
+                                                        <th style="text-align:center;padding:3px;width:36px;">Type</th>
+                                                        <th style="text-align:center;padding:3px;width:71px;">From Date</th>
+                                                        <th style="text-align:center;padding:3px;width:54px;">To Date</th>
+                                                        <th style="text-align:center;padding:3px;width:37px;">Days</th>
+                                                        <th style="text-align:center;padding:3px;width:63px;">Half Day</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @*dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:5"*@ @*<tbody ng-repeat="ld in lappdata">*@
+                                    <tbody dir-paginate="ld in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="lapp">
+                                        <tr ng-style="ld.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                            <td id="releaseGroupCode" style="text-align:center;padding:3px;">{{ld.releaseGroupCode}}</td>
+                                            <td style="text-align:center;padding:3px;" data-title="'addDt'">{{ld.addDt| date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;padding:3px;" ng-style="
+                                                    ld.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
+                                                    ld.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||
+                                                    ld.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                <strong>{{ld.releaseStatusCode}}</strong>
+                                            </td>
+                                            <td id="remarks">{{ld.remarks}}</td>
+                                            <td style="padding:3px;">
+                                                <table class="table table-condensed table-hover" style="padding:3px;margin-bottom:0px;">
+                                                    <tr ng-repeat="lrd in ld.leaveApplicationDetails">
+                                                        <td style="padding:2px;text-align:center;width:82px;">{{(ld.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="padding:3px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
+                                                        <td style="padding:3px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
+                                                        <td style="padding:3px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding:3px;text-align:center;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding:3px;text-align:center;width:37px;">{{lrd.totalDays}}</td>
+                                                        <td style="padding:3px;text-align:center;width:60px;">
+                                                            <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="lapp"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application </strong><br />
+                        <strong>Note For Release Status :  N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                @* Posted Leave Requests Grid  *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Posted Leave Application List From HR</strong></div>
+                    <div class="panel-body" style="overflow:auto;">
+                        <div ng-init="GetPostedLeave()">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">From Date</th>
+                                            <th style="text-align:center;">To Date</th>
+                                            <th style="text-align:center;">Days</th>
+                                            <th style="text-align:center;">Half Day</th>
+                                        </tr>
+                                    </thead>
+                                    @*dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:5"*@ @*<tbody ng-repeat="pld in pladata">*@
+                                    <tbody dir-paginate="pld in pladata|itemsPerPage:10" pagination-id="pldaapp">
+                                        <tr>
+                                            <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
+                                            <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;" data-title="'totalDays'">{{pld.totalDays}}</td>
+                                            <td style="text-align:center;" data-title="'halfDayFlag'">
+                                                <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pldaapp"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Leave Balance Grid  *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">Open</th>
+                                            <th style="text-align:center;">Availed</th>
+                                            <th style="text-align:center;">Encashed</th>
+                                            <th style="text-align:center;">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*dir-paginate="pld in pladata|itemsPerPage:10" pagination-id="pldaapp"*@
+                                        <tr dir-paginate="d in data|itemsPerPage:10" pagination-id="pldaapp">
+                                            <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
+                                            <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
+                                            <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
+                                            <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
+                                            <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <hr />
+    <div class="container" style="display:none;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading"><strong>Posting Leave Application List</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetPostingLeaveApplicationLists()">
+                            <div class="table-responsive">
+                                <table class="table table-responsive table-bordered table-condensed"><tr><td colspan="12"><input type="text" id="Search" class="form-control" placeholder="Search Anything to Filter in Grid" ng-model="search" autofocus></td></tr></table>
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;padding:3px;width:44px;"><a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a></th>
+                                            <th style="text-align:center;padding:3px;width:40px;"><a href="" ng-click="predicate = 'leaveAppId'; reverse=!reverse">App.ID</a></th>
+                                            <th style="text-align:center;padding:3px;width:56px;"><a href="" ng-click="predicate = 'addDt'; reverse=!reverse">App.Date</a></th>
+                                            <th style="text-align:center;padding:3px;width:61px;"><a href="" ng-click="predicate = 'empUnqId'; reverse=!reverse">Emp.Code</a></th>
+                                            <th style="text-align:center;padding:3px;width:120px;">Employee Name</th>
+                                            <th style="text-align:center;padding:3px;width:68px;"><a href="" ng-click="predicate = 'statCode'; reverse=!reverse">Station</a></th>
+                                            <th style="text-align:center;padding:3px;width:63px;"><a href="" ng-click="predicate = 'catCode'; reverse=!reverse">Category</a></th>
+                                            <th style="padding:0px;width:330px;">
+                                                <table class="table table-bordered" style="margin-bottom:0;padding:0px;">
+                                                    <tr>
+                                                        <th style="padding:3px;width:42px;">Sr.No.</th>
+                                                        <th style="padding:3px;width:34px;">Type</th>
+                                                        <th style="padding:3px;width:66px;">From Date</th>
+                                                        <th style="padding:3px;width:54px;">To Date</th>
+                                                        <th style="padding:3px;width:34px;">Days</th>
+                                                        <th style="padding:3px;width:34px;">Half Day</th>
+                                                        <th style="padding:3px;width:64px;">Posting</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;">Remarks</th>
+                                            <th style="text-align:center;padding:3px;width:131px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                                        @*<tbody ng-repeat="d in lappdata | orderBy:predicate:reverse | pagination: curPage * pageSize | limitTo: pageSize | filter:search">*@
+                                        <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                            <td id="releaseGroupCode" style="text-align:center;padding:3px;">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
+                                            <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;padding:3px;" id="empUnqId">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;padding:3px;"><table><tr><td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">{{e}}</td></tr></table></td>
+                                            <td style="text-align:center;padding:0px;"><table class="table" style="text-align:center;margin-bottom:0;padding:3px;"><tr ng-repeat="s in d.stations"><td style="padding:3px;" id="statName" ng-if="$index==1">{{s}}</td></tr></table></td>
+                                            <td style="text-align:center;padding:0px;"><table class="table" style="text-align:center;margin-bottom:0;padding:3px;"><tr><td style="padding:3px;" id="catName" ng-repeat="catg in d.categories" ng-show="catg[1]">{{catg}}</td></tr></table></td>
+                                            <td style="text-align:center;padding:0px;">
+                                                <table id="aliasTable" class="table table-bordered table-hover" style="text-align:center;padding:0px;">
+                                                    <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                                        <td ng-hide="true">{{lrd.leaveAppId}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:42px;">{{lrd.leaveAppItem}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:34px;">{{lrd.leaveTypeCode}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:66px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:34px;">{{lrd.totalDays}}</td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:34px;"><input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled"></td>
+                                                        <td style="padding-left:3px;padding-right:3px;width:64px;">
+                                                            <select id="cmbPartial" style="width:57px;" class="drp" required>
+                                                                <option value="0">Select</option>
+                                                                <option value="F" title="Fully">Fully</option>
+                                                                <option value="P" title="Partial">Partial</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="padding:3px;"><input type="text" id="remarks" name="remarks" class="form-control" placeholder="Rejection Remarks" ng-model="New.Remarks" /></td>
+                                            <td style="padding:3px;">
+                                                <input type="button" class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}})">
+                                                <input type="button" class="btn btn-danger" id="btnReject" value="Reject" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}})">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><strong>Note For Leave Group : LA - Leave Application</strong><br /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,308 @@
+﻿@{
+    ViewBag.Title = "Leave Release";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/LeaveReleaseCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="LeaveReleaseCntrloller">
+    <div class="container">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox"></div>
+        <div class="row">
+            @* Popup Model For Approve/Reject Leave Application  *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:650px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Leave Application Details</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    @* Release Level Wise Work Flow *@
+                                    <table class="table" style="text-align:center;">
+                                        <tr>
+                                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels">
+                                                <b> Releaser {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    @* Leave Application Details *@
+                                    <table class="table table-bordered table-condensed" id="aliasTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Unit</th>
+                                                <th style="text-align:center;">Department</th>
+                                                <th style="text-align:center;">Station</th>
+                                                <th style="text-align:center;">Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="ld in lappdata">
+                                            <tr>
+                                                <td style="text-align:center;" id="unitName" ng-repeat="u in ld.units track by $index" ng-if="$index==1" data-title="'unitName'">
+                                                    {{u}}
+                                                </td>
+                                                <td style="text-align:center;" id="deptName" ng-repeat="dept in ld.departments track by $index" ng-if="$index==1"
+                                                    data-title="'deptName'">
+                                                    {{dept}}
+                                                </td>
+                                                <td style="text-align:center;" id="statName" ng-repeat="s in ld.stations track by $index" ng-if="$index==1" data-title="'statName'">
+                                                    {{s}}
+                                                </td>
+                                                <td style="text-align:center;" id="catName" ng-repeat="catg in ld.categories" ng-show="catg[1]">{{catg}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @* Posted Leave Application List *@
+                                    <table class="table table-bordered table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Type</th>
+                                                <th style="text-align:center;">From Date</th>
+                                                <th style="text-align:center;">To Date</th>
+                                                <th style="text-align:center;">Days</th>
+                                                <th style="text-align:center;">Half Day</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="pld in pladata|orderBy:sortKey:reverse|filter:search|itemsPerPage:5" pagination-id="pg_3">
+                                            <tr>
+                                                <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
+                                                <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;" data-title="'leaveDeducted'">{{pld.leaveDed}}</td>
+                                                <td style="text-align:center;" data-title="'halfDayFlag'">
+                                                    <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_3"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Main Model Display All Pending For Apporoval Leave Application List*@
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending Leave Application List</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetLeaveRequestLists()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;width:48px;">
+                                                <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
+                                            </th>
+                                            <th style="text-align:center;width:64px;">
+                                                <a href="" ng-click="predicate = 'empUnqId'; reverse=!reverse">Emp.Code</a>
+                                            </th>
+                                            <th style="text-align:center;width: 150px;">Employee Name</th>
+                                            <th style="text-align:center;width: 100px;">Designation</th>
+                                            <th style="text-align:center;padding:0px;">
+                                                <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
+                                                    <tr>
+                                                        <th style="text-align:center;padding:3px;width:91px;">Leave Reason</th>
+                                                        <th style="text-align:center;padding:3px;width:45px;">Sr.No.</th>
+                                                        <th style="text-align:center;padding:3px;width:36px;">Type</th>
+                                                        <th style="text-align:center;padding:3px;width:71px;">From Date</th>
+                                                        <th style="text-align:center;padding:3px;width:54px;">To Date</th>
+                                                        <th style="text-align:center;padding:3px;width:37px;">Days</th>
+                                                        <th style="text-align:center;padding:3px;width:63px;">Half Day</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th style="text-align:center;">Remarks</th>
+                                            <th style="text-align:center;width: 191px;">Action</th>
+                                            <th style="text-align:center;width:46px;">
+                                                <a href="" ng-click="predicate = 'releaseStatusCode'; reverse=!reverse">Status</a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                        <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                            <td style="text-align:center;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;" id="empName"
+                                                ng-repeat="e in d.employee track by $index" ng-if="$index==10" data-title="'empName'">
+                                                {{e}}
+                                            </td>
+                                            <td style="text-align:center;" id="desgName"
+                                                ng-repeat="desg in d.employee track by $index" ng-if="$index==8" data-title="'desgName'">
+                                                {{desg}}
+                                            </td>
+                                            <td style="padding:2px;">
+                                                <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
+                                                    <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                                        <td style="padding:2px;text-align:center;width:91px;">{{lrd.remarks}}</td>
+                                                        <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
+                                                        <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
+                                                        <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding:2px;text-align:center;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding:2px;text-align:center;width:37px;">{{lrd.totalDays}}</td>
+                                                        <td style="padding:2px;text-align:center;width:60px;">
+                                                            <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="padding:3px;">
+                                                <input class="form-control" type="text" id="Remarks" placeholder="Rejection" style="width:85px;" ng-model="N.Remarks">
+                                            </td>
+                                            <td style="text-align:center;padding:3px;">
+                                                <input type="button" id="btnApprove" class="btn btn-success" value="Approve" style="padding:6px 6px;"
+                                                       data-ng-click="UpdateLeaveReleaseStatus('F',{{d.leaveAppId}},N)" />
+                                                <input type="button" id="btnReject" class="btn btn-danger" value="Reject" style="padding:6px 6px;"
+                                                       data-ng-click="UpdateLeaveReleaseStatus('R',{{d.leaveAppId}},N)" />
+                                                <input type="button" value="Details" id="btnDetails" class="btn btn-info" style="padding:6px 6px;"
+                                                       data-ng-click="PopulateData({{d.leaveAppId}},{{d.empUnqId}})" />
+                                            </td>
+                                            <td style="text-align:center;padding:3px;" id="releaseStatusCode"
+                                                ng-style="d.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
+                                                d.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||
+                                                d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                {{d.releaseStatusCode}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
+                        <strong>Note For Release Status : N - Not released, <text style="color:#ff9800;"> P - Partially released</text></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>On Leave Application List</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetLeaveInfo()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;width:8%;">
+                                                <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
+                                            </th>
+                                            <th style="text-align:center;width:9%;">
+                                                <a href="" ng-click="predicate = 'empUnqId'; reverse=!reverse">Employee Code</a>
+                                            </th>
+                                            <th style="text-align:center;width:26%;">Employee Name</th>
+                                            <th style="text-align:center;width:20%;">Leave Reason</th>
+                                            <th style="text-align:center;width:5%;">Sr No.</th>
+                                            <th style="text-align:center;width:3%;">Type</th>
+                                            <th style="text-align:center;width:7%;">From Date</th>
+                                            <th style="text-align:center;width:7%;">To Date</th>
+                                            <th style="text-align:center;width:3%;">Days</th>
+                                            <th style="text-align:center;width:6%;">Half Day</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate=" d in reqdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_2"
+                                            ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}"
+                                            ng-show="d.releaseStatusCode =='F'">
+                                            <td style="text-align:center;padding-top:10px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;padding-top:10px;">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">
+                                                {{e}}
+                                            </td>
+                                            <td colspan="7">
+                                                <table class="table table-hover table-condensed table-hover table-bordered">
+                                                    <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                                        <td style="text-align:center;width:215px;" data-title="'remarks'">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="text-align:center;width:55px;" data-title="'leaveAppItem'">{{lrd.leaveAppItem}}</td>
+                                                        <td style="text-align:center;width:38px;" data-title="'leaveTypeCode'">{{lrd.leaveTypeCode}}</td>
+                                                        <td style="text-align:center;width:77px;" data-title="'fromDt'">{{lrd.fromDt | date:'dd/MM/yyyy'}}</td>
+                                                        <td style="text-align:center;width:77px;" data-title="'toDt'">{{lrd.toDt | date:'dd/MM/yyyy'}}</td>
+                                                        <td style="text-align:center;width:38px;" data-title="'totalDays'">{{lrd.totalDays}}</td>
+                                                        <td style="text-align:center;width:60px;" data-title="'halfDayFlag'">
+                                                            <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_2"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
+                        <strong>Note For Release Status :  N - Not released ,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Today Gate Pass List</strong></div>
+                        <div class="panel-body">
+                            <div ng-init="ReleaserGatePassInfo()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Emp.Code</th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                                <th style="text-align:center;">GP Date</th>
+                                                <th style="text-align:center;">Mode</th>
+                                                <th style="text-align:center;">Place</th>
+                                                <th style="text-align:center;">Reason</th>
+                                                <th style="text-align:center;">Out Time</th>
+                                                <th style="text-align:center;">Out User</th>
+                                                <th style="text-align:center;">In Time</th>
+                                                <th style="text-align:center;">In User</th>
+                                                <th style="text-align:center;">Status</th>
+                                                <th style="text-align:center;">Created by</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" pagination-id="pg_4"
+                                                ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                            d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} ">
+                                                <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;width:185px;">{{d.empName}}</td>
+                                                <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;width:60px;">{{d.modeName}}</td>
+                                                <td style="text-align:left;">{{d.placeOfVisit}}</td>
+                                                <td style="text-align:left;">{{d.reason}}</td>
+                                                <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                                <td style="text-align:center;width:70px;">{{d.gateOutUser}}</td>
+                                                <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                                <td style="text-align:center;width:70px;">{{d.gateInUser}}</td>
+                                                <td style="text-align:center;">{{d.statusName}}</td>
+                                                <td style="text-align:center;width:80px;">{{d.addUser}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_4"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>

@@ -1,0 +1,273 @@
+﻿@model AttendanceWebApp.Models.Employees
+
+<html lang="en">
+
+@{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
+
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/Angular/angular.min.js"></script>
+    <script src="~/Scripts/Angular/angular-resource.js"></script>
+    <script src="~/Scripts/CommonFunction.js"></script>
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/Jquery/jquery-ui.js"></script>
+    <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+
+    <style>
+        .Requed {
+            color: red;
+            font-size: 20px;
+        }
+
+        .activediv {
+            display: inline;
+        }
+
+        .deactivediv {
+            display: none;
+        }
+
+        #Home-Index #topBar {
+            display: none;
+        }
+    </style>
+
+
+    @* Manage Menu User Role Wise *@
+    <script type="text/javascript">
+
+        var chk = "@Session["UserRole"]";
+
+        var _ishod = "@Session["IsHod"]";
+
+        $(window).on('load', function () {
+
+            //if user role
+            if (chk === "IsUser") {
+                $('#mnuReport').hide(); $('#mnuMaster').hide(); $('#mnuUitility').hide();
+
+                $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
+            }
+
+            //if releaser role
+            if (chk === "IsReleaser") {
+                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show();
+                //$('#mnuRelGatePassReport').show();
+
+                $('#mnuMaster').hide(); $('#mnuUitility').hide();
+
+                $('#mnuLeavePosting').hide();
+
+                $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
+                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuAllGatePassReport').hide();
+            }
+
+            //if hr user role
+            if (chk === "IsHrUser") {
+                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show();
+
+                $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
+                $('#mnuPendingLeavesForPostReport').show(); $('#mnuPostedByReport').show(); $('#mnuAllGatePassReport').show();
+
+                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide();
+                //$('#mnuRelGatePassReport').hide();
+            }
+
+            //if Hr / Releaser both role
+            if (chk === "IsHrRelease") {
+                $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show();
+
+                $('#mnuLeaveRelease').show();
+
+                $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
+                $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
+                $('#mnuAllGatePassReport').show();
+                //$('#mnuRelGatePassReport').show();
+            }
+        });
+    </script>
+
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.test').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
+
+    @* Function For Sync All Master Data *@
+    <script>
+        function AutoSync() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync', true);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText);
+                }
+            }
+            xhr.send();
+        };
+    </script>
+</head>
+
+<body>
+    @* Hidden Objects of Session Variables *@
+    <input type="hidden" value="@Session["EmpUnqId"]" id="myEmpUnqId" />
+    <input type="hidden" value="@Session["EmpName"]" id="myEmpName" />
+    <input type="hidden" value="@Session["CompCode"]" id="myCompCode" />
+    <input type="hidden" value="@Session["WrkGrp"]" id="myWrkGrp" />
+    <input type="hidden" value="@Session["UnitCode"]" id="myUnitCode" />
+    <input type="hidden" value="@Session["DeptCode"]" id="myDeptCode" />
+    <input type="hidden" value="@Session["StatCode"]" id="myStatCode" />
+    <input type="hidden" value="@Session["CatCode"]" id="myCatCode" />
+    <input type="hidden" value="@Session["IsHod"]" id="myIsHod" />
+    <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float:left;height:56px;width:56px;" />
+                <label class="navbar-brand" style="color:white">Employee Self Service Portal - Jindal SAW Ltd.</label>
+                <div class="nav-collapse">
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-user"></i>
+                                <strong>
+                                    @Session["EmpName"].ToString() (@Session["EmpUnqId"].ToString())
+                                    <b class="caret"></b>
+                                </strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
+                                <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Master</a></li>
+                                <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
+                                <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Update EMail ID</a></li>
+                                <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
+                                <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="subnavbar">
+        <div class="subnavbar-inner">
+            <div class="container">
+                <ul class="mainnav">
+                    <li class="active"><a href="/Home/Index" id="mnuDashboard"><i class="icon-dashboard"></i><span>Dashboard</span></a></li>
+                    <li class="dropdown" id="mnuMaster">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Streategy Master</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="mnuLeave">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Leave</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuLeaveRules"><a href="/LeaveApp/LeaveRules">Leave Rules</a></li>
+                            <li id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
+                            <li class="dropdown-submenu">
+                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
+                                <ul class="dropdown-menu">
+                                    <li id="mnuShortLeaveCancel"><a href="/LeaveApp/LeaveCancellation">Short Leave Cancel</a></li>
+                                    <li id="mnuFullLeaveCancel"><a href="/LeaveApp/FullLeaveCancel">Full Leave Cancel</a></li>
+                                </ul>
+                            </li>
+                            <li id="mnuLeaveRelease"><a href="/ReleaseLeave/LeaveRelease">Leave Release</a></li>
+                            <li class="dropdown-submenu" id="mnuLeavePosting">
+                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Posting <b class="icon-caret-right"></b></span></a>
+                                <ul class="dropdown-menu">
+                                    <li id="mnuFullLeavePosting"><a href="/LeavePosting/LeavePosting?flg=N">Full Leave Posting</a></li>
+                                    <li id="mnuPartialLeavePosting"><a href="/LeavePosting/LeavePosting?flg=P">Partial Leave Posting</a></li>
+                                    <li id="mnuCancelledLeavePosting"><a href="/LeavePosting/LeavePosting?flg=C">Canceled Leave Posting</a></li>
+                                </ul>
+                            </li>
+                            @*<li id="mnuLeavePosting"><a href="/LeavePosting/LeavePosting">Leave Posting</a></li>*@
+                        </ul>
+                    </li>
+                    @*<li class="dropdown" id="mnuGatePass">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuCreateGatePass"><a href="/Master/GatePass">New Gate Pass</a></li>
+                            <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Print Gate Pass</a></li>
+                            <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
+                        </ul>
+                    </li>*@
+                    <li class="dropdown" id="mnuReport">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuReleaserEmpReport"><a href="/Report/EmployeeList">Employee List</a></li>
+                            <li id="mnuLeaveReport"><a href="/Report/LeaveReport">Leave Report</a></li>
+                            <li id="mnuPostedLeaveReport"><a href="/Report/PostedLeaveReport">Posted Leave Report</a></li>
+                            <li id="mnuPostedByReport"><a href="/Report/PostedByReport">Posted By HR Report</a></li>
+                            <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
+                            <li id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
+                            @*<li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>*@
+                            <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
+                            <li id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="mnuUitility">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuAutoSync"><a href="#" onclick="AutoSync()">Sync Employees</a></li>
+                            <li id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
+                            <li id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
+                        </ul>
+                    </li>
+                    <li id="mnuUserManual"><a href="~/Master/UserManual" id="mnuManual"><i class="icon-file"></i><span>User Manual</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-inner">
+            <div class="container HTMLCONTAIN">
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-fixed-bottom" style="height:30px;">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD.</b></span></div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.js"></script>
+</body>
+</html>

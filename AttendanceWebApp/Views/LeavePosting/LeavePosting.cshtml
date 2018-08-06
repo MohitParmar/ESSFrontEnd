@@ -1,0 +1,362 @@
+﻿@{
+    ViewBag.Title = "Leave Posting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/LeavePostingCntrl.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+@*<script src="~/Content/ng-grid-2.0.14.debug.js"></script>*@
+
+@*<script>function checkAll(ele) {var checkboxes = document.getElementsByTagName('input');
+    if (ele.checked) {for (var i = 0; i < checkboxes.length; i++) {if (checkboxes[i].type == 'checkbox') {checkboxes[i].checked = true;}}}
+    else {for (var i = 0; i < checkboxes.length; i++) {console.log(i)if (checkboxes[i].type == 'checkbox') {checkboxes[i].checked = false;}}}}</script>*@
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+</style>
+
+<script>
+    window.onload = function () {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+
+        if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+
+        if (lastDay.getMonth() < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(lastDay);
+    }
+</script>
+
+<div ng-app="myApp" ng-controller="LeavePostingController">
+    <div class="container">
+        <div class="row">
+            @* Popup Model *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:1100px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Performance Report <label id="eid"></label></h4>
+                            <table class="table">
+                                <tr>
+                                    <th dir-paginate="bal in lbaldata|itemsPerPage:10">{{bal.leaveTypeCode}}-{{bal.opening-bal.availed-bal.encashed}}</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel" style="height:500px;overflow:scroll;">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td><label>Select From Date : </label></td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="icon-calendar"></i>
+                                                <input class="form-control" type="text" id="FDt" ng-model="dta.fdt" data-date-format="yyyy/MM/dd" datepicker>
+                                            </div>
+                                        <td><label>Select To Date : </label></td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="icon-calendar"></i>
+                                                <input class="form-control" type="text" id="TDt" ng-model="dta.tdt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                            </div>
+                                        <td>
+                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="PerformanceAttendanceRpt(dta)">
+                                                <i class="icon-search"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="table-responsive" style="overflow:auto;">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;padding:3px;width:44px;" ng-click="sort('attdDate')">
+                                                    Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='attdDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                <th style="text-align:center;">Shift</th>
+                                                <th style="text-align:center;">Cons Shift</th>
+                                                <th style="text-align:center;">In</th>
+                                                <th style="text-align:center;">Out</th>
+                                                <th style="text-align:center;">Wrking Hrs</th>
+                                                <th style="text-align:center;">Over Time</th>
+                                                <th style="text-align:center;">Status</th>
+                                                <th style="text-align:center;">Half Day</th>
+                                                <th style="text-align:center;">Leave Type</th>
+                                                <th style="text-align:center;">Leave Half</th>
+                                                <th style="text-align:center;">Early come</th>
+                                                <th style="text-align:center;">Early Going</th>
+                                                <th style="text-align:center;">Late Come</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="a in prdata|orderBy:sortKey:reverse|itemsPerPage:31" pagination-id="pg1">
+                                                <td style="text-align:center;" id="attdDate">{{a.attdDate| date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;">{{a.scheDuleShift}}</td>
+                                                <td style="text-align:center;">{{a.consShift}}</td>
+                                                <td style="text-align:center;">{{a.consIn| date:'dd/MM/yy HH:mm'}}</td>
+                                                <td style="text-align:center;">{{a.consOut| date:'dd/MM/yy HH:mm'}}</td>
+                                                <td style="text-align:center;">{{a.consWrkHrs}}</td>
+                                                <td style="text-align:center;">{{a.consOverTime}}</td>
+                                                <td style="text-align:center;">{{a.status}}</td>
+                                                <td style="text-align:center;"><input type="checkbox" ng-checked="{{a.halfDay}}" disabled="disabled" /></td>
+                                                <td style="text-align:center;">{{a.leaveType}}</td>
+                                                <td style="text-align:center;"><input type="checkbox" ng-checked="{{a.leaveHalf}}" disabled="disabled" /></td>
+                                                <td style="text-align:center;">{{a.earlycome}}</td>
+                                                <td style="text-align:center;">{{a.earlyGoing}}</td>
+                                                <td style="text-align:center;">{{a.lateCome}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Main Model *@
+            <div class="col-sm-12">
+                <input type="hidden" id="hidfromdt" value="" />
+                <input type="hidden" id="hidtodt" value="" />
+                <div id="MessageBox"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Posting Leave Application List</strong>
+                        @*<div style="float:right;">
+                                <a style="float: right;" href="#" ng-click="exportAllData()">
+                                    <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                </a>
+                            </div>*@
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetPostingLeaveApplicationLists(New)">
+                                            <i class="icon-search"></i>
+                                            Search
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-init="GetPostingLeaveApplicationLists()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            @*<th><input id="chk" type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>*@
+                                            @*<th style="text-align:center;padding:3px;width:40px;"><a href="" ng-click="predicate = 'unitCode'; reverse=!reverse">Unit</a></th><th style="text-align:center;padding:3px;width:76px;"><a href="" ng-click="predicate = 'deptCode'; reverse=!reverse">Department</a></th>*@
+                                            <th>Sr No.</th>
+                                            <th style="text-align:center;padding:3px;width:44px;" ng-click="sort('releaseGroupCode')">
+                                                Leave Group
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseGroupCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;width:40px;" ng-click="sort('leaveAppId')">
+                                                App.ID
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('addDt')">
+                                                App.Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;width:61px;" ng-click="sort('empUnqId')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;width:120px;">Employee Name</th>
+                                            <th style="text-align:center;padding:3px;width:68px;">Station</th>
+                                            <th style="text-align:center;padding:3px;width:63px;">Category</th>
+                                            <th style="padding:0px;width:334px;">
+                                                <table class="table table-bordered" style="margin-bottom:0;padding:0px;">
+                                                    <tr>
+                                                        <th style="text-align:center;padding:3px;width:42px;">Sr.No.</th>
+                                                        <th style="text-align:center;padding:3px;width:34px;">Type</th>
+                                                        <th style="text-align:center;padding:3px;width:66px;">From Date</th>
+                                                        <th style="text-align:center;padding:3px;width:54px;">To Date</th>
+                                                        <th style="text-align:center;padding:3px;width:34px;">Days</th>
+                                                        <th style="text-align:center;padding:3px;width:34px;">Half Day</th>
+                                                        <th style="text-align:center;padding:3px;width:64px;">Posting</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th style="text-align:center;padding:3px;">Remarks</th>
+                                            <th style="text-align:center;padding:3px;width:122px;">Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>@*<input class="form-control" type="text" ng-model="search.releaseGroupCode" style="margin:0;padding:1px;" />*@</td>
+                                            <td>@*<input class="form-control" type="text" ng-model="search.leaveAppId" style="margin:0;padding:1px;" />*@</td>
+                                            <td>@*<input class="form-control" type="text" ng-model="search.addDt" style="margin:0;padding:1px;" />*@</td>
+                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.categories" style="margin:0;padding:1px;" /></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25"
+                                           current-page="currentPage" pagination-id="pg2">
+                                        <tr>
+                                            @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
+                                            @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;padding:3px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
+                                            <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;padding:3px;" id="empUnqId">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10"
+                                                data-title="'empName'">
+                                                {{e}}
+                                            </td>
+                                            <td style="text-align:center;padding:3px;" id="statName" ng-repeat="s in d.stations" ng-if="$index==1" data-title="'statName'">
+                                                {{s}}
+                                            </td>
+                                            <td style="text-align:center;padding:3px;" id="catName" ng-repeat="catg in d.categories" ng-if="$index==1" data-title="'catName'">
+                                                {{catg}}
+                                            </td>
+                                            @*<td style="text-align:center;padding:0px;"><table class="table" style="text-align:center;margin-bottom:0;padding:3px;"><tr>
+                                                <td style="padding:3px;" id="catName" ng-repeat="catg in d.categories" ng-show="catg[1]">{{catg}}</td></tr></table></td>*@
+                                            <td style="text-align:center;padding:2px;">
+                                                <table id="aliasTable" class="table table-bordered table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                    <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                                        <td ng-hide="true">{{lrd.leaveAppId}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:42px;">{{lrd.leaveAppItem}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:34px;">{{lrd.leaveTypeCode}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:66px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:34px;">{{lrd.totalDays}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:34px;">
+                                                            <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
+                                                        </td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:64px;">
+                                                            <select id="cmbPartial" style="width:57px;" class="drp" required>
+                                                                <option value="F" title="Fully">Fully</option>
+                                                                <option value="P" title="Partial">Partial</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="padding:3px;">
+                                                <input type="text" id="remarks" name="remarks" class="form-control" placeholder="Rejection Remarks"
+                                                       ng-model="New.Remarks" />
+                                            </td>
+                                            <td style="padding:3px;">
+                                                <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'P')">
+                                                    <i class="icon-ok"></i>
+                                                </button>
+                                                <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'R')"
+                                                        ng-show="d.cancelled==false">
+                                                    <i class="icon-remove"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.empUnqId}})">
+                                                    <i class="icon-info"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg2"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

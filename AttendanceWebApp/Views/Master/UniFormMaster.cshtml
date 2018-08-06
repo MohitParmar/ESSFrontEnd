@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "UniForm Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/UniformCntrl.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<script>
+    window.onload = function () {
+        var d = new Date();
+        var Currentyear = (d.getFullYear());
+        $('#txtYear').val(Currentyear);
+    };
+</script>
+
+<div ng-app="myApp" ng-controller="UniformController">
+    <div class="container">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            @* Add / Update Uniform Details *@
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Update Uniform Details</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed"> 
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label>Year</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtYear" name="Year" disabled="disabled">
+                                        </td>
+                                        <td><label>Trouser Size</label></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtTrouserSize" name="TrouserSize" placeholder="Trouser Size" ng-model="New.TrouserSize" required>
+                                        </td>
+                                        <td><label>Shirt Size</label></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtShirtSize" name="ShirtSize" placeholder="Shirt Size" ng-model="New.ShirtSize" required>
+                                        </td>
+                                        <td>
+                                            <input id="btnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                                            <button id="btnCreate" type="button" class="btn btn-Primary" style="text-align:right;" value="Submit" name="Submit"
+                                                    ng-click="AddUniformDetails(New)">
+                                                Submit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong><text style="color:#f44336;">Note: Please Enter Shirt/Trouser Size in inches</text></strong>
+                    </div>
+                </div>
+            </div>
+            @* Get Uniform Details *@
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Details Of Uniform</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetUniformDetails()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-bordered table-condensed table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Year</th>
+                                            <th style="text-align:center;">Trouser Size</th>
+                                            <th style="text-align:center;">Shirt Size</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                                            <td style="text-align:center;">{{d.year}}</td>
+                                            <td style="text-align:center;">{{d.trouserSize}}</td>
+                                            <td style="text-align:center;">{{d.shirtSize}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div ng-app="myApp" ng-controller="SelectLTypeCntrl" ng-init="GetTrouserSize()">
+    <select class="form-control" id="TrouserSize" ng-model="New.T_Size"
+    ng-options="s.LeaveTypeCode as s.LeaveTypeCode for s in LList" ng-change="SetLTListValue(New.T_Size)" required>
+    <option value="" selected>--- Select ---</option>
+    </select>
+    </div>*@

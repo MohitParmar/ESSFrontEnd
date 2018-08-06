@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Uniform Master Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/UniformCntrl.js"></script>
+<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+
+<div ng-app="myApp" ng-controller="UniformController">
+    <div class="container">
+        <div class="row">
+            @* Uniform Master Details*@
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Uniform Master Details</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData()">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetAllUserUniformDetails()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-bordered table-condensed table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('year')">
+                                                Year
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='year'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('trouserSize')">
+                                                Trouser Size
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='trouserSize'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('shirtSize')">
+                                                Shirt Size
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='shirtSize'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('updTime')">
+                                                Update Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='updTime'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td><input class="form-control" type="text" ng-model="search.year" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.trouserSize" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.shirtSize" style="margin:0;padding:1px;" /></td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in Alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50">
+                                            <td style="text-align:center;">{{d.year}}</td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;">{{d.trouserSize}}</td>
+                                            <td style="text-align:center;">{{d.shirtSize}}</td>
+                                            <td style="text-align:center;">{{d.updTime | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

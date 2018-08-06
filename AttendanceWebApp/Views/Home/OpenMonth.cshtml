@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Manage Open Month";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/OpenMonthCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="OpenMonthController">
+    <div class="container">
+        <div class="row">
+            @* Open Month *@
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Change Open Month</strong></div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">
+                                        <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:right;"><label>Select Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="yearMonth" ng-model="New.yearMonth" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-success" value="Search" name="Search" ng-click="ChangeOpenMonth(New)">
+                                            Submit
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

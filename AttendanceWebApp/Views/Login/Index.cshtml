@@ -1,0 +1,152 @@
+﻿@model AttendanceWebApp.Models.Employees
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Self Service Portal - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/pages/signin.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/ng-table.css" rel="stylesheet" />
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" />
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+    <script src="~/Scripts/Angular/angular-resource.js"></script>
+    <script src="~/Scripts/Angular/angular.min.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/app.js"></script>
+    <script src="~/Scripts/Jquery/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/Jquery/jquery-ui.js"></script>
+    <script src="~/Scripts/CommonFunction.js"></script>
+
+    <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+
+    <script src="~/Scripts/Controller/LoginCntrl.js"></script>
+
+    <style>
+        .imgs {
+            display: inline-block;
+            max-width: 100%;
+            height: auto;
+            padding: 4px;
+            line-height: 1.42857143;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all .2s ease-in-out;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('input').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    $("#btnOK").focus().click();
+                    return false;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div data-ng-app="myApp" data-ng-controller="LoginController">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <img src="~/ESS_Images/JINDALLOGO.jpg" class="imgs" style="float:right;height:56px;width:56px;" />
+                    <a class="brand" href="#">Employee Self Service Portal - Jindal SAW Ltd.</a>
+                </div>
+            </div>
+        </div>
+        <div class="account-container">
+            @* Create Forget Password Popup Model *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Forget Password</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div id="modelMessageBox"></div>
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table table-responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label>Employee Code</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="eCode" name="eCode" ng-model="New.empUnqId" required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>New Password</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="Password" id="ePass" name="newPassword" ng-model="New.pass" required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="text-align:center;">
+                                                    <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Change Password" name="Save"
+                                                            ng-click="updatePassword(New)">
+                                                        Change Password
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Main Content *@
+            <div class="content clearfix">
+                <div id="MessageBox"></div>
+                <fieldset>
+                    <h1>Member Login</h1>
+                    <div class="login-fields">
+                        <p>Please Provide Your Details</p>
+                        <div class="field">
+                            <label for="username">Username</label>
+                            <input type="text" id="EmpUnqId" name="EmpUnqId" value="" placeholder="Username" class="login username-field" ng-model="usr.EmpUnqId" autofocus />
+                        </div>
+                        <div class="field">
+                            <label for="password">Password:</label>
+                            <input type="password" id="Pass" name="Pass" value="" placeholder="Password" class="login password-field" ng-model="usr.Pass" />
+                        </div>
+                    </div>
+                    <div class="login-actions">
+                        @*<input type="button" class="btn btn-default btn-large" value="Forget Password" data-ng-click="ChangePassword()">*@
+                        <input type="submit" id="btnOK" class="button btn btn-success btn-large" style="margin-top:0;" value="Login" ng-click="UserLogin(usr)" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="navbar-fixed-bottom" style="height:30px;">
+            <div class="navbar-inner">
+                <div class="container">
+                    <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD.</b></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.js"></script>
+    <script src="~/Content/js/signin.js"></script>
+</body>
+</html>

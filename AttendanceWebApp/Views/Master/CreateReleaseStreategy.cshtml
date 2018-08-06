@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Manage Release Streategy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/ReleaseStreategyCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="ReleaseStreategyCntrloller">
+    <div class="container">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            @* Add New Releaser *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:650px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Releaser Details</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><label>Enter Releaser Employee Code</label></td>
+                                                <td><input class="form-control" type="text" id="Rel_Empid" name="Rel_Empid" required></td>
+                                                <td>
+                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetReleaserInfo()">
+                                                        <i class="icon-search"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align:center;"><label>Release Code</label></th>
+                                                                <th style="text-align:center;"><label>Releaser Code</label></th>
+                                                                <th style="text-align:center;"><label>Releaser Name</label></th>
+                                                                <th style="text-align:center;"><label>Add</label></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="rls in rdata">
+                                                                <td style="text-align:center;">{{rls.releaseCode}}</td>
+                                                                <td style="text-align:center;">{{rls.empUnqId}}</td>
+                                                                <td style="text-align:center;">{{rls.empName}}</td>
+                                                                <td>
+                                                                    <button type="submit" id="btnOK" class="btn btn-default" value="Add" name="Add" ng-click="AddReleaser('{{rls.releaseCode}}')">OK</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Create / Update Release Strategies *@
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Create / Update Release Strategy</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5">
+                                            Employee Details
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;"><label>Select Employee</label></td>
+                                        <td><input class="form-control" type="text" id="eCode" name="eCode"></td>
+                                        <td>
+                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                                <i class="icon-search"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="d in empdata">
+                                        <td style="text-align:center;"><label>Employee Code : {{d.empUnqId}} </label></td>
+                                        <td style="text-align:center;"><label>Employee Name : {{d.empName}}</label></td>
+                                        <td style="text-align:center;">Father Name : <label>{{d.fatherName}}</label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Release Strategy</th>
+                                        <th style="text-align:center;">Release Level</th>
+                                        <th style="text-align:center;">Releaser Code</th>
+                                        <th style="text-align:center;">Releaser Name</th>
+                                        <th style="text-align:center;">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="rls in rlsdata.releaseStrategyLevels">
+                                        <td style="text-align:center;">{{rls.releaseStrategy}}</td>
+                                        <td style="text-align:center;">{{rls.releaseStrategyLevel}}</td>
+                                        <td style="text-align:center;">{{rls.releaseCode}}</td>
+                                        <td style="text-align:center;">{{rls.empName}}</td>
+                                        <td style="text-align:center;" ng-if="$last == true">
+                                            <button type="submit" id="btnSearch" class="btn btn-danger" value="delete" name="delete" ng-click="RemoveReleaser()">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="text-align:right;">
+                                <button type="reset" id="btnreset" class="btn btn-default" ng-click="ResetView()">Reset</button>
+                                <input type="button" id="btnAddNewReleaser" class="btn btn-primary" name="AddNewReleaser" value="Add New Releaser" data-ng-click="PopulateData()" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="text-align:right;">
+                        <input type="button" id="btnCreateUpdate" class="btn btn-Success" name="CreateReleaseStrategy" value="Create Release Strategy" data-ng-click="CreateReleaseStrategy()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

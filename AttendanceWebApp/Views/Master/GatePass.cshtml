@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Gate Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GatePassCntrl.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="GatePassCntroller">
+    <div class="container">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-8">
+                @* Create New Gate Pass *@
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Employee Out Gate Pass</strong></div>
+                    <div class="panel-body">
+                        <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                            <div ng-init="GetEmpInfo()">
+                                <table id="myTable" class="table table-responsive table-condensed">
+                                    <tr>
+                                        <td><label>Employee Code</label></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" disabled="disabled" required>
+                                        </td>
+                                        <td colspan="2">
+                                            <input class="form-control" type="text" id="txtEmpName" name="EmpName" disabled="disabled" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Station</label>
+                                        </td>
+                                        <td colspan="3">
+                                            <input class="form-control" type="text" id="txtStat" name="Stat" disabled="disabled">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Mode Of Gate Pass</label>
+                                        </td>
+                                        <td>
+                                            <select id="Mode" class="form-control" ng-model="New.Mode" ng-click="GetEmpInfo()">
+                                                <option value="P" title="Personal" selected>Personal</option>
+                                                <option value="O" title="Official">Official</option>
+                                                <option value="D" title="Duty Off">Duty Off</option>
+                                            </select>
+                                        </td>
+                                        <td><label>Place Of Visit</label></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtPlace" name="Place" ng-model="New.PlaceofVisit" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Purpose of Gate Pass</label></td>
+                                        <td colspan="3">
+                                            <input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="New.Reason" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:right;" colspan="4">
+                                            <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddNewPerson(New)">
+                                                Add Person
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Out Gate Pass Details</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Gate Pass Item</th>
+                                        <th style="text-align:center;">Employee Code</th>
+                                        <th style="text-align:center;">Mode</th>
+                                        <th style="text-align:center;">Place of Visit</th>
+                                        <th style="text-align:center;">Purpose of Gate Pass</th>
+                                        <th style="text-align:center;">UserID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tempRow">
+                                        <td colspan="6">No information entered.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="text-align:right;">
+                        <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                        <button id="btnSubmit" type="button" class="btn btn-success" value="Submit" name="submit" ng-click="CreateGatePass()">
+                            Generate Gate Pass
+                        </button>
+                    </div>
+                    <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                        <strong><text style="color:#f44336;">Note: Gate Pass to be Generate only when "Generate Gate Pass" button is pressed.</text></strong>
+                    </div>
+                </div>
+            </div>
+            @* Right Side Bar Start *@
+            <div class="col-sm-4">
+                @* Leave Balance List *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">Open</th>
+                                            <th style="text-align:center;">Availed</th>
+                                            <th style="text-align:center;">Encashed</th>
+                                            <th style="text-align:center;">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="d in data">
+                                            <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
+                                            <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
+                                            <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
+                                            <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
+                                            <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed-d.encashed}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Holiday List Of Current User *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="hld in hlddata">
+                                            <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:Left;" data-title="'Holiday Name'" id="holidayName">{{hld.holidayName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Right Side Bar End *@
+        </div>
+    </div>
+</div>

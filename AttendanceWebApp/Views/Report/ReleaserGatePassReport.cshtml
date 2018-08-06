@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Gate Pass Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GatePassCntrl.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<script>
+    window.onload = function () {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(firstDay);
+    }
+</script>
+
+<div ng-app="myApp" ng-controller="GatePassCntroller">
+    <div class="container">
+        <div class="row">
+            @* Gate Pass Information *@
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Gate Pass Report</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="ReleaserGatePassInfo(New)">
+                                            <i class="icon-search"></i>
+                                            Search
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-init="ReleaserGatePassInfo()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Emp.Code</th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">GP Date</th>
+                                            <th style="text-align:center;">Mode</th>
+                                            <th style="text-align:center;">Place</th>
+                                            <th style="text-align:center;">Reason</th>
+                                            <th style="text-align:center;">Out Time</th>
+                                            <th style="text-align:center;">Out User</th>
+                                            <th style="text-align:center;">In Time</th>
+                                            <th style="text-align:center;">In User</th>
+                                            <th style="text-align:center;">Status</th>
+                                            <th style="text-align:center;">Created by</th>
+                                        </tr>
+                                        <tr>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqID" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                            <td></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" /></td>
+                                            <td colspan="6"></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.addUser" /></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
+                                            ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                      d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} ">
+                                            <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;width:185px;">{{d.empName}}</td>
+                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;width:60px;">{{d.modeName}}</td>
+                                            <td style="text-align:left;">{{d.placeOfVisit}}</td>
+                                            <td style="text-align:left;">{{d.reason}}</td>
+                                            <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                            <td style="text-align:center;width:70px;">{{d.gateOutUser}}</td>
+                                            <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                            <td style="text-align:center;width:70px;">{{d.gateInUser}}</td>
+                                            <td style="text-align:center;">{{d.statusName}}</td>
+                                            <td style="text-align:center;width:80px;">{{d.addUser}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

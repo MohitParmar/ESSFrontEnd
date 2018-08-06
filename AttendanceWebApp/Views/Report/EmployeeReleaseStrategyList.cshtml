@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Release Strategy Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/EmpRelStrCntrl.js"></script>
+<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+
+@*<script src="~/Content/Excell/alasql.min.js"></script><script src="~/Content/Excell/xlsx.core.min.js"></script> alasql*@
+
+@*//http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js*@
+@*<script type="text/javascript" src="ng-grid-legacy/ng-grid-2.0.14.debug.js"></script>*@
+
+<div ng-app="myApp" ng-controller="EmpRlsStrListCntroller">
+    <div class="container">
+        <div class="row">
+            @* Leave Information *@
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>List of Employee wise Release Strategies</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData()">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div style="text-align:center;">
+                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetEmployeeReleaseStrategy()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="tblrls">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Employee Code<span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Name<span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Work Group</th>
+                                            <th style="text-align:center;" ng-click="sort('deptName')">
+                                                Department<span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                                ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('statName')">
+                                                Station<span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('email')">
+                                                Email<span class="glyphicon sort-icon" ng-show="sortKey=='email'"
+                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Release Group</th>
+                                            <th style="text-align:center;">Release Strategy</th>
+                                            <th style="text-align:center;">Releaser 1 Code</th>
+                                            <th style="text-align:center;">Releaser 1 ID</th>
+                                            <th style="text-align:center;">Releaser 1 Name</th>
+                                            <th style="text-align:center;">Releaser 2 Code</th>
+                                            <th style="text-align:center;">Releaser 2 ID</th>
+                                            <th style="text-align:center;">Releaser 2 Name</th>
+                                            <th style="text-align:center;">Releaser 3 Code</th>
+                                            <th style="text-align:center;">Releaser 3 ID</th>
+                                            <th style="text-align:center;">Releaser 3 Name</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.empUnqId" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.empName" /></td>
+                                            <td>@*<input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.wrkGrp" />*@</td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.deptName" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.statName" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.email" /></td>
+                                            <td>@*<input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseGroup" />*@</td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseStrategy" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseCode1" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseEmpUnqId1" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseName1" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseCode2" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseEmpUnqId2" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseName2" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseCode3" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseEmpUnqId3" /></td>
+                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.releaseName3" /></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in rlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:Left;">{{d.empName}}</td>
+                                            <td style="text-align:Left;">{{d.wrkGrp}}</td>
+                                            <td style="text-align:center;">{{d.deptName}}</td>
+                                            <td style="text-align:Left;">{{d.statName}}</td>
+                                            <td style="text-align:Left;">{{d.email}}</td>
+                                            <td style="text-align:Left;">{{d.releaseGroup}}</td>
+                                            <td style="text-align:Left;">{{d.releaseStrategy}}</td>
+                                            <td style="text-align:Left;">{{d.releaseCode1}}</td>
+                                            <td style="text-align:Left;">{{d.releaseEmpUnqId1}}</td>
+                                            <td style="text-align:Left;">{{d.releaseName1}}</td>
+                                            <td style="text-align:Left;">{{d.releaseCode2}}</td>
+                                            <td style="text-align:Left;">{{d.releaseEmpUnqId2}}</td>
+                                            <td style="text-align:Left;">{{d.releaseName2}}</td>
+                                            <td style="text-align:Left;">{{d.releaseCode3}}</td>
+                                            <td style="text-align:Left;">{{d.releaseEmpUnqId3}}</td>
+                                            <td style="text-align:Left;">{{d.releaseName3}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

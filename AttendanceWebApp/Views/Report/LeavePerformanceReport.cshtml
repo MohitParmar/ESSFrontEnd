@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Leave Performance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/LeavePerformanceReportCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="LeavePerformanceReportController">
+    <div class="container">
+        <div class="row">
+            @* Leave Information *@
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Leave Performance Report</strong>
+                        <a style="float: right;" href="#" ng-click="exportAllData()">
+                            <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetLeavePerformanceReport(New)">
+                                            <i class="icon-search"></i>
+                                            Search
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-reponsive table-bordered table-condensed">
+                                <tr><td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search" /></td></tr>
+                            </table>
+                            <table class="table table-bordered table-striped table-hover table-condensed">
+                                <tr><th ng-repeat="h in headers track by $index">{{h}}</th></tr>
+                                <tr dir-paginate="s in dta |orderBy:sortKey:reverse|filter:search|itemsPerPage:25">
+                                    <td ng-repeat="r in s track by $index">{{r}}</td>
+                                </tr>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

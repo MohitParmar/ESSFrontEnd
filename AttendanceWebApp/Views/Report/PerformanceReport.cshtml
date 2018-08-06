@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Performance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="LeaveReportCntrloller">
+    <div class="container">
+        <div class="row">
+            @* Leave Information *@
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Performance Report</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <button class="btn btn-success" id="btnPerf" ng-click="PerformanceAttendanceRpt('PERF')">Attendance Report</button>
+                            <button class="btn btn-info" id="btnPunch" ng-click="PerformanceAttendanceRpt('PUNCH')">Cafeteria Punch Report</button>
+                            <hr />
+                            <div ng-init="PerformanceAttendanceRpt('PERF')" id="rptPerformance">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('attdDate')">
+                                                Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='attdDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;"><label>Shift</label></th>
+                                            <th style="text-align:center;"><label>Cons Shift</label></th>
+                                            <th style="text-align:center;"><label>In</label></th>
+                                            <th style="text-align:center;"><label>Out</label></th>
+                                            <th style="text-align:center;"><label>Wrking Hrs</label></th>
+                                            <th style="text-align:center;"><label>Over Time</label></th>
+                                            <th style="text-align:center;"><label>Status</label></th>
+                                            <th style="text-align:center;"><label>Half Day</label></th>
+                                            <th style="text-align:center;"><label>Leave Type</label></th>
+                                            <th style="text-align:center;"><label>Leave Half</label></th>
+                                            <th style="text-align:center;"><label>Early come</label></th>
+                                            <th style="text-align:center;"><label>Early Going</label></th>
+                                            <th style="text-align:center;"><label>Late Come</label></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_1">
+                                            <td style="text-align:center;">{{d.attdDate| date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.scheDuleShift}}</td>
+                                            <td style="text-align:center;">{{d.consShift}}</td>
+                                            <td style="text-align:center;">{{d.consIn| date:'dd/MM/yy HH:mm'}}</td>
+                                            <td style="text-align:center;">{{d.consOut| date:'dd/MM/yy HH:mm'}}</td>
+                                            <td style="text-align:center;">{{d.consWrkHrs}}</td>
+                                            <td style="text-align:center;">{{d.consOverTime}}</td>
+                                            <td style="text-align:center;">{{d.status}}</td>
+                                            <td style="text-align:center;" ng-style="d.halfDay===true && {'background-color':'#DC143C'}">
+                                                <input type="checkbox" ng-checked="{{d.halfDay}}" disabled="disabled" />
+                                            </td>
+                                            <td style="text-align:center;">{{d.leaveType}}</td>
+                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.leaveHalf}}" disabled="disabled" /></td>
+                                            <td style="text-align:center;">{{d.earlycome}}</td>
+                                            <td style="text-align:center;">{{d.earlyGoing}}</td>
+                                            <td style="text-align:center;">{{d.lateCome}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                            <div ng-init="CafePuncheRpt('PUNCH')" id="rptPunching">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('punchDate')">
+                                                Date Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='punchDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;"><label>In / Out</label></th>
+                                            <th style="text-align:center;"><label>Machine IP</label></th>
+                                            <th style="text-align:center;"><label>Machine Desc</label></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="p in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_2">
+                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yy HH:mm'}}</td>
+                                            <td style="text-align:center;">{{p.ioFlag}}</td>
+                                            <td style="text-align:center;">{{p.machineIp}}</td>
+                                            <td style="text-align:center;">{{p.machineDesc}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_2"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

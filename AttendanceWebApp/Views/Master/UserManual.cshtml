@@ -1,0 +1,314 @@
+﻿@{
+    ViewBag.Title = "User Manual";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+<script type="text/javascript">
+    var chk = "@Session["UserRole"]";
+    $(window).on('load', function () {
+        if (chk === "IsUser") { $('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide(); }
+        if (chk === "IsReleaser") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); }
+        if (chk === "IsHrUser") { $('#btnLA').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnLP').show(); }
+        if (chk === "IsHrRelease") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLP').show(); }
+    });
+</script>
+
+<div ng-app="myApp" ng-controller="MasterCntrloller">
+    <div class="container">
+        <div class="row" id="div_Main">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>
+                            User Manuals
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-info" ng-click="LoadDiv('LA')" id="btnLA">Leave Application</button>
+                        <button class="btn btn-info" ng-click="LoadDiv('LC')" id="btnLC">Leave Cancellation</button>
+                        <button class="btn btn-info" ng-click="LoadDiv('LR')" id="btnLR">Leave Release</button>
+                        <button class="btn btn-info" ng-click="LoadDiv('LP')" id="btnLP">Leave Posting</button>
+                        <button class="btn btn-info" ng-click="LoadDiv('EM')" id="btnEM">Update Email Id</button>
+                        <button class="btn btn-info" ng-click="LoadDiv('RS')" id="btnRS">Release Strategy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Create Leave Application *@
+        <div class="row" id="div_LeaveApplication">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Leave Application
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>ESS PORTAL LOGIN PROCESS</strong>
+                            <br /><br />
+                            <p>Enter Link <b style="background-color:yellow">“http://172.16.12.44:8080”</b> in the browser or double click on the “<strong>ESS-PORTAL</strong>” Icon provided on the desktop to start the ESS Leave Application as shown below:</p>
+                            <p>Link:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1.png" class="img-thumbnail" />
+                            <hr />
+                            <p>ESS Portal Icon:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1(2).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Following Member Login page will open:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (3).png" class="img-thumbnail" />
+                            <hr />
+                            <p>
+                                Enter employee code (full unique code as per attendance records, for e.g.
+                                <strong><em>20004422</em></strong> or
+                                <strong><em>20010195</em></strong>, etc.) as user name and password for first time login. Click on “
+                                <strong><em>Login</em></strong>” button.
+                            </p>
+                            <p>System will ask to change the password.  Type new desired password and click “Ok” button.</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (4).png" class="img-thumbnail" />
+                            <hr />
+                            <strong>DESKTOP:</strong>
+                            <br /><br />
+                            <p>Initial screen will show employee personal details, current leave balance, list of leaves (as per attendance system), and list of leave application with status:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (5).png" class="img-thumbnail" />
+                            <hr />
+                            <strong>CREATING NEW LEAVE APPLICATION:</strong>
+                            <br /><br />
+                            <p>Select “Leave” -&gt; “Leave Application” from Menu:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (6).png" class="img-thumbnail" />
+                            <hr />
+                            <p>At the time of Leave Application, System shows Leave Form, Current Leave Balance, Release information and Holiday List as per following:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (7).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Select From Date / To Date, Leave Type and enter Leave Reason while applying the leave</p>
+                            <p><strong><em>Half Day:</em></strong>Click on “Half Day” if applying for Half Day leave.</p>
+                            <p><strong><em>Save:</em></strong>Click on “Save” button.</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (8).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Your leave will be added to “Leave Request List” when click on <strong><em>Save</em></strong> Button as shown below:</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (9).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Click on “<strong><em>Create Leave Application</em></strong>” button to forward the Leave Application for Release / Approval.</p>
+                            <img src="~/UserManuals/images/LeaveaApplication/1 (10).png" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Leave Release *@
+        <div class="row" id="div_LeaveRelease" style="display:none">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Leave Release
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>LEAVE RELEASE:</strong><br /><br />
+                            <p>From ESS Portal Dashboard, Select “Leave” -&gt; “Leave Release” menu.</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (1).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Following screen will show all leave application pending for release, along with list of leave applications for next 30 days:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (2).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Click on the “<strong>Details</strong>” button to view list of recent leaves taken by the employee:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (3).png" class="img-thumbnail" />
+                            <hr />
+                            <strong>LEAVE APPLICATION APPROVAL:</strong><br /><br />
+                            <img src="~/UserManuals/images/LeaveRelease/1 (4).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Clicking on the “Approve” button will release the leave application and following message will be displayed:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (5).png" class="img-thumbnail" />
+                            <hr />
+                            <strong>LEAVE APPLICATION REJECTION:</strong><br /><br />
+                            <p>Click on the “Reject” button to reject the leave application.  You’ll need to provide reason for rejection in the space provided:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (6).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Rejection cannot be done If reason for rejection is not provided, and following error will show:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (7).png" class="img-thumbnail" />
+                            <hr />
+                            <p>On successful rejection, following message will be displayed:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (8).png" class="img-thumbnail" />
+                            <hr />
+                            <strong>LEAVE REPORTS:</strong><br /><br />
+                            <p>A report is developed to have a detailed view of leave taken during specified period, which can be accessed using “Leave Report” menu under “Report”:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (9).png" class="img-thumbnail" />
+                            <hr />
+                            <p>List of employees on leave during the selected date range will be displayed:</p>
+                            <img src="~/UserManuals/images/LeaveRelease/1 (10).png" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Update User Mail Id *@
+        <div class="row" id="div_UpdateEmailId">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Update Email ID
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>EMAIL ID UPDATE</strong>
+                            <br /><br />
+                            <p>From ESS Portal desktop menu, select Utility -&gt; Update Email ID:</p>
+                            <img src="~/UserManuals/images/UpdateEmailId/1 (2).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Following form will be shown:</p>
+                            <img src="~/UserManuals/images/UpdateEmailId/1 (3).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Enter Email in the space provided and press “Update Email ID” button:</p>
+                            <img src="~/UserManuals/images/UpdateEmailId/1 (4).png" class="img-thumbnail" />
+                            <hr />
+                            <p>Following message will be shown if email is updated successfully:</p>
+                            <img src="~/UserManuals/images/UpdateEmailId/1 (5).png" class="img-thumbnail" />
+                            <hr />
+                            <p>To verify, again go to Utility-&gt;Update Email ID, which will show following screen with updated email </p>
+                            <img src="~/UserManuals/images/UpdateEmailId/1 (1).png" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Create / Update Release Strategy *@
+        <div class="row" id="div_ReleaseStrategy" style="display:none">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Release Strategy Master
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>Create / Update Release Stratagey</strong>
+                            <br /><br />
+                            <p>Select "Master" -> "Release Strategy Master" from Menu:</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/RLS.jpg" class="img-thumbnail" /><hr />
+                            <p>Following Form Will be Shown</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (1).png" class="img-thumbnail" /><hr />
+                            <p>Search Employee With his Employee Code to View Release Streagey if exist </p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (2).png" class="img-thumbnail" /><hr />
+                            <p>If Reconfigure release strategy otherwise lower level releasers change then click on Cross Button to remove releasers from the last</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (2)(1).png" class="img-thumbnail" /><hr />
+                            <img src="~/UserManuals/images/ReleaseStrategy/RemoveReleaser.jpg" class="img-thumbnail" /><hr />
+                            <p>Add New Releaser on Next Leavel of Existing then Click on Add Releaser Button to Open Below PopUp Window</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (3).png" class="img-thumbnail" /><hr />
+                            <p>Search Releaser With his Employee Code</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (4).png" class="img-thumbnail" /><hr />
+                            <p>Press OK Button to Add releaser in the user release strategy list with Levels</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (5).png" class="img-thumbnail" /><hr />
+                            <p>Press Create Release Strategy Buttoon to Configure Selected User Release Strategy and Display this Message</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/1 (6).png" class="img-thumbnail" /><hr />
+                            <p>IF No Releasers is there in Releaser List and Click on Create Release Strategy Button than View Below Meassage</p>
+                            <img src="~/UserManuals/images/ReleaseStrategy/rqr.jpg" class="img-thumbnail" /><hr />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Leave Cancellation *@
+        <div class="row" id="div_LeaveCancellation" style="display:none">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Leave Cancellation
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>LEAVE CANCELLATION</strong>
+                            <br /><br />
+                            <strong>Short Leave Cancel</strong>
+                            <br /><br />
+                            <p>Select "Leave" -> "Leave Cancellation" -> "Short Leave Cancel" from Menu:</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (1).png" class="img-thumbnail" /><hr />
+                            <p>View List Of Leave Application to be Available to Short Leave Cancel</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (2).png" class="img-thumbnail" /><hr />
+                            <p>Click on Leave Cancellation Button To Open below Poup Up Window</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (3).png" class="img-thumbnail" /><hr />
+                            <p>Select  Short Leave From Date & To Date</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (4).png" class="img-thumbnail" /><hr />
+                            <p>If Your Short Leave Successfully Created then display this Message</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/ShortLeaveCancel.jpg" class="img-thumbnail" /><hr />
+                            <p>View your Short Leave Cancel Application in Dashboard with Your original Cancelled Leave</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/shortlleavedashboard.jpg" class="img-thumbnail" /><hr />
+                            <strong>Full Leave Cancel</strong>
+                            <br /><br />
+                            <p>Select "Leave" -> "Leave Cancellation” - > "Full Leave Cancel" from Menu:</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (5).png" class="img-thumbnail" /><hr />
+                            <p>View List Of Leave Application to be Available to Full Leave Cancel</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (6).png" class="img-thumbnail" /><hr />
+                            <p>Click On Cancel Button to Display Berlow Confirmation Box</p>
+                            <p>Press "OK" to Cancel othewise Press "Cancel" to Ignore</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/2 (7).png" class="img-thumbnail" /><hr />
+                            <p>If Press Ok theen Display below Message</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/fullleaveCancel.jpg" class="img-thumbnail" /><hr />
+                            <p>View Your Original Leave is Cancelled in Dashboard & move to Approval Process</p>
+                            <img src="~/UserManuals/images/LeaveCancellation/FLC.jpg" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Leave Posting *@
+        <div class="row" id="div_LeavePosting" style="display:none">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>
+                            Leave Posting
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <strong>Leave Posting</strong>
+                            <br /><br />
+                            <p>Select "Leave" -> "Leave Posting" from Menu:</p>
+                            <img src="~/UserManuals/images/LeavePosting/LeavePositng.jpg" class="img-thumbnail" /><hr />
+                            <p>View Pending Leave Applications from Previous Month Starting to Next Month Ending of Current Month</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (1).png" class="img-thumbnail" /><hr />
+                            <p>Using Filter Boxes to Find Any Application</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (9).png" class="img-thumbnail" /><hr />
+                            <p>Leave Posting Buttton </p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (5)(P).png" class="img-thumbnail" /><hr />
+                            <p>Leave Application Item Wise Posting Option in Drop Down Fully / Partial.</p>
+                            <p>Posting Option is Mandatory Before Click on Post Button</p>
+                            <p>By Default Fully is Selected</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (4).png" class="img-thumbnail" /><hr />
+                            <p>Leave Posting Rejection Button</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (5)(R).png" class="img-thumbnail" /><hr />
+                            <p>Remarks is Required before Rejection</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (7).png" class="img-thumbnail" /><hr />
+                            <p>IF Remarks is not Entered than display below Message</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (8).png" class="img-thumbnail" /><hr />
+                            <p>Enter Remarks brfore Reject of Leave Applications</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (13).png" class="img-thumbnail" /><hr />
+                            <p>Leave Application Wise Employee Performance Report</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (5)(I).png" class="img-thumbnail" /><hr />
+                            <p>Performance Report of Selected Leave Application Applied by whose Employee. By Default viewing Current Date to Previous 1 Month</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (6).png" class="img-thumbnail" /><hr />
+                            <p>Leave Application View in different Color This Type Of Leave is Cancellation Leave </p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (12).png" class="img-thumbnail" /><hr />
+                            <p>Display This Message Box after Posted or Rejected Leave Application</p>
+                            <img src="~/UserManuals/images/LeavePosting/1 (14).png" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

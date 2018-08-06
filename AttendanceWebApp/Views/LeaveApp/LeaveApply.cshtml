@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Leave Application";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/LeaveCntrl.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+@*<script>
+        window.onload = function () {
+            var d = new Date();
+            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            $('#FromDt').val(strDate);
+            $('#ToDt').val(strDate);
+        }
+    </script>*@
+
+<div ng-app="myApp" ng-controller="LeaveController">
+    <div class="container">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                @* Create New Leave Application *@
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Leave Application</strong></div>
+                    <div class="panel-body">
+                        <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                            <table id="myTable" class="table table-responsive table-condensed">
+                                <tr>
+                                    <td><label>From Date :</label></td>
+                                    <td style="text-align:center;" colspan="4">
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" placeholder="Select From Date"
+                                                   datepicker required>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>To Date :</label></td>
+                                    <td style="text-align:center;" colspan="4">
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" placeholder="Select To Date"
+                                                   datepicker required>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Leave Type :</label></td>
+                                    <td style="text-align:center;" colspan="4">
+                                        <div ng-app="myApp" ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
+                                            <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
+                                                    ng-options="s.LeaveTypeCode as s.LeaveTypeCode for s in LList" ng-change="SetLTListValue(New.LeaveTypeCode)" required>
+                                                <option value="" selected>--- Select ---</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Leave Reason : </label></td>
+                                    <td colspan="4">
+                                        <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Half Day :</label></td>
+                                    <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" style="margin-top:0px;"></td>
+                                    <td style="text-align:right;"><label>Total Days :</label></td>
+                                    <td><input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required></td>
+                                    <td style="text-align:right;">
+                                        <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="LeaveRequestData(New)">
+                                            Add to List
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                @* Leave Request List *@
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Leave Request List</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Leave App Item</th>
+                                        <th style="text-align:center;">Leave Type</th>
+                                        <th style="text-align:center;">From Date</th>
+                                        <th style="text-align:center;">To Date</th>
+                                        <th style="text-align:center;">Days</th>
+                                        <th style="text-align:center;">Half Day</th>
+                                        <th style="text-align:center;">Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tempRow">
+                                        <td colspan="7">No information entered.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="text-align:right;">
+                        <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                        <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                ng-click="createLeave($('#aliasTable').val())">
+                            Save
+                        </button>
+                    </div>
+                    <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                        <strong><text style="color:#f44336;">Note: Leave application will be saved and forwarded for approval only when "Save" button is pressed.</text></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                @* Leave Balance List *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">Open</th>
+                                            <th style="text-align:center;">Availed</th>
+                                            <th style="text-align:center;">Encashed</th>
+                                            <th style="text-align:center;">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="d in data">
+                                            <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
+                                            <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
+                                            <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
+                                            <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
+                                            <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed-d.encashed}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Holiday List Of Current User *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="hld in hlddata">
+                                            <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:Left;" data-title="'Holiday Name'" id="holidayName">{{hld.holidayName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

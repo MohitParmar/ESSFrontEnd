@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Update Email Address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/HomeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="HomeCntrloller">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                @* Add / Update Email Address in ESS Database *@
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Update Email Id</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetUserInfo()">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-condensed">
+                                    <tr dir-paginate="d in Udata|itemsPerPage:5">
+                                        <td><label>Employee Code: </label> {{d.empUnqId}}</td>
+                                        <td><label>Employee Name: </label> {{d.empName}}</td>
+                                        <td><label>Email ID: </label> {{d.email}}</td>
+                                    </tr>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                        <form role="form" name="LeaveForm" novalidate>
+                            <table id="myTable" class="table table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td><label>Email Address</label></td>
+                                        <td><input class="form-control" type="email" id="eMailID" name="eMailID" ng-model="New.eMailID" required></td>
+                                        <td>
+                                            <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Notification Email ID"
+                                                    name="Save" ng-click="EmpeMail(New)">
+                                                Update Email ID
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
