@@ -7,8 +7,6 @@ app.controller('MasterCntrloller', function ($scope, $http) {
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
-    $scope.ResetView = function () { window.location.reload(true); }
-
     //Get User Release Strategy
     $scope.GetRelesaseStratey = function (rls) {
         var rel = new XMLHttpRequest();

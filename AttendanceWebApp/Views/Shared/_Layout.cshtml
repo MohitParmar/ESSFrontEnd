@@ -46,24 +46,24 @@
     <script type="text/javascript">
 
         var chk = "@Session["UserRole"]";
-
         var _ishod = "@Session["IsHod"]";
 
         $(window).on('load', function () {
 
             //if user role
             if (chk === "IsUser") {
-                $('#mnuReport').hide(); $('#mnuMaster').hide(); $('#mnuUitility').hide();
+                $('#mnuReport').hide(); $('#mnuUitility').hide();
 
-                $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
+                $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide(); $('#mnureleasestreategymaster').hide();
             }
 
             //if releaser role
             if (chk === "IsReleaser") {
-                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show();
+                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnureleasestreategymaster').hide();
+                $('#mnuUserPresentAddressReport').hide();
                 //$('#mnuRelGatePassReport').show();
 
-                $('#mnuMaster').hide(); $('#mnuUitility').hide();
+                $('#mnuUitility').hide();
 
                 $('#mnuLeavePosting').hide();
 
@@ -73,7 +73,7 @@
 
             //if hr user role
             if (chk === "IsHrUser") {
-                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show();
+                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show(); $('#mnuUserPresentAddressReport').hide();
 
                 $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
                 $('#mnuPendingLeavesForPostReport').show(); $('#mnuPostedByReport').show(); $('#mnuAllGatePassReport').show();
@@ -90,7 +90,7 @@
 
                 $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
                 $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
-                $('#mnuAllGatePassReport').show();
+                $('#mnuAllGatePassReport').show(); $('#mnuUserPresentAddressReport').show();
                 //$('#mnuRelGatePassReport').show();
             }
         });
@@ -190,6 +190,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Streategy Master</a></li>
+                            <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address Master</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" id="mnuLeave">
@@ -217,13 +218,13 @@
                         </ul>
                     </li>
                     @*<li class="dropdown" id="mnuGatePass">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li id="mnuCreateGatePass"><a href="/Master/GatePass">New Gate Pass</a></li>
-                            <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Print Gate Pass</a></li>
-                            <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
-                        </ul>
-                    </li>*@
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li id="mnuCreateGatePass"><a href="/Master/GatePass">New Gate Pass</a></li>
+                                <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Print Gate Pass</a></li>
+                                <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
+                            </ul>
+                        </li>*@
                     <li class="dropdown" id="mnuReport">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -234,6 +235,7 @@
                             <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
                             <li id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
                             @*<li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>*@
+                            <li id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Report</a></li>
                             <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
                             <li id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
                         </ul>

@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "User Details Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/EmpListCntrl.js"></script>
+<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+
+<div ng-app="myApp" ng-controller="EmployeeListCntroller">
+    <div class="container">
+        <div class="row">
+            @* Under Releasing Employees List*@
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>All Employee Details</strong><div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData()">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align:center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div ng-init="GetEmployeeList()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Name<span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center">Father Name</th>
+                                            <th style="text-align:center">Email Id</th>
+                                            <th style="text-align:center;" ng-click="sort('unitName')">
+                                                Unit<span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('deptName')">
+                                                Dept<span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('statName')">
+                                                Stat<span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('catName')">
+                                                Cat<span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                         ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('desgName')">
+                                                Desg<span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center">Add1</th>
+                                            <th style="text-align:center">Add2</th>
+                                            <th style="text-align:center;" ng-click="sort('preAdd3')">
+                                                Village<span class="glyphicon sort-icon" ng-show="sortKey=='preAdd3'"
+                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('preCity')">
+                                                City<span class="glyphicon sort-icon" ng-show="sortKey=='preCity'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('preAdd4')">
+                                                Taluka<span class="glyphicon sort-icon" ng-show="sortKey=='preAdd4'"
+                                                            ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center">District</th>
+                                            <th style="text-align:center">State</th>
+                                            <th style="text-align:center">Pin Code</th>
+                                            <th style="text-align:center">Phone No.</th>
+                                            <th style="text-align:center">Resident No.</th>
+                                        </tr>
+                                        <tr>
+                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" /></td>
+                                            <td></td>
+                                            <td><input class="form-control" type="text" ng-model="search.email" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.unitName" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.deptName" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.statName" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.catName" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.desgName" style="margin:0;padding:1px;" /></td>
+                                            <td colspan="2"></td>
+                                            <td><input class="form-control" type="text" ng-model="search.preAdd3" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.preCity" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.preAdd4" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.preDistrict" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.preState" style="margin:0;padding:1px;" /></td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                            <td style="text-align:center">{{d.empUnqId}}</td>
+                                            <td style="text-align:left">{{d.empName}}</td>
+                                            <td style="text-align:left">{{d.fatherName}}</td>
+                                            <td style="text-align:left">{{d.email}}</td>
+                                            <td style="text-align:left">{{d.unitName}}</td>
+                                            <td style="text-align:left">{{d.deptName}}</td>
+                                            <td style="text-align:left">{{d.statName}}</td>
+                                            <td style="text-align:left">{{d.catName}}</td>
+                                            <td style="text-align:left">{{d.desgName}}</td>
+                                            <td style="text-align:left">{{d.preAdd1}}</td>
+                                            <td style="text-align:left">{{d.preAdd2}}</td>
+                                            <td style="text-align:left">{{d.preAdd3}}</td>
+                                            <td style="text-align:left">{{d.preCity}}</td>
+                                            <td style="text-align:left">{{d.preAdd4}}</td>
+                                            <td style="text-align:left">{{d.preDistrict}}</td>
+                                            <td style="text-align:left">{{d.preState}}</td>
+                                            <td style="text-align:center">{{d.prePin}}</td>
+                                            <td style="text-align:center">{{d.prePhone}}</td>
+                                            <td style="text-align:center">{{d.preResPhone}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

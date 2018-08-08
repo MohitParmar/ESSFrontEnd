@@ -199,7 +199,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                         }
                     }
                 }
-
+                debugger;
                 $scope.lappdata = temparr;
                 $scope.lappdata = $filter('orderBy')($scope.lappdata, '-leaveAppId');
                 $scope.curPage = 0;
@@ -236,11 +236,8 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
 
     //Performance Report Method with Employee Code / SEarch Dates
     $scope.PerformanceAttendanceRpt = function (data) {
-
         var str = $scope.popupid;
-
         if (str === "") { return false; }
-
         var pr = new XMLHttpRequest();
 
         if ((typeof (data) === "undefined") ||
@@ -251,11 +248,9 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         else {
             pr.open('GET', $scope._Conpath + 'Employee/PerfAttd?empunqid=' + str + '&flag=PERF&fromdate=' + data.fdt + '&todate=' + data.tdt, true);
         }
-
         pr.setRequestHeader('Accept', 'application/json');
         pr.onreadystatechange = function () {
             if (pr.readyState === 4) {
-
                 var json = JSON.parse(pr.responseText);
                 $scope.prdata = json;
                 $scope.prdata = $filter('orderBy')($scope.prdata, '-attdDate');

@@ -9,6 +9,9 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
+    //Reload Page
+    $scope.ResetView = function () { window.location.reload(true); };
+
     //Enable Jquery Support FOR XML HTTP Request Objet to execute Cross Domain Object
     jQuery.support.cors = true;
 
@@ -113,7 +116,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         xhr.send();
     };
 
-    //Get User Personal Details
+    //Get User Personal Details from Attendance Database
     $scope.GetUserPerasonalInfo = function () {
         var per = new XMLHttpRequest();
         per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=1', true);
@@ -314,6 +317,93 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
             can.send(TableData);
         }
         else { return false; }
+    };
+
+    //Update Present Address in ESS Database
+    $scope.UpdateAddress = function (entity) {
+
+        if ((typeof (entity) === "undefined") ||
+            (typeof (entity.add1) === "undefined") ||
+            (typeof (entity.phoneno) === "undefined")) {
+
+            alert("Please Fill All Required Details .. ");
+            return false;
+        }
+
+        var jsonObj = {};
+
+        jsonObj.EmpUnqId = $('#myEmpUnqId').val();
+        jsonObj.PreAdd1 = entity.add1;
+        jsonObj.PreAdd2 = entity.add2;
+        jsonObj.PreAdd3 = entity.vlg;
+        jsonObj.PreAdd4 = entity.tlk;
+        jsonObj.PreState = $('#txtstate').val();
+        jsonObj.PreDistrict = $('#txtdist').val();
+        jsonObj.PreCity = entity.city;
+        jsonObj.PrePin = entity.pincode;
+        jsonObj.PrePhone = entity.phoneno;
+        jsonObj.PreResPhone = entity.resno;
+
+        jsonObj = JSON.stringify(jsonObj);
+
+        var addr = new XMLHttpRequest();
+        addr.open('POST', $scope._Conpath + 'EmpAddress/UpdateEmpAddress', true);
+        addr.setRequestHeader("Content-type", "application/json");
+        addr.onreadystatechange = function () {
+            if (addr.readyState === 4 && addr.status === 200) {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details Successfully Updated.. </strong></div>";
+                $('#MessageBox').show();
+                document.getElementById("txtadd1").value = "";
+                document.getElementById("txtadd2").value = "";
+                document.getElementById("txtvlg").value = "";
+                document.getElementById("txtcity").value = "";
+                document.getElementById("txttlk").value = "";
+                document.getElementById("txtdist").value = "";
+                document.getElementById("txtState").value = "";
+                document.getElementById("txtpincode").value = "";
+                document.getElementById("txtphoneno").value = "";
+                document.getElementById("txtresno").value = "";
+
+                $scope.GetPresentAddress();
+            }
+            else if (addr.status === 400) {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details are not Saved.. </strong></div>";
+                $('#MessageBox').show();
+            }
+        };
+        addr.send(jsonObj);
+    };
+
+    //Get Present Addres Information from ESS Database
+    $scope.GetPresentAddress = function () {
+        var arr = new Array();
+        var preAdd = new XMLHttpRequest();
+        preAdd.open('GET', $scope._Conpath + 'EmpAddress/GetEmpAddress?empUnqId=' + $('#myEmpUnqId').val(), true);
+        preAdd.setRequestHeader('Accept', 'application/json');
+        preAdd.onreadystatechange = function () {
+            if (preAdd.readyState === 4) {
+                var json = JSON.parse(preAdd.responseText);
+                var tmparr = json;
+
+                arr[0] = {
+                    "empUnqId": tmparr["empUnqId"]
+                    , "preAdd1": tmparr["preAdd1"]
+                    , "preAdd2": tmparr["preAdd2"]
+                    , "preAdd3": tmparr["preAdd3"]
+                    , "preAdd4": tmparr["preAdd4"]
+                    , "preCity": tmparr["preCity"]
+                    , "preDistrict": tmparr["preDistrict"]
+                    , "prePhone": tmparr["prePhone"]
+                    , "prePin": tmparr["prePin"]
+                    , "preResPhone": tmparr["preResPhone"]
+                    , "preState": tmparr["preState"]
+                };
+
+                $scope.preadddata = arr;
+                $scope.$digest();
+            }
+        };
+        preAdd.send();
     };
 
     //Using For DIR Pagintaiton Sorting

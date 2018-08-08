@@ -82,6 +82,12 @@
 
 <script>
     window.onload = function () {
+
+    };
+</script>
+
+<script>
+    window.onload = function () {
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
@@ -98,7 +104,7 @@
 </script>
 
 <div ng-app="myApp" ng-controller="LeavePostingController">
-    <div class="container">
+    <div class="container" id="mainContainer">
         <div class="row">
             @* Popup Model *@
             <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -231,7 +237,6 @@
                                     <thead>
                                         <tr>
                                             @*<th><input id="chk" type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>*@
-                                            @*<th style="text-align:center;padding:3px;width:40px;"><a href="" ng-click="predicate = 'unitCode'; reverse=!reverse">Unit</a></th><th style="text-align:center;padding:3px;width:76px;"><a href="" ng-click="predicate = 'deptCode'; reverse=!reverse">Department</a></th>*@
                                             <th>Sr No.</th>
                                             <th style="text-align:center;padding:3px;width:44px;" ng-click="sort('releaseGroupCode')">
                                                 Leave Group
@@ -248,12 +253,13 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;padding:3px;width:56px;">Rel.Date</th>
                                             <th style="text-align:center;padding:3px;width:61px;" ng-click="sort('empUnqId')">
                                                 Emp.Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;padding:3px;width:120px;">Employee Name</th>
+                                            <th style="text-align:center;padding:3px;width:120px;">Name</th>
                                             <th style="text-align:center;padding:3px;width:68px;">Station</th>
                                             <th style="text-align:center;padding:3px;width:63px;">Category</th>
                                             <th style="padding:0px;width:334px;">
@@ -277,17 +283,17 @@
                                             <td>@*<input class="form-control" type="text" ng-model="search.releaseGroupCode" style="margin:0;padding:1px;" />*@</td>
                                             <td>@*<input class="form-control" type="text" ng-model="search.leaveAppId" style="margin:0;padding:1px;" />*@</td>
                                             <td>@*<input class="form-control" type="text" ng-model="search.addDt" style="margin:0;padding:1px;" />*@</td>
-                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
+                                            <td></td>
+                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.categories" style="margin:0;padding:1px;" /></td>
+                                            <td><input class="form-control" type="text" ng-model="search.categories" style="margin:0;padding:1px;width:50px;" /></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
                                     </thead>
-                                    <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25"
-                                           current-page="currentPage" pagination-id="pg2">
+                                    <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage" pagination-id="pg2">
                                         <tr>
                                             @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
                                             @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
@@ -295,6 +301,9 @@
                                             <td style="text-align:center;padding:3px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
                                             <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
                                             <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">
+                                                {{lr.releaseDate | date:'dd/MM/yy'}}
+                                            </td>
                                             <td style="text-align:center;padding:3px;" id="empUnqId">{{d.empUnqId}}</td>
                                             <td style="text-align:center;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10"
                                                 data-title="'empName'">
@@ -330,8 +339,8 @@
                                                 </table>
                                             </td>
                                             <td style="padding:3px;">
-                                                <input type="text" id="remarks" name="remarks" class="form-control" placeholder="Rejection Remarks"
-                                                       ng-model="New.Remarks" />
+                                                <input type="text" id="remarks" name="remarks" class="form-control" placeholder="Reject"
+                                                       ng-model="New.Remarks" style="width:65px;" />
                                             </td>
                                             <td style="padding:3px;">
                                                 <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'P')">

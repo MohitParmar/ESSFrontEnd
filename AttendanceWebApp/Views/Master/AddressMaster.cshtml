@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Update Present Address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+<script src="~/Scripts/Module/ng-table.src.js"></script>
+<script src="~/Scripts/Module/ng-tags-input.js"></script>
+<script src="~/Scripts/Module/app.js"></script>
+<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+<script src="~/Scripts/Controller/HomeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="HomeCntrloller">
+    <div class="container">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                @* Add / Update Present Address in ESS Database *@
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Add / Update Present Address</strong></div>
+                    <div class="panel-body">
+                        <form role="form" name="AddressForm" novalidate>
+                            <table id="myTable" class="table table-responsive table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td><label>Address 1</label></td>
+                                        <td colspan="3"><input class="form-control" type="text" id="txtadd1" name="add1" ng-model="New.add1" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Address 2</label></td>
+                                        <td colspan="3"><input class="form-control" type="text" id="txtadd2" name="add2" ng-model="New.add2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Village</label></td>
+                                        <td><input class="form-control" type="text" id="txtvlg" name="vlg" ng-model="New.vlg"></td>
+                                        <td><label>Taluka</label></td>
+                                        <td><input class="form-control" type="text" id="txttlk" name="tlk" ng-model="New.tlk"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>City</label></td>
+                                        <td><input class="form-control" type="text" id="txtcity" name="city" ng-model="New.city"></td>
+                                        <td><label>District</label></td>
+                                        <td><input class="form-control" type="text" id="txtdist" name="dist" value="Kutch"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>State</label></td>
+                                        <td><input class="form-control" type="text" id="txtstate" name="State" value="Gujarat"></td>
+                                        <td><label>PinCode.</label></td>
+                                        <td><input class="form-control" type="text" id="pincode" name="pincode" ng-model="New.pincode"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Personal Contact No.</label></td>
+                                        <td><input class="form-control" type="text" id="txtphoneno" name="phoneno" ng-model="New.phoneno" required></td>
+                                        <td><label>Resident Contact No.</label></td>
+                                        <td><input class="form-control" type="text" id="txtresno" name="resno" ng-model="New.resno"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align:right;">
+                                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                                            <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
+                                                    value="Notification Email ID" name="Save" ng-click="UpdateAddress(New)">
+                                                Submit Address Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Current Present Address</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetPresentAddress()">
+                            <table class="table table-bordered table-condensed table-responsive">
+                                <tr>
+                                    <th style="text-align:center">Address1</th>
+                                    <th style="text-align:center">Addres2</th>
+                                    <th style="text-align:center">Village</th>
+                                    <th style="text-align:center">Taluka</th>
+                                    <th style="text-align:center">City</th>
+                                    <th style="text-align:center">District</th>
+                                    <th style="text-align:center">State</th>
+                                    <th style="text-align:center">Pincode</th>
+                                    <th style="text-align:center">Personal Contact No</th>
+                                    <th style="text-align:center">Resident Contact No</th>
+                                </tr>
+                                <tr ng-repeat="d in preadddata">
+                                    <td style="text-align:center">{{d.preAdd1}}</td>
+                                    <td style="text-align:center">{{d.preAdd2}}</td>
+                                    <td style="text-align:center">{{d.preAdd3}}</td>
+                                    <td style="text-align:center">{{d.preAdd4}}</td>
+                                    <td style="text-align:center">{{d.preCity}}</td>
+                                    <td style="text-align:center">{{d.preDistrict}}</td>
+                                    <td style="text-align:center">{{d.preState}}</td>
+                                    <td style="text-align:center">{{d.prePin}}</td>
+                                    <td style="text-align:center">{{d.prePhone}}</td>
+                                    <td style="text-align:center">{{d.preResPhone}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

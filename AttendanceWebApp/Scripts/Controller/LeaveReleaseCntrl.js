@@ -9,6 +9,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
+    //Page Reload
     $scope.RefreshTable = function () { $scope.tableParams.reload(); };
 
     jQuery.support.cors = true;
@@ -275,7 +276,6 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         };
         relall.send();
     };
-
 
     //Using For DIR Pagintaiton Sorting
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; }
