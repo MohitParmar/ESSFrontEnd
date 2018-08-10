@@ -15,7 +15,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
     //Enable Jquery Support FOR XML HTTP Request Objet to execute Cross Domain Object
     jQuery.support.cors = true;
 
-    //Change Password
+    //Change Password of Login Member
     $scope.changePassword = function (entity) {
 
         var jsonObj = {};
@@ -42,7 +42,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         xhr2.send(jsonObj);
     };
 
-    //Reset Password
+    //Reset Password (employee code required)
     $scope.ResetPass = function () {
 
         var e_Code = $('#eCode').val();
@@ -79,7 +79,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         xhr2.send(jsonObj);
     };
 
-    //Update Email Address
+    //Update Login Member Email Address
     $scope.EmpeMail = function (data) {
         var xhr3 = new XMLHttpRequest();
         xhr3.open('POST', $scope._Conpath + 'Employee/updateemail?empunqid=' + $('#myEmpUnqId').val() + '&email=' + data.eMailID, true);
@@ -161,7 +161,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         fml.send();
     };
 
-    //Get Employee details from employee code entered by user for Reset Password 
+    //Get Employee details from employee code (Method Use for Reset Password)
     $scope.GetEmpInfo = function () {
 
         $('#tbl_empdtl').show();
@@ -190,7 +190,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         emp.send();
     };
 
-    //Get Login User Leave Applications List
+    //Get Login Member Leave Applications List
     $scope.GetLeaveRequestLists = function () {
         var xhr1 = new XMLHttpRequest();
         xhr1.open('GET', $scope._Conpath + 'LeaveApplication/GetLeaveApplication?empUnqId=' + $('#myEmpUnqId').val(), true);
@@ -208,7 +208,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         xhr1.send();
     };
 
-    //Get Actual Posted Leave List by HR Department
+    //Get Actual Posted Leave Application List by HR Department
     $scope.GetPostedLeave = function () {
 
         var d = new Date();
@@ -229,34 +229,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         pstl.send();
     };
 
-    //Change Open Month
-    $scope.ChangeOpenMonth = function (openMonth) {
-
-        var opmnth = openMonth.yearMonth;
-        var d = new Date(opmnth);
-
-        var yearmonth;
-        if (d.getMonth() < '10') { yearmonth = (d.getFullYear()) + '0' + (d.getMonth() + 1); }
-
-        var opm = new XMLHttpRequest();
-        opm.open('POST', $scope._Conpath + 'OpenMonth/ChangeOpenMonth?yearMonth=' + yearmonth, true);
-        opm.setRequestHeader("Content-type", "application/json");
-        opm.onreadystatechange = function () {
-            if (opm.readyState === 4 && opm.status === 200) {
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month Changed Successfully.. </strong></div>";
-                $('#MessageBox').show();
-                document.getElementById("openMonth").value = "";
-            }
-            else if (opm.status === 400) {
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month not Changed.. </strong></div>";
-                $('#MessageBox').show();
-                document.getElementById("openMonth").value = "";
-            }
-        };
-        opm.send();
-    };
-
-    //Cancel Leave Before First Release from User Side
+    //Cancel Leave Before First Release from member it self
     $scope.CancelLeave = function (ym, lid) {
 
         var retVal = confirm("Are You Sure to Cancel Leave Aplication ?");
@@ -319,13 +292,19 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         else { return false; }
     };
 
-    //Update Present Address in ESS Database
-    $scope.UpdateAddress = function (entity) {
+    //Update Present Address in ESS Database of Login Member
+    $scope.UpdateAddress = function () {
 
-        if ((typeof (entity) === "undefined") ||
-            (typeof (entity.add1) === "undefined") ||
-            (typeof (entity.phoneno) === "undefined")) {
+        var PreAdd1 = "", PreAdd2 = "", PreAdd3 = "", PreAdd4 = "", pincode = "", phoneno = "";
 
+        PreAdd1 = $('#txtadd1').val();      //Add1
+        PreAdd2 = $('#txtadd2').val();      //Add2
+        PreAdd3 = $('#txtvlg').val();       //Village
+        PreAdd4 = $('#txttlk').val();       //Taluka
+        pincode = $('#pincode').val();      //PinCode
+        phoneno = $('#txtphoneno').val();   //Mobile No
+
+        if ((PreAdd1 === "") || (PreAdd2 === "") || (PreAdd3 === "") || (PreAdd4 === "") || (pincode === "") || (phoneno === "")) {
             alert("Please Fill All Required Details .. ");
             return false;
         }
@@ -333,16 +312,16 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         var jsonObj = {};
 
         jsonObj.EmpUnqId = $('#myEmpUnqId').val();
-        jsonObj.PreAdd1 = entity.add1;
-        jsonObj.PreAdd2 = entity.add2;
-        jsonObj.PreAdd3 = entity.vlg;
-        jsonObj.PreAdd4 = entity.tlk;
+        jsonObj.PreAdd1 = PreAdd1;
+        jsonObj.PreAdd2 = PreAdd2;
+        jsonObj.PreAdd3 = PreAdd3;
+        jsonObj.PreAdd4 = PreAdd4;
         jsonObj.PreState = $('#txtstate').val();
         jsonObj.PreDistrict = $('#txtdist').val();
-        jsonObj.PreCity = entity.city;
-        jsonObj.PrePin = entity.pincode;
-        jsonObj.PrePhone = entity.phoneno;
-        jsonObj.PreResPhone = entity.resno;
+        jsonObj.PreCity = $('#txtcity').val();
+        jsonObj.PrePin = pincode;
+        jsonObj.PrePhone = phoneno;
+        jsonObj.PreResPhone = $('#txtresno').val();
 
         jsonObj = JSON.stringify(jsonObj);
 
@@ -351,20 +330,19 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         addr.setRequestHeader("Content-type", "application/json");
         addr.onreadystatechange = function () {
             if (addr.readyState === 4 && addr.status === 200) {
+                $scope.GetPresentAddress();
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details Successfully Updated.. </strong></div>";
                 $('#MessageBox').show();
                 document.getElementById("txtadd1").value = "";
                 document.getElementById("txtadd2").value = "";
                 document.getElementById("txtvlg").value = "";
-                document.getElementById("txtcity").value = "";
                 document.getElementById("txttlk").value = "";
+                document.getElementById("txtcity").value = "";
                 document.getElementById("txtdist").value = "";
                 document.getElementById("txtState").value = "";
                 document.getElementById("txtpincode").value = "";
                 document.getElementById("txtphoneno").value = "";
                 document.getElementById("txtresno").value = "";
-
-                $scope.GetPresentAddress();
             }
             else if (addr.status === 400) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details are not Saved.. </strong></div>";
@@ -374,7 +352,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         addr.send(jsonObj);
     };
 
-    //Get Present Addres Information from ESS Database
+    //Get Present Addres Information from ESS Database of Login Memeber
     $scope.GetPresentAddress = function () {
         var arr = new Array();
         var preAdd = new XMLHttpRequest();
@@ -399,6 +377,22 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
                     , "preState": tmparr["preState"]
                 };
 
+                $('#txtadd1').val(arr[0].preAdd1);     //Add1
+                $('#txtadd2').val(arr[0].preAdd2);     //Add2
+                $('#txtvlg').val(arr[0].preAdd3);      //Village
+                $('#txttlk').val(arr[0].preAdd4);      //Taluka
+                $('#txtcity').val(arr[0].preCity);     //City
+                $('#pincode').val(arr[0].prePin);      //PinCode
+                $('#txtphoneno').val(arr[0].prePhone);    //Mobile No
+                $('#txtresno').val(arr[0].preResPhone);   //Alternate Mobile No
+
+                debugger;
+                var dist = arr[0].preDistrict;
+                if ((typeof (dist) === "undefined")) { $('#txtdist').val('KUTCH'); } else { $('#txtdist').val(arr[0].preDistrict); }
+
+                var state = arr[0].preState;
+                if ((typeof (state) === "undefined")) { $('#txtstate').val('GUJARAT'); } else { $('#txtstate').val(arr[0].preState); }
+
                 $scope.preadddata = arr;
                 $scope.$digest();
             }
@@ -422,3 +416,31 @@ app.directive("datepicker", function () {
         }
     }
 });
+
+
+////Change Open Month master
+//$scope.ChangeOpenMonth = function (openMonth) {
+
+//    var opmnth = openMonth.yearMonth;
+//    var d = new Date(opmnth);
+
+//    var yearmonth;
+//    if (d.getMonth() < '10') { yearmonth = (d.getFullYear()) + '0' + (d.getMonth() + 1); }
+
+//    var opm = new XMLHttpRequest();
+//    opm.open('POST', $scope._Conpath + 'OpenMonth/ChangeOpenMonth?yearMonth=' + yearmonth, true);
+//    opm.setRequestHeader("Content-type", "application/json");
+//    opm.onreadystatechange = function () {
+//        if (opm.readyState === 4 && opm.status === 200) {
+//            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month Changed Successfully.. </strong></div>";
+//            $('#MessageBox').show();
+//            document.getElementById("openMonth").value = "";
+//        }
+//        else if (opm.status === 400) {
+//            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month not Changed.. </strong></div>";
+//            $('#MessageBox').show();
+//            document.getElementById("openMonth").value = "";
+//        }
+//    };
+//    opm.send();
+//};

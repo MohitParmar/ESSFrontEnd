@@ -35,6 +35,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
         else { return true; }
     };
 
+    //Get Open Month Details
     $scope.GetOpenMonth = function () {
         var mon = new XMLHttpRequest();
         mon.open('GET', $scope._Conpath + 'OpenMonth/GetOpenMonth', true);

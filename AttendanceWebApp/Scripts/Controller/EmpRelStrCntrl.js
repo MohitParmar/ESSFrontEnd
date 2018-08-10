@@ -6,11 +6,11 @@ app.controller('EmpRlsStrListCntroller', function ($scope, $http) {
     $scope.currentPage = 1;
     $scope.itemsPerPage = 50;
     $scope.alluserlist = [];
-    $scope.jsondata;
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+    $scope.jsondata;
 
-    //Get All Employee Release Stratefy
+    //Get All Employee Release Strategy
     $scope.GetEmployeeReleaseStrategy = function () {
 
         $('#loading').removeClass("deactivediv");

@@ -319,7 +319,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         all.send();
     };
 
-    //Get All Gate Pass Informatinon for HR Department
+    //Get All Gate Pass Informatinon for HR Releaser
     $scope.ReleaserGatePassInfo = function (entity) {
 
         var FromDate, ToDate;

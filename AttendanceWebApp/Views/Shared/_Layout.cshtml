@@ -52,7 +52,7 @@
 
             //if user role
             if (chk === "IsUser") {
-                $('#mnuReport').hide(); $('#mnuUitility').hide();
+                $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuMaster').hide();
 
                 $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide(); $('#mnureleasestreategymaster').hide();
             }
@@ -63,7 +63,7 @@
                 $('#mnuUserPresentAddressReport').hide();
                 //$('#mnuRelGatePassReport').show();
 
-                $('#mnuUitility').hide();
+                $('#mnuUitility').hide(); $('#mnuMaster').hide();
 
                 $('#mnuLeavePosting').hide();
 
@@ -73,7 +73,7 @@
 
             //if hr user role
             if (chk === "IsHrUser") {
-                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show(); $('#mnuUserPresentAddressReport').hide();
+                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show(); $('#mnuUserPresentAddressReport').show();
 
                 $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
                 $('#mnuPendingLeavesForPostReport').show(); $('#mnuPostedByReport').show(); $('#mnuAllGatePassReport').show();
@@ -169,8 +169,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
-                                <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Master</a></li>
                                 <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
+                                <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Update Present Address</a></li>
+                                <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Update Uniform Details</a></li>
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Update EMail ID</a></li>
                                 <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
@@ -190,7 +191,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Streategy Master</a></li>
-                            <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address Master</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" id="mnuLeave">
@@ -198,6 +198,7 @@
                         <ul class="dropdown-menu">
                             <li id="mnuLeaveRules"><a href="/LeaveApp/LeaveRules">Leave Rules</a></li>
                             <li id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
+                            @*<li id="mnuCOffApplication"><a href="/LeaveApp/COffApply">COFF Application</a></li>*@
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -214,7 +215,6 @@
                                     <li id="mnuCancelledLeavePosting"><a href="/LeavePosting/LeavePosting?flg=C">Canceled Leave Posting</a></li>
                                 </ul>
                             </li>
-                            @*<li id="mnuLeavePosting"><a href="/LeavePosting/LeavePosting">Leave Posting</a></li>*@
                         </ul>
                     </li>
                     @*<li class="dropdown" id="mnuGatePass">
@@ -235,9 +235,9 @@
                             <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
                             <li id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
                             @*<li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>*@
-                            <li id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Report</a></li>
-                            <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
+                            <li id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Details Report</a></li>
                             <li id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
+                            <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" id="mnuUitility">

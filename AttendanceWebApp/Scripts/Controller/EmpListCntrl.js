@@ -35,6 +35,7 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
         empdtl.setRequestHeader('Accept', 'application/json');
         empdtl.onreadystatechange = function () {
             if (empdtl.readyState === 4) {
+                
                 $('#loading').removeClass("activediv");
                 $('#loading').addClass("deactivediv");
 
@@ -64,9 +65,9 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
             var d = new Date();
             d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
             var FileName = "All_Users_Present_Address_Report_" + d;
-            debugger;
+            
             $scope.JSONToCSVConvertor($scope.Info, FileName, true);
-            debugger;
+            
             $('#loading').removeClass("activediv");
             $('#loading').addClass("deactivediv");
         }, 100);
@@ -119,5 +120,4 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
         link.click();
         document.body.removeChild(link);
     }
-
 });

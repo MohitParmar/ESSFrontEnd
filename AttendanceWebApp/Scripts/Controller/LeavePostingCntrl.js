@@ -199,7 +199,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                         }
                     }
                 }
-                debugger;
+                
                 $scope.lappdata = temparr;
                 $scope.lappdata = $filter('orderBy')($scope.lappdata, '-leaveAppId');
                 $scope.curPage = 0;

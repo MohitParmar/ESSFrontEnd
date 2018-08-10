@@ -39,12 +39,10 @@ app.controller('OpenMonthController', function ($scope, $http) {
         opm.send();
     };
 
-
-
+    //Get Current Open Month Details
     $scope.GetOpenMonth = function () {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        debugger;
+        
         var mon = new XMLHttpRequest();
         mon.open('GET', $scope._Conpath + 'OpenMonth/GetOpenMonth', true);
         mon.setRequestHeader("Content-type", "application/json");

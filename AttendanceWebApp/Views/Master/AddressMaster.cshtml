@@ -16,52 +16,52 @@
     <div class="container">
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
-            <div class="col-sm-12">
-                <div id="MessageBox" class="table-responsive"></div>
-                @* Add / Update Present Address in ESS Database *@
+            @* Add / Update Present Address in ESS Database *@
+            <div class="col-sm-8">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Add / Update Present Address</strong></div>
                     <div class="panel-body">
                         <form role="form" name="AddressForm" novalidate>
+                            <div ng-init="GetPresentAddress()"></div>
                             <table id="myTable" class="table table-responsive table-condensed">
                                 <tbody>
                                     <tr>
                                         <td><label>Address 1</label></td>
-                                        <td colspan="3"><input class="form-control" type="text" id="txtadd1" name="add1" ng-model="New.add1" required></td>
+                                        <td colspan="3"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd1" name="add1" required></td>
                                     </tr>
                                     <tr>
                                         <td><label>Address 2</label></td>
-                                        <td colspan="3"><input class="form-control" type="text" id="txtadd2" name="add2" ng-model="New.add2"></td>
+                                        <td colspan="3"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd2" name="add2" required></td>
                                     </tr>
                                     <tr>
                                         <td><label>Village</label></td>
-                                        <td><input class="form-control" type="text" id="txtvlg" name="vlg" ng-model="New.vlg"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtvlg" name="vlg" required></td>
                                         <td><label>Taluka</label></td>
-                                        <td><input class="form-control" type="text" id="txttlk" name="tlk" ng-model="New.tlk"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txttlk" name="tlk" required></td>
                                     </tr>
                                     <tr>
                                         <td><label>City</label></td>
-                                        <td><input class="form-control" type="text" id="txtcity" name="city" ng-model="New.city"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtcity" name="city"></td>
                                         <td><label>District</label></td>
-                                        <td><input class="form-control" type="text" id="txtdist" name="dist" value="Kutch"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH"></td>
                                     </tr>
                                     <tr>
                                         <td><label>State</label></td>
-                                        <td><input class="form-control" type="text" id="txtstate" name="State" value="Gujarat"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtstate" name="State" value="GUJARAT"></td>
                                         <td><label>PinCode.</label></td>
-                                        <td><input class="form-control" type="text" id="pincode" name="pincode" ng-model="New.pincode"></td>
+                                        <td><input class="form-control" style="text-transform: uppercase;" type="number" id="pincode" name="pincode" required></td>
                                     </tr>
                                     <tr>
-                                        <td><label>Personal Contact No.</label></td>
-                                        <td><input class="form-control" type="text" id="txtphoneno" name="phoneno" ng-model="New.phoneno" required></td>
-                                        <td><label>Resident Contact No.</label></td>
-                                        <td><input class="form-control" type="text" id="txtresno" name="resno" ng-model="New.resno"></td>
+                                        <td><label>Mobile No.</label></td>
+                                        <td><input class="form-control" type="number" id="txtphoneno" name="phoneno" required></td>
+                                        <td><label>Alternate Mobile No.</label></td>
+                                        <td><input class="form-control" type="number" id="txtresno" name="resno"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="text-align:right;">
                                             <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
                                             <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
-                                                    value="Notification Email ID" name="Save" ng-click="UpdateAddress(New)">
+                                                    value="Submit Presenrt Address" name="Save" ng-click="UpdateAddress()">
                                                 Submit Address Details
                                             </button>
                                         </td>
@@ -72,41 +72,27 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
+            @* Permanent Address Details *@
+            <div class="col-sm-4">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <strong>Current Present Address</strong>
-                    </div>
+                    <div class="panel-heading"><strong>Permanent Address Details</strong></div>
                     <div class="panel-body">
-                        <div ng-init="GetPresentAddress()">
-                            <table class="table table-bordered table-condensed table-responsive">
-                                <tr>
-                                    <th style="text-align:center">Address1</th>
-                                    <th style="text-align:center">Addres2</th>
-                                    <th style="text-align:center">Village</th>
-                                    <th style="text-align:center">Taluka</th>
-                                    <th style="text-align:center">City</th>
-                                    <th style="text-align:center">District</th>
-                                    <th style="text-align:center">State</th>
-                                    <th style="text-align:center">Pincode</th>
-                                    <th style="text-align:center">Personal Contact No</th>
-                                    <th style="text-align:center">Resident Contact No</th>
-                                </tr>
-                                <tr ng-repeat="d in preadddata">
-                                    <td style="text-align:center">{{d.preAdd1}}</td>
-                                    <td style="text-align:center">{{d.preAdd2}}</td>
-                                    <td style="text-align:center">{{d.preAdd3}}</td>
-                                    <td style="text-align:center">{{d.preAdd4}}</td>
-                                    <td style="text-align:center">{{d.preCity}}</td>
-                                    <td style="text-align:center">{{d.preDistrict}}</td>
-                                    <td style="text-align:center">{{d.preState}}</td>
-                                    <td style="text-align:center">{{d.prePin}}</td>
-                                    <td style="text-align:center">{{d.prePhone}}</td>
-                                    <td style="text-align:center">{{d.preResPhone}}</td>
-                                </tr>
-                            </table>
+                        <div class="table-responsive">
+                            <div ng-init="GetUserPerasonalInfo()">
+                                <table class="table table-bordered table-condensed table-responsive table-striped">
+                                    <tbody ng-repeat="p in Uperdata">
+                                        <tr><td>Address1</td><td>{{p.perAdd1}}</td></tr>
+                                        <tr><td>Address2</td><td>{{p.perAdd2}}</td></tr>
+                                        <tr><td>Address3</td><td>{{p.perAdd3}}</td></tr>
+                                        <tr><td>Address4</td><td>{{p.perAdd4}}</td></tr>
+                                        <tr><td>City</td><td>{{p.perCity}}</td></tr>
+                                        <tr><td>District</td><td>{{p.perDistrict}}</td></tr>
+                                        <tr><td>State</td><td>{{p.perState}}</td></tr>
+                                        <tr><td>Pincode</td><td>{{p.perPin}}</td></tr>
+                                        <tr><td>Mobile No</td><td>{{p.perPhone}}</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

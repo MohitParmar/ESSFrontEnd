@@ -15,6 +15,7 @@ app.controller('UniformController', function ($scope, $http, $filter) {
     var d = new Date();
     var Currentyear = (d.getFullYear());
 
+    //Add/Update Uniform Details
     $scope.AddUniformDetails = function (entity) {
 
         if ((typeof (entity) === "undefined") ||
@@ -69,7 +70,7 @@ app.controller('UniformController', function ($scope, $http, $filter) {
         xhr.send();
     };
 
-    //Get Uniform Details of Selected User 
+    //Get Uniform Details of All User 
     $scope.GetAllUserUniformDetails = function () {
 
         $('#loading').removeClass("deactivediv");

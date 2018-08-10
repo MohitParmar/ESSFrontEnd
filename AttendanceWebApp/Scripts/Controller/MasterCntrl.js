@@ -7,7 +7,7 @@ app.controller('MasterCntrloller', function ($scope, $http) {
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
-    //Get User Release Strategy
+    //Get User Release Strategy of Login /Member
     $scope.GetRelesaseStratey = function (rls) {
         var rel = new XMLHttpRequest();
         rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + rls + '&empUnqId=' + $('#myEmpUnqId').val(), true);
@@ -22,7 +22,7 @@ app.controller('MasterCntrloller', function ($scope, $http) {
         rel.send();
     };
 
-    //Get List of Holidays
+    //Get List of Holidays as per Company Policy
     $scope.ListOfholiday = function () {
         var dyear = new Date();
         var hld = new XMLHttpRequest();
@@ -38,7 +38,7 @@ app.controller('MasterCntrloller', function ($scope, $http) {
         hld.send();
     };
 
-    //Get Leave Balance
+    //Get Leave Balance of Login Member
     $scope.GetLeave = function () {
         var d = new Date();
         var req = new XMLHttpRequest();
@@ -54,7 +54,7 @@ app.controller('MasterCntrloller', function ($scope, $http) {
         req.send();
     };
 
-    //Load / Unload Div control in User Manual Form
+    //Load / Unload Div control in User Manual
     $scope.LoadDiv = function (data) {
         if (data === "LR") {
             $('#div_LeaveRelease').show();
