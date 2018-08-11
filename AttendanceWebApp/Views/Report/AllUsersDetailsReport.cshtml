@@ -37,7 +37,7 @@
                                         <tr>
                                             <th colspan="9" style="text-align:center;"><h4>JOB Profile Details</h4></th>
                                             <th colspan="10" style="text-align:center;"><h4>Permanent Address</h4></th>
-                                            <th colspan="10" style="text-align:center;"><h4>Present Address</h4></th>
+                                            <th colspan="11" style="text-align:center;"><h4>Present Address</h4></th>
                                         </tr>
                                         <tr>
                                             @* Profile Details *@
@@ -118,6 +118,7 @@
                                             <th style="text-align:center">Pin Code</th>
                                             <th style="text-align:center">Mobile No.</th>
                                             <th style="text-align:center">Alternate Mobile No.</th>
+                                            <th style="text-align:center">Eamil Id</th>
                                         </tr>
                                         <tr>
                                             <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
@@ -140,7 +141,7 @@
                                             <td><input class="form-control" type="text" ng-model="search.preCity" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.preDistrict" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.preState" style="margin:0;padding:1px;" /></td>
-                                            <td colspan="3"></td>
+                                            <td colspan="4"></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -174,6 +175,7 @@
                                             <td style="text-align:center">{{d.prePin}}</td>
                                             <td style="text-align:center">{{d.prePhone}}</td>
                                             <td style="text-align:center">{{d.preResPhone}}</td>
+                                            <td style="text-align:center">{{d.preEmail}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

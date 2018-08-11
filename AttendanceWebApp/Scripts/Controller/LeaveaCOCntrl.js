@@ -5,14 +5,6 @@
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
-    $scope.SetLTListValue = function (value) {
-        if (value === "CO") {
-            $("#HalfFlag").attr("disabled", true);
-            $("#HalfFlag").attr("checked", false);
-        }
-        $scope.LeaveType = value;
-    };
-
     //Reload Page
     $scope.ResetView = function () { window.location.reload(true); };
 
@@ -33,27 +25,19 @@
 
     //Date Validation
     $scope.ToValidate = function () {
-        var chkFrom = document.getElementById('FromDt');
+
+        var FromDate = $("#FromDt option:selected").text();
         var chkTo = document.getElementById('ToDt');
 
-        var FromDate = chkFrom.value;
         var ToDate = chkTo.value;
 
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);
         var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-
+        if (diff > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; }
         $('#TotalDays').text = diff;
 
         document.getElementById("TotalDays").value = diff;
-
-        if (diff > 1) {
-            $("#HalfFlag").attr("disabled", true);
-            $("#HalfFlag").attr("checked", false);
-        }
-        else {
-            $("#HalfFlag").removeAttr("disabled");
-        }
 
         if (date2 < date1) {
             document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date..</strong></div>";
@@ -69,15 +53,17 @@
 
     //Get Applied Comp Off Leave Requests & Validate
     $scope.LeaveRequestData = function (entity) {
-        
+
         var chk = false;
         var chktabldta = false;
 
+        var FromDate = $("#FromDt option:selected").text();
+
         //enable Checkbox for Half Day Leave Apply
         if ((typeof (entity) === "undefined") ||
-            (typeof (entity.FromDt) === "undefined") ||
             (typeof (entity.ToDt) === "undefined") ||
-            (typeof (entity.Remarks) === "undefined")) {
+            (typeof (entity.Remarks) === "undefined") ||
+            FromDate === "") {
             alert("Please Fill All Required Details .. ");
             return false;
         }
@@ -86,16 +72,14 @@
         var Totaldays = 1;
 
         var Remarks = entity.Remarks;
-        var FromDate = entity.FromDt;
         var ToDate = entity.ToDt;
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);
 
         var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if (coffdays > 4) {
-            alert("Please Select Correct Date for COff Apply .. ");
-            return false;
-        }
+
+        if (coffdays > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; }
+        // Week Off Apply //if (coffdays > 4) { alert("Please Select Correct Date for COff Apply .. "); return false; }
 
         ///Get Grid Data
         var d = new Date();

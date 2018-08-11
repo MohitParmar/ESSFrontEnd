@@ -62,13 +62,24 @@
                         <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                             <table id="myTable" class="table table-responsive table-condensed">
                                 <tr>
-                                    <td><label>Week Off Date :</label></td>
+                                    <td>
+                                        @*<label>Week Off Date :</label>*@
+                                        <label>Holiday Date :</label>
+                                    </td>
                                     <td style="text-align:center;" colspan="4">
-                                        <div class="right-inner-addon">
-                                            <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" placeholder="Select Week Off Date"
-                                                   datepicker required>
+                                        @* Holiday COFF Apply *@
+                                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
+                                            <select class="form-control" id="FromDt" ng-model="New.FromDt"
+                                                    ng-options="hld.holidayDate as (hld.holidayDate|date:'yyyy-MM-dd') for hld in hlddata"
+                                                    ng-change="SetLTListValue(New.FromDt)" required>
+                                                <option value="" selected>--- Select ---</option>
+                                            </select>
                                         </div>
+                                        @* Week OFF Apply *@
+                                        @*<div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                placeholder="Select Week Off Date" datepicker required></div>*@
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,7 +105,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:right;"><label>Total Days :</label></td>
+                                    <td><label>Total Days :</label></td>
                                     <td>
                                         <input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required>
                                     </td>

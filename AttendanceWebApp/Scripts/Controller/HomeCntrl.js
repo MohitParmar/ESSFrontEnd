@@ -295,16 +295,17 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
     //Update Present Address in ESS Database of Login Member
     $scope.UpdateAddress = function () {
 
-        var PreAdd1 = "", PreAdd2 = "", PreAdd3 = "", PreAdd4 = "", pincode = "", phoneno = "";
+        var PreAdd1 = "", PreAdd2 = "", PreAdd3 = "", PreAdd4 = "", pincode = "", phoneno = "", PreEmail = "";
 
-        PreAdd1 = $('#txtadd1').val();      //Add1
-        PreAdd2 = $('#txtadd2').val();      //Add2
-        PreAdd3 = $('#txtvlg').val();       //Village
-        PreAdd4 = $('#txttlk').val();       //Taluka
-        pincode = $('#pincode').val();      //PinCode
-        phoneno = $('#txtphoneno').val();   //Mobile No
+        PreAdd1 = $('#txtadd1').val();          //Add1
+        PreAdd2 = $('#txtadd2').val();          //Add2
+        PreAdd3 = $('#txtvlg').val();           //Village
+        PreAdd4 = $('#txttlk').val();           //Taluka
+        pincode = $('#pincode').val();          //PinCode
+        phoneno = $('#txtphoneno').val();       //Mobile No
+        PreEmail = $('#txtemailid').val();     //Personal Email ID
 
-        if ((PreAdd1 === "") || (PreAdd2 === "") || (PreAdd3 === "") || (PreAdd4 === "") || (pincode === "") || (phoneno === "")) {
+        if ((PreAdd1 === "") || (PreAdd2 === "") || (PreAdd3 === "") || (PreAdd4 === "") || (pincode === "") || (phoneno === "") || (PreEmail === "")) {
             alert("Please Fill All Required Details .. ");
             return false;
         }
@@ -312,14 +313,15 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         var jsonObj = {};
 
         jsonObj.EmpUnqId = $('#myEmpUnqId').val();
-        jsonObj.PreAdd1 = PreAdd1;
-        jsonObj.PreAdd2 = PreAdd2;
-        jsonObj.PreAdd3 = PreAdd3;
-        jsonObj.PreAdd4 = PreAdd4;
+        jsonObj.PreAdd1 = PreAdd1.toUpperCase();
+        jsonObj.PreAdd2 = PreAdd2.toUpperCase();
+        jsonObj.PreAdd3 = PreAdd3.toUpperCase();
+        jsonObj.PreAdd4 = PreAdd4.toUpperCase();
         jsonObj.PreState = $('#txtstate').val();
         jsonObj.PreDistrict = $('#txtdist').val();
-        jsonObj.PreCity = $('#txtcity').val();
+        jsonObj.PreEmail = PreEmail.toUpperCase();
         jsonObj.PrePin = pincode;
+
         jsonObj.PrePhone = phoneno;
         jsonObj.PreResPhone = $('#txtresno').val();
 
@@ -331,21 +333,11 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         addr.onreadystatechange = function () {
             if (addr.readyState === 4 && addr.status === 200) {
                 $scope.GetPresentAddress();
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details Successfully Updated.. </strong></div>";
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address / Contact Details Successfully Updated.. </strong></div>";
                 $('#MessageBox').show();
-                document.getElementById("txtadd1").value = "";
-                document.getElementById("txtadd2").value = "";
-                document.getElementById("txtvlg").value = "";
-                document.getElementById("txttlk").value = "";
-                document.getElementById("txtcity").value = "";
-                document.getElementById("txtdist").value = "";
-                document.getElementById("txtState").value = "";
-                document.getElementById("txtpincode").value = "";
-                document.getElementById("txtphoneno").value = "";
-                document.getElementById("txtresno").value = "";
             }
             else if (addr.status === 400) {
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address Details are not Saved.. </strong></div>";
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Address / Contact Details are not Saved.. </strong></div>";
                 $('#MessageBox').show();
             }
         };
@@ -369,24 +361,23 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
                     , "preAdd2": tmparr["preAdd2"]
                     , "preAdd3": tmparr["preAdd3"]
                     , "preAdd4": tmparr["preAdd4"]
-                    , "preCity": tmparr["preCity"]
                     , "preDistrict": tmparr["preDistrict"]
                     , "prePhone": tmparr["prePhone"]
                     , "prePin": tmparr["prePin"]
+                    , "preEmail": tmparr["preEmail"]
                     , "preResPhone": tmparr["preResPhone"]
                     , "preState": tmparr["preState"]
                 };
 
-                $('#txtadd1').val(arr[0].preAdd1);     //Add1
-                $('#txtadd2').val(arr[0].preAdd2);     //Add2
-                $('#txtvlg').val(arr[0].preAdd3);      //Village
-                $('#txttlk').val(arr[0].preAdd4);      //Taluka
-                $('#txtcity').val(arr[0].preCity);     //City
-                $('#pincode').val(arr[0].prePin);      //PinCode
-                $('#txtphoneno').val(arr[0].prePhone);    //Mobile No
-                $('#txtresno').val(arr[0].preResPhone);   //Alternate Mobile No
+                $('#txtadd1').val(arr[0].preAdd1);          //Add1
+                $('#txtadd2').val(arr[0].preAdd2);          //Add2
+                $('#txtvlg').val(arr[0].preAdd3);           //Village
+                $('#txttlk').val(arr[0].preAdd4);           //Taluka
+                $('#pincode').val(arr[0].prePin);           //PinCode
+                $('#txtemailid').val(arr[0].preEmail);       //Eamil ID
+                $('#txtphoneno').val(arr[0].prePhone);      //Mobile No
+                $('#txtresno').val(arr[0].preResPhone);     //Alternate Mobile No
 
-                debugger;
                 var dist = arr[0].preDistrict;
                 if ((typeof (dist) === "undefined")) { $('#txtdist').val('KUTCH'); } else { $('#txtdist').val(arr[0].preDistrict); }
 
