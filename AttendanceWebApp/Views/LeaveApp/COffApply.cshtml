@@ -71,7 +71,7 @@
                                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                                             <select class="form-control" id="FromDt" ng-model="New.FromDt"
                                                     ng-options="hld.holidayDate as (hld.holidayDate|date:'yyyy-MM-dd') for hld in hlddata"
-                                                    ng-change="SetLTListValue(New.FromDt)" required>
+                                                    ng-change="ChkHoliday()" required>
                                                 <option value="" selected>--- Select ---</option>
                                             </select>
                                         </div>

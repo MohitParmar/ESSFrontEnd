@@ -12,7 +12,6 @@ app.controller('EmpRlsStrListCntroller', function ($scope, $http) {
 
     //Get All Employee Release Strategy
     $scope.GetEmployeeReleaseStrategy = function () {
-
         $('#loading').removeClass("deactivediv");
         $('#loading').addClass("activediv");
 
@@ -33,26 +32,21 @@ app.controller('EmpRlsStrListCntroller', function ($scope, $http) {
     };
 
     //Using For DIR Pagintaiton Sorting
-    $scope.sort = function (keyname) {
-        $scope.sortKey = keyname;   //set the sortKey to the param passed
-        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-    };
+    $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
 
     //Export to Excel CSV File Grid Data
     $scope.exportAllData = function () {
         setTimeout(function () {
 
-            $('#loading').removeClass("deactivediv");
-            $('#loading').addClass("activediv");
+            $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
 
-            var d = new Date();
-            d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+
             var FileName = "Employee_Wise_Release_Strategy_List_" + d;
-
             $scope.JSONToCSVConvertor($scope.jsondata, FileName, true);
 
-            $('#loading').removeClass("activediv");
-            $('#loading').addClass("deactivediv");
+            $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
+
         }, 100);
     };
 

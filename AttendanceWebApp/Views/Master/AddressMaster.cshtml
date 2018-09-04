@@ -12,6 +12,28 @@
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 
+<script>
+    function validateEmail() {
+
+        var email = document.getElementById('txtemailid').value;
+        var filter = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        if (filter.test(email)) { }
+        else {
+            alert("In Valid Email ID");
+            document.getElementById('txtemailid').value = "";
+            document.getElementById("txtemailid").focus();
+        }
+    }
+    function validatePin() {
+        var pin = document.getElementById('pincode').value;
+        if (pin.length > 6 || pin.length < 6) {
+            alert("Please Enter Pincode in 6 Digit");
+            document.getElementById('pincode').value = "";
+            document.getElementById("pincode").focus();
+        };
+    }
+</script>
+
 <div ng-app="myApp" ng-controller="HomeCntrloller">
     <div class="container">
         <div id="MessageBox" class="table-responsive"></div>
@@ -40,23 +62,36 @@
                                         <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txttlk" name="tlk" required></td>
                                     </tr>
                                     <tr>
-
                                         <td><label>District</label></td>
                                         <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH"></td>
                                         <td><label>State</label></td>
                                         <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtstate" name="State" value="GUJARAT"></td>
                                     </tr>
                                     <tr>
-                                        <td><label>PinCode.</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="number" id="pincode" name="pincode" required></td>
-                                        <td><label>Personal Email Id</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtemailid" name="emailid"></td>
+                                        <td><label>PinCode</label></td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="pincode" name="pincode"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                   onchange="validatePin()" required>
+                                        </td>
+                                        <td><label>Personal E-mail Id</label></td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="email" id="txtemailid" name="emailid"
+                                                   onchange="validateEmail()" placeholder="ex: abc@xyz.com">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><label>Mobile No.</label></td>
-                                        <td><input class="form-control" type="number" id="txtphoneno" name="phoneno" required></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtphoneno" name="phoneno"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                   required>
+                                        </td>
                                         <td><label>Alternate Mobile No.</label></td>
-                                        <td><input class="form-control" type="number" id="txtresno" name="resno"></td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtresno" name="resno"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="text-align:right;">

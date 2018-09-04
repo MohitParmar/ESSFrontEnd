@@ -22,7 +22,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
 
         jsonObj.EmpUnqId = $('#myEmpUnqId').val();
         jsonObj.Pass = entity.Pass;
-        jsonObj = JSON.stringify(jsonObj);
+        jsonObj = JSON.stringify(jsonObj); //Convert Array Data to Json Object
 
         var xhr2 = new XMLHttpRequest();
         xhr2.open('POST', $scope._Conpath + 'Employee/ChangePassword', true);
@@ -53,10 +53,8 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         }
 
         var jsonObj = {};
-
         jsonObj.EmpUnqId = $('#eCode').val();
         jsonObj.Pass = $('#eCode').val();
-
         jsonObj = JSON.stringify(jsonObj);
 
         var xhr2 = new XMLHttpRequest();
@@ -129,21 +127,6 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
             }
         };
         per.send();
-    };
-
-    //Get User Educational Details
-    $scope.GetUserEducationalInfo = function () {
-        var edu = new XMLHttpRequest();
-        edu.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=2', true);
-        edu.setRequestHeader('Accept', 'application/json');
-        edu.onreadystatechange = function () {
-            if (edu.readyState === 4) {
-                var json = JSON.parse(edu.responseText);
-                $scope.Uedudata = json;
-                $scope.$digest();
-            }
-        };
-        edu.send();
     };
 
     //Get User Family Details
@@ -305,7 +288,7 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         phoneno = $('#txtphoneno').val();       //Mobile No
         PreEmail = $('#txtemailid').val();     //Personal Email ID
 
-        if ((PreAdd1 === "") || (PreAdd2 === "") || (PreAdd3 === "") || (PreAdd4 === "") || (pincode === "") || (phoneno === "") || (PreEmail === "")) {
+        if ((PreAdd1 === "") || (PreAdd2 === "") || (PreAdd3 === "") || (PreAdd4 === "") || (pincode === "") || (phoneno === "")) {
             alert("Please Fill All Required Details .. ");
             return false;
         }
@@ -317,8 +300,8 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
         jsonObj.PreAdd2 = PreAdd2.toUpperCase();
         jsonObj.PreAdd3 = PreAdd3.toUpperCase();
         jsonObj.PreAdd4 = PreAdd4.toUpperCase();
-        jsonObj.PreState = $('#txtstate').val();
-        jsonObj.PreDistrict = $('#txtdist').val();
+        jsonObj.PreState = $('#txtstate').val().toUpperCase();
+        jsonObj.PreDistrict = $('#txtdist').val().toUpperCase();
         jsonObj.PreEmail = PreEmail.toUpperCase();
         jsonObj.PrePin = pincode;
 
@@ -378,11 +361,8 @@ app.controller('HomeCntrloller', function ($scope, $http, $filter) {
                 $('#txtphoneno').val(arr[0].prePhone);      //Mobile No
                 $('#txtresno').val(arr[0].preResPhone);     //Alternate Mobile No
 
-                var dist = arr[0].preDistrict;
-                if ((typeof (dist) === "undefined")) { $('#txtdist').val('KUTCH'); } else { $('#txtdist').val(arr[0].preDistrict); }
-
-                var state = arr[0].preState;
-                if ((typeof (state) === "undefined")) { $('#txtstate').val('GUJARAT'); } else { $('#txtstate').val(arr[0].preState); }
+                var dist = arr[0].preDistrict; if ((typeof (dist) === "undefined")) { $('#txtdist').val('KUTCH'); } else { $('#txtdist').val(arr[0].preDistrict); }
+                var state = arr[0].preState; if ((typeof (state) === "undefined")) { $('#txtstate').val('GUJARAT'); } else { $('#txtstate').val(arr[0].preState); }
 
                 $scope.preadddata = arr;
                 $scope.$digest();
@@ -407,31 +387,3 @@ app.directive("datepicker", function () {
         }
     }
 });
-
-
-////Change Open Month master
-//$scope.ChangeOpenMonth = function (openMonth) {
-
-//    var opmnth = openMonth.yearMonth;
-//    var d = new Date(opmnth);
-
-//    var yearmonth;
-//    if (d.getMonth() < '10') { yearmonth = (d.getFullYear()) + '0' + (d.getMonth() + 1); }
-
-//    var opm = new XMLHttpRequest();
-//    opm.open('POST', $scope._Conpath + 'OpenMonth/ChangeOpenMonth?yearMonth=' + yearmonth, true);
-//    opm.setRequestHeader("Content-type", "application/json");
-//    opm.onreadystatechange = function () {
-//        if (opm.readyState === 4 && opm.status === 200) {
-//            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month Changed Successfully.. </strong></div>";
-//            $('#MessageBox').show();
-//            document.getElementById("openMonth").value = "";
-//        }
-//        else if (opm.status === 400) {
-//            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month not Changed.. </strong></div>";
-//            $('#MessageBox').show();
-//            document.getElementById("openMonth").value = "";
-//        }
-//    };
-//    opm.send();
-//};

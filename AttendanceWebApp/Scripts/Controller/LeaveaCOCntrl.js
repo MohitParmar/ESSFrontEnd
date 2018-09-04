@@ -23,6 +23,35 @@
         rel.send();
     };
 
+    //Check Holiday Date with today
+    $scope.ChkHoliday = function () {
+
+        var d = new Date();
+        var today;
+
+        if (d.getMonth() < '10') { today = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate(); }
+        else { today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+
+        var FromDate = $("#FromDt option:selected").text();
+        //var ToDate = chkTo.value;
+
+        var fdt = FromDate + " 00:00:00";
+        var tdt = today + " 00:00:00";
+
+
+        var date1 = new Date(fdt);
+        var date2 = new Date(tdt);
+
+        if (date2 < date1) {
+            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Can not take COFF before Holiday</strong></div>";
+            $('#MessageBox').show();
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+
     //Date Validation
     $scope.ToValidate = function () {
 
@@ -57,7 +86,24 @@
         var chk = false;
         var chktabldta = false;
 
+        //Check Today Date With Holiday Date
+        var dtoday = new Date();
+        var today;
+        if (dtoday.getMonth() < '10') { today = dtoday.getFullYear() + '-' + '0' + (dtoday.getMonth() + 1) + '-' + dtoday.getDate(); }
+        else { today = dtoday.getFullYear() + '-' + (dtoday.getMonth() + 1) + '-' + dtoday.getDate(); }
+
         var FromDate = $("#FromDt option:selected").text();
+
+        var fdt = FromDate + " 00:00:00";
+        var tdt = today + " 00:00:00";
+
+        var dateholidaydate = new Date(fdt);
+        var datetoday = new Date(tdt);
+
+        if (datetoday < dateholidaydate) {
+            alert("Can not take COFF before Holiday");
+            return false;
+        }
 
         //enable Checkbox for Half Day Leave Apply
         if ((typeof (entity) === "undefined") ||
@@ -71,7 +117,7 @@
         var LeaveTypeCode = $('#txtLeaveTypeCode').val();
         var Totaldays = 1;
 
-        var Remarks = entity.Remarks;
+        var Remarks = entity.Remarks.replace("'", "");;
         var ToDate = entity.ToDt;
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);

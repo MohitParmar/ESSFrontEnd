@@ -42,7 +42,7 @@ namespace AttendanceWebApp.Models
 
         //[StringLength(3)]
         //public string SecCode { get; set; }
-        //[ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode, StatCode,SecCode")]
+        //[ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode, StatCode, SecCode")]
         //public Sections Sections { get; set; }
 
         [StringLength(3)]
@@ -68,6 +68,8 @@ namespace AttendanceWebApp.Models
 
         public bool Active { get; set; }
 
+        public bool OtFlag { get; set; }
+
         //siple roles
         public bool IsReleaser { get; set; }
 
@@ -77,5 +79,7 @@ namespace AttendanceWebApp.Models
 
         [StringLength(20)]
         public string Pass { get; set; }
+
+        public string Email { get; set; }
     }
 }

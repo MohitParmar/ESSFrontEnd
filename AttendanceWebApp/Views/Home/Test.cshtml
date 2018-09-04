@@ -9,40 +9,40 @@
 <script src="~/Scripts/Module/app.js"></script>
 <link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
 <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+
 <script src="~/Scripts/Controller/TestCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
-
 @*<style>
-        .paginationclass {
-            margin: 19px 28px;
-        }
+    .paginationclass {
+    margin: 19px 28px;
+    }
 
-            .paginationclass span {
-                margin-left: 15px;
-                display: inline-block;
-            }
+    .paginationclass span {
+    margin-left: 15px;
+    display: inline-block;
+    }
 
-        .pagination-controle li {
-            display: inline-block;
-        }
+    .pagination-controle li {
+    display: inline-block;
+    }
 
-        .pagination-controle button {
-            font-size: 12px;
-            margin-top: -26px;
-            cursor: pointer;
-        }
+    .pagination-controle button {
+    font-size: 12px;
+    margin-top: -26px;
+    cursor: pointer;
+    }
 
-        .pagination {
-            margin: 0px 12px !important;
-        }
+    .pagination {
+    margin: 0px 12px !important;
+    }
 
-        .drp {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-        }
+    .drp {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
     </style>*@
 
 <style>
@@ -110,9 +110,9 @@
                                             <td id="releaseGroupCode" style="text-align:center;padding:3px;">{{ld.releaseGroupCode}}</td>
                                             <td style="text-align:center;padding:3px;" data-title="'addDt'">{{ld.addDt| date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;padding:3px;" ng-style="
-                                                    ld.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
-                                                    ld.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||
-                                                    ld.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                ld.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
+                                                ld.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||
+                                                ld.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
                                                 <strong>{{ld.releaseStatusCode}}</strong>
                                             </td>
                                             <td id="remarks">{{ld.remarks}}</td>

@@ -6,20 +6,25 @@
 
 <head>
     <title>@ViewBag.Title</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
     <link href="~/Content/css/font-awesome.css" rel="stylesheet">
     <link href="~/Content/css/style.css" rel="stylesheet">
     <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
+
     <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/Angular/angular.min.js"></script>
     <script src="~/Scripts/Angular/angular-resource.js"></script>
     <script src="~/Scripts/CommonFunction.js"></script>
+
     <link href="~/Content/jquery-ui.css" rel="stylesheet" />
     <script src="~/Scripts/Jquery/jquery-ui.js"></script>
+
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
 
     <style>
@@ -41,61 +46,7 @@
         }
     </style>
 
-
-    @* Manage Menu User Role Wise *@
-    <script type="text/javascript">
-
-        var chk = "@Session["UserRole"]";
-        var _ishod = "@Session["IsHod"]";
-
-        $(window).on('load', function () {
-
-            //if user role
-            if (chk === "IsUser") {
-                $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuMaster').hide();
-
-                $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide(); $('#mnureleasestreategymaster').hide();
-            }
-
-            //if releaser role
-            if (chk === "IsReleaser") {
-                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnureleasestreategymaster').hide();
-                $('#mnuUserPresentAddressReport').hide();
-                //$('#mnuRelGatePassReport').show();
-
-                $('#mnuUitility').hide(); $('#mnuMaster').hide();
-
-                $('#mnuLeavePosting').hide();
-
-                $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
-                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuAllGatePassReport').hide();
-            }
-
-            //if hr user role
-            if (chk === "IsHrUser") {
-                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show(); $('#mnuUserPresentAddressReport').show();
-
-                $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
-                $('#mnuPendingLeavesForPostReport').show(); $('#mnuPostedByReport').show(); $('#mnuAllGatePassReport').show();
-
-                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide();
-                //$('#mnuRelGatePassReport').hide();
-            }
-
-            //if Hr / Releaser both role
-            if (chk === "IsHrRelease") {
-                $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show();
-
-                $('#mnuLeaveRelease').show();
-
-                $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
-                $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
-                $('#mnuAllGatePassReport').show(); $('#mnuUserPresentAddressReport').show();
-                //$('#mnuRelGatePassReport').show();
-            }
-        });
-    </script>
-
+    @* Dropdown Mwnu Style *@
     <style>
         .dropdown-submenu {
             position: relative;
@@ -108,6 +59,50 @@
             }
     </style>
 
+    @* Manage Menu User Role Wise *@
+    <script type="text/javascript">
+
+        var chk = "@Session["UserRole"]";
+        var _ishod = "@Session["IsHod"]";
+
+        $(window).on('load', function () {
+
+            //if user role
+            if (chk === "IsUser") {
+                $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuMaster').hide();
+                $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide(); $('#mnureleasestreategymaster').hide(); $('#mnuRelGatePassReport').hide();
+            }
+
+            //if releaser role
+            if (chk === "IsReleaser") {
+                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuRelGatePassReport').show();
+                $('#mnureleasestreategymaster').hide(); $('#mnuUserPresentAddressReport').hide();
+                $('#mnuUitility').hide(); $('#mnuMaster').hide();
+                $('#mnuLeavePosting').hide();
+                $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
+                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuAllGatePassReport').hide();
+            }
+
+            //if hr user role
+            if (chk === "IsHrUser") {
+                $('#mnuUitility').show(); $('#mnuMaster').show(); $('#mnuLeavePosting').show(); $('#mnuUserPresentAddressReport').show();
+                $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
+                $('#mnuPendingLeavesForPostReport').show(); $('#mnuPostedByReport').show(); $('#mnuAllGatePassReport').show();
+                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide(); $('#mnuRelGatePassReport').hide();
+            }
+
+            //if Hr / Releaser both role
+            if (chk === "IsHrRelease") {
+                $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show();
+                $('#mnuLeaveRelease').show();
+                $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
+                $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
+                $('#mnuRelGatePassReport').show(); $('#mnuAllGatePassReport').show(); $('#mnuUserPresentAddressReport').show();
+            }
+        });
+    </script>
+
+    @* Submenu Script *@
     <script>
         $(document).ready(function () {
             $('.dropdown-submenu a.test').on("click", function (e) {
@@ -118,7 +113,7 @@
         });
     </script>
 
-    @* Function For Sync All Master Data *@
+    @* Function For Sync All Master Data Of Employee *@
     <script>
         function AutoSync() {
             var xhr = new XMLHttpRequest();
@@ -132,6 +127,17 @@
             xhr.send();
         };
     </script>
+
+    @* COFF Application Authoriization *@
+    <script>
+        function COFF() {
+            var _grade = "@Session["GradeCode"]";
+            var _tpaFlag = "@Session["OtFlag"]";
+            if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); }
+            else { window.location.href = "/LeaveApp/COffApply"; };
+        }
+    </script>
+
 </head>
 
 <body>
@@ -144,6 +150,8 @@
     <input type="hidden" value="@Session["DeptCode"]" id="myDeptCode" />
     <input type="hidden" value="@Session["StatCode"]" id="myStatCode" />
     <input type="hidden" value="@Session["CatCode"]" id="myCatCode" />
+    <input type="hidden" value="@Session["GradeCode"]" id="myGradeCode" />
+    <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
     <input type="hidden" value="@Session["IsHod"]" id="myIsHod" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
 
@@ -198,7 +206,7 @@
                         <ul class="dropdown-menu">
                             <li id="mnuLeaveRules"><a href="/LeaveApp/LeaveRules">Leave Rules</a></li>
                             <li id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
-                            <li id="mnuCOffApplication"><a href="/LeaveApp/COffApply">COFF Application</a></li>
+                            <li id="mnuCOffApplication"><a href="#" onclick="COFF()">COFF Application</a></li>
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -217,14 +225,14 @@
                             </li>
                         </ul>
                     </li>
-                    @*<li class="dropdown" id="mnuGatePass">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li id="mnuCreateGatePass"><a href="/Master/GatePass">New Gate Pass</a></li>
-                                <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Print Gate Pass</a></li>
-                                <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
-                            </ul>
-                        </li>*@
+                    <li class="dropdown" id="mnuGatePass">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuCreateGatePass"><a href="/Master/GatePass">New Gate Pass</a></li>
+                            <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Print Gate Pass</a></li>
+                            <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown" id="mnuReport">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -234,7 +242,7 @@
                             <li id="mnuPostedByReport"><a href="/Report/PostedByReport">Posted By HR Report</a></li>
                             <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
                             <li id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
-                            @*<li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>*@
+                            <li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>
                             <li id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Details Report</a></li>
                             <li id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
                             <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>

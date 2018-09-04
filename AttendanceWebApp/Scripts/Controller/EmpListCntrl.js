@@ -35,7 +35,7 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
         empdtl.setRequestHeader('Accept', 'application/json');
         empdtl.onreadystatechange = function () {
             if (empdtl.readyState === 4) {
-                
+
                 $('#loading').removeClass("activediv");
                 $('#loading').addClass("deactivediv");
 
@@ -43,19 +43,14 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
                 var json = JSON.parse(empdtl.responseText);
                 $scope.alldata = json;
                 $scope.$digest();
-
             }
         };
         empdtl.send();
     };
 
     //Using For DIR Pagintaiton Sorting
-    $scope.sort = function (keyname) {
-        $scope.sortKey = keyname;   //set the sortKey to the param passed
-        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-    }
+    $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; }
 
-    //Export to Excel CSV File Grid Data
     $scope.exportAllData = function () {
         setTimeout(function () {
 
@@ -65,9 +60,9 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
             var d = new Date();
             d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
             var FileName = "All_Users_Present_Address_Report_" + d;
-            
+
             $scope.JSONToCSVConvertor($scope.Info, FileName, true);
-            
+
             $('#loading').removeClass("activediv");
             $('#loading').addClass("deactivediv");
         }, 100);
@@ -119,5 +114,5 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
         document.body.appendChild(link); //this part will append the anchor tag and remove it after automatic click
         link.click();
         document.body.removeChild(link);
-    }
+    };
 });

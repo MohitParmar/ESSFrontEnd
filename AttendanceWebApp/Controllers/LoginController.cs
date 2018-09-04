@@ -35,6 +35,8 @@ namespace AttendanceWebApp.Controllers
                 Session["DeptCode"] = Convert.ToString(requestData.DeptCode);
                 Session["StatCode"] = Convert.ToString(requestData.StatCode);
                 Session["CatCode"] = Convert.ToString(requestData.CatCode);
+                Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
+                Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["IsHod"] = Convert.ToString(requestData.IsHod);
 
                 bool IsReleaser = requestData.IsReleaser;
@@ -85,6 +87,7 @@ namespace AttendanceWebApp.Controllers
             Session["UnitCode"] = null;
             Session["DeptCode"] = null;
             Session["StatCode"] = null;
+            Session["GradeCode"] = null;
             Session["CatCode"] = null;
             Session["IsHod"] = null;
             Session["UserRole"] = null;

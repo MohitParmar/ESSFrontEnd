@@ -170,7 +170,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
                         for (var key2 in json[key].leaveApplicationDetails) {
-                            
+
                             var tmpisPosted = json[key].leaveApplicationDetails[key2].isPosted;     //Not Posted / Partially Posted
                             var tmpcancelled = json[key].leaveApplicationDetails[key2].cancelled;   //Short Leave Cancelled
                             var tmpparentId = json[key].leaveApplicationDetails[key2].parentId;     //Full Leavea Cancelled
@@ -190,7 +190,8 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                                 }
                             }
                             else if (tmpflg === 'C') {
-                                if (tmpcancelled === true || tmpparentId !== 0) {
+                                //if ((tmpcancelled === true || tmpparentId !== 0)) {
+                                if ((tmpcancelled === true && tmpparentId === 0) || (tmpcancelled === false && tmpparentId !== 0)) {
                                     temparr[count] = json[key];
                                     count++;
                                     break;
@@ -199,7 +200,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                         }
                     }
                 }
-                
+
                 $scope.lappdata = temparr;
                 $scope.lappdata = $filter('orderBy')($scope.lappdata, '-leaveAppId');
                 $scope.curPage = 0;

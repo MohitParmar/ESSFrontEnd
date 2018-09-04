@@ -331,10 +331,6 @@
     <Content Include="Content\css\pTable.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\DirPAgination\dirPagination.js" />
-    <Content Include="Content\Excell\alasql.min.js" />
-    <Content Include="Content\Excell\excellentexport.js" />
-    <Content Include="Content\Excell\excellentexport.min.js" />
-    <Content Include="Content\Excell\xlsx.core.min.js" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\img\body-bg.png" />

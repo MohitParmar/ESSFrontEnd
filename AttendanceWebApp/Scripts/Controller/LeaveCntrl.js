@@ -6,10 +6,7 @@
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
     $scope.SetLTListValue = function (value) {
-        if (value === "CO") {
-            $("#HalfFlag").attr("disabled", true);
-            $("#HalfFlag").attr("checked", false);
-        }
+        //if (value === "CO") { $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false); }
         $scope.LeaveType = value;
     };
 
@@ -69,7 +66,7 @@
 
     //Get Applied Leave Requests
     $scope.LeaveRequestData = function (entity) {
-        
+
         var chk = false;
         var chktabldta = false;
 
@@ -89,45 +86,44 @@
         var HalfDayFlag = false;
         var Totaldays = 0;
 
-        var Remarks = entity.Remarks;
+        var Remarks = entity.Remarks.replace("'", "");
         var FromDate = entity.FromDt;
         var ToDate = entity.ToDt;
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);
 
+        //if (LeaveTypeCode === "CO") {
+        //    var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
+        //    Totaldays = 1;
+        //    $('#HalfFlag').prop('checked', false);
+        //    if (coffdays > 4) {
+        //        alert("Please Select Correct Date for COff Apply .. ");
+        //        return false;
+        //    }
+        //}
+        //else {
 
-        if (LeaveTypeCode === "CO") {
-            var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-            Totaldays = 1;
-            $('#HalfFlag').prop('checked', false);
-            if (coffdays > 4) {
-                alert("Please Select Correct Date for COff Apply .. ");
-                return false;
+        var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
+
+        if (date2 < date1) {
+            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>";
+            $('#MessageBox').show();
+            return false;
+        }
+
+        if ($('#HalfFlag').prop("checked") === true) { HalfDayFlag = true; } else { HalfDayFlag = false; }
+
+        Totaldays = $('#TotalDays').val();
+        if (HalfDayFlag === true) {
+            Totaldays = '0.5';
+        } else {
+            if (Totaldays === null ||
+                Totaldays === '' ||
+                Totaldays === 0) {
+                Totaldays = diff;
             }
         }
-        else {
-
-            var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-
-            if (date2 < date1) {
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>";
-                $('#MessageBox').show();
-                return false;
-            }
-
-            if ($('#HalfFlag').prop("checked") === true) { HalfDayFlag = true; } else { HalfDayFlag = false; }
-
-            Totaldays = $('#TotalDays').val();
-            if (HalfDayFlag === true) {
-                Totaldays = '0.5';
-            } else {
-                if (Totaldays === null ||
-                    Totaldays === '' ||
-                    Totaldays === 0) {
-                    Totaldays = diff;
-                }
-            }
-        };
+        //};
 
         ///Get Grid Data
 

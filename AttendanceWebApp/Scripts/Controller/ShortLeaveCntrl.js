@@ -8,7 +8,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
     $scope.alluserlist = [];
     $scope._Conpath = '';
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
-    
+
     jQuery.support.cors = true;
 
     $scope.ResetView = function () { window.location.reload(true); } //Reload Page
@@ -116,7 +116,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
 
     //Short Leave Cancellation
     $scope.LeaveCancel = function (entity) {
-
+        
         var d = new Date();
         var year = d.getFullYear().toString();
         var month = d.getMonth() + 1
@@ -169,7 +169,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
         var lnt = tbldta.length;
 
         for (var i = 0; i < tbldta.length; i++) {
-
+            
             var fdt = tbldta[i]["fromDt"];
             var tdt = tbldta[i]["toDt"];
 
@@ -194,6 +194,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
                 }
             }
         }
+
         if (efdate === chkfdt && etdate === chktdt) {
             document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Cancel this Leave Application from Full Leave Cancel Menu</strong></div>";
             $('#MessageBox').show();
@@ -253,6 +254,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.status === 201) {
+                
                 jQuery('#btnClose').click();
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Cancellation Leave Created Sucesfully.. </strong></div>";
                 $('#MessageBox').show();
@@ -263,6 +265,7 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
                 document.getElementById("Remarks").value = "";
             }
             else {
+                
                 jQuery('#btnClose').click();
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Cancellation Not Created.. </strong></div>";
                 $('#MessageBox').show();

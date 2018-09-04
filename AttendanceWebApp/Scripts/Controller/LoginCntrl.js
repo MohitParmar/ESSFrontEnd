@@ -20,7 +20,7 @@
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                
+
                 var json = JSON.parse(xhr.responseText);
                 $scope.Udata = json;
 
@@ -42,7 +42,8 @@
                 jsonObj1.UnitCode = $scope.Udata[0]["unitCode"];
                 jsonObj1.DeptCode = $scope.Udata[0]["deptCode"];
                 jsonObj1.StatCode = $scope.Udata[0]["statCode"];
-                //jsonObj1.SecCode = $scope.Udata[0]["secCode"];
+                jsonObj1.GradeCode = $scope.Udata[0]["gradeCode"];
+                jsonObj1.OtFlag = $scope.Udata[0]["otFlag"];
                 jsonObj1.CatCode = $scope.Udata[0]["catCode"];
                 jsonObj1.isReleaser = $scope.Udata[0]["isReleaser"];
                 jsonObj1.isHrUser = $scope.Udata[0]["isHrUser"];
@@ -54,6 +55,7 @@
                 reqs.open('POST', '/Login/Users', true);
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
+                    //window.location.href = "Master/AddressMaster";
                     if (reqs.readyState === 4) {
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else { window.location.href = "Home/Index"; }

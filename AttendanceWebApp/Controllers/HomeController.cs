@@ -9,86 +9,37 @@ namespace AttendanceWebApp.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult ChangePassword()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult EmployeeProfile()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult ResetPassword()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult UpdateEmailAdd()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult OpenMonth()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult Test()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null) { return View(); } else { return RedirectToAction("Index", "Login"); }
         }
     }
 }
