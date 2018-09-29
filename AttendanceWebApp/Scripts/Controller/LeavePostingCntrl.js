@@ -86,7 +86,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
             }
             return tbl;
         }
-
+        
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
         xhr1.setRequestHeader("Content-type", "application/json");

@@ -10,9 +10,11 @@ namespace AttendanceWebApp.Controllers
     {
         private ApplicationDbContext _context;
 
-        public LeaveAppDataController() { _context = new ApplicationDbContext(); }
+        public LeaveAppDataController()
+        {
+            _context = new ApplicationDbContext();
+        }
 
-        //Get Leave Types
         [HttpGet]
         [System.Web.Http.ActionName("GetLeaveTypeList")]
         public dynamic GetLeaveTypeList()
@@ -20,12 +22,12 @@ namespace AttendanceWebApp.Controllers
             try
             {
                 var LeaveTypeData = (from o in _context.LeaveTypes
-                                     where o.WrkGrp == "comp" && o.Active == true
-                                     select new
+                                                                               where o.WrkGrp == "comp" && o.Active == true
+                                                                               select new
                                      {
-                                         o.LeaveTypeCode,
-                                         o.LeaveTypeName
-                                     }).ToList<dynamic>();
+                                                                                   o.LeaveTypeCode,
+                                                                                   o.LeaveTypeName
+                                                                               }).ToList<dynamic>();
 
                 return LeaveTypeData;
             }

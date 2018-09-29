@@ -10,9 +10,16 @@ namespace AttendanceWebApp.Controllers
     {
         private ApplicationDbContext _context;
 
-        public LoginController() { _context = new ApplicationDbContext(); }
+        public LoginController()
+        {
+            _context = new ApplicationDbContext();
+        }
 
-        protected override void Dispose(bool disposing) { _context.Dispose(); base.Dispose(disposing); }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+            base.Dispose(disposing);
+        }
 
         public ActionResult Index()
         {
@@ -39,25 +46,31 @@ namespace AttendanceWebApp.Controllers
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["IsHod"] = Convert.ToString(requestData.IsHod);
 
-                bool IsReleaser = requestData.IsReleaser;
+                var IsReleaser = requestData.IsReleaser;
 
-                bool IsHrUser = requestData.IsHrUser;
+                var IsHrUser = requestData.IsHrUser;
 
                 if (IsReleaser == true && IsHrUser == false)
                 {
                     Session["UserRole"] = "IsReleaser";
                 }
-                else if (IsHrUser == true && IsReleaser == false)
-                {
-                    Session["UserRole"] = "IsHrUser";
-                }
-                else if (IsHrUser == true && IsReleaser == true)
-                {
-                    Session["UserRole"] = "IsHrRelease";
-                }
                 else
                 {
-                    Session["UserRole"] = "IsUser";
+                    if (IsHrUser == true && IsReleaser == false)
+                    {
+                        Session["UserRole"] = "IsHrUser";
+                    }
+                    else
+                    {
+                        if (IsHrUser == true && IsReleaser == true)
+                        {
+                            Session["UserRole"] = "IsHrRelease";
+                        }
+                        else
+                        {
+                            Session["UserRole"] = "IsUser";
+                        }
+                    }
                 }
                 return null;
             }

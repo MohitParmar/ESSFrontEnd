@@ -75,9 +75,9 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
         xhr.send();
     };
 
-    //Get Posted / Not Posted / Rejected by HR Leaves Report
+    //Get Fully Posted / Partillay Posted / Not Posted / Post Rejected by HR Leaves Report
     $scope.GetPostedLeaveInfo = function (data) {
-        
+
         $('#loading').removeClass("deactivediv");
         $('#loading').addClass("activediv");
 
@@ -118,10 +118,48 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
                 $('#loading').removeClass("activediv");
                 $('#loading').addClass("deactivediv");
 
-                $scope.InfoPL = xhr1.responseText;
                 var json = JSON.parse(xhr1.responseText);
                 $scope.pdata = json;
                 $scope.pdata = $filter('orderBy')($scope.pdata, '-leaveAppId');
+
+                //var la = new Array; la = json;
+                //var applReleaseStatus = new Array;
+                //var leaveApplicationDetails = new Array;
+                //var empName, statName, releaseDate;
+                //var cnt = 0;
+                //var myArray = [];
+                //for (var i = 0; i < la.length; i++) {
+                //    empName = la[i].employee.empName;
+                //    statName = la[i].stations.statName;
+                //    applReleaseStatus = la[i].applReleaseStatus; for (var j = 0; j < applReleaseStatus.length; j++) { releaseDate = applReleaseStatus[j].releaseDate; }
+                //    leaveApplicationDetails = la[i].leaveApplicationDetails;
+                //    for (var l = 0; l < leaveApplicationDetails.length; l++) {
+                //        myArray.push([]);
+                //        //Leave Applications
+                //        myArray[cnt]["releaseGroupCode"] = la[i].releaseGroupCode;
+                //        myArray[cnt]["leaveAppId"] = la[i].leaveAppId;
+                //        myArray[cnt]["yearMonth"] = la[i].yearMonth;
+                //        myArray[cnt]["addDt"] = la[i].addDt;
+                //        myArray[cnt]["releaseDate"] = releaseDate;
+                //        myArray[cnt]["updDt"] = la[i].updDt;
+                //        myArray[cnt]["empUnqId"] = la[i].empUnqId;
+                //        myArray[cnt]["empName"] = empName;
+                //        myArray[cnt]["statName"] = statName;
+                //        //Leave Application Details 
+                //        myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks;
+                //        myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem;
+                //        myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode;
+                //        myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt;
+                //        myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt;
+                //        myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays;
+                //        myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag;
+                //        myArray[cnt]["isPosted"] = leaveApplicationDetails[l].isPosted;
+                //        cnt++;
+                //    }
+                //    leaveApplicationDetails = "";
+                //}
+                //$scope.pdata = myArray;
+                //$scope.InfoPL = $scope.pdata;
                 $scope.curPage1 = 0;
                 $scope.pageSize1 = 25;
                 $scope.$digest();
@@ -132,7 +170,7 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
 
     //Reject Force fully after Leave Application Posted 
     $scope.PostLeaveReject = function (data, value, value1) {
-
+        
         var TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
 
@@ -172,7 +210,7 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
             }
             return tbl;
         }
-
+        debugger;
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
         xhr1.setRequestHeader("Content-type", "application/json");
@@ -193,7 +231,6 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
 
     //Attendance Report / Cafetria Punching Report
     $scope.PerformanceAttendanceRpt = function (str) {
-
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth() - 2, 25);           //Previous Month Date 25
         var lastDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());    //Current Date Today
@@ -215,10 +252,11 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
         pr.setRequestHeader('Accept', 'application/json');
         pr.onreadystatechange = function () {
             if (pr.readyState === 4) {
-
+                $scope.InfoPL = pr.responseText;
                 var json = JSON.parse(pr.responseText);
                 $scope.prdata = json;
-                $scope.prdata = $filter('orderBy')($scope.prdata, '-attdDate');
+                if (str === "PERF") { $scope.prdata = $filter('orderBy')($scope.prdata, '-attdDate'); }
+                if (str === "PUNCH") { $scope.prdata = $filter('orderBy')($scope.prdata, '-punchDate'); }
                 $scope.curPage = 0;
                 $scope.pageSize = 31;
                 $scope.$digest();
@@ -231,7 +269,7 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
 
     //Export to Excel CSV File Grid Data
-    $scope.exportAllData = function () {
+    $scope.exportAllData = function (name) {
         setTimeout(function () {
 
             $('#loading').removeClass("deactivediv");
@@ -239,7 +277,7 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
 
             var d = new Date();
             d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            var FileName = "Posted_Leave_Report_" + d;
+            var FileName = name + d;
 
             $scope.JSONToCSVConvertor($scope.InfoPL, FileName, true);
 

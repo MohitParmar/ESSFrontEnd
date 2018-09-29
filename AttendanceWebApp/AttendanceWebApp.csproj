@@ -479,6 +479,7 @@
     <Content Include="Scripts\Controller\LeaveReportCntrl.js" />
     <Content Include="Scripts\Controller\LoginCntrl.js" />
     <Content Include="Scripts\Controller\MasterCntrl.js" />
+    <Content Include="Scripts\Controller\MediclaimCntrl.js" />
     <Content Include="Scripts\Controller\ODCntrl.js" />
     <Content Include="Scripts\Controller\OpenMonthCntrl.js" />
     <Content Include="Scripts\Controller\PendingLeaveReport.js" />
@@ -636,6 +637,7 @@
     <Content Include="Views\Report\ReleaserGatePassReport.cshtml" />
     <Content Include="Views\Master\AddressMaster.cshtml" />
     <Content Include="Views\Report\AllUsersDetailsReport.cshtml" />
+    <Content Include="Views\Master\MediclaimMaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

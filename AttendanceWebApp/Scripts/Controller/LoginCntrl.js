@@ -55,10 +55,10 @@
                 reqs.open('POST', '/Login/Users', true);
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
-                    //window.location.href = "Master/AddressMaster";
                     if (reqs.readyState === 4) {
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
-                        else { window.location.href = "Home/Index"; }
+                        else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
+                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Master/GatePass"; }
                     }
                 };
                 reqs.send(jsonObj1);

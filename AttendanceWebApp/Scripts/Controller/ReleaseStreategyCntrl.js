@@ -125,6 +125,7 @@
     //Create / Update Release Strategy
     $scope.CreateReleaseStrategy = function () {
 
+        //var UserId = $('#myEmpUnqId').val();
         var tables = document.getElementById('aliasTable');
         var rowCounts = tables.rows.length;
 
@@ -153,6 +154,7 @@
             });
             TableData.shift();// first row will be empty - so remove
 
+            //jsonObj.UserId = UserId;
             jsonObj.releaseGroupCode = 'LA';
             jsonObj.releaseStrategy = $scope.empdata[0]['empUnqId'];
             jsonObj.releaseStrategyName = $scope.empdata[0]['empName'];

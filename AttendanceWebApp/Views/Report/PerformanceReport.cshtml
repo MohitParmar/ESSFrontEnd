@@ -19,7 +19,14 @@
             <div class="col-sm-12">
                 <div id="MessageBox" class="table-responsive"></div>
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Performance Report</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Performance Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('performance_report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <button class="btn btn-success" id="btnPerf" ng-click="PerformanceAttendanceRpt('PERF')">Attendance Report</button>
@@ -54,8 +61,8 @@
                                             <td style="text-align:center;">{{d.attdDate| date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;">{{d.scheDuleShift}}</td>
                                             <td style="text-align:center;">{{d.consShift}}</td>
-                                            <td style="text-align:center;">{{d.consIn| date:'dd/MM/yy HH:mm'}}</td>
-                                            <td style="text-align:center;">{{d.consOut| date:'dd/MM/yy HH:mm'}}</td>
+                                            <td style="text-align:center;">{{d.consIn| date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.consOut| date:'dd/MM/yy HH:mm:ss'}}</td>
                                             <td style="text-align:center;">{{d.consWrkHrs}}</td>
                                             <td style="text-align:center;">{{d.consOverTime}}</td>
                                             <td style="text-align:center;">{{d.status}}</td>
@@ -88,7 +95,7 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="p in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_2">
-                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yy HH:mm'}}</td>
+                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yy HH:mm:ss'}}</td>
                                             <td style="text-align:center;">{{p.ioFlag}}</td>
                                             <td style="text-align:center;">{{p.machineIp}}</td>
                                             <td style="text-align:center;">{{p.machineDesc}}</td>

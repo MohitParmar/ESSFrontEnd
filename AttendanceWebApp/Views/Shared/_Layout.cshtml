@@ -16,8 +16,8 @@
     <link href="~/Content/css/style.css" rel="stylesheet">
     <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
 
-    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="~/Scripts/Angular/angular.min.js"></script>
     <script src="~/Scripts/Angular/angular-resource.js"></script>
     <script src="~/Scripts/CommonFunction.js"></script>
@@ -64,13 +64,18 @@
 
         var chk = "@Session["UserRole"]";
         var _ishod = "@Session["IsHod"]";
+        var _wrkgrp = "@Session["WrkGrp"]";
 
         $(window).on('load', function () {
 
             //if user role
-            if (chk === "IsUser") {
+            if (chk === "IsUser" && _wrkgrp === "COMP") {
                 $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuMaster').hide();
                 $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide(); $('#mnureleasestreategymaster').hide(); $('#mnuRelGatePassReport').hide();
+            } else if (chk === "IsUser" && _wrkgrp !== "COMP") {
+                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuUserManual').hide();
+                $('#mnuRelGatePassReport').hide();
+                $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
             }
 
             //if releaser role
@@ -137,7 +142,6 @@
             else { window.location.href = "/LeaveApp/COffApply"; };
         }
     </script>
-
 </head>
 
 <body>
@@ -179,6 +183,7 @@
                                 <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
                                 <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
                                 <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
+                                @*<li id="mnuMediclaimMaster"><a href="/Master/MediclaimMaster">Mediclaim Details</a></li>*@
                                 <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
                                 <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>

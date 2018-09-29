@@ -51,7 +51,7 @@
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        if (lastDay.getMonth() < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         $('#FromDt').val(firstDay);
         $('#ToDt').val(lastDay);
@@ -123,7 +123,8 @@
                                         <td style="text-align:center;">{{d.statusName}}</td>
                                         <td style="text-align:center;width:80px;">{{d.addUser}}</td>
                                         <td>
-                                            <a class="btn-link" target="_blank" href="/Report/PrintPreviewGatePass?gpno={{d.gatePassNo}}&gpdate={{d.gatePassDate | date:'yyyy/MM/dd'}}"><i class="icon-print"></i></a>
+                                            <a class="btn-link" target="_blank" href="/Report/PrintPreviewGatePass?gpno={{d.gatePassNo}}&gpdate={{d.gatePassDate | date:'yyyy/MM/dd'}}"
+                                               ng-show="d.gatePassStatus == 'N'"><i class="icon-print"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

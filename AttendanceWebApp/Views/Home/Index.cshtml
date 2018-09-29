@@ -32,7 +32,9 @@
     {
         var sEmpUnqId = @Session["EmpUnqId"].ToString();
         var sPass = @Session["Pass"].ToString();
-        if (sEmpUnqId === sPass )
+        var sWrkgrp = "@Session["WrkGrp"]";
+
+        if (sEmpUnqId === sPass && sWrkgrp === "COMP")
         {
             $('#myModal').modal('show');
         }
@@ -46,7 +48,7 @@
             <div class="col-sm-8">
                 @*Leave Application List  *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Application List </strong></div>
+                    <div class="panel-heading"><strong> Leave Application List </strong></div>
                     <div class="panel-body" style="overflow:auto;">
                         <div ng-init="GetLeaveRequestLists()">
                             <div class="table-responsive">

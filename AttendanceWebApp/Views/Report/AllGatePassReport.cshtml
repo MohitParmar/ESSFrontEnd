@@ -49,7 +49,7 @@
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        if (lastDay.getMonth() < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         $('#FromDt').val(firstDay);
         $('#ToDt').val(lastDay);
@@ -62,7 +62,14 @@
             @* Gate Pass Information *@
             <div class="col-sm-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Gate Pass Report</strong></div>
+                    <div class="panel-heading">
+                        <strong>Gate Pass Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData()">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Gate Pass Report
+                            </a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-condensed">
@@ -93,52 +100,65 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;">Emp.Code</th>
+                                            <th style="text-align:center;" ng-click="sort('gatePassDate')">
+                                                GP Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;" ng-click="sort('empName')">
                                                 Employee Name
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Station</th>
-                                            <th style="text-align:center;">GP Date</th>
-                                            <th style="text-align:center;">Mode</th>
-                                            <th style="text-align:center;">Place</th>
-                                            <th style="text-align:center;">Reason</th>
                                             <th style="text-align:center;">Out Time</th>
-                                            @*<th style="text-align:center;">Out User</th>*@
                                             <th style="text-align:center;">In Time</th>
-                                            @*<th style="text-align:center;">In User</th>*@
-                                            <th style="text-align:center;">Status</th>
-                                            <th style="text-align:center;">Created by</th>
+                                            <th style="text-align:center;width:70px;">GP Total Count</th>
+                                            <th style="text-align:center;">Reason</th>
+                                            <th style="text-align:center;" ng-click="sort('typeofGatePass')">
+                                                Mode
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Place Of Visit</th>
+                                            <th style="text-align:center;" ng-click="sort('statusName')">
+                                                Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                         </tr>
                                         <tr>
-                                            <td><input class="form-control" style="margin:0;padding:1px;width:60px;" type="text" ng-model="search.empUnqID" /></td>
+                                            <td></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" /></td>
-                                            <td></td>
-                                            <td><input class="form-control" style="margin:0;padding:1px;width:59px;" type="text" ng-model="search.modeName" /></td>
                                             <td colspan="4"></td>
-                                            <td><input class="form-control" style="margin:0;padding:1px;width:40px;" type="text" ng-model="search.statusName" /></td>
-                                            <td><input class="form-control" style="margin:0;padding:1px;width:69px;" type="text" ng-model="search.addUser" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.placeOfVisit" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                             ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
-                                                      d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} ">
+                                                      d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} "
+                                            ng-show="d.statusName != 'New'">
+                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;width:185px;">{{d.empName}}</td>
-                                            <td style="text-align:center;">{{d.statName}}</td>
-                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;width:60px;">{{d.modeName}}</td>
-                                            <td style="text-align:left;">{{d.placeOfVisit}}</td>
+                                            <td style="text-align:left;">{{d.statName}}</td>
+                                            <td style="text-align:center;width:95px;">{{d.gateOutDateTime}}</td>
+                                            <td style="text-align:center;width:95px;">{{d.gateInDateTime}}</td>
+                                            <td style="text-align:center;width:95px;">{{d.gpTotalCount}}</td>
                                             <td style="text-align:left;">{{d.reason}}</td>
-                                            <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                            @*<td style="text-align:center;width:70px;">{{d.gateOutUser}}</td>*@
-                                            <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                            @*<td style="text-align:center;width:70px;">{{d.gateInUser}}</td>*@
+                                            <td style="text-align:left;width:60px;">{{d.typeofGatePass}}</td>
+                                            <td style="text-align:left;">{{d.placeOfVisit}}</td>
                                             <td style="text-align:center;">{{d.statusName}}</td>
-                                            <td style="text-align:center;width:80px;">{{d.addUser}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

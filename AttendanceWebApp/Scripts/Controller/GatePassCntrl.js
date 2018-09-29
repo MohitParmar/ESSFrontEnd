@@ -10,6 +10,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
     $scope.gpno;
     $scope.gpdate;
+    $scope.GPInfo;
 
     jQuery.support.cors = true;
     $('#txtEmpCode').val($('#myEmpUnqId').val());
@@ -31,6 +32,12 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         emp.setRequestHeader('Accept', 'application/json');
         emp.onreadystatechange = function () {
             if (emp.readyState === 4) {
+                if (emp.responseText === "") {
+                    alert("Please Enter Valid Employee Code ..");
+                    document.getElementById("txtEmpCode").value = "";
+                    document.getElementById("txtPlace").value = "";
+                    document.getElementById("txtPurpose").value = "";
+                }
                 var json = JSON.parse(emp.responseText);
                 $scope.empdata = json;
                 $scope.$digest();
@@ -77,6 +84,45 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     var c = 0;
     $scope.AddNewPerson = function (entity) {
 
+        var EmpUnqId = $('#txtEmpCode').val();
+
+        //Validation For Same Employee Sholuld not be Add to List 
+        if (c >= 1) {
+            var tblData = gpvalues();
+            //Get data from the Gate Pass List
+            function gpvalues() {
+                var tbl = new Array();
+                $('#aliasTable tr').each(function (row, tr) {
+                    tbl[row] = {
+                        "empUnqId": $(tr).find('td:eq(1)').text()
+                    }
+                });
+                tbl.shift();// first row will be empty - so remove
+                return tbl;
+            };
+
+            for (var i = 0; i < tblData.length; i++) {
+                var userid = tblData[i].empUnqId;
+                if (EmpUnqId === userid) {
+                    alert("Same Employee not Allow in one GatePass ..");
+                    document.getElementById("txtEmpCode").value = "";
+                    document.getElementById("txtEmpName").value = "";
+                    document.getElementById("txtStat").value = "";
+                    document.getElementById("txtPlace").value = "";
+                    document.getElementById("txtPurpose").value = "";
+                    $("#Mode option:first").attr("selected", true);
+                    return false;
+                };
+            };
+        };
+
+        if (EmpUnqId === "") {
+            alert("Please Select Employee .. ");
+            document.getElementById("txtPlace").value = "";
+            document.getElementById("txtPurpose").value = "";
+            return false;
+        }
+
         if ((typeof (entity.Mode) === "undefined") ||
             (typeof (entity.PlaceofVisit) === "undefined") ||
             (typeof (entity.Reason) === "undefined")) {
@@ -84,7 +130,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             return false;
         }
 
-        var EmpUnqId = $('#txtEmpCode').val();
         var Mode = entity.Mode;
         var PlaceofVisit = entity.PlaceofVisit;
         var Reason = entity.Reason;
@@ -132,8 +177,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             });
             TableData.shift();
             return TableData;
-
-
         }
     };
 
@@ -182,6 +225,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                                     "<a style='float: right;' target='_blank' href='/Report/PrintPreviewGatePass?gpno=" + $scope.gpno + "&gpdate=" + gpdt + "'>Print Preview</a></strong></div></div>";
                 $('#MessageBox').show();
 
+                document.getElementById("btnSubmit").disabled = true;
                 $("#aliasTable").find("tr:not(:first)").remove();
                 document.getElementById("txtEmpCode").value = "";
                 document.getElementById("txtEmpName").value = "";
@@ -210,8 +254,14 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             typeof (gpdate) === "undefined") {
             var url_string = window.location.href
             var url = new URL(url_string);
-            gpno = url.searchParams.get("gpno");
-            gpdate = url.searchParams.get("gpdate");
+            var tmpurl1 = url.search; var url_1 = tmpurl1.split("?");
+            var tmpurl2 = tmpurl1; var url_2 = tmpurl2.split("&");
+            var tmpurl3 = url_2[0]; var url_3 = tmpurl3.split("=");
+            var tmpurl4 = url_2[1]; var url_4 = tmpurl4.split("=");
+            gpno = url_3[1];
+            gpdate = url_4[1];
+            // gpno = url.searchParams.get("gpno");
+            // gpdate = url.searchParams.get("gpdate");
         }
 
         var prnt = new XMLHttpRequest();
@@ -219,7 +269,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         prnt.setRequestHeader("Content-type", "application/json");
         prnt.onreadystatechange = function () {
             if (prnt.readyState === 4 && prnt.status === 200) {
-
                 var json = JSON.parse(prnt.responseText);
                 $scope.pdata = json;
                 $scope.$digest();
@@ -233,7 +282,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         prnt.send();
     };
 
-    //Get Details of Gate PAss of Login USer
+    //Get Details of Gate PAss of Login User
     $scope.GetUserGatePassInfo = function (data) {
 
         var FromDate, ToDate;
@@ -277,12 +326,13 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     };
 
     //Get All Gate Pass Informatinon for HR Department
-    $scope.AllGatePassInfo = function () {
+    $scope.AllGatePassInfo = function (gpdata) {
+
         var FromDate, ToDate;
 
-        if ((typeof (entity) === "undefined") ||
-            (typeof (entity.FromDt) === "undefined") ||
-            (typeof (entity.ToDt) === "undefined")) {
+        if ((typeof (gpdata) === "undefined") ||
+            (typeof (gpdata.FromDt) === "undefined") ||
+            (typeof (gpdata.ToDt) === "undefined")) {
 
             var date = new Date();
             var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -292,8 +342,8 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
         }
         else {
-            FromDate = entity.FromDt;
-            ToDate = entity.ToDt;
+            FromDate = gpdata.FromDt;
+            ToDate = gpdata.ToDt;
         }
 
         var date1 = new Date(FromDate);
@@ -310,16 +360,60 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         all.setRequestHeader("Content-type", "application/json");
         all.onreadystatechange = function () {
             if (all.readyState === 4 && all.status === 200) {
+                //$scope.GPInfo = all.responseText;
                 var json = JSON.parse(all.responseText);
-                $scope.alldata = json;
-                $scope.alldata = $filter('orderBy')($scope.alldata, '-addDateTime');
+
+                var la = new Array; la = json;
+                var myArray = [];
+                for (var i = 0; i < la.length; i++) {
+                    myArray.push([]);
+                    myArray[i]["gatePassDate"] = la[i].gatePassDate.replace("T00:00:00", "");
+                    myArray[i]["empUnqId"] = la[i].empUnqId;
+                    myArray[i]["empName"] = la[i].empName;
+                    myArray[i]["deptName"] = la[i].deptName;
+                    myArray[i]["statName"] = la[i].statName;
+                    
+                    var outtime = la[i].gateOutDateTime;
+                    if (outtime !== null) { outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); myArray[i]["gateOutDateTime"] = outtime; }
+                    else { myArray[i]["gateOutDateTime"] = outtime; }
+
+                    var intime = la[i].gateInDateTime;
+                    if (intime !== null) { intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5); myArray[i]["gateInDateTime"] = intime; }
+                    else { myArray[i]["gateInDateTime"] = intime; }
+
+                    myArray[i]["gpTotalCount"] = "";
+                    myArray[i]["reason"] = la[i].reason;
+                    myArray[i]["typeofGatePass"] = la[i].modeName; //Type Of GatePAss
+                    myArray[i]["placeOfVisit"] = la[i].placeOfVisit;
+                    myArray[i]["statusName"] = la[i].statusName;
+                }
+
+                //Count Hours & Minutes & Add in SAcope Object
+                for (var j = 0; j < la.length; j++) {
+
+                    var GateOutTime = la[j].gateOutDateTime;
+                    var GateInTime = la[j].gateInDateTime;
+                    if (GateOutTime === null || GateInTime === null) { continue; }
+                    else {
+                        var timeStart = new Date(GateOutTime).getTime(); var timeEnd = new Date(GateInTime).getTime();
+                        var hourDiff = timeEnd - timeStart; //in ms
+                        var minDiff = hourDiff / 60 / 1000; //in minutes
+                        var hDiff = hourDiff / 3600 / 1000; //in hours
+                        var humanReadable = {}; humanReadable.hours = Math.floor(hDiff); humanReadable.minutes = minDiff - 60 * humanReadable.hours;
+                        myArray[j]["gpTotalCount"] = humanReadable.hours + ":" + Math.floor(humanReadable.minutes);
+                    }
+                }
+
+                $scope.alldata = myArray;
+                $scope.alldata = $filter('orderBy')($scope.alldata, '-gatePassDate');
+                $scope.GPInfo = $scope.alldata;
                 $scope.$digest();
             }
         };
         all.send();
     };
 
-    //Get All Gate Pass Informatinon for HR Releaser
+    //Get All Gate Pass Informatinon for Releaser
     $scope.ReleaserGatePassInfo = function (entity) {
 
         var FromDate, ToDate;
@@ -353,7 +447,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             if (relall.readyState === 4 && relall.status === 200) {
                 var json = JSON.parse(relall.responseText);
                 $scope.relalldata = json;
-                $scope.relalldata = $filter('orderBy')($scope.relalldata, '-addDateTime');
+                $scope.relalldata = $filter('orderBy')($scope.relalldata, '-gateOutDateTime');
                 $scope.$digest();
             }
         };
@@ -362,6 +456,72 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Using For DIR Pagintaiton Sorting
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
+
+    //Export to Excel CSV File Grid Data
+    $scope.exportAllData = function () {
+        setTimeout(function () {
+
+            $('#loading').removeClass("deactivediv");
+            $('#loading').addClass("activediv");
+
+            var d = new Date();
+            d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            var FileName = "Gate_Pass_Report_" + d;
+
+            $scope.JSONToCSVConvertor($scope.GPInfo, FileName, true);
+
+            $('#loading').removeClass("activediv");
+            $('#loading').addClass("deactivediv");
+        }, 100);
+    };
+
+    //Convert Json Data to CSV 
+    $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {
+
+        //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+        var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+        var CSV = '';
+        CSV += ReportTitle + '\r\n\n'; //Set Report title in first row or line
+
+        //This condition will generate the Label/Header
+        if (ShowLabel) {
+            var row = "";
+            //This loop will extract the label from 1st index of on array
+            for (var index in arrData[0]) {
+                //Now convert each value to string and comma-seprated
+                row += index + ',';
+            }
+            row = row.slice(0, -1);
+            CSV += row + '\r\n'; //append Label row with line break
+        }
+
+        //1st loop is to extract each row
+        for (var i = 0; i < arrData.length; i++) {
+            var row = "";
+            //2nd loop will extract each column and convert it in string comma-seprated
+            for (var index in arrData[i]) { row += '"' + arrData[i][index] + '",'; }
+            row.slice(0, row.length - 1);
+            CSV += row + '\r\n'; //add a line break after each row
+        }
+
+        if (CSV === '') { alert("Invalid data"); return; }
+        var fileName = "MyReport_"; //Generate a file name
+
+        //this will remove the blank-spaces from the title and replace it with an underscore
+        fileName += ReportTitle.replace(/ /g, "_");
+        var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); //Initialize file format you want csv or xls
+
+        // Now the little tricky part.// you can use either>> window.open(uri);// but this will not work in some browsers// or you will not get the correct file extension    
+        // this trick will generate a temp <a /> tag
+
+        var link = document.createElement("a");
+        link.href = uri;
+        link.style = "visibility:hidden"; //set the visibility hidden so it will not effect on your web-layout
+        link.download = fileName + ".csv";
+        document.body.appendChild(link); //this part will append the anchor tag and remove it after automatic click
+        link.click();
+        document.body.removeChild(link);
+    };
 });
 
 //Date Picker
