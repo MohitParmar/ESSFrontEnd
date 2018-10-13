@@ -53,7 +53,6 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                         if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) {
                             document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>";
                             $('#MessageBox').show();
-
                             return;
                         }
                     }

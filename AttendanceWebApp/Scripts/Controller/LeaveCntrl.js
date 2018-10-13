@@ -387,12 +387,9 @@
 
                 //Auto Mail Sending
                 var json = JSON.parse(xhr.responseText);
-
                 var maildata = []; maildata = json;
                 var relsdata = []; relsdata = maildata["applReleaseStatus"];
-
                 var relsauth = relsdata[0]["releaseAuth"];
-
                 var rlsmail = new XMLHttpRequest();
                 rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=' + maildata["releaseGroupCode"] + '&id=' + maildata["leaveAppId"] + '&releaseAuth=' +
                     relsauth, true);

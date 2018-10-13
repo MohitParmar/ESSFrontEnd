@@ -86,7 +86,7 @@
         var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
-        if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
 
         if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
@@ -109,7 +109,7 @@
                             <h4 class="modal-title" id="myModalLabel">Performance Report <label id="eid"></label></h4>
                             <table class="table">
                                 <tr>
-                                    <th dir-paginate="bal in lbaldata|itemsPerPage:10">{{bal.leaveTypeCode}}-{{bal.opening-bal.availed-bal.encashed}}</th>
+                                    <th dir-paginate="bal in lbaldata|itemsPerPage:10">{{bal.leaveTypeCode}} - {{bal.opening-bal.availed-bal.encashed}}</th>
                                 </tr>
                             </table>
                         </div>
@@ -144,6 +144,7 @@
                                                     Date
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='attdDate'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:center;">Shift</th>
                                                 <th style="text-align:center;">Cons Shift</th>
                                                 <th style="text-align:center;">In</th>

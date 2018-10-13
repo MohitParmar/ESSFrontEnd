@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Print Gate Pass Report";
+    ViewBag.Title = "Gate Pass List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -49,7 +49,7 @@
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        if (firstDay.getMonth() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
@@ -64,7 +64,7 @@
             <div class="col-sm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <strong>Print Gate Pass </strong>
+                        <strong>Gate Pass List</strong>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -95,37 +95,31 @@
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="tbl_print">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;">GP No</th>
                                         <th style="text-align:center;">GP Date</th>
-                                        <th style="text-align:center;">Mode</th>
-                                        <th style="text-align:center;">Place</th>
-                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">GP No</th>
                                         <th style="text-align:center;">Out Time</th>
-                                        <th style="text-align:center;">Out User</th>
                                         <th style="text-align:center;">In Time</th>
-                                        <th style="text-align:center;">In User</th>
+                                        <th style="text-align:center;">Purpose</th>
+                                        <th style="text-align:center;">Mode</th>
+                                        <th style="text-align:center;">Place of Visist</th>
                                         <th style="text-align:center;">Status</th>
-                                        <th style="text-align:center;">Created by</th>
-                                        <th>Action</th>
+                                        @*<th>Action</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="d in pUdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
-                                        <td style="text-align:center;width:60px;">{{d.gatePassNo}}</td>
                                         <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;width:60px;">{{d.gatePassNo}}</td>
+                                        <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                        <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
+                                        <td style="text-align:center;">{{d.reason}}</td>
                                         <td style="text-align:center;width:60px;">{{d.modeName}}</td>
                                         <td style="text-align:center;">{{d.placeOfVisit}}</td>
-                                        <td style="text-align:center;">{{d.reason}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                        <td style="text-align:center;width:70px;">{{d.gateOutUser}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                        <td style="text-align:center;width:70px;">{{d.gateInUser}}</td>
                                         <td style="text-align:center;">{{d.statusName}}</td>
-                                        <td style="text-align:center;width:80px;">{{d.addUser}}</td>
-                                        <td>
+                                        @*<td>
                                             <a class="btn-link" target="_blank" href="/Report/PrintPreviewGatePass?gpno={{d.gatePassNo}}&gpdate={{d.gatePassDate | date:'yyyy/MM/dd'}}"
                                                ng-show="d.gatePassStatus == 'N'"><i class="icon-print"></i></a>
-                                        </td>
+                                        </td>*@
                                     </tr>
                                 </tbody>
                             </table>

@@ -3,20 +3,17 @@
 app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
 
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
-    $scope.currentPage = 1;
-    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1; $scope.itemsPerPage = 10;
     $scope.alluserlist = [];
-    $scope._Conpath = '';
-    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
-
-    //Page Reload
-    $scope.RefreshTable = function () { $scope.tableParams.reload(); };
+    $scope._Conpath = ''; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+    $scope.RefreshTable = function () { $scope.tableParams.reload(); }; //Page Reload
 
     jQuery.support.cors = true;
 
+    //Get Current Date
     var d = new Date();
-    var releasearr = [];
-    var rlsarr = [];
+
+    var releasearr = []; var rlsarr = [];
 
     //Get Leave Report Login Releaser 
     $scope.GetLeaveInfo = function () {
@@ -29,7 +26,10 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
 
         var req = new XMLHttpRequest();
-        req.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?empunqid=' + $('#myEmpUnqId').val() + '&fromDt=' + FromDate + '&toDt=' + ToDate, true);
+        req.open('GET', $scope._Conpath +
+            'LeaveReport/GetLeaves?empunqid=' + $('#myEmpUnqId').val() +
+            '&fromDt=' + FromDate +
+            '&toDt=' + ToDate, true);
         req.setRequestHeader('Accept', 'application/json');
         req.onreadystatechange = function () {
             if (req.readyState === 4) {
@@ -44,7 +44,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         req.send();
     };
 
-    //Get Pending Leave Applicatinons List for Release
+    //Get Pending Leave Applicatinons List
     $scope.GetLeaveRequestLists = function () {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val(), true);
@@ -73,21 +73,25 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
 
     //Get Leave Application Details from Leave Application ID
     $scope.GetLeaveApplicationDetails = function () {
+
         var xhr1 = new XMLHttpRequest();
         xhr1.open('GET', $scope._Conpath + 'LeaveApplication/GetLeaveApplication?leaveAppId=' + $scope.LeaveAppId, true);
         xhr1.setRequestHeader('Accept', 'application/json');
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4) {
+
                 var jsonvar = JSON.parse(xhr1.responseText);
                 releasearr = jsonvar;
                 $scope.lappdata = jsonvar;
 
                 //Get Leave Application wise Releaser Details
-                var objarr = [];
-                objarr = $scope.lappdata;
+                var objarr = []; objarr = $scope.lappdata;
 
+                //Get Release Strategy
                 var xhr2 = new XMLHttpRequest();
-                xhr2.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + objarr[0]["releaseGroupCode"] + '&empUnqId=' + $scope.empunqid, true);
+                xhr2.open('GET', $scope._Conpath +
+                    'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + objarr[0]["releaseGroupCode"] +
+                    '&empUnqId=' + $scope.empunqid, true);
                 xhr2.setRequestHeader('Accept', 'application/json');
                 xhr2.onreadystatechange = function () {
                     if (xhr2.readyState === 4) {
@@ -100,7 +104,9 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
 
                 //Get Posted Leave Entries
                 var pstl = new XMLHttpRequest();
-                pstl.open('GET', $scope._Conpath + 'leaveentry?empunqid=' + objarr[0]["empUnqId"] + '&year=' + d.getFullYear(), true);
+                pstl.open('GET', $scope._Conpath +
+                    'leaveentry?empunqid=' + objarr[0]["empUnqId"] +
+                    '&year=' + d.getFullYear(), true);
                 pstl.setRequestHeader('Accept', 'application/json');
                 pstl.onreadystatechange = function () {
                     if (pstl.readyState === 4) {
@@ -121,7 +127,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
 
     //Update Leave Application With Approve / Reject
     $scope.UpdateLeaveReleaseStatus = function (releaseStatusCode, rlsappid, data) {
-
+        
         var rmks = '';
 
         if (releaseStatusCode === "R") {
@@ -133,15 +139,14 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
             }
             else { rmks = data.Remarks; }
         }
-        else {
-            if ((typeof (data) === "undefined")) { rmks = ""; }
-            else { rmks = data.Remarks; }
-        }
+        else { if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; } }
 
         var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-        var detailarr = [];
 
+        // Get Releaser Details From AppReleaseStatus Table 
+        var detailarr = [];
         for (var r = 0; r <= rlsarr.length; r++) {
+            
             var ecode = rlsarr[r]["leaveAppId"];
             if (ecode == rlsappid) {
                 detailarr = rlsarr[r]["applReleaseStatus"];
@@ -149,8 +154,8 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
             }
         }
 
+        //Get ReleaseCode of Releaser
         var dataarr = [];
-
         for (i = 0; i < detailarr.length; i++) {
             var release_auth = detailarr[i]["releaseAuth"];
             if (release_auth === $('#myEmpUnqId').val()) {
@@ -176,11 +181,16 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         jsonObj = JSON.stringify(jsonObj);
 
         var xhr2 = new XMLHttpRequest();
-        xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode, true);
+        xhr2.open('POST', $scope._Conpath +
+            'AppRelease/UpdateApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() +
+            '&releaseStatusCode=' + releaseStatusCode, true);
         xhr2.setRequestHeader("Content-type", "application/json");
         xhr2.onreadystatechange = function () {
+
             if (xhr2.readyState === 4) {
+
                 $('#btnClose').click();
+
                 if (releaseStatusCode === 'F') {
 
                     //Auto Mail Sending
@@ -188,6 +198,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     var ind = 0;
                     var rls_final = '';
 
+                    //Get Final Releaser Details
                     if (detailarr.length > 0) {
                         for (var rls = 0; rls < detailarr.length; rls++) {
                             var rls_code = detailarr[rls]["releaseAuth"];
@@ -199,11 +210,15 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                         }
                     }
 
+                    //IF Final Release equals fasle then mail send
                     if (rls_final !== true) {
+                        
                         var relsauth = detailarr[ind]["releaseAuth"];
                         var rlsmail = new XMLHttpRequest();
-                        rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=' + rlsarr[0]["releaseGroupCode"] + '&id=' + rlsarr[0]["leaveAppId"] + '&releaseAuth=' +
-                            relsauth, true);
+                        rlsmail.open('GET', $scope._Conpath +
+                            'AutoMail/SendMail?releaseGroupCode=' + detailarr[ind]["releaseGroupCode"] +
+                            '&id=' + rlsappid +
+                            '&releaseAuth=' + relsauth, true);
                         rlsmail.setRequestHeader("Content-type", "application/json");
                         rlsmail.send();
                     }
@@ -217,18 +232,22 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     document.getElementById("Remarks").value = "";
                     document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Rejected Sucesfully.. </strong></div>";
                 }
+
                 $('#MessageBox').show();
             }
             else {
                 jQuery('#btnClose').click();
+
                 if (releaseStatusCode === 'F') {
                     document.getElementById("Remarks").value = "";
                     document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Not Approved .. </strong></div>";
                 }
+
                 if (releaseStatusCode === 'R') {
                     document.getElementById("Remarks").value = "";
                     document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Leave Application Not Rejected .. </strong></div>";
                 }
+
                 $('#MessageBox').show();
             }
             $scope.GetLeaveRequestLists();
@@ -244,10 +263,9 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         if ((typeof (entity) === "undefined") ||
             (typeof (entity.FromDt) === "undefined") ||
             (typeof (entity.ToDt) === "undefined")) {
-
-            var d = new Date();
-            FromDate = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
-            ToDate = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+            var dn = new Date();
+            FromDate = dn.getFullYear() + '/' + (dn.getMonth() + 1) + '/' + dn.getDate();
+            ToDate = FromDate;
         }
         else {
             FromDate = entity.FromDt;
@@ -264,7 +282,11 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         }
 
         var relall = new XMLHttpRequest();
-        relall.open('GET', $scope._Conpath + 'GatePass/GetGatePass?empUnqId=' + $('#myEmpUnqId').val() + '&fromDt=' + FromDate + '&toDt=' + ToDate + '&reportType=s', true);
+        relall.open('GET', $scope._Conpath +
+            'GatePass/GetGatePass?empUnqId=' + $('#myEmpUnqId').val() +
+            '&fromDt=' + FromDate +
+            '&toDt=' + ToDate +
+            '&reportType=s', true);
         relall.setRequestHeader("Content-type", "application/json");
         relall.onreadystatechange = function () {
             if (relall.readyState === 4 && relall.status === 200) {

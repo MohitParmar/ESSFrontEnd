@@ -254,6 +254,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveAppController.cs" />
     <Compile Include="Controllers\LeaveAppDataController.cs">
@@ -630,14 +631,15 @@
     <Content Include="Views\LeaveApp\COffApply.cshtml" />
     <Content Include="Views\Report\PendingLeavesForPostReport.cshtml" />
     <Content Include="Views\Report\UniformMasterReport.cshtml" />
-    <Content Include="Views\Master\GatePass.cshtml" />
     <Content Include="Views\Report\PrintGatePassReport.cshtml" />
     <Content Include="Views\Report\AllGatePassReport.cshtml" />
-    <Content Include="Views\Report\PrintPreviewGatePass.cshtml" />
     <Content Include="Views\Report\ReleaserGatePassReport.cshtml" />
     <Content Include="Views\Master\AddressMaster.cshtml" />
     <Content Include="Views\Report\AllUsersDetailsReport.cshtml" />
     <Content Include="Views\Master\MediclaimMaster.cshtml" />
+    <Content Include="Views\GatePass\GatePass.cshtml" />
+    <Content Include="Views\GatePass\GatePassRelease.cshtml" />
+    <Content Include="Views\GatePass\GatePassInOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

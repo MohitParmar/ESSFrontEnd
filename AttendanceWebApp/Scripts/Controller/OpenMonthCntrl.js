@@ -14,18 +14,19 @@ app.controller('OpenMonthController', function ($scope, $http) {
 
     //Change Open Month
     $scope.ChangeOpenMonth = function (openMonth) {
-
+        
         var opmnth = openMonth.yearMonth;
         var d = new Date(opmnth);
 
         var yearmonth;
-        if (d.getMonth() < '10') { yearmonth = (d.getFullYear()) + '0' + (d.getMonth() + 1); }
+        if (d.getMonth() + 1 < '10') { yearmonth = (d.getFullYear()) + '0' + (d.getMonth() + 1); } else { yearmonth = (d.getFullYear().toString()) + (d.getMonth() + 1); }
 
         var opm = new XMLHttpRequest();
         opm.open('POST', $scope._Conpath + 'OpenMonth/ChangeOpenMonth?yearMonth=' + yearmonth, true);
         opm.setRequestHeader("Content-type", "application/json");
         opm.onreadystatechange = function () {
             if (opm.readyState === 4 && opm.status === 200) {
+                $scope.GetOpenMonth();
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month Changed Successfully.. </strong></div>";
                 $('#MessageBox').show();
                 document.getElementById("openMonth").value = "";
@@ -37,12 +38,13 @@ app.controller('OpenMonthController', function ($scope, $http) {
             }
         };
         opm.send();
+        
     };
 
     //Get Current Open Month Details
     $scope.GetOpenMonth = function () {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
+
         var mon = new XMLHttpRequest();
         mon.open('GET', $scope._Conpath + 'OpenMonth/GetOpenMonth', true);
         mon.setRequestHeader("Content-type", "application/json");

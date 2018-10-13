@@ -58,7 +58,7 @@
                     if (reqs.readyState === 4) {
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
-                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Master/GatePass"; }
+                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "GatePass/GatePass"; }
                     }
                 };
                 reqs.send(jsonObj1);

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Gate Pass";
+    ViewBag.Title = "Create Gate Pass";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -53,8 +53,20 @@
 <div ng-app="myApp">
     <div ng-controller="GatePassCntroller">
         <div class="container">
+            <input type="hidden" value="GP" id="releaseGroupCode" />
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
+                <div class="col-sm-12">
+                    <div ng-init="GetRelesaseStratey()">
+                        <table class="table table-responsive" style="text-align:center;">
+                            <tr>
+                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                    <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <div class="col-sm-8">
                     @* Create New Gate Pass *@
                     <div class="panel panel-default">
@@ -83,9 +95,9 @@
                                             <td><label>Mode Of Gate Pass</label></td>
                                             <td>
                                                 <select id="Mode" class="form-control" ng-model="New.Mode" ng-click="GetEmpInfo()">
-                                                    <option value="P" title="Personal" selected>Personal</option>
+                                                    <option value="D" title="Duty Off" selected>Duty Off / Half day</option>
                                                     <option value="O" title="Official">Official</option>
-                                                    <option value="D" title="Duty Off">Duty Off</option>
+                                                    <option value="P" title="Personal">Personal</option>
                                                 </select>
                                             </td>
                                             <td><label>Place Of Visit</label></td>
@@ -100,7 +112,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label>STEP - 1 : Add To List</label></th>
+                                            <th>
+                                                <label>STEP - 1 : Add To List</label>
+                                            </th>
                                             <td style="text-align:left;" colspan="3">
                                                 <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddNewPerson(New)">
                                                     +

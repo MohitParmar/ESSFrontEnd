@@ -17,6 +17,7 @@ app.controller('MediclaimCntroller', function ($scope, $http, $filter) {
 
     // Age Calculate
     $scope._calculateAge = function () {
+        
         var birthday = document.getElementById('dtDOB').value;
         var d = new Date();
         var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
@@ -51,6 +52,24 @@ app.controller('MediclaimCntroller', function ($scope, $http, $filter) {
             }
         };
         emp.send();
+    };
+  
+    $scope.GetMediclaimDetails = function () {
+        
+        for (var i = 0; i < 10 ; i++) {
+            $('.tempRow').remove();
+            var row = $("<tr>" +
+                //"<td style='width:50px;text-align:center;'><input type='hidden' name='AliasLastNames' value='" + i + "'>" + i + "</td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtName' name='Name'></td>" +
+                "<td style='text-align:left;'><div class='right-inner-addon'><i class='icon-calendar'></i><input class='form-control' type='text' id='dtDOB' ng-model='New.DOB' data-date-format='yyyy/MM/dd' ng-change='_calculateAge()' datepicker></div></td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtAge' name='Age' disabled='disabled'></td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtRelation' name='Relation'></td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtGender' name='Gender' disabled='disabled'> </td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtStatus' name='Status'></td>" +
+                "<td style='text-align:left;'><input class='form-control' style='text-transform: uppercase;' type='text' id='txtRemarks' name='Remarks'></td>" +
+                "</tr>");
+            $("#myTable").append(row);
+        }
     };
 });
 

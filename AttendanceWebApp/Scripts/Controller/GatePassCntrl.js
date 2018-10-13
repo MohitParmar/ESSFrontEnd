@@ -12,8 +12,24 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     $scope.gpdate;
     $scope.GPInfo;
 
+    var rlsarr = [];
+
     jQuery.support.cors = true;
+
+    //Get Current Date
+    var d = new Date();
+
     $('#txtEmpCode').val($('#myEmpUnqId').val());
+
+    //Get Release Strategy
+    $scope.GetRelesaseStratey = function () {
+        var rel = new XMLHttpRequest();
+        rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true);
+        rel.setRequestHeader('Accept', 'application/json');
+        rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } };
+        rel.send();
+    };
+
     //Reload Page
     $scope.ResetView = function () { window.location.reload(true); };
 
@@ -66,17 +82,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             return false;
         }
         else { return true; }
-    }
-
-    //Print Perview of Gate Pass
-    $scope.PrintTable = function () {
-        var prtContent = document.getElementById("tblPrint");
-        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-        WinPrint.document.write(prtContent.innerHTML);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
     }
 
     var AddFirst = false;
@@ -183,6 +188,12 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     //Generate List Employees Gate Pass
     $scope.CreateGatePass = function () {
 
+        var d1 = new Date();
+        var dt = d1.getFullYear() + "-" + (d1.getMonth() + 1) + "-" + d1.getDate() + " " + d1.getHours() + ":" + d1.getMinutes();
+        var year = d1.getFullYear().toString()
+        var month = d1.getMonth() + 1
+        var yearmonth = year + (month.toString());
+
         var TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
 
@@ -197,35 +208,39 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                     , "placeOfVisit": $(tr).find('td:eq(3)').text()
                     , "reason": $(tr).find('td:eq(4)').text()
                     , "addUser": $(tr).find('td:eq(5)').text()
+                    , "releaseGroupCode": "GP"
+                    , "yearMonth": yearmonth
                 }
             });
             tbl.shift();// first row will be empty - so remove
             return tbl;
         }
 
+        document.getElementById("btnSubmit").disabled = true;
+
         var xhr = new XMLHttpRequest();
         xhr.open('POST', $scope._Conpath + 'GatePass/CreateGatePass', true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var json = JSON.parse(xhr.responseText);
-                $scope.tmpdta = json;
-                $scope.$digest();
+            if (xhr.readyState === 4) {
+                //
+                //var json = JSON.parse(xhr.responseText);
+                //$scope.tmpdta = json;
+                //$scope.$digest();
 
-                $scope.gpno = $scope.tmpdta[0]['gatePassNo'];
-
-                $scope.gpdate = $scope.tmpdta[0]['gatePassDate'];
-                var gpdt = $scope.gpdate;
-                gpdt = (gpdt).slice(0, 10);
+                //$scope.gpno = $scope.tmpdta[0]['gatePassNo'];
+                //$scope.gpdate = $scope.tmpdta[0]['gatePassDate'];
+                //var gpdt = $scope.gpdate;
+                //gpdt = (gpdt).slice(0, 10);
 
                 document.getElementById("MessageBox").innerHTML =
-                                    "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Gate Pass Generated Sucesfully..</strong>" +
-                                    "<div style='float:right;'>" +
-                                    "<strong>" +
-                                    "<a style='float: right;' target='_blank' href='/Report/PrintPreviewGatePass?gpno=" + $scope.gpno + "&gpdate=" + gpdt + "'>Print Preview</a></strong></div></div>";
+                                    "<div class='alert alert-success alert-dismissable'>" +
+                                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                                    "<strong>Gate Pass Generated Sucesfully..</strong>" +
+                                    "</div>";
+                //"<div style='float:right;'><strong><a style='float: right;' target='_blank' href='/Report/PrintPreviewGatePass?gpno=" + $scope.gpno + "&gpdate=" + gpdt + "'>Print Preview</a></strong></div>";
                 $('#MessageBox').show();
 
-                document.getElementById("btnSubmit").disabled = true;
                 $("#aliasTable").find("tr:not(:first)").remove();
                 document.getElementById("txtEmpCode").value = "";
                 document.getElementById("txtEmpName").value = "";
@@ -234,18 +249,146 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                 document.getElementById("txtPurpose").value = "";
                 $("#Mode option:first").attr("selected", true);
             }
-            else {
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Not Generated.. </strong></div>";
-                $('#MessageBox').show();
-                document.getElementById("txtEmpCode").value = "";
-                document.getElementById("txtEmpName").value = "";
-                document.getElementById("txtStat").value = "";
-                document.getElementById("txtPlace").value = "";
-                document.getElementById("txtPurpose").value = "";
-                $("#Mode option:first").attr("selected", true);
-            }
+            //else {
+            //    
+            //    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Not Generated.. </strong></div>";
+            //    $('#MessageBox').show();
+            //    document.getElementById("txtEmpCode").value = "";
+            //    document.getElementById("txtEmpName").value = "";
+            //    document.getElementById("txtStat").value = "";
+            //    document.getElementById("txtPlace").value = "";
+            //    document.getElementById("txtPurpose").value = "";
+            //    $("#Mode option:first").attr("selected", true);
+            //    document.getElementById("btnSubmit").disabled = false;
+            //}
         };
         xhr.send(TableData);
+    };
+
+    //Get Pending Gate Pass List
+    $scope.GetGPLists = function () {
+
+        var gplst = new XMLHttpRequest();
+        gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true);
+        gplst.setRequestHeader('Accept', 'application/json');
+        gplst.onreadystatechange = function () {
+            if (gplst.readyState === 4) {
+
+                var json = JSON.parse(gplst.responseText);
+                rlsarr = json;
+                $scope.relalldata = json;
+                $scope.relalldata = $filter('orderBy')($scope.relalldata, '-id');
+                $scope.curPage1 = 0;
+                $scope.pageSize1 = 10;
+                $scope.$digest();
+            }
+        };
+        gplst.send();
+    };
+
+    //Update Gate Pass With Approve / Reject
+    $scope.UpdateGPStatus = function (releaseStatusCode, rlsgpid) {
+
+        //Set Current Date
+        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+
+        // Get Releaser Details From AppReleaseStatus Table 
+        var detailarr = [];
+        for (var r = 0; r <= rlsarr.length; r++) { var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) { detailarr = rlsarr[r]["applReleaseStatus"]; break; } }
+
+        //Get ReleaseCode of Releaser
+        var dataarr = [];
+        for (i = 0; i < detailarr.length; i++) { var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; } };
+
+        var jsonObj = {};
+        jsonObj.YearMonth = dataarr.yearMonth;
+        jsonObj.ReleaseGroupCode = dataarr.releaseGroupCode;
+        jsonObj.ApplicationId = rlsgpid;
+        jsonObj.ReleaseStrategy = dataarr.releaseStrategy;
+        jsonObj.ReleaseStrategyLevel = dataarr.releaseStrategyLevel;
+        jsonObj.ReleaseCode = dataarr.releaseCode;
+        jsonObj.ReleaseStatusCode = dataarr.releaseStatusCode;
+        jsonObj.ReleaseDate = strDate;
+        jsonObj.ReleaseAuth = dataarr.releaseAuth;
+        jsonObj.IsFinalRelease = dataarr.isFinalRelease;
+        jsonObj.Remarks = "";
+        jsonObj.LeaveApplications_YearMonth = null;
+        jsonObj.LeaveApplications_LeaveAppId = null;
+        jsonObj = JSON.stringify(jsonObj);
+
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', $scope._Conpath +
+            'AppRelease/UpdateGpStatus?empUnqId=' + $('#myEmpUnqId').val() +
+            '&releaseStatusCode=' + releaseStatusCode +
+            '&releaseGroupCode=' + dataarr.releaseGroupCode, true);
+        xhr2.setRequestHeader("Content-type", "application/json");
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState === 4) {
+                if (releaseStatusCode === 'F') {
+                    document.getElementById("Remarks").value = "";
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Approved Sucesfully.. </strong></div>";
+                }
+                if (releaseStatusCode === 'R') {
+                    document.getElementById("Remarks").value = "";
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Rejected Sucesfully.. </strong></div>";
+                }
+                $('#MessageBox').show();
+                $scope.GetGPLists();
+            }
+            else {
+                if (releaseStatusCode === 'F') {
+                    document.getElementById("Remarks").value = "";
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Gate Pass Not Approved .. </strong></div>";
+                }
+                if (releaseStatusCode === 'R') {
+                    document.getElementById("Remarks").value = "";
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Gate Pass Not Rejected .. </strong></div>";
+                }
+                $('#MessageBox').show();
+                $scope.GetGPLists();
+            }
+        };
+        xhr2.send(jsonObj);
+    };
+
+    //Show / Hide Div
+    $scope.LoadData = function (str) {
+        if (str === "OUT") {
+            $('#divOUT').show();
+            $('#divIN').hide();
+            document.getElementById("outinmsg").innerHTML
+        }
+        if (str === "IN") {
+            $('#divOUT').hide();
+            $('#divIN').show();
+        }
+    };
+
+    //Gate Pass IN/OUT 
+    $scope.GateINOUT = function (barcode, empid, empname) {
+        debugger;
+        var retVal = confirm(empid + ":" + empname);
+        if (retVal === true) {
+            var gpio = new XMLHttpRequest();
+            gpio.open('GET', $scope._Conpath + 'GatePass/GetGatePass?request=' + barcode, true);
+            gpio.setRequestHeader("Content-type", "application/json");
+            gpio.onreadystatechange = function () {
+                if (gpio.readyState === 4 && gpio.status === 200) {
+                    var json = JSON.parse(gpio.responseText);
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + json.errorMessage + "</strong></div>";
+                    $('#MessageBox').show();
+                    $scope.AllGatePassInfo();
+                }
+                else if (gpio.status === 400) {
+                    debugger;
+                    var json1 = JSON.parse(gpio.responseText);
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> " + json1.errorMessage + " </strong></div>";
+                    $('#MessageBox').show();
+                    $scope.AllGatePassInfo();
+                }
+            };
+            gpio.send();
+        } else { $scope.AllGatePassInfo(); return false; }
     };
 
     //Print out of Gate Pass
@@ -273,10 +416,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                 $scope.pdata = json;
                 $scope.$digest();
                 JsBarcode(".barcode").init();
-            }
-            else {
-
-                var ss = prnt.responseText;
             }
         };
         prnt.send();
@@ -325,95 +464,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         puser.send();
     };
 
-    //Get All Gate Pass Informatinon for HR Department
-    $scope.AllGatePassInfo = function (gpdata) {
-
-        var FromDate, ToDate;
-
-        if ((typeof (gpdata) === "undefined") ||
-            (typeof (gpdata.FromDt) === "undefined") ||
-            (typeof (gpdata.ToDt) === "undefined")) {
-
-            var date = new Date();
-            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-            FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate();
-            ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
-        }
-        else {
-            FromDate = gpdata.FromDt;
-            ToDate = gpdata.ToDt;
-        }
-
-        var date1 = new Date(FromDate);
-        var date2 = new Date(ToDate);
-
-        if (date2 < date1) {
-            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>";
-            $('#MessageBox').show();
-            return false;
-        }
-
-        var all = new XMLHttpRequest();
-        all.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true);
-        all.setRequestHeader("Content-type", "application/json");
-        all.onreadystatechange = function () {
-            if (all.readyState === 4 && all.status === 200) {
-                //$scope.GPInfo = all.responseText;
-                var json = JSON.parse(all.responseText);
-
-                var la = new Array; la = json;
-                var myArray = [];
-                for (var i = 0; i < la.length; i++) {
-                    myArray.push([]);
-                    myArray[i]["gatePassDate"] = la[i].gatePassDate.replace("T00:00:00", "");
-                    myArray[i]["empUnqId"] = la[i].empUnqId;
-                    myArray[i]["empName"] = la[i].empName;
-                    myArray[i]["deptName"] = la[i].deptName;
-                    myArray[i]["statName"] = la[i].statName;
-                    
-                    var outtime = la[i].gateOutDateTime;
-                    if (outtime !== null) { outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); myArray[i]["gateOutDateTime"] = outtime; }
-                    else { myArray[i]["gateOutDateTime"] = outtime; }
-
-                    var intime = la[i].gateInDateTime;
-                    if (intime !== null) { intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5); myArray[i]["gateInDateTime"] = intime; }
-                    else { myArray[i]["gateInDateTime"] = intime; }
-
-                    myArray[i]["gpTotalCount"] = "";
-                    myArray[i]["reason"] = la[i].reason;
-                    myArray[i]["typeofGatePass"] = la[i].modeName; //Type Of GatePAss
-                    myArray[i]["placeOfVisit"] = la[i].placeOfVisit;
-                    myArray[i]["statusName"] = la[i].statusName;
-                }
-
-                //Count Hours & Minutes & Add in SAcope Object
-                for (var j = 0; j < la.length; j++) {
-
-                    var GateOutTime = la[j].gateOutDateTime;
-                    var GateInTime = la[j].gateInDateTime;
-                    if (GateOutTime === null || GateInTime === null) { continue; }
-                    else {
-                        var timeStart = new Date(GateOutTime).getTime(); var timeEnd = new Date(GateInTime).getTime();
-                        var hourDiff = timeEnd - timeStart; //in ms
-                        var minDiff = hourDiff / 60 / 1000; //in minutes
-                        var hDiff = hourDiff / 3600 / 1000; //in hours
-                        var humanReadable = {}; humanReadable.hours = Math.floor(hDiff); humanReadable.minutes = minDiff - 60 * humanReadable.hours;
-                        myArray[j]["gpTotalCount"] = humanReadable.hours + ":" + Math.floor(humanReadable.minutes);
-                    }
-                }
-
-                $scope.alldata = myArray;
-                $scope.alldata = $filter('orderBy')($scope.alldata, '-gatePassDate');
-                $scope.GPInfo = $scope.alldata;
-                $scope.$digest();
-            }
-        };
-        all.send();
-    };
-
-    //Get All Gate Pass Informatinon for Releaser
+    //Get All Gate Pass Informatinon for Releaser Report
     $scope.ReleaserGatePassInfo = function (entity) {
 
         var FromDate, ToDate;
@@ -452,6 +503,100 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             }
         };
         relall.send();
+    };
+
+    //Get All Gate Pass Informatinon for HR Department
+    $scope.AllGatePassInfo = function (gpdata) {
+
+        var FromDate, ToDate;
+
+        if ((typeof (gpdata) === "undefined") ||
+            (typeof (gpdata.FromDt) === "undefined") ||
+            (typeof (gpdata.ToDt) === "undefined")) {
+
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+            FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate();
+            ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
+        }
+        else {
+            FromDate = gpdata.FromDt;
+            ToDate = gpdata.ToDt;
+        }
+
+        var date1 = new Date(FromDate);
+        var date2 = new Date(ToDate);
+
+        if (date2 < date1) {
+            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>";
+            $('#MessageBox').show();
+            return false;
+        }
+
+        var all = new XMLHttpRequest();
+        all.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true);
+        all.setRequestHeader("Content-type", "application/json");
+        all.onreadystatechange = function () {
+            if (all.readyState === 4 && all.status === 200) {
+                //$scope.GPInfo = all.responseText;
+
+                var json = JSON.parse(all.responseText);
+
+                var la = new Array; la = json;
+                var myArray = [];
+                for (var i = 0; i < la.length; i++) {
+                    myArray.push([]);
+                    myArray[i]["gatePassNo"] = la[i].gatePassNo;
+                    myArray[i]["gatePassDate"] = la[i].gatePassDate.replace("T00:00:00", "");
+                    myArray[i]["empUnqId"] = la[i].empUnqId;
+                    myArray[i]["empName"] = la[i].empName;
+                    myArray[i]["deptName"] = la[i].deptName;
+                    myArray[i]["statName"] = la[i].statName;
+
+                    var outtime = la[i].gateOutDateTime;
+                    if (outtime !== null) {
+                        outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); myArray[i]["gateOutDateTime"] = outtime;
+                        myArray[i]["gateOutDateTimeORG"] = la[i].gateOutDateTime;
+                    }
+                    else { myArray[i]["gateOutDateTime"] = outtime; }
+
+                    var intime = la[i].gateInDateTime;
+                    if (intime !== null) { intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5); myArray[i]["gateInDateTime"] = intime; }
+                    else { myArray[i]["gateInDateTime"] = intime; }
+
+                    myArray[i]["gpTotalCount"] = "";
+                    myArray[i]["reason"] = la[i].reason;
+                    myArray[i]["typeofGatePass"] = la[i].modeName; //Type Of GatePAss
+                    myArray[i]["placeOfVisit"] = la[i].placeOfVisit;
+                    myArray[i]["statusName"] = la[i].statusName;
+                    myArray[i]["barCode"] = la[i].barCode;
+                }
+
+                //Count Hours & Minutes & Add in SAcope Object
+                for (var j = 0; j < la.length; j++) {
+
+                    var GateOutTime = la[j].gateOutDateTime;
+                    var GateInTime = la[j].gateInDateTime;
+                    if (GateOutTime === null || GateInTime === null) { continue; }
+                    else {
+                        var timeStart = new Date(GateOutTime).getTime(); var timeEnd = new Date(GateInTime).getTime();
+                        var hourDiff = timeEnd - timeStart; //in ms
+                        var minDiff = hourDiff / 60 / 1000; //in minutes
+                        var hDiff = hourDiff / 3600 / 1000; //in hours
+                        var humanReadable = {}; humanReadable.hours = Math.floor(hDiff); humanReadable.minutes = minDiff - 60 * humanReadable.hours;
+                        myArray[j]["gpTotalCount"] = humanReadable.hours + ":" + Math.floor(humanReadable.minutes);
+                    }
+                }
+
+                $scope.alldata = myArray;
+                $scope.alldata = $filter('orderBy')($scope.alldata, '-gatePassDate');
+                $scope.GPInfo = $scope.alldata;
+                $scope.$digest();
+            }
+        };
+        all.send();
     };
 
     //Using For DIR Pagintaiton Sorting
@@ -539,3 +684,14 @@ app.directive("datepicker", function () {
 
 ////Generate Gatepass BarCode
 //$scope.GenerateBarCode = function () { JsBarcode("#barcode", '20010915:000001', { width: 1, height: 50 }); };
+
+////Print Perview of Gate Pass
+//$scope.PrintTable = function () {
+//    var prtContent = document.getElementById("tblPrint");
+//    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+//    WinPrint.document.write(prtContent.innerHTML);
+//    WinPrint.document.close();
+//    WinPrint.focus();
+//    WinPrint.print();
+//    WinPrint.close();
+//}

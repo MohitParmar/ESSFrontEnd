@@ -38,32 +38,19 @@
         }
 </style>
 
-@*<script>
-        function _calculateAge() { // birthday is a date
-            var birthday = document.getElementById('dtDOB').value;
-            var d = new Date();
-            var ageDifMs = d.getDate() - birthday;
-            var ageDate = new Date(ageDifMs); // miliseconds from epoch
-            document.getElementById('txtAge') = Math.abs(ageDate.getUTCFullYear() - 1970);
-            //return Math.abs(ageDate.getUTCFullYear() - 1970);
-        }
-    </script>*@
-
 <div ng-app="myApp" ng-controller="MediclaimCntroller">
     <div class="container">
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
-            @* Add / Update Present Address in ESS Database *@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Add / Update Family Details for Mediclaim Purpose</strong></div>
                     <div class="panel-body">
                         <form role="form" name="MediclaimForm" novalidate>
-                            <div ng-init="GetPresentAddress()"></div>
+                            <div ng-init="GetMediclaimDetails()"></div>
                             <table id="myTable" class="table table-responsive table-bordered table-hover  table-striped table-condensed">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;">Sr No.</th>
                                         <th style="text-align:center;">Name</th>
                                         <th style="text-align:center;">Date Of Birth</th>
                                         <th style="text-align:center;">Age</th>
@@ -74,36 +61,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td style="width:50px;text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtName" name="Name"></td>
-                                        <td style="text-align:left;">
-                                            <div class="right-inner-addon">
-                                                <i class="icon-calendar"></i>
-                                                <input class="form-control" type="text" id="dtDOB" ng-model="New.DOB" data-date-format="yyyy/MM/dd" placeholder="Date Of Birth"
-                                                       ng-change="_calculateAge()" datepicker>
-                                            </div>
-                                        </td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtAge" name="Age" disabled="disabled"></td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtRelation" name="Relation"></td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtGender" name="Gender" disabled="disabled"> </td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtStatus" name="Status"> </td>
-                                        <td style="text-align:left;"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtRemarks" name="Remarks"></td>
+                                    <tr class="tempRow">
+                                        <td colspan="7">No information entered.</td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="8" style="text-align:right;">
-                                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reload" ng-click="ResetView()" />
-                                            <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
-                                                    value="Submit Presenrt Address" name="Save" ng-click="UpdateAddress()">
-                                                Submit Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </form>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
+                                value="Submit Presenrt Address" name="Save" ng-click="UpdateFamilyDetails()">
+                            Submit Details
+                        </button>
                     </div>
                 </div>
             </div>
