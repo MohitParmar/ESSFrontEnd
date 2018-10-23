@@ -576,6 +576,7 @@
     <Content Include="UserManuals\images\UpdateEmailId\1 %283%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %284%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %285%29.png" />
+    <Content Include="Views\OD\ODApply.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -611,7 +612,6 @@
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\LeavePosting\LeavePosting.cshtml" />
     <Content Include="Views\Report\LeaveReport.cshtml" />
-    <Content Include="Views\OD\ODApply.cshtml" />
     <Content Include="Views\Home\EmployeeProfile.cshtml" />
     <Content Include="Views\Report\PostedLeaveReport.cshtml" />
     <Content Include="Views\LeaveApp\LeaveCancellation.cshtml" />
@@ -640,6 +640,8 @@
     <Content Include="Views\GatePass\GatePass.cshtml" />
     <Content Include="Views\GatePass\GatePassRelease.cshtml" />
     <Content Include="Views\GatePass\GatePassInOut.cshtml" />
+    <Content Include="Views\GatePass\ContractualGatePass.cshtml" />
+    <Content Include="Views\GatePass\GPSecReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

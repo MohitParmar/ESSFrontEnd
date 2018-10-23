@@ -21,7 +21,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
 
     //Leave Posting Method with Parameteer data(Remarks for Rejection),value(Leave Application ID),value1(YearMonth),value2(IS Posted Flag)
     $scope.CostLeave = function (data, value, value1, value2) {
-
+        debugger;
         var TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
 
@@ -85,16 +85,18 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
             }
             return tbl;
         }
-        
+
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
         xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
+                debugger;
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Leave Posted / Rejected Sucesfully.. </strong></div>";
                 $('#MessageBox').show();
             }
             else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
+                debugger;
                 var str = xhr1.responseText.replace("[", '').replace("]", '').toString();
                 var fields = str.split(',');
                 var er = "";

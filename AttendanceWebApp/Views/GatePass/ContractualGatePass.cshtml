@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Regular Employee Gate Pass";
+    ViewBag.Title = "Labour Gate Pass";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -54,32 +54,21 @@
     <div ng-controller="GatePassCntroller">
         <div class="container">
             <input type="hidden" value="GP" id="releaseGroupCode" />
-            <input type="hidden" value="COMP" id="empWrkGrp" />
+            <input type="hidden" value="CONT" id="empWrkGrp" />
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
-                <div class="col-sm-12">
-                    <div ng-init="GetRelesaseStratey()">
-                        <table class="table table-responsive" style="text-align:center;">
-                            <tr>
-                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                                    <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
                 <div class="col-sm-8">
                     @* Create New Gate Pass *@
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>Regular Employee Out Gate Pass</strong></div>
+                        <div class="panel-heading"><strong>Labour Out Gate Pass</strong></div>
                         <div class="panel-body" style="padding-bottom:5px;">
                             <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
-                                <div ng-init="GetEmpInfo()">
+                                <div>
                                     <table id="myTable" class="table table-responsive table-condensed" style="margin-bottom:5px;">
                                         <tr>
                                             <td><label>Employee Code</label></td>
                                             <td>
-                                                <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" disabled="disabled"
+                                                <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId"
                                                        onchange="validateCode()" required>
                                             </td>
                                             <td colspan="2">

@@ -7,6 +7,7 @@
 @{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
 <head>
     <title>GATE PASS IN OUT</title>
+    @*<meta http-equiv="refresh" content="30">*@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
@@ -84,6 +85,7 @@
 
     <script>
         window.onload = function () {
+            $('#outinmsg').text("OUT");
             var date = new Date();
             var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -96,129 +98,126 @@
         }
     </script>
 </head>
-<body>
+<body style="background-color:white;">
     <div class="main">
         <div class="main-inner">
-            @*<div class="container HTMLCONTAIN">*@
-            @*<div class="row">*@
             <div data-ng-app="myApp" data-ng-controller="GatePassCntroller">
-                @*<div class="container">*@
                 <input type="hidden" value="GP" id="releaseGroupCode" />
                 <div id="MessageBox" class="table-responsive"></div>
-                <div class="row">
-                    @* New Gate Pass Information For OUT *@
-                    <div class="col-sm-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <strong>GATE PASS IN/OUT LIST</strong>
+                @* New Gate Pass Information For OUT *@
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>GATE PASS IN/OUT LIST</strong>
+                        <div style="float:right;">
+                            <a class="btn-link" target="_blank" href="/GatePass/GPSecReport">Gate Pass Report</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-lg btn-warning" style="width:100px;" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
+                        <button class="btn btn-lg btn-success" style="width:100px;" id="btnIN" ng-click="LoadData('IN')">IN</button>
+                        <div style="text-align:center;margin:0px;padding:0px;">
+                            <h3 style="margin-top:5px;margin-bottom:5px;">
+                                <label id="outinmsg" style="text-align:center;font-size:larger;"></label>
+                            </h3>
+                        </div>
+                        <div ng-init="AllGatePassInfo()">
+                            <div class="table-responsive" id="divOUT">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('gatePassNo')">
+                                                GP No.
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassNo'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('typeofGatePass')">
+                                                Mode
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100"
+                                            ng-show="d.statusName == 'New' && d.releaseStatusCode == 'F'">
+                                            <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;font-size:large;">{{d.empName}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.typeofGatePass}}</td>
+                                            <td style="text-align:center;">
+                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnOut" name="btnInOut" value="OUT" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="panel-body">
-                                <button class="btn btn-warning" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
-                                <button class="btn btn-success" id="btnIN" ng-click="LoadData('IN')">IN</button>
-                                @*<label id="outinmsg"><strong>OUT</strong></label>*@
-                                <hr />
-                                <div ng-init="AllGatePassInfo()">
-                                    <div class="table-responsive" id="divOUT">
-                                        <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center;">Sr No.</th>
-                                                    <th style="text-align:center;" ng-click="sort('empUnqId')">
-                                                        Emp.Code
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    <th style="text-align:center;" ng-click="sort('empName')">
-                                                        Employee Name
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    <th style="text-align:center;" ng-click="sort('typeofGatePass')">
-                                                        Mode
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    @*<th style="text-align:center;">Station</th><th style="text-align:center;">Reason</th>
-                                                        <th style="text-align:center;">Place Of Visit</th>*@
-                                                    <th style="text-align:center;">Action</th>
-                                                </tr>
-                                                <tr>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
-                                                    <td></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
-                                                    ng-show="d.statusName == 'New'">
-                                                    <td style="text-align:center;">{{d.gatePassNo}}</td>
-                                                    <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                    <td style="text-align:left;">{{d.empName}}</td>
-                                                    <td style="text-align:center;">{{d.typeofGatePass}}</td>
-                                                    @*<td style="text-align:left;">{{d.statName}}</td><td style="text-align:left;">{{d.reason}}</td>
-                                                        <td style="text-align:left;">{{d.placeOfVisit}}</td>*@
-                                                    <td style="text-align:center;">
-                                                        <input type="button" class="btn btn-primary" id="btnOut" name="btnInOut" value="Out" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                                    </div>
-                                    <div class="table-responsive" id="divIN" hidden="hidden">
-                                        <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center;">Sr No.</th>
-                                                    <th style="text-align:center;" ng-click="sort('empUnqId')">
-                                                        Emp.Code
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    <th style="text-align:center;" ng-click="sort('empName')">
-                                                        Employee Name
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    <th style="text-align:center;" ng-click="sort('typeofGatePass')">
-                                                        Mode
-                                                        <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                    </th>
-                                                    @*<th style="text-align:center;">Station</th><th style="text-align:center;">Reason</th>
-                                                        <th style="text-align:center;">Place Of Visit</th>*@
-                                                    <th style="text-align:center;">Out Time</th>
-                                                    <th style="text-align:center;">Action</th>
-                                                </tr>
-                                                <tr>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
-                                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
-                                                    <td colspan="2"></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
-                                                    ng-show="d.statusName == 'Out'">
-                                                    <td style="text-align:center;">{{d.gatePassNo}}</td>
-                                                    <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                    <td style="text-align:left;">{{d.empName}}</td>
-                                                    <td style="text-align:center;">{{d.typeofGatePass}}</td>
-                                                    @*<td style="text-align:left;">{{d.statName}}</td><td style="text-align:left;">{{d.reason}}</td>
-                                                        <td style="text-align:left;">{{d.placeOfVisit}}</td>*@
-                                                    <td style="text-align:center;">{{d.gateOutDateTimeORG | date:'dd/MM/yy hh:mm'}}</td>
-                                                    <td style="text-align:center;">
-                                                        <input type="button" class="btn btn-primary" id="btnIn" name="btnInOut" value="In" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                                    </div>
-                                </div>
+                            <div class="table-responsive" id="divIN" hidden="hidden" style="font-size:large;">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('gatePassNo')">
+                                                GP No.
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassNo'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('typeofGatePass')">
+                                                Mode
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Out Time</th>
+                                            <th style="text-align:center;">Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100"
+                                            ng-show="d.statusName == 'Out'">
+                                            <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;font-size:large;">{{d.empName}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.typeofGatePass}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.gateOutDateTimeORG | date:'dd/MM/yy hh:mm'}}</td>
+                                            <td style="text-align:center;">
+                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnIn" name="btnInOut" value="IN" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -226,9 +225,6 @@
             </div>
         </div>
     </div>
-    @*</div>
-        </div>
-            </div>*@
     <script src="~/Content/js/jquery-1.7.2.min.js"></script>
     <script src="~/Content/js/bootstrap.js"></script>
 </body>

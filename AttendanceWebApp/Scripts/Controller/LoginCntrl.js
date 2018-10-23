@@ -56,9 +56,12 @@
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
+                        debugger;
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
-                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "GatePass/GatePass"; }
+                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Report/PerformanceReport"; }
+
+                        if ($scope.Udata[0]["isHod"] === true) { window.location.href = "GatePass/GatePassInOut"; }
                     }
                 };
                 reqs.send(jsonObj1);

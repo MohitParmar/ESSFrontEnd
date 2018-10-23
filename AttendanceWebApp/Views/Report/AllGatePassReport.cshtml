@@ -47,7 +47,7 @@
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        if (firstDay.getMonth() +1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
@@ -115,6 +115,9 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;">Work Group</th>
+                                            <th style="text-align:center;">Category</th>
+                                            <th style="text-align:center;">Deignation</th>
                                             <th style="text-align:center;">Station</th>
                                             <th style="text-align:center;">Out Time</th>
                                             <th style="text-align:center;">In Time</th>
@@ -131,16 +134,19 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;">Created By</th>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                            <td colspan="3"></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" /></td>
                                             <td colspan="4"></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.placeOfVisit" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
+                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -151,6 +157,9 @@
                                             <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;width:185px;">{{d.empName}}</td>
+                                            <td style="text-align:left;">{{d.wrkGrp}}</td>
+                                            <td style="text-align:left;">{{d.catName}}</td>
+                                            <td style="text-align:left;">{{d.desgName}}</td>
                                             <td style="text-align:left;">{{d.statName}}</td>
                                             <td style="text-align:center;width:95px;">{{d.gateOutDateTime}}</td>
                                             <td style="text-align:center;width:95px;">{{d.gateInDateTime}}</td>
@@ -159,6 +168,7 @@
                                             <td style="text-align:left;width:60px;">{{d.typeofGatePass}}</td>
                                             <td style="text-align:left;">{{d.placeOfVisit}}</td>
                                             <td style="text-align:center;">{{d.statusName}}</td>
+                                            <td style="text-align:center;">{{d.addUser}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

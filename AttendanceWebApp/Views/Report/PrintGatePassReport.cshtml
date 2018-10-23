@@ -102,7 +102,8 @@
                                         <th style="text-align:center;">Purpose</th>
                                         <th style="text-align:center;">Mode</th>
                                         <th style="text-align:center;">Place of Visist</th>
-                                        <th style="text-align:center;">Status</th>
+                                        <th style="text-align:center;">GP Status</th>
+                                        <th style="text-align:center;">Release Status</th>
                                         @*<th>Action</th>*@
                                     </tr>
                                 </thead>
@@ -116,12 +117,25 @@
                                         <td style="text-align:center;width:60px;">{{d.modeName}}</td>
                                         <td style="text-align:center;">{{d.placeOfVisit}}</td>
                                         <td style="text-align:center;">{{d.statusName}}</td>
+                                        <td style="text-align:center;width:60px;"
+                                            ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'}">
+                                            {{d.releaseStatusCode}}
+                                        </td>
                                         @*<td>
-                                            <a class="btn-link" target="_blank" href="/Report/PrintPreviewGatePass?gpno={{d.gatePassNo}}&gpdate={{d.gatePassDate | date:'yyyy/MM/dd'}}"
-                                               ng-show="d.gatePassStatus == 'N'"><i class="icon-print"></i></a>
-                                        </td>*@
+                                                <a class="btn-link" target="_blank" href="/Report/PrintPreviewGatePass?gpno={{d.gatePassNo}}&gpdate={{d.gatePassDate | date:'yyyy/MM/dd'}}"
+                                                   ng-show="d.gatePassStatus == 'N'"><i class="icon-print"></i></a>
+                                            </td>*@
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="9">
+                                            <strong><text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                             <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                         </div>

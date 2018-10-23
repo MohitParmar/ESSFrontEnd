@@ -68,19 +68,29 @@
 
         $(window).on('load', function () {
 
+            if (_ishod == "True") {
+                $('#mnuGatePassInOut').show();
+
+                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
+                $('#mnuUserManual').hide();
+                $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
+            }
+
+
             //if user role
             if (chk === "IsUser" && _wrkgrp === "COMP") {
                 $('#mnuMaster').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuContCreateGatePass').hide();
             } else if (chk === "IsUser" && _wrkgrp !== "COMP") {
-                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuUserManual').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
+                $('#mnuUserManual').hide();
                 $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
             }
 
             //if releaser role
             if (chk === "IsReleaser") {
                 $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuGatePassRelease').show(); $('#mnuRelGatePassReport').show();
+                $('#mnuContCreateGatePass').show();
 
                 $('#mnuUitility').hide(); $('#mnuMaster').hide(); $('#mnuLeavePosting').hide(); $('#mnuGatePassInOut').hide();
                 $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
@@ -91,7 +101,7 @@
             if (chk === "IsHrUser") {
                 $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
                 $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuAllGatePassReport').show(); $('#mnuEmpRlsStrLstReport').show();
-                $('#mnuUniformMasterReport').show(); $('#mnuUserPresentAddressReport').show();
+                $('#mnuUniformMasterReport').show(); $('#mnuUserPresentAddressReport').show(); $('#mnuContCreateGatePass').hide();
 
                 $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide(); $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide();
                 $('#mnuGatePassInOut').hide();
@@ -103,12 +113,12 @@
                 $('#mnuReleaserEmpReport').show(); $('#mnuLeaveReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
                 $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
                 $('#mnuRelGatePassReport').show(); $('#mnuAllGatePassReport').show(); $('#mnuUserPresentAddressReport').show();
-                $('#mnuGatePassInOut').hide();
+                $('#mnuGatePassInOut').hide(); $('#mnuContCreateGatePass').show();
             }
 
-            if (_ishod == "True") {
-                $('#mnuGatePassInOut').show();
-            }
+            //if (_ishod == "True") {
+            //    $('#mnuGatePassInOut').show();
+            //}
         });
     </script>
 
@@ -189,7 +199,7 @@
                                 <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
                                 <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
                                 @*<li id="mnuMediclaimMaster"><a href="/Master/MediclaimMaster">Mediclaim Details</a></li>*@
-                                <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
+                                @*<li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>*@
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
                                 <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
@@ -239,6 +249,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li id="mnuCreateGatePass"><a href="/GatePass/GatePass">New Gate Pass</a></li>
+                            <li id="mnuContCreateGatePass"><a href="/GatePass/ContractualGatePass">Labour Gate Pass</a></li>
                             <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Gate Pass List</a></li>
                             <li id="mnuGatePassRelease"><a href="/GatePass/GatePassRelease">Gate Pass Release</a></li>
                             <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>

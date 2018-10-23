@@ -7,6 +7,7 @@ namespace AttendanceWebApp.Controllers
 {
     public class LeaveAppController : Controller
     {
+        //Leave Application
         public ActionResult LeaveApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -19,6 +20,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //COFF Application
         public ActionResult COffApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -31,6 +33,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //Leave Rules As Per Policy
         public ActionResult LeaveRules()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -43,6 +46,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //Short Leave Cancellation
         public ActionResult LeaveCancellation()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -55,6 +59,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //Full Leave Cancellation
         public ActionResult FullLeaveCancel()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
