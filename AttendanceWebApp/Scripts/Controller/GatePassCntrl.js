@@ -74,7 +74,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
                 if (LoginUserWG === "COMP" && PageWG === "COMP" && SelUserWG !== "COMP") {
                     //Validation For Company Regular Employee GatePass List
-                    debugger;
+
                     document.getElementById("txtEmpCode").value = "";
                     document.getElementById("txtPlace").value = "";
                     document.getElementById("txtPurpose").value = "";
@@ -82,7 +82,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                     alert("User not Allow to Add in this gate pass list");
                 }
                 else if (LoginUserWG === "COMP" && SelUserWG === "COMP" && PageWG === "CONT") {
-                    debugger;
+
                     //Validation For Contractual Labur GatePass List
                     document.getElementById("txtEmpCode").value = "";
                     document.getElementById("txtPlace").value = "";
@@ -91,7 +91,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                     alert("User not Allow to Add in this gate pass list");
                 }
                 else {
-                    debugger;
+
                     //Fill the Details
                     $('#txtEmpCode').val($scope.empdata[0].empUnqId);
                     $('#txtEmpName').val($scope.empdata[0].empName);
@@ -278,7 +278,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                 document.getElementById("MessageBox").innerHTML =
                                     "<div class='alert alert-success alert-dismissable'>" +
                                     "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                                    "<strong>Gate Pass Generated Sucesfully..</strong>" +
+                                    "<strong>Gate Pass Generated Sucessfully.Please contact your Releasing Authority..</strong>" +
                                     "</div>";
                 //"<div style='float:right;'><strong><a style='float: right;' target='_blank' href='/Report/PrintPreviewGatePass?gpno=" + $scope.gpno + "&gpdate=" + gpdt + "'>Print Preview</a></strong></div>";
                 $('#MessageBox').show();
@@ -314,7 +314,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Get Pending Gate Pass List
     $scope.GetGPLists = function () {
-        debugger;
+
         var gplst = new XMLHttpRequest();
         gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true);
         gplst.setRequestHeader('Accept', 'application/json');
@@ -510,7 +510,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Get All Gate Pass Informatinon for Releaser Report
     $scope.ReleaserGatePassInfo = function (entity) {
-        debugger;
+
         var FromDate, ToDate;
 
         if ((typeof (entity) === "undefined") ||
@@ -571,10 +571,9 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
         //For Gate 1 Security Gate Pass Report
         if (gpdata === 'Sec') {
-            debugger;
             var d2 = new Date();
-            var today = new Date(d2.getFullYear(), d2.getMonth() + 1, d2.getDate());
-            FromDate = (today.getFullYear()) + '/' + (today.getMonth()) + '/' + today.getDate();
+            var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+            FromDate = (today.getFullYear()) + '/' + (today.getMonth() + 1) + '/' + today.getDate();
             ToDate = FromDate;
         }
 

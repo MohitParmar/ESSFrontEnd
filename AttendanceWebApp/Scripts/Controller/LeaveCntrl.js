@@ -2,11 +2,10 @@
 
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
     $scope.alluserlist = [];
-    $scope._Conpath = '';
-    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+    $scope._Conpath = ''; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
     $scope.SetLTListValue = function (value) {
-        //if (value === "CO") { $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false); }
+        if (value === "OH") { $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false); }
         $scope.LeaveType = value;
     };
 

@@ -63,12 +63,14 @@
     <script type="text/javascript">
 
         var chk = "@Session["UserRole"]";
-        var _ishod = "@Session["IsHod"]";
+        var _isSecUser = "@Session["isSecUser"]";
+        var _isGpReleaser = "@Session["isGpReleaser"]";
         var _wrkgrp = "@Session["WrkGrp"]";
 
         $(window).on('load', function () {
 
-            if (_ishod == "True") {
+            //Security User Role
+            if (_isSecUser == "True") {
                 $('#mnuGatePassInOut').show();
 
                 $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
@@ -76,35 +78,35 @@
                 $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
             }
 
-
             //if user role
             if (chk === "IsUser" && _wrkgrp === "COMP") {
                 $('#mnuMaster').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuContCreateGatePass').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
             } else if (chk === "IsUser" && _wrkgrp !== "COMP") {
                 $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
-                $('#mnuUserManual').hide();
-                $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
+                $('#mnuUserManual').hide(); $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide();
+                $('#mnuEmployeeProfile').hide();
             }
 
             //if releaser role
             if (chk === "IsReleaser") {
-                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show(); $('#mnuGatePassRelease').show(); $('#mnuRelGatePassReport').show();
-                $('#mnuContCreateGatePass').show();
+                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show();
 
-                $('#mnuUitility').hide(); $('#mnuMaster').hide(); $('#mnuLeavePosting').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuUitility').hide(); $('#mnuMaster').hide(); $('#mnuLeavePosting').hide();
                 $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
-                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuAllGatePassReport').hide(); $('#mnuUserPresentAddressReport').hide();
+                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuUserPresentAddressReport').hide();
+
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuAllGatePassReport').hide();
             }
 
             //if hr user role
             if (chk === "IsHrUser") {
                 $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
-                $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuAllGatePassReport').show(); $('#mnuEmpRlsStrLstReport').show();
-                $('#mnuUniformMasterReport').show(); $('#mnuUserPresentAddressReport').show(); $('#mnuContCreateGatePass').hide();
+                $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show();
+                $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
 
-                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide(); $('#mnuGatePassRelease').hide(); $('#mnuRelGatePassReport').hide();
-                $('#mnuGatePassInOut').hide();
+                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
             }
 
             //if Hr / Releaser both role
@@ -112,13 +114,14 @@
                 $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeaveRelease').show(); $('#mnuLeavePosting').show();
                 $('#mnuReleaserEmpReport').show(); $('#mnuLeaveReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
                 $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
-                $('#mnuRelGatePassReport').show(); $('#mnuAllGatePassReport').show(); $('#mnuUserPresentAddressReport').show();
-                $('#mnuGatePassInOut').hide(); $('#mnuContCreateGatePass').show();
+                $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
+
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
             }
 
-            //if (_ishod == "True") {
-            //    $('#mnuGatePassInOut').show();
-            //}
+            if (_isGpReleaser == "True") {
+                $('#mnuGatePassRelease').show(); $('#mnuContCreateGatePass').show(); $('#mnuRelGatePassReport').show(); $('#mnuGatePassInOut').hide();
+            }
         });
     </script>
 
@@ -158,7 +161,6 @@
         }
     </script>
 </head>
-
 <body>
     @* Hidden Objects of Session Variables *@
     <input type="hidden" value="@Session["EmpUnqId"]" id="myEmpUnqId" />
@@ -173,6 +175,10 @@
     <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
     <input type="hidden" value="@Session["IsHod"]" id="myIsHod" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
+
+    <input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" />
+    <input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" />
+    <input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />
 
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
@@ -248,12 +254,11 @@
                     <li class="dropdown" id="mnuGatePass">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuCreateGatePass"><a href="/GatePass/GatePass">New Gate Pass</a></li>
-                            <li id="mnuContCreateGatePass"><a href="/GatePass/ContractualGatePass">Labour Gate Pass</a></li>
+                            <li id="mnuCreateGatePass"><a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a></li>
+                            <li id="mnuContCreateGatePass"><a href="/GatePass/ContractualGatePass">New Gate Pass (Others)</a></li>
                             <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Gate Pass List</a></li>
                             <li id="mnuGatePassRelease"><a href="/GatePass/GatePassRelease">Gate Pass Release</a></li>
                             <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
-                            @*<li id="mnuGatePassInOut"><a href="/GatePass/GPInOut">Gate Pass IN/OUT</a></li>*@
                             <li id="mnuGatePassInOut"><a href="/GatePass/GatePassInOut">Gate Pass IN/OUT</a></li>
                         </ul>
                     </li>

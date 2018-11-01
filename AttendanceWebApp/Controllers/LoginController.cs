@@ -45,6 +45,9 @@ namespace AttendanceWebApp.Controllers
                 Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["IsHod"] = Convert.ToString(requestData.IsHod);
+                Session["IsSecUser"] = Convert.ToString(requestData.IsSecUser); //For Gate Pass OUT/IN
+                Session["IsGpReleaser"] = Convert.ToString(requestData.IsGpReleaser);   //For Gate Pass Release
+                Session["IsAdmin"] = Convert.ToString(requestData.IsAdmin);
 
                 var IsReleaser = requestData.IsReleaser;
 
@@ -104,6 +107,9 @@ namespace AttendanceWebApp.Controllers
             Session["CatCode"] = null;
             Session["IsHod"] = null;
             Session["UserRole"] = null;
+            Session["IsSecUser"] = null;
+            Session["IsGpReleaser"] = null;
+            Session["IsAdmin"] = null;
 
             return RedirectToAction("Index", "Login");
         }

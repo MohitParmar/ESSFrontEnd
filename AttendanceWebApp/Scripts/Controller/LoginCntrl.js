@@ -1,38 +1,25 @@
 ﻿angular.module('myApp.Controllers').controller('LoginController', ['$scope', '$http', function ($scope, $http) {
-
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
     $scope.alluserlist = [];
-    $scope._Conpath = '';
-    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+    $scope._Conpath = ''; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
 
     $scope.UserLogin = function (entity) {
-
-        var jsonObj = {};
-
-        jsonObj.EmpUnqId = entity.EmpUnqId;
-        jsonObj.Pass = entity.Pass;
-        jsonObj = JSON.stringify(jsonObj);
-
+        var jsonObj = {}; jsonObj.EmpUnqId = entity.EmpUnqId; jsonObj.Pass = entity.Pass; jsonObj = JSON.stringify(jsonObj);
         jQuery.support.cors = true;
-
         var xhr = new XMLHttpRequest();
         xhr.open('POST', $scope._Conpath + 'Login/GetLogin', true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-
-                var json = JSON.parse(xhr.responseText);
-                $scope.Udata = json;
-
+                debugger;
+                var json = JSON.parse(xhr.responseText); $scope.Udata = json;
                 var act = $scope.Udata[0]["active"];
                 if (act === false) {
-                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> You are not Authorized. </strong></div>";
-                    $('#MessageBox').show();
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> You are not Authorized. </strong></div>"; $('#MessageBox').show();
                     document.getElementById("EmpUnqId").value = "";
                     document.getElementById("Pass").value = "";
                     return false;
                 }
-
                 var jsonObj1 = {};
                 jsonObj1.EmpUnqId = $scope.Udata[0]["empUnqId"];
                 jsonObj1.EmpName = $scope.Udata[0]["empName"];
@@ -48,31 +35,32 @@
                 jsonObj1.isReleaser = $scope.Udata[0]["isReleaser"];
                 jsonObj1.isHrUser = $scope.Udata[0]["isHrUser"];
                 jsonObj1.isHod = $scope.Udata[0]["isHod"];
+                jsonObj1.isGpReleaser = $scope.Udata[0]["isGpReleaser"];
+                jsonObj1.isSecUser = $scope.Udata[0]["isSecUser"];
+                jsonObj1.isAdmin = $scope.Udata[0]["isAdmin"];
                 jsonObj1 = JSON.stringify(jsonObj1);
-
                 //Go to Login Controller for Set Session Values
                 var reqs = new XMLHttpRequest();
                 reqs.open('POST', '/Login/Users', true);
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-                        debugger;
+
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
                         else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Report/PerformanceReport"; }
 
-                        if ($scope.Udata[0]["isHod"] === true) { window.location.href = "GatePass/GatePassInOut"; }
+                        if ($scope.Udata[0]["isReleaser"] === true && $scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
+                        else if ($scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "GatePass/GatePassRelease"; }
+
+                        if ($scope.Udata[0]["isSecUser"] === true) { window.location.href = "GatePass/GatePassInOut"; }
                     }
                 };
                 reqs.send(jsonObj1);
             }
             else if (xhr.status === 400 || xhr.status === 500) {
-                if (xhr.status === 500) {
-                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Internal Server Error Please try after some time..</strong></div>";
-                }
-                else {
-                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Incorrect Password / Employee code. </strong></div>";
-                }
+                if (xhr.status === 500) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Internal Server Error Please try after some time..</strong></div>"; }
+                else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Incorrect Password / Employee code. </strong></div>"; }
                 $('#MessageBox').show();
                 document.getElementById("EmpUnqId").value = "";
                 document.getElementById("Pass").value = "";
@@ -84,13 +72,7 @@
     $scope.ChangePassword = function () { $('#ConformModel').modal('show'); };
 
     $scope.updatePassword = function (data) {
-
-        var jsonObj = {};
-
-        jsonObj.EmpUnqId = data.empUnqId;
-        jsonObj.Pass = data.pass;
-        jsonObj = JSON.stringify(jsonObj);
-
+        var jsonObj = {}; jsonObj.EmpUnqId = data.empUnqId; jsonObj.Pass = data.pass; jsonObj = JSON.stringify(jsonObj);
         var xhr2 = new XMLHttpRequest();
         xhr2.open('POST', $scope._Conpath + 'Employee/ChangePassword', true);
         xhr2.setRequestHeader("Content-type", "application/json");
@@ -98,15 +80,13 @@
             if (xhr2.readyState === 4) {
                 document.getElementById("eCode").value = "";
                 document.getElementById("ePass").value = "";
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Password Changed Sucesfully.. </strong></div>";
-                $('#MessageBox').show();
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Password Changed Sucesfully.. </strong></div>"; $('#MessageBox').show();
                 jQuery('#btnClose').click();
             }
             else if (xhr2.status === 400) {
                 document.getElementById("eCode").value = "";
                 document.getElementById("ePass").value = "";
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Password Not Updated .. </strong></div>";
-                $('#MessageBox').show();
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Password Not Updated .. </strong></div>"; $('#MessageBox').show();
                 jQuery('#btnClose').click();
             }
         };

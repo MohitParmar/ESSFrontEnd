@@ -245,15 +245,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AuthConfig.cs">
+    <Compile Include="Content\App_Start\AuthConfig.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Content\App_Start\BundleConfig.cs" />
+    <Compile Include="Content\App_Start\FilterConfig.cs" />
+    <Compile Include="Content\App_Start\IdentityConfig.cs" />
+    <Compile Include="Content\App_Start\RouteConfig.cs" />
+    <Compile Include="Content\App_Start\Startup.Auth.cs" />
+    <Compile Include="Content\App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CustomErrorController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveAppController.cs" />
@@ -420,6 +421,11 @@
     <Content Include="Content\ui-grid\ui-grid.css" />
     <Content Include="Content\ui-grid\ui-grid.js" />
     <Content Include="ESS_Images\ajax-loader.gif" />
+    <Content Include="ESS_Images\ErrorImages\401-unauthorized-error.jpg" />
+    <Content Include="ESS_Images\ErrorImages\401.png" />
+    <Content Include="ESS_Images\ErrorImages\55RWL.png" />
+    <Content Include="ESS_Images\ErrorImages\Error-401_1460548854.jpg" />
+    <Content Include="ESS_Images\ErrorImages\images.png" />
     <Content Include="ESS_Images\ess-logo-login.ico" />
     <Content Include="ESS_Images\excel.ico" />
     <Content Include="favicon.ico" />
@@ -642,6 +648,7 @@
     <Content Include="Views\GatePass\GatePassInOut.cshtml" />
     <Content Include="Views\GatePass\ContractualGatePass.cshtml" />
     <Content Include="Views\GatePass\GPSecReport.cshtml" />
+    <Content Include="Views\CustomError\AuthorizationError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
