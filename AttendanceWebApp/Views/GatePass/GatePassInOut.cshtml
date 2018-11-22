@@ -120,8 +120,9 @@
                                 <label id="outinmsg" style="text-align:center;font-size:larger;"></label>
                             </h3>
                         </div>
-                        <div ng-init="AllGatePassInfo()">
-                            <div class="table-responsive" id="divOUT">
+                        @*<div ng-init="AllGatePassInfo('GPIO')">*@
+                        <div class="table-responsive" id="divOUT">
+                            <div ng-init="NewGPInfo()">
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
@@ -156,8 +157,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100"
-                                            ng-show="d.statusName == 'New' && d.releaseStatusCode == 'F'">
+                                        @* pagination-id="pg1" *@
+                                        <tr dir-paginate="d in outdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
+                                            @* ng-show="d.statusName == 'New' && d.releaseStatusCode == 'F'" *@
                                             <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
                                             <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;font-size:large;">{{d.empName}}</td>
@@ -168,8 +170,12 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                @*<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>*@
                             </div>
-                            <div class="table-responsive" id="divIN" hidden="hidden" style="font-size:large;">
+                        </div>
+                        @* Gate IN DIV *@
+                        <div class="table-responsive" id="divIN" hidden="hidden">
+                            <div ng-init="OutGPInfo()">
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
@@ -193,7 +199,11 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='typeofGatePass'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;">Out Time</th>
+                                            <th style="text-align:center;" ng-click="sort('gateOutDateTimeORG')">
+                                                Out Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gateOutDateTimeORG'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;">Action</th>
                                         </tr>
                                         <tr>
@@ -205,19 +215,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100"
-                                            ng-show="d.statusName == 'Out'">
-                                            <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
-                                            <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
-                                            <td style="text-align:left;font-size:large;">{{d.empName}}</td>
-                                            <td style="text-align:center;font-size:large;">{{d.typeofGatePass}}</td>
-                                            <td style="text-align:center;font-size:large;">{{d.gateOutDateTimeORG | date:'dd/MM/yy hh:mm'}}</td>
+                                        @* pagination-id="pg2" *@
+                                        <tr dir-paginate="i in indata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
+                                            @* ng-show="i.statusName == 'Out' && i.typeofGatePass != 'Duty Off'" *@
+                                            <td style="text-align:center;font-size:large;">{{i.gatePassNo}}</td>
+                                            <td style="text-align:center;font-size:large;">{{i.empUnqId}}</td>
+                                            <td style="text-align:left;font-size:large;">{{i.empName}}</td>
+                                            <td style="text-align:center;font-size:large;">{{i.typeofGatePass}}</td>
+                                            <td style="text-align:center;font-size:large;">{{i.gateOutDateTimeORG | date:'dd/MM/yy hh:mm'}}</td>
                                             <td style="text-align:center;">
-                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnIn" name="btnInOut" value="IN" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
+                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnIn" name="btnInOut" value="IN" ng-click='GateINOUT("{{i.barCode}}","{{i.empUnqId}}","{{i.empName}}")' />
                                             </td>
                                         </tr>
                                     </tbody>
+
                                 </table>
+                                @*<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg2"></dir-pagination-controls>*@
                             </div>
                         </div>
                     </div>

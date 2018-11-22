@@ -112,8 +112,8 @@ app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
             var TableData = new Array();
             $('#aliasTable tr').each(function (row, tr) {
                 TableData[row] = {
-                    "LeaveAppId": $(tr).find('td:eq(0)').text(),
-                    "LeaveAppItem": $(tr).find('td:eq(2)').text()
+                    "LeaveAppId": $(tr).find('td:eq(2)').text(),
+                    "LeaveAppItem": $(tr).find('td:eq(10)').text()
                 }
             });
             var tbl = new Array(); tbl[0] = "test";

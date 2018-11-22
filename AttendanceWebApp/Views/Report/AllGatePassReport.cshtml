@@ -92,6 +92,11 @@
                                             Search
                                         </button>
                                     </td>
+                                    <td>
+                                        <div style="text-align:center;">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -135,6 +140,9 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Created By</th>
+                                            <th style="text-align:center;">Tripod Remarks</th>
+                                            <th style="text-align:center;">Tripod Out</th>
+                                            <th style="text-align:center;">Tripod IN</th>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -146,7 +154,7 @@
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.placeOfVisit" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
-                                            <td></td>
+                                            <td colspan="4"></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,6 +177,9 @@
                                             <td style="text-align:left;">{{d.placeOfVisit}}</td>
                                             <td style="text-align:center;">{{d.statusName}}</td>
                                             <td style="text-align:center;">{{d.addUser}}</td>
+                                            <td style="text-align:center;">{{d.gpRemarks}}</td>
+                                            <td style="text-align:center;">{{d.attdGpOutTime | date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.attdGpInTime | date:'dd/MM/yy HH:mm:ss'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

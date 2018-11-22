@@ -190,4 +190,120 @@ app.controller('listdata', function ($scope, $http, $filter) {
         };
         xhr.send();
     };
+
+    //Get Fully Posted / Partillay Posted / Not Posted / Post Rejected by HR Leaves Report
+    $scope.GetPostedLeaveInfo = function (data) {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
+        var FromDate, ToDate;
+        if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) {
+            var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+            FromDate = firstDay.getFullYear() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate();
+            ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
+        } else { FromDate = data.FromDt; ToDate = data.ToDt; }
+        var date1 = new Date(FromDate); var date2 = new Date(ToDate);
+        if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
+        var sel = $('#cmbIsPosted').val()
+        var xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', $scope._Conpath + 'LeavePosting/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate + '&postingFlg=' + sel, true);
+        xhr1.setRequestHeader('Accept', 'application/json');
+        xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
+                var json = JSON.parse(xhr1.responseText);
+                //$scope.InfoPL = json; $scope.pdata = json; $scope.pdata = $filter('orderBy')($scope.pdata, '-leaveAppId');
+                var la = new Array; la = json;
+                var applReleaseStatus = new Array;
+                var leaveApplicationDetails = new Array;
+                var empName, statName, releaseDate;
+                var cnt = 0;
+                var myArray = [];
+                for (var i = 0; i < la.length; i++) {
+                    empName = la[i].employee.empName;
+                    statName = la[i].stations.statName;
+                    applReleaseStatus = la[i].applReleaseStatus; for (var j = 0; j < applReleaseStatus.length; j++) { releaseDate = applReleaseStatus[j].releaseDate; }
+                    leaveApplicationDetails = la[i].leaveApplicationDetails;
+                    for (var l = 0; l < leaveApplicationDetails.length; l++) {
+                        myArray.push([]);
+                        //Leave Applications
+                        myArray[cnt]["releaseGroupCode"] = la[i].releaseGroupCode;
+                        myArray[cnt]["leaveAppId"] = la[i].leaveAppId;
+                        myArray[cnt]["yearMonth"] = la[i].yearMonth;
+                        myArray[cnt]["addDt"] = la[i].addDt;
+                        myArray[cnt]["releaseDate"] = releaseDate;
+                        myArray[cnt]["updDt"] = la[i].updDt;
+                        myArray[cnt]["empUnqId"] = la[i].empUnqId;
+                        myArray[cnt]["empName"] = empName;
+                        myArray[cnt]["statName"] = statName;
+                        //Leave Application Details 
+                        myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks;
+                        myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem;
+                        myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode;
+                        myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt;
+                        myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt;
+                        myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays;
+                        myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag;
+                        myArray[cnt]["isPosted"] = leaveApplicationDetails[l].isPosted;
+                        cnt++;
+                    }
+                    leaveApplicationDetails = "";
+                }
+                $scope.pdata = myArray;
+                $scope.InfoPL = $scope.pdata;
+                $scope.curPage1 = 0; $scope.pageSize1 = 25;
+                $scope.$digest();
+            }
+        };
+        xhr1.send();
+    };
+
+    //Reject Force fully after Leave Application Posted 
+    $scope.PostLeaveReject = function (data, value, value1) {
+        debugger;
+        var TableData = storeTblValues();
+        TableData = JSON.stringify(TableData);
+        function storeTblValues() {
+            var TableData = new Array();
+            $('#aliasTable tr').each(function (row, tr) {
+                TableData[row] = {
+                    "LeaveAppId": $(tr).find('td:eq(2)').text(),
+                    "LeaveAppItem": $(tr).find('td:eq(10)').text()
+                }
+            });
+            debugger;
+            var tbl = new Array(); tbl[0] = "test";
+            var count = 0;
+            for (var i = 0; i < TableData.length; i++) {
+                var appid = TableData[i]["LeaveAppId"];
+                if (appid == value) {
+                    if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) {
+                        document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>";
+                        $('#MessageBox').show();
+                        return;
+                    }
+                    tbl[count] = {
+                        "YearMonth": value1
+                        , "LeaveAppId": value
+                        , "LeaveAppItem": TableData[i]["LeaveAppItem"]
+                        , "IsPosted": "R"
+                        , "Remarks": data.Remarks
+                        , "UserId": $('#myEmpUnqId').val()
+                    }
+                    count++;
+                }
+            }
+            return tbl;
+        }
+        debugger;
+        var xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
+        xhr1.setRequestHeader("Content-type", "application/json");
+        xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                window.location.reload(true);
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Rejected Sucesfully.. </strong></div>"; $('#MessageBox').show();
+            } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Not Rejected Please Try again.. </strong></div>"; $('#MessageBox').show(); }
+            $scope.GetPostedLeaveInfo();
+        };
+        xhr1.send(TableData);
+    };
 });

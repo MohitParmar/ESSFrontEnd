@@ -57,12 +57,19 @@
             <input type="hidden" value="COMP" id="empWrkGrp" />
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12" style="text-align:center;">
                     <div ng-init="GetRelesaseStratey()">
-                        <table class="table table-responsive" style="text-align:center;">
+                        <table class="table table-responsive">
                             <tr>
-                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                                    <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                <td ng-repeat="rls in rlsdata.gpReleaseStrategyLevels" ng-show="rls.isGpNightReleaser == false" style="text-align:center;">
+                                    <b> Releaser : </b><br />
+                                    <b>{{rls.empName}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="rls in rlsdata.gpReleaseStrategyLevels" ng-show="rls.isGpNightReleaser == true" style="text-align:center;">
+                                    <b> Night Releaser : </b><br />
+                                    <b>{{rls.empName}}</b>
                                 </td>
                             </tr>
                         </table>
@@ -96,7 +103,7 @@
                                             <td><label>Mode Of Gate Pass</label></td>
                                             <td>
                                                 <select id="Mode" class="form-control" ng-model="New.Mode" ng-click="GetEmpInfo()">
-                                                    <option value="D" title="Duty Off" selected>Duty Off / Half day</option>
+                                                    <option value="D" title="Duty Off" selected>Duty Off / Half day / Early Going</option>
                                                     <option value="O" title="Official">Official</option>
                                                     <option value="P" title="Personal">Personal</option>
                                                 </select>

@@ -118,7 +118,7 @@
                         <div class="table-responsive">
                             <div ng-init="GetPostedLeaveInfo()">
                                 <div class="table-responsive">
-                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="aliasTable">
                                         <thead>
                                             <tr>
                                                 <th>Sr No.</th>
@@ -175,22 +175,22 @@
                                                 <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
                                                 <td style="text-align:center;">{{d.isPosted}}</td>
                                                 @*<td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">{{e}}</td>
-                                                    <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">{{s}}</td>
-                                                    <td colspan="8">
-                                                        <table id="aliasTable" class="table table-bordered table-hover">
-                                                            <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                                <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                                <td>{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
-                                                                <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
-                                                                <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
-                                                                <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
-                                                                <td style="text-align:center;width:64px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
-                                                                <td style="text-align:center;width:38px;">{{lrd.totalDays}}</td>
-                                                                <td style="text-align:center;width:61px;"><input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled"></td>
-                                                                <td style="text-align:center;width:59px;">{{lrd.isPosted}}</td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>*@
+                    <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">{{s}}</td>
+                    <td colspan="8">
+                        <table id="aliasTable" class="table table-bordered table-hover">
+                            <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                <td ng-hide="true">{{lrd.leaveAppId}}</td>
+                                <td>{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
+                                <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
+                                <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                <td style="text-align:center;width:64px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                <td style="text-align:center;width:38px;">{{lrd.totalDays}}</td>
+                                <td style="text-align:center;width:61px;"><input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled"></td>
+                                <td style="text-align:center;width:59px;">{{lrd.isPosted}}</td>
+                            </tr>
+                        </table>
+                    </td>*@
                                                 <td><input type="text" id="remarks" ng-model="N.Remarks" class="form-control" placeholder="Rejection Remarks" /></td>
                                                 <td>
                                                     @* ng-repeat="lrd in d.leaveApplicationDetails" *@

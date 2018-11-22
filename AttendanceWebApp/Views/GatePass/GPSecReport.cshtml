@@ -155,7 +155,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
+                            <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:250" current-page="currentPage"
                                 ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                       d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} "
                                 ng-show="d.statusName != 'New'">

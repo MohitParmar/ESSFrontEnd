@@ -11,7 +11,7 @@
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                debugger;
+                
                 var json = JSON.parse(xhr.responseText); $scope.Udata = json;
                 var act = $scope.Udata[0]["active"];
                 if (act === false) {
