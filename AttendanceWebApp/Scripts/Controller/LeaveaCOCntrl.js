@@ -235,8 +235,11 @@
                 var fdate = new Date(dtlarr[dtlarrleg]["fromDt"]);
                 var tdate = new Date(dtlarr[dtlarrleg]["toDt"]);
 
-                fdate = fdate.getFullYear() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getDate();
-                tdate = tdate.getFullYear() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getDate();
+                //fdate = fdate.getDate() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getFullYear();     //dd/MM/yyyy
+                fdate = fdate.getFullYear() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getDate();     //yyyy/MM/dd
+                tdate = tdate.getFullYear() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getDate();     //yyyy/MM/dd
+
+                //var COremarks = dtlarr[dtlarrleg]["remarks"] + " " + "Holiday Date : " + fdate;
 
                 var row = $("<tr>" +
                     "<td style='text-align:center;'><input type='hidden' name='AliasFirstNames' value='" + dtlarr[dtlarrleg]["leaveAppItem"] + "'>" + dtlarr[dtlarrleg]["leaveAppItem"] + "</td>" +

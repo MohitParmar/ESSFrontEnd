@@ -11,7 +11,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease")
+                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
                 {
                     return View();
                 }

@@ -88,13 +88,13 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                     alert("User not Allow to Add in this gate pass list");
                 }
                 else if (LoginUserWG === "COMP" && SelUserWG === "COMP" && PageWG === "CONT") {
-
                     //Validation For Contractual Labur GatePass List
                     document.getElementById("txtEmpCode").value = "";
                     document.getElementById("txtPlace").value = "";
                     document.getElementById("txtPurpose").value = "";
                     $scope.GPWRkGRP = "";
-                    alert("User not Allow to Add in this gate pass list");
+                    if (PageWG !== LoginUserWG) { return; }
+                    else { alert("User not Allow to Add in this gate pass list"); }
                 }
                 else {
 

@@ -50,9 +50,8 @@ namespace AttendanceWebApp.Controllers
                 Session["IsAdmin"] = Convert.ToString(requestData.IsAdmin);
 
                 var IsReleaser = requestData.IsReleaser;
-
                 var IsHrUser = requestData.IsHrUser;
-
+                var IsAdmin = requestData.IsAdmin;
                 if (IsReleaser == true && IsHrUser == false)
                 {
                     Session["UserRole"] = "IsReleaser";
@@ -68,6 +67,10 @@ namespace AttendanceWebApp.Controllers
                         if (IsHrUser == true && IsReleaser == true)
                         {
                             Session["UserRole"] = "IsHrRelease";
+                        }
+                        else if (IsAdmin == true)
+                        {
+                            Session["UserRole"] = "IsAdmin";
                         }
                         else
                         {

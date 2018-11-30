@@ -66,5 +66,24 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        public ActionResult ManageLeaveMaster()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "IsAdmin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }

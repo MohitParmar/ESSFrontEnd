@@ -258,7 +258,7 @@ app.controller('listdata', function ($scope, $http, $filter) {
 
     //Reject Force fully after Leave Application Posted 
     $scope.PostLeaveReject = function (data, value, value1) {
-        debugger;
+        
         var TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
         function storeTblValues() {
@@ -269,7 +269,7 @@ app.controller('listdata', function ($scope, $http, $filter) {
                     "LeaveAppItem": $(tr).find('td:eq(10)').text()
                 }
             });
-            debugger;
+            
             var tbl = new Array(); tbl[0] = "test";
             var count = 0;
             for (var i = 0; i < TableData.length; i++) {
@@ -293,7 +293,7 @@ app.controller('listdata', function ($scope, $http, $filter) {
             }
             return tbl;
         }
-        debugger;
+        
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
         xhr1.setRequestHeader("Content-type", "application/json");

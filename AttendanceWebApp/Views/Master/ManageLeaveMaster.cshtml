@@ -1,0 +1,292 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Leave Application Master</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
+
+    <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="~/Scripts/Angular/angular.min.js"></script>
+    <script src="~/Scripts/Angular/angular-resource.js"></script>
+    <script src="~/Scripts/CommonFunction.js"></script>
+
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/Jquery/jquery-ui.js"></script>
+
+    <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+
+    <style>
+        .Requed {
+            color: red;
+            font-size: 20px;
+        }
+
+        .activediv {
+            display: inline;
+        }
+
+        .deactivediv {
+            display: none;
+        }
+
+        #Home-Index #topBar {
+            display: none;
+        }
+    </style>
+
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/ng-tags-input.js"></script>
+    <script src="~/Scripts/Module/app.js"></script>
+    <link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+    <script src="~/Content/DirPAgination/dirPagination.js"></script>
+    <script src="~/Scripts/Controller/MasterCntrl.js"></script>
+    <script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
+
+    <style type="text/css">
+        .TextBoxStyle {
+            height: 25px;
+        }
+
+        .AddNew {
+            float: right;
+            position: relative;
+        }
+
+        .right-inner-addon {
+            position: relative;
+        }
+
+            .right-inner-addon input {
+                padding-right: 30px;
+            }
+
+            .right-inner-addon i {
+                position: absolute;
+                right: 0px;
+                padding: 10px 12px;
+                pointer-events: none;
+            }
+    </style>
+</head>
+<body style="background-color:white;">
+    <input type="hidden" value="@Session["EmpUnqId"]" id="myEmpUnqId" />
+    <div class="main">
+        <div class="main-inner">
+            <div data-ng-app="myApp" data-ng-controller="ManageLeaveMasterController">
+                <input type="hidden" value="LA" id="releaseGroupCode" />
+                <div class="panel-body">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    @* Popup Model For Short Leave Application  *@
+                    <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width:650px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Leave Application Details</h4>
+                                </div>
+                                <div class="content" style="padding: 4px 15px 15px 15px;">
+                                    <div class="body_panel">
+                                        <div class="table-responsive">
+                                            <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                                                <table id="myTable" class="table table-responsive table-condensed">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><label>From Date :</label></td>
+                                                            <td style="text-align:center;" colspan="4">
+                                                                <div class="right-inner-addon">
+                                                                    <i class="icon-calendar"></i>
+                                                                    <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" placeholder="Select From Date"
+                                                                           datepicker required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>To Date :</label></td>
+                                                            <td style="text-align:center;" colspan="4">
+                                                                <div class="right-inner-addon">
+                                                                    <i class="icon-calendar"></i>
+                                                                    <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" placeholder="Select To Date"
+                                                                           datepicker required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Leave Type :</label></td>
+                                                            <td style="text-align:center;" colspan="4">
+                                                                <div ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
+                                                                    <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
+                                                                            ng-options="s.LeaveTypeCode as s.LeaveTypeCode for s in LList" ng-change="SetLTListValue(New.LeaveTypeCode)" required>
+                                                                        <option value="" selected>--- Select ---</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Leave Reason : </label></td>
+                                                            <td colspan="4">
+                                                                <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Half Day :</label></td>
+                                                            <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" style="margin-top:0px;"></td>
+                                                            <td style="text-align:right;"><label>Total Days :</label></td>
+                                                            <td><input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="7" style="text-align:right;">
+                                                                <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                                                        ng-click="createLeave(New)">
+                                                                    Save
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* Employee Details *@
+                    <div class="table-responsive">
+                        <table class="table table-responsive" style="text-align:center;">
+                            <tr>
+                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                    <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-hover table-bordered table-condensed">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:right;"><label>Enter Employee Code :</label></td>
+                                    <td><input class="form-control" type="text" id="eCode" /></td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                            <i class="icon-search"></i>Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered" id="tbl_empdtl">
+                                            <tr dir-paginate="e in empdata|itemsPerPage:5">
+                                                <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
+                                                <td style="text-align:center;">Father Name : <label>{{e.fatherName}}</label></td>
+                                                <td style="text-align:center;">Department : <label>{{e.deptName}}</label></td>
+                                                <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @*Leave Application Details *@
+                    <div class="table-responsive">
+                        <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="aliasTable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                        Release Status
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th style="text-align:center;">Year Month</th>
+                                    <th style="text-align:center;" ng-click="sort('leaveAppId')">App.Id</th>
+                                    <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
+                                    <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
+                                    <th style="text-align:center;" ng-click="sort('updDt')">Post.Date</th>
+                                    <th style="text-align:center;">Leave Reason</th>
+                                    <th style="text-align:center;">Leave App Item</th>
+                                    <th style="text-align:center;">Type</th>
+                                    <th style="text-align:center;">from Date</th>
+                                    <th style="text-align:center;">To Date</th>
+                                    <th style="text-align:center;">Days</th>
+                                    <th style="text-align:center;">Half Day</th>
+                                    <th style="text-align:center;" ng-click="sort('isPosted')">Is Posted</th>
+                                    <th style="text-align:center;" ng-click="sort('postedBy')">Posted By</th>
+                                    <th style="text-align:center;">Update</th>
+                                    <th style="text-align:center;" colspan="2">Reject</th>
+                                </tr>
+                                @*<tr>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveAppId" /></td>
+                                        <td colspan="5"></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveTypeCode" /></td>
+                                        <td colspan="4"></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.isPosted" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.postedBy" /></td>
+                                        <td colspan="3"></td>
+                                    </tr>*@
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                                    <td style="text-align:center;"
+                                        ng-style="
+                                        d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
+                                        d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                        d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
+                                        {{d.releaseStatusCode}}
+                                    </td>
+                                    <td style="text-align:center;">{{d.yearMonth}}</td>
+                                    <td style="text-align:center;">{{d.leaveAppId}}</td>
+                                    <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                    <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
+                                    <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.updDt | date:'dd/MM/yy'}}</label></td>
+                                    <td style="text-align:left;">{{d.remarks}}</td>
+                                    <td style="text-align:center;">{{d.leaveAppItem}}</td>
+                                    <td style="text-align:center;">{{d.leaveTypeCode}}</td>
+                                    <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
+                                    <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                    <td style="text-align:center;">{{d.totalDays}}</td>
+                                    <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
+                                    <td style="text-align:center;"
+                                        ng-style="
+                                        d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
+                                        d.isPosted==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                        d.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
+                                        {{d.isPosted}}
+                                    </td>
+                                    <td style="text-align:center;">{{d.postedBy}}</td>
+                                    <td style="text-align:center;">
+                                        <button class="btn btn-info" id="btnEdit" value="Edit" ng-click="PopulateData({{d.leaveAppId}},{{d.leaveAppItem}})">
+                                            <i class="icon-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td style="text-align:center;"><input type="text" id="rejRemarks" class="form-control" ng-model="r.remarks" /></td>
+                                    <td style="text-align:center;">
+                                        <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="LeaveReject(r,{{d.leaveAppId}},{{d.yearMonth}})">
+                                            <i class="icon-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.js"></script>
+</body>
+</html>

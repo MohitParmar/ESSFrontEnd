@@ -14,6 +14,7 @@ app.controller('MasterCntrloller', function ($scope, $http) {
         rel.send();
     };
 
+    //List Of Public Holidays
     $scope.ListOfholiday = function () {
         var dyear = new Date();
         var hld = new XMLHttpRequest();

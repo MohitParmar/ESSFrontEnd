@@ -66,6 +66,7 @@
         var _isSecUser = "@Session["isSecUser"]";
         var _isGpReleaser = "@Session["isGpReleaser"]";
         var _wrkgrp = "@Session["WrkGrp"]";
+        var _isHod = "@Session["IsHod"]";
 
         $(window).on('load', function () {
 
@@ -76,16 +77,17 @@
                 $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
                 $('#mnuUserManual').hide();
                 $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
+                $('#mnuManageLeave').hide();
             }
 
             //if user role
             if (chk === "IsUser" && _wrkgrp === "COMP") {
                 $('#mnuMaster').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
             } else if (chk === "IsUser" && _wrkgrp !== "COMP") {
                 $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
                 $('#mnuUserManual').hide(); $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide();
-                $('#mnuEmployeeProfile').hide();
+                $('#mnuEmployeeProfile').hide(); $('#mnuManageLeave').hide();
             }
 
             //if releaser role
@@ -97,6 +99,7 @@
                 $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuUserPresentAddressReport').hide();
 
                 $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuAllGatePassReport').hide();
+                $('#mnuManageLeave').hide();
             }
 
             //if hr user role
@@ -106,7 +109,7 @@
                 $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
 
                 $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
             }
 
             //if Hr / Releaser both role
@@ -116,12 +119,30 @@
                 $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
                 $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
 
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide();
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
             }
 
-            if (_isGpReleaser == "True") {
-                $('#mnuGatePassRelease').show(); $('#mnuContCreateGatePass').show(); $('#mnuRelGatePassReport').show(); $('#mnuGatePassInOut').hide();
+            //Use For Extra Right in hr department User for only reprots
+            if (_isHod == "True") {
+                $('#mnuReport').show(); $('#mnuAllGatePassReport').show();
+                $('#mnuReleaserEmpReport').hide(); $('#mnuLeaveReport').hide(); $('#mnuLeavePerformanceReport').hide(); $('#mnuEmpRlsStrLstReport').hide();
+                $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide(); $('#mnuUniformMasterReport').hide();
+                $('#mnuUserPresentAddressReport').hide();
+
+                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
             }
+
+            //if Gate Pass Releaser role
+            if (_isGpReleaser == "True") {
+                $('#mnuGatePassRelease').show(); $('#mnuContCreateGatePass').show(); $('#mnuRelGatePassReport').show(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
+            }
+
+            //if Is Admin
+            if (chk == "IsAdmin") {
+                $('#mnuDashboard').show(); $('#mnuMaster').show(); $('#mnuLeave').show(); $('#mnuGatePass').show(); $('#mnuReport').show(); $('#mnuUitility').show();
+                $('#mnuUserManual').show(); $('#mnuManageLeave').show();
+            }
+
         });
     </script>
 
@@ -286,6 +307,7 @@
                         </ul>
                     </li>
                     <li id="mnuUserManual"><a href="~/Master/UserManual" id="mnuManual"><i class="icon-file"></i><span>User Manual</span></a></li>
+                    <li id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster" id="mnuManage"><i class="icon-smile"></i><span>Manage Leave</span></a></li>
                 </ul>
             </div>
         </div>
