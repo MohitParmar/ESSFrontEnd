@@ -2,8 +2,9 @@
 
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
     $scope.alluserlist = [];
-    $scope._Conpath = '';
-    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+
+    $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
 
     //Reload Page
     $scope.ResetView = function () { window.location.reload(true); };
@@ -347,6 +348,7 @@
             jsonObj.releaseStatusCode = "";
             jsonObj.addDt = dt;
             jsonObj.addUser = $('#myEmpUnqId').val();
+            jsonObj.clientIp = $('#myIPAddress').val();
             jsonObj.updDt = dt;
             jsonObj.updUser = null;
             jsonObj.remarks = null;

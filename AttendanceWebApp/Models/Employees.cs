@@ -39,11 +39,6 @@ namespace AttendanceWebApp.Models
         [ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode, StatCode")]
         public Stations Stations { get; set; }
 
-        //[StringLength(3)]
-        //public string SecCode { get; set; }
-        //[ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode, StatCode, SecCode")]
-        //public Sections Sections { get; set; }
-
         [StringLength(3)]
         public string CatCode { get; set; }
         [ForeignKey("CompCode, WrkGrp, CatCode")]
@@ -69,7 +64,6 @@ namespace AttendanceWebApp.Models
 
         public bool OtFlag { get; set; }
 
-        //siple roles
         public bool IsReleaser { get; set; }
 
         public bool IsHrUser { get; set; }

@@ -23,8 +23,20 @@
     <script src="~/Scripts/Jquery/jquery-ui.js"></script>
 
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+    <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
 
-    <style>
+    @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>*@
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/ng-tags-input.js"></script>
+    <script src="~/Scripts/Module/app.js"></script>
+    <link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+
+    <script src="~/Content/DirPAgination/dirPagination.js"></script>
+    <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
+
+    <style type="text/css">
         .Requed {
             color: red;
             font-size: 20px;
@@ -41,18 +53,7 @@
         #Home-Index #topBar {
             display: none;
         }
-    </style>
 
-    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-    <script src="~/Scripts/Module/ng-table.src.js"></script>
-    <script src="~/Scripts/Module/ng-tags-input.js"></script>
-    <script src="~/Scripts/Module/app.js"></script>
-    <link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
-    <script src="~/Content/DirPAgination/dirPagination.js"></script>
-    <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
-
-    <style type="text/css">
         .ng-table-pager {
             display: none;
         }
@@ -145,7 +146,8 @@
                                 <td></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
-                                <td colspan="3"></td>
+                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.wrkGrp" /></td>
+                                <td colspan="2"></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" /></td>
                                 <td colspan="4"></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.typeofGatePass" /></td>

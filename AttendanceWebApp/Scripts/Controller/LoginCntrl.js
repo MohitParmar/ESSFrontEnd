@@ -1,7 +1,20 @@
 ﻿angular.module('myApp.Controllers').controller('LoginController', ['$scope', '$http', function ($scope, $http) {
+
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
     $scope.alluserlist = [];
-    $scope._Conpath = ''; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+    $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    var url_port = url.port;
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                //if (url_port === "8080") { $scope._Conpath = urlprotocol + "//" + urlhost + ":8080/api/"; } else {
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+                //}
+            }
+        };
+    });
+
+    //$(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $http({ method: 'Get', contentType: "application/json", url: '/Helper/GetUrl' }).success(function (data, status, headers, config) { $scope._Conpath = data + "/api/"; });//$scope._Conpath = _ConPath; } });
 
     $scope.UserLogin = function (entity) {
         var jsonObj = {}; jsonObj.EmpUnqId = entity.EmpUnqId; jsonObj.Pass = entity.Pass; jsonObj = JSON.stringify(jsonObj);
@@ -11,7 +24,8 @@
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                
+                //var headerdetail = xhr.getResponseHeaders("content-type");
+                //alert(headerdetail);
                 var json = JSON.parse(xhr.responseText); $scope.Udata = json;
                 var act = $scope.Udata[0]["active"];
                 if (act === false) {
@@ -38,6 +52,7 @@
                 jsonObj1.isGpReleaser = $scope.Udata[0]["isGpReleaser"];
                 jsonObj1.isSecUser = $scope.Udata[0]["isSecUser"];
                 jsonObj1.isAdmin = $scope.Udata[0]["isAdmin"];
+                //jsonObj1.headerdetail = headerdetail;
                 jsonObj1 = JSON.stringify(jsonObj1);
                 //Go to Login Controller for Set Session Values
                 var reqs = new XMLHttpRequest();
@@ -45,14 +60,14 @@
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-
+                        //IS Releaser/IS User/Another User
                         if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
                         else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Report/PerformanceReport"; }
-
+                        //IS Releaser /IS GPReleaser
                         if ($scope.Udata[0]["isReleaser"] === true && $scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
                         else if ($scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "GatePass/GatePassRelease"; }
-
+                        //IS Security USer
                         if ($scope.Udata[0]["isSecUser"] === true) { window.location.href = "GatePass/GatePassInOut"; }
                     }
                 };

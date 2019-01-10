@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,7 +8,13 @@ namespace AttendanceWebApp.Controllers
 {
     public class LeaveAppController : Controller
     {
-        //Leave Application
+        private ApplicationDbContext _context;
+
+        public LeaveAppController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         public ActionResult LeaveApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -20,7 +27,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //COFF Application
         public ActionResult COffApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -33,7 +39,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Leave Rules As Per Policy
         public ActionResult LeaveRules()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -46,7 +51,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Short Leave Cancellation
         public ActionResult LeaveCancellation()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -59,7 +63,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Full Leave Cancellation
         public ActionResult FullLeaveCancel()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -69,6 +72,24 @@ namespace AttendanceWebApp.Controllers
             else
             {
                 return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        [System.Web.Http.ActionName("GetLeaveTypeList")]
+        public JsonResult GetLeaveTypeList()
+        {
+            try
+            {
+                var LeaveTypeData = (from o in _context.LeaveTypes
+                                                           where o.WrkGrp == "comp" && o.Active == true
+                                                           select new
+                                     { o.LeaveTypeCode, o.LeaveTypeName }).ToList();
+                return Json(LeaveTypeData, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return null;
             }
         }
     }

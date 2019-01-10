@@ -5,7 +5,10 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
     $scope.currentPage = 1; $scope.itemsPerPage = 25;
     $scope.alluserlist = [];
     $scope.popupid = '';
-    $scope._Conpath = ''; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+
+    $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+
     $scope.InfoPL;
 
     $scope.ResetView = function () { window.location.reload(true); };
@@ -28,15 +31,23 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                     , "IsPosted": $(tr).find("select").val()
                 }
             });
-
             var tbl = new Array(); tbl[0] = "test";
-
             var count = 0;
             for (var i = 0; i < TableData.length; i++) {
                 var appid = TableData[i]["LeaveAppId"];
                 //var ispst = TableData[i]["IsPosted"];
                 if (appid == value) {
-                    if (value2 === "R") { if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return; } }
+                    //If Reject Leavea & Remarks not enter
+                    if (value2 === "R") {
+                        if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) {
+                            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" +
+                                "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                                "<strong>Please Enter Remarks First For Rejection</strong>" +
+                                "</div>";
+                            $('#MessageBox').show();
+                            return;
+                        }
+                    }
                     //R For Rejection
                     if (value2 === "R") {
                         tbl[count] = {
@@ -64,18 +75,28 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
             }
             return tbl;
         }
-
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
         xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
-            if (xhr1.readyState === 4 && xhr1.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Leave Posted / Rejected Sucesfully.. </strong></div>"; $('#MessageBox').show(); }
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Leave Posted / Rejected Sucesfully.. </strong>" +
+                    "</div>";
+                $('#MessageBox').show();
+                TableData = "";
+            }
             else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
                 var str = xhr1.responseText.replace("[", '').replace("]", '').toString();
                 var fields = str.split(',');
                 var er = "";
                 for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; };
-                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er + "</strong></div>"; $('#MessageBox').show();
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>" + er + "</strong>" +
+                    "</div>";
+                $('#MessageBox').show();
             }
             $scope.GetPostingLeaveApplicationLists();
         };
@@ -84,19 +105,23 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
 
     //Get Pending Leave Application List for Posting
     $scope.GetPostingLeaveApplicationLists = function (data) {
+
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var hidfdt = $('#hidfromdt').val(); var hidtdt = $('#hidtodt').val();
         var FromDate, ToDate;
-        if (hidfdt !== '' && hidtdt !== '' && (typeof (data) === "undefined")) { FromDate = hidfdt; ToDate = hidtdt; }
+        if (hidfdt !== '' && hidtdt !== '' && (typeof (data) === "undefined")) {
+            FromDate = hidfdt; ToDate = hidtdt;
+        }
         else if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) {
-            var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
             FromDate = firstDay.getFullYear() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate() + ' 00:00:00';
             ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getDate() + ' 23:59:59';
         } else {
             FromDate = data.FromDt; document.getElementById("hidfromdt").value = data.FromDt;
             ToDate = data.ToDt; document.getElementById("hidtodt").value = data.ToDt;
         }
-
         var date1 = new Date(FromDate); var date2 = new Date(ToDate);
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var flg = true;
@@ -107,11 +132,8 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-
                 $scope.InfoPL = xhr.responseText;
-
                 var json = JSON.parse(xhr.responseText);
-
                 var temparr = new Array();
                 var url_string = window.location.href; var url = new URL(url_string);
                 var tmpflg = url.searchParams.get("flg");
@@ -122,12 +144,14 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                             var tmpisPosted = json[key].leaveApplicationDetails[key2].isPosted;     //Not Posted / Partially Posted
                             var tmpcancelled = json[key].leaveApplicationDetails[key2].cancelled;   //Short Leave Cancelled
                             var tmpparentId = json[key].leaveApplicationDetails[key2].parentId;     //Full Leavea Cancelled
-
                             if (tmpflg === 'N') { if (tmpisPosted === 'N' && tmpcancelled === false && tmpparentId === 0) { temparr[count] = json[key]; count++; break; } }
                             else if (tmpflg === 'P') { if (tmpisPosted === 'P') { temparr[count] = json[key]; count++; break; } }
                             else if (tmpflg === 'C') {
                                 //if ((tmpcancelled === true || tmpparentId !== 0)) {
-                                if ((tmpcancelled === true && tmpparentId === 0) || (tmpcancelled === false && tmpparentId !== 0)) { temparr[count] = json[key]; count++; break; }
+                                if ((tmpcancelled === true && tmpparentId === 0) || (tmpcancelled === false && tmpparentId !== 0)) {
+                                    temparr[count] = json[key]; count++;
+                                    break;
+                                }
                             }
                         }
                     }

@@ -1,31 +1,39 @@
 ﻿@model AttendanceWebApp.Models.Employees
 
+<!DOCTYPE html>
 <html lang="en">
 
 @{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
 
 <head>
     <title>@ViewBag.Title</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
     <link href="~/Content/css/font-awesome.css" rel="stylesheet">
     <link href="~/Content/css/style.css" rel="stylesheet">
-    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
-
     <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
-    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="~/Scripts/Angular/angular.min.js"></script>
     <script src="~/Scripts/Angular/angular-resource.js"></script>
     <script src="~/Scripts/CommonFunction.js"></script>
-
-    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
-    <script src="~/Scripts/Jquery/jquery-ui.js"></script>
-
+    <script src="~/Scripts/Jquery/jquery-ui.min.js"></script>
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+    <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/ng-tags-input.js"></script>
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+    <script src="~/Scripts/Controller/default.js"></script>
+
+    @*<link href="~/Content/css/pages/dashboard.css" rel="stylesheet">*@
+    @*<script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>*@
+    @*<script src="~/Scripts/Jquery/jquery-ui.js"></script>*@
+    @*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>*@
+    @*<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />*@
 
     <style>
         .Requed {
@@ -59,127 +67,35 @@
             }
     </style>
 
-    @* Manage Menu User Role Wise *@
-    <script type="text/javascript">
-
-        var chk = "@Session["UserRole"]";
-        var _isSecUser = "@Session["isSecUser"]";
-        var _isGpReleaser = "@Session["isGpReleaser"]";
-        var _wrkgrp = "@Session["WrkGrp"]";
-        var _isHod = "@Session["IsHod"]";
-
-        $(window).on('load', function () {
-
-            //Security User Role
-            if (_isSecUser == "True") {
-                $('#mnuGatePassInOut').show();
-
-                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
-                $('#mnuUserManual').hide();
-                $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide(); $('#mnuEmployeeProfile').hide();
-                $('#mnuManageLeave').hide();
-            }
-
-            //if user role
-            if (chk === "IsUser" && _wrkgrp === "COMP") {
-                $('#mnuMaster').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide(); $('#mnuLeaveRelease').hide(); $('#mnuLeavePosting').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
-            } else if (chk === "IsUser" && _wrkgrp !== "COMP") {
-                $('#mnuDashboard').hide(); $('#mnuMaster').hide(); $('#mnuLeave').hide(); $('#mnuGatePass').hide(); $('#mnuReport').hide(); $('#mnuUitility').hide();
-                $('#mnuUserManual').hide(); $('#mnuuniformmaster').hide(); $('#mnuChangePassword').hide(); $('#mnuAddressMaster').hide(); $('#mnuUpdateEmailAdd').hide();
-                $('#mnuEmployeeProfile').hide(); $('#mnuManageLeave').hide();
-            }
-
-            //if releaser role
-            if (chk === "IsReleaser") {
-                $('#mnuLeaveRelease').show(); $('#mnuLeaveReport').show(); $('#mnuReleaserEmpReport').show();
-
-                $('#mnuUitility').hide(); $('#mnuMaster').hide(); $('#mnuLeavePosting').hide();
-                $('#mnuLeavePerformanceReport').hide(); $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide();
-                $('#mnuEmpRlsStrLstReport').hide(); $('#mnuUniformMasterReport').hide(); $('#mnuUserPresentAddressReport').hide();
-
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuAllGatePassReport').hide();
-                $('#mnuManageLeave').hide();
-            }
-
-            //if hr user role
-            if (chk === "IsHrUser") {
-                $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeavePosting').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuPostedLeaveReport').show();
-                $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuEmpRlsStrLstReport').show(); $('#mnuUniformMasterReport').show();
-                $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
-
-                $('#mnuLeaveRelease').hide(); $('#mnuLeaveReport').hide(); $('#mnuReleaserEmpReport').hide();
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
-            }
-
-            //if Hr / Releaser both role
-            if (chk === "IsHrRelease") {
-                $('#mnuMaster').show(); $('#mnuUitility').show(); $('#mnuLeaveRelease').show(); $('#mnuLeavePosting').show();
-                $('#mnuReleaserEmpReport').show(); $('#mnuLeaveReport').show(); $('#mnuLeavePerformanceReport').show(); $('#mnuEmpRlsStrLstReport').show();
-                $('#mnuPostedLeaveReport').show(); $('#mnuPostedByReport').show(); $('#mnuPendingLeavesForPostReport').show(); $('#mnuUniformMasterReport').show();
-                $('#mnuUserPresentAddressReport').show(); $('#mnuAllGatePassReport').show();
-
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
-            }
-
-            //Use For Extra Right in hr department User for only reprots
-            if (_isHod == "True") {
-                $('#mnuReport').show(); $('#mnuAllGatePassReport').show();
-                $('#mnuReleaserEmpReport').hide(); $('#mnuLeaveReport').hide(); $('#mnuLeavePerformanceReport').hide(); $('#mnuEmpRlsStrLstReport').hide();
-                $('#mnuPostedLeaveReport').hide(); $('#mnuPostedByReport').hide(); $('#mnuPendingLeavesForPostReport').hide(); $('#mnuUniformMasterReport').hide();
-                $('#mnuUserPresentAddressReport').hide();
-
-                $('#mnuGatePassRelease').hide(); $('#mnuContCreateGatePass').hide(); $('#mnuRelGatePassReport').hide(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
-            }
-
-            //if Gate Pass Releaser role
-            if (_isGpReleaser == "True") {
-                $('#mnuGatePassRelease').show(); $('#mnuContCreateGatePass').show(); $('#mnuRelGatePassReport').show(); $('#mnuGatePassInOut').hide(); $('#mnuManageLeave').hide();
-            }
-
-            //if Is Admin
-            if (chk == "IsAdmin") {
-                $('#mnuDashboard').show(); $('#mnuMaster').show(); $('#mnuLeave').show(); $('#mnuGatePass').show(); $('#mnuReport').show(); $('#mnuUitility').show();
-                $('#mnuUserManual').show(); $('#mnuManageLeave').show();
-            }
-
-        });
-    </script>
-
     @* Submenu Script *@
     <script>
-        $(document).ready(function () {
-            $('.dropdown-submenu a.test').on("click", function (e) {
-                $(this).next('ul').toggle();
-                e.stopPropagation();
-                e.preventDefault();
-            });
-        });
+        $(document).ready(function () { $('.dropdown-submenu a.test').on("click", function (e) { $(this).next('ul').toggle(); e.stopPropagation(); e.preventDefault(); }); });
     </script>
 
     @* Function For Sync All Master Data Of Employees *@
     <script>
-        function AutoSync() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync', true);
-            xhr.setRequestHeader('Accept', 'application/json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert(xhr.responseText);
-                }
-            }
-            xhr.send();
-        };
+        function AutoSync() { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync', true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };
     </script>
 
     @* COFF Application Authoriization *@
     <script>
-        function COFF() {
-            var _grade = "@Session["GradeCode"]";
-            var _tpaFlag = "@Session["OtFlag"]";
-            if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); }
-            else { window.location.href = "/LeaveApp/COffApply"; };
-        }
+        function COFF() { var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; }; }
+    </script>
+
+    @* Get IP Address *@
+    <script type="text/javascript">
+        $(document).ready(function ubsrt() {
+            window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+            var pc = new RTCPeerConnection({ iceServers: [] }),
+            noop = function () { };
+            pc.createDataChannel("");
+            pc.createOffer(pc.setLocalDescription.bind(pc), noop);
+            pc.onicecandidate = function (ice) {
+                if (!ice || !ice.candidate || !ice.candidate.candidate) { return; };
+                var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+                $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop;
+            };
+        });
     </script>
 </head>
 <body>
@@ -196,10 +112,11 @@
     <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
     <input type="hidden" value="@Session["IsHod"]" id="myIsHod" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
-
     <input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" />
     <input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" />
     <input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />
+    @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
+    <input type="hidden" value="" id="myIPAddress" />
 
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
@@ -307,7 +224,7 @@
                         </ul>
                     </li>
                     <li id="mnuUserManual"><a href="~/Master/UserManual" id="mnuManual"><i class="icon-file"></i><span>User Manual</span></a></li>
-                    <li id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster" id="mnuManage"><i class="icon-smile"></i><span>Manage Leave</span></a></li>
+                    <li id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster" id="mnuManage"><i class="icon-code"></i><span>Manage Leave</span></a></li>
                 </ul>
             </div>
         </div>
@@ -324,7 +241,7 @@
     <div class="navbar-fixed-bottom" style="height:30px;">
         <div class="navbar-inner">
             <div class="container">
-                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD.</b></span></div>
+                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD.</b></span> (<label id="ipAdd"></label>)</div>
             </div>
         </div>
     </div>

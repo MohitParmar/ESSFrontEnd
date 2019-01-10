@@ -7,7 +7,6 @@ namespace AttendanceWebApp.Controllers
 {
     public class ReleaseLeaveController : Controller
     {
-        //Leave Release
         public ActionResult LeaveRelease()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)

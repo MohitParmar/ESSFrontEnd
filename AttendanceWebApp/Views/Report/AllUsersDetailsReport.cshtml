@@ -3,12 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
-<script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/EmpListCntrl.js"></script>
 <script src="~/Content/ng-grid-2.0.14.debug.js"></script>
@@ -35,12 +29,13 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th colspan="9" style="text-align:center;"><h4>JOB Profile Details</h4></th>
+                                            <th colspan="10" style="text-align:center;"><h4>JOB Profile Details</h4></th>
                                             <th colspan="10" style="text-align:center;"><h4>Permanent Address</h4></th>
                                             <th colspan="11" style="text-align:center;"><h4>Present Address</h4></th>
                                         </tr>
                                         <tr>
                                             @* Profile Details *@
+                                            <th>Sr No.</th>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">
                                                 Emp.Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
@@ -121,6 +116,7 @@
                                             <th style="text-align:center">Eamil Id</th>
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" /></td>
                                             <td></td>
@@ -146,6 +142,7 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center">{{d.empUnqId}}</td>
                                             <td style="text-align:left">{{d.empName}}</td>
                                             <td style="text-align:left">{{d.fatherName}}</td>

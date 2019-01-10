@@ -3,12 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
-<script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 
@@ -43,17 +37,7 @@
 </style>
 
 <script>
-    window.onload = function () {
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
-        else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
-        $('#FromDt').val(firstDay);
-        $('#ToDt').val(lastDay);
-    }
+    window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(lastDay); }
 </script>
 
 <div ng-app="myApp" ng-controller="LeaveReportCntrloller">

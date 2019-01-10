@@ -256,15 +256,12 @@
     <Compile Include="Content\App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomErrorController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveAppController.cs" />
-    <Compile Include="Controllers\LeaveAppDataController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\LeavePostingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
-    <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Global.asax.cs">
@@ -302,6 +299,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
     <Content Include="Content\BarCodeGenerate\JsBarcode.all.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -334,6 +332,8 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\DirPAgination\dirPagination.js" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\img\body-bg.png" />
     <Content Include="Content\img\glyphicons-halflings-white.html" />
@@ -350,11 +350,12 @@
     <Content Include="Content\Jquery 3.2.1\JQuery Slim Version 3.2.1\jquery-3.2.1.slim.min.js" />
     <Content Include="Content\Jquery 3.2.1\jquery-3.2.1.js" />
     <Content Include="Content\Jquery 3.2.1\jquery-3.2.1.min.js" />
-    <Content Include="Content\js\bootstrap-multiselect.js" />
-    <Content Include="Content\js\jquery-1.12.4.min.js" />
     <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\js\base.js" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\js\bootstrap-multiselect.js" />
     <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\jquery-1.12.4.min.js" />
+    <Content Include="Content\js\base.js" />
     <Content Include="Content\js\chart.min.js" />
     <Content Include="Content\js\charts\area.js" />
     <Content Include="Content\js\charts\bar.js" />
@@ -442,6 +443,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
     <Content Include="Scripts\CommonFunction.js" />
+    <Content Include="Scripts\Controller\default.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
     <Content Include="Scripts\Controller\GatePassCntrl.js" />
@@ -483,14 +485,11 @@
     <Content Include="Scripts\Controller\LoginCntrl.js" />
     <Content Include="Scripts\Controller\ManageLeaveCntrl.js" />
     <Content Include="Scripts\Controller\MasterCntrl.js" />
-    <Content Include="Scripts\Controller\MediclaimCntrl.js" />
-    <Content Include="Scripts\Controller\ODCntrl.js" />
     <Content Include="Scripts\Controller\OpenMonthCntrl.js" />
     <Content Include="Scripts\Controller\PendingLeaveReport.js" />
     <Content Include="Scripts\Controller\PostedByHRReportCntrl.js" />
     <Content Include="Scripts\Controller\ReleaseStreategyCntrl.js" />
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
-    <Content Include="Scripts\Controller\TestCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -509,6 +508,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Jquery\jquery-1.9.1.js" />
     <Content Include="Scripts\Jquery\jquery-ui.js" />
+    <Content Include="Scripts\Jquery\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -539,11 +539,11 @@
     <Content Include="UserManuals\images\LeaveCancellation\FLC.jpg" />
     <Content Include="UserManuals\images\LeaveCancellation\fullleaveCancel.jpg" />
     <Content Include="UserManuals\images\LeaveCancellation\ShortLeaveCancel.jpg" />
-    <Content Include="UserManuals\images\LeaveCancellation\shortlleavedashboard.jpg" />
+    <Content Include="UserManuals\images\LeaveCancellation\shortlleavedashboard.png" />
     <Content Include="UserManuals\images\LeavePosting\1 %285%29%28I%29.png" />
     <Content Include="UserManuals\images\LeavePosting\1 %285%29%28P%29.png" />
     <Content Include="UserManuals\images\LeavePosting\1 %285%29%28R%29.png" />
-    <Content Include="UserManuals\images\LeavePosting\LeavePositng.jpg" />
+    <Content Include="UserManuals\images\LeavePosting\LeavePositng.png" />
     <Content Include="UserManuals\images\ReleaseStrategy\1 %282%29%281%29.png" />
     <Content Include="UserManuals\images\ReleaseStrategy\RemoveReleaser.jpg" />
     <Content Include="UserManuals\images\LeavePosting\1 %281%29.png" />
@@ -579,7 +579,6 @@
     <Content Include="UserManuals\images\UpdateEmailId\1 %283%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %284%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %285%29.png" />
-    <Content Include="Views\OD\ODApply.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -621,7 +620,6 @@
     <Content Include="Views\Home\ResetPassword.cshtml" />
     <Content Include="Views\Home\UpdateEmailAdd.cshtml" />
     <Content Include="Views\Report\EmployeeList.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Report\EmployeeReleaseStrategyList.cshtml" />
     <Content Include="Views\Home\OpenMonth.cshtml" />
     <Content Include="Views\Master\CreateReleaseStreategy.cshtml" />
@@ -639,7 +637,6 @@
     <Content Include="Views\Report\ReleaserGatePassReport.cshtml" />
     <Content Include="Views\Master\AddressMaster.cshtml" />
     <Content Include="Views\Report\AllUsersDetailsReport.cshtml" />
-    <Content Include="Views\Master\MediclaimMaster.cshtml" />
     <Content Include="Views\GatePass\GatePass.cshtml" />
     <Content Include="Views\GatePass\GatePassRelease.cshtml" />
     <Content Include="Views\GatePass\GatePassInOut.cshtml" />
@@ -650,6 +647,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

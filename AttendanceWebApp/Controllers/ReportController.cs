@@ -7,7 +7,6 @@ namespace AttendanceWebApp.Controllers
 {
     public class ReportController : Controller
     {
-        //Releaser Wise Employees Leave List
         public ActionResult LeaveReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -32,7 +31,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Posted Leave Report by Posted Status
         public ActionResult PostedLeaveReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -45,7 +43,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Releaser Wise Employee List
         public ActionResult EmployeeList()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -58,7 +55,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Employee Release Strategy List
         public ActionResult EmployeeReleaseStrategyList()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -71,7 +67,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Employee Performance Report
         public ActionResult PerformanceReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -96,7 +91,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Posted by Report
         public ActionResult PostedByReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -109,7 +103,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Uniform Details
         public ActionResult UniformMasterReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -122,7 +115,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //View Gate Pass List Generate By User
         public ActionResult PrintGatePassReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -134,18 +126,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
-        //public ActionResult PrintPreviewGatePass()
-        //{
-        //    if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-        //    {
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Login");
-        //    }
-        //}
 
         ///View All Gate Pass List
         public ActionResult AllGatePassReport()
@@ -160,7 +140,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //View Gate Pass List For Releasers
         public ActionResult ReleaserGatePassReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -173,7 +152,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Basic Details Of All Users
         public ActionResult AllUsersDetailsReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)

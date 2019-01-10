@@ -24,6 +24,7 @@
     <script src="~/Scripts/Jquery/jquery-ui.js"></script>
 
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+    <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
 
     <style>
         .Requed {
@@ -44,7 +45,8 @@
         }
     </style>
 
-    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+    @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>*@
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
     <script src="~/Scripts/Module/ng-table.src.js"></script>
     <script src="~/Scripts/Module/ng-tags-input.js"></script>
     <script src="~/Scripts/Module/app.js"></script>

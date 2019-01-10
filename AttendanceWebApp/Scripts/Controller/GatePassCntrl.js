@@ -6,8 +6,9 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     $scope.currentPage = 1;
     $scope.itemsPerPage = 25;
     $scope.alluserlist = [];
-    $scope._Conpath = '';
-    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { $scope._Conpath = _ConPath; } });
+
+    $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
 
     $scope.gpno;
     $scope.gpdate;
@@ -271,23 +272,13 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
 
-            if (xhr.readyState === 4) {
-                //
-                //var json = JSON.parse(xhr.responseText);
-                //$scope.tmpdta = json;
-                //$scope.$digest();
-
-                //$scope.gpno = $scope.tmpdta[0]['gatePassNo'];
-                //$scope.gpdate = $scope.tmpdta[0]['gatePassDate'];
-                //var gpdt = $scope.gpdate;
-                //gpdt = (gpdt).slice(0, 10);
-
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                ///var json = JSON.parse(xhr.responseText);$scope.tmpdta = json;$scope.$digest();$scope.gpno = $scope.tmpdta[0]['gatePassNo'];$scope.gpdate = $scope.tmpdta[0]['gatePassDate'];var gpdt = $scope.gpdate;gpdt = (gpdt).slice(0, 10);
                 document.getElementById("MessageBox").innerHTML =
                                     "<div class='alert alert-success alert-dismissable'>" +
                                     "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                                     "<strong>Gate Pass Generated. Pls. contact your Releasing Authority..</strong>" +
                                     "</div>";
-                //"<div style='float:right;'><strong><a style='float: right;' target='_blank' href='/Report/PrintPreviewGatePass?gpno=" + $scope.gpno + "&gpdate=" + gpdt + "'>Print Preview</a></strong></div>";
                 $('#MessageBox').show();
                 $("#aliasTable").find("tr:not(:first)").remove();
                 document.getElementById("txtEmpCode").value = $('#myEmpUnqId').val();
@@ -319,11 +310,13 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Get Pending Gate Pass List
     $scope.GetGPLists = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var gplst = new XMLHttpRequest();
         gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true);
         gplst.setRequestHeader('Accept', 'application/json');
         gplst.onreadystatechange = function () {
             if (gplst.readyState === 4) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 var json = JSON.parse(gplst.responseText);
                 rlsarr = json;
                 $scope.relalldata = json;
@@ -379,7 +372,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         xhr2.setRequestHeader("Content-type", "application/json");
         xhr2.onreadystatechange = function () {
             if (xhr2.readyState === 4) {
-
                 if (releaseStatusCode === 'F') {
                     document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Approved Sucesfully.. </strong></div>";
                 }
@@ -390,7 +382,6 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                 $scope.GetGPLists();
             }
             else {
-
                 if (releaseStatusCode === 'F') {
                     document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Gate Pass Not Approved .. </strong></div>";
                 }
@@ -422,6 +413,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Gate Pass IN/OUT 
     $scope.GateINOUT = function (barcode, empid, empname) {
+
         var retVal = confirm(empid + ":" + empname);
         if (retVal === true) {
             var gpio = new XMLHttpRequest();
@@ -477,7 +469,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Get Details of Gate PAss of Login User
     $scope.GetUserGatePassInfo = function (data) {
-
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var FromDate, ToDate;
 
         if ((typeof (data) === "undefined") ||
@@ -510,6 +502,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         puser.setRequestHeader("Content-type", "application/json");
         puser.onreadystatechange = function () {
             if (puser.readyState === 4 && puser.status === 200) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 var json = JSON.parse(puser.responseText);
                 $scope.pUdata = json;
                 $scope.$digest();
@@ -520,7 +513,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Get All Gate Pass Informatinon for Releaser Report
     $scope.ReleaserGatePassInfo = function (entity) {
-
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var FromDate, ToDate;
 
         if ((typeof (entity) === "undefined") ||
@@ -550,6 +543,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
         relall.setRequestHeader("Content-type", "application/json");
         relall.onreadystatechange = function () {
             if (relall.readyState === 4 && relall.status === 200) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 var json = JSON.parse(relall.responseText);
                 $scope.relalldata = json;
                 $scope.relalldata = $filter('orderBy')($scope.relalldata, '-gateOutDateTime');
@@ -623,8 +617,15 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Gate Out Info
     $scope.NewGPInfo = function () {
+        //var today = new Date(); var yesterday = new Date(today); yesterday.setDate(today.getDate() - 1); var dd = yesterday.getDate(); var mm = yesterday.getMonth() + 1; var yyyy = yesterday.getFullYear();
+        //if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm }; yesterday = yyyy + '/' + mm + '/' + dd;
+
         var count = 0;
-        var FromDate, ToDate; var d3 = new Date(); var iodate = new Date(d3.getFullYear(), d3.getMonth(), d3.getDate()); FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1); ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
+        var d3 = new Date();
+        var iodate = new Date(d3.getFullYear(), d3.getMonth(), d3.getDate());
+        //var FromDate = yesterday;
+        var FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1);
+        var ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
         var date1 = new Date(FromDate); var date2 = new Date(ToDate);
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var out = new XMLHttpRequest(); out.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true); out.setRequestHeader("Content-type", "application/json");
@@ -651,8 +652,14 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
 
     //Gate In Info
     $scope.OutGPInfo = function () {
+        //var today = new Date(); var yesterday = new Date(today); yesterday.setDate(today.getDate() - 1); var dd = yesterday.getDate(); var mm = yesterday.getMonth() + 1; //January is 0!
+        //var yyyy = yesterday.getFullYear(); if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm }; yesterday = yyyy + '/' + mm + '/' + dd;
+
         var count1 = 0;
-        var FromDate, ToDate; var d4 = new Date(); var iodate = new Date(d4.getFullYear(), d4.getMonth(), d4.getDate()); FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1); ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
+        var d4 = new Date(); var iodate = new Date(d4.getFullYear(), d4.getMonth(), d4.getDate());
+        //var FromDate = yesterday;
+        var FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1);
+        var ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
         var date1 = new Date(FromDate); var date2 = new Date(ToDate);
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var ingp = new XMLHttpRequest(); ingp.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true); ingp.setRequestHeader("Content-type", "application/json");
@@ -676,7 +683,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                         count1++;
                     };
                 }
-                $scope.indata = inArray; $scope.indata = $filter('orderBy')($scope.indata, '-gatePassNo'); $scope.$digest();
+                $scope.indata = inArray; $scope.indata = $filter('orderBy')($scope.indata, '-gateOutDateTimeORG'); $scope.$digest();
             }
         };
         ingp.send();
@@ -769,12 +776,4 @@ app.directive("datepicker", function () {
 //$scope.GenerateBarCode = function () { JsBarcode("#barcode", '20010915:000001', { width: 1, height: 50 }); };
 
 ////Print Perview of Gate Pass
-//$scope.PrintTable = function () {
-//    var prtContent = document.getElementById("tblPrint");
-//    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-//    WinPrint.document.write(prtContent.innerHTML);
-//    WinPrint.document.close();
-//    WinPrint.focus();
-//    WinPrint.print();
-//    WinPrint.close();
-//}
+//$scope.PrintTable = function () { var prtContent = document.getElementById("tblPrint"); var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0'); WinPrint.document.write(prtContent.innerHTML); WinPrint.document.close(); WinPrint.focus(); WinPrint.print(); WinPrint.close(); };

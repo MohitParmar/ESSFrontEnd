@@ -3,12 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
+@*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script><script src="~/Scripts/Module/ng-table.src.js"></script><script src="~/Scripts/Module/ng-tags-input.js"></script><link href="~/Content/ng-table.css" rel="stylesheet" media="screen" /><link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />*@
 <script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Scripts/Controller/LeaveCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
 
@@ -38,15 +34,6 @@
         }
 </style>
 
-@*<script>
-        window.onload = function () {
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            $('#FromDt').val(strDate);
-            $('#ToDt').val(strDate);
-        }
-    </script>*@
-
 <div ng-app="myApp" ng-controller="LeaveController">
     <div class="container">
         <input type="hidden" value="LA" id="releaseGroupCode" />
@@ -75,7 +62,7 @@
                                     <td style="text-align:center;" colspan="4">
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" placeholder="Select From Date"
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" ng-change="YearValidate()" placeholder="Select From Date"
                                                    datepicker required>
                                         </div>
                                     </td>
@@ -85,7 +72,7 @@
                                     <td style="text-align:center;" colspan="4">
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" placeholder="Select To Date"
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" onclick="ToValidate()" placeholder="Select To Date"
                                                    datepicker required>
                                         </div>
                                     </td>
@@ -93,6 +80,13 @@
                                 <tr>
                                     <td><label>Leave Type :</label></td>
                                     <td style="text-align:center;" colspan="4">
+                                        @*<select class="form-control" id="leavetype" ng-model="new.leavetypecode" ng-change="setltlistvalue(new.leavetypecode)" required>
+                                                <option value="cl" title="cl">cl</option>
+                                                <option value="lw" title="lw">lw</option>
+                                                <option value="oh" title="oh">oh</option>
+                                                <option value="pl" title="pl">pl</option>
+                                                <option value="sl" title="sl">sl</option>
+                                            </select>*@
                                         <div ng-app="myApp" ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
                                             <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
                                                     ng-options="s.LeaveTypeCode as s.LeaveTypeCode for s in LList" ng-change="SetLTListValue(New.LeaveTypeCode)" required>

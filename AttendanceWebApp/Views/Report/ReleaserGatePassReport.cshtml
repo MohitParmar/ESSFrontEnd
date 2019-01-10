@@ -3,12 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
-<script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
 
@@ -43,14 +37,7 @@
 </style>
 
 <script>
-    window.onload = function () {
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        $('#FromDt').val(firstDay);
-        $('#ToDt').val(firstDay);
-    }
+    window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate()); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(firstDay); }
 </script>
 
 <div ng-app="myApp" ng-controller="GatePassCntroller">
@@ -81,6 +68,7 @@
                                             <i class="icon-search"></i>
                                             Search
                                         </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                     </td>
                                 </tr>
                             </table>
@@ -97,7 +85,6 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-
                                             <th style="text-align:center;">Gate Out Time</th>
                                             <th style="text-align:center;">Gate In Time</th>
                                             <th style="text-align:center;">Purpose</th>

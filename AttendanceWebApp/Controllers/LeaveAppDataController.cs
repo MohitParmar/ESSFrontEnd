@@ -22,19 +22,15 @@ namespace AttendanceWebApp.Controllers
             try
             {
                 var LeaveTypeData = (from o in _context.LeaveTypes
-                                                                               where o.WrkGrp == "comp" && o.Active == true
-                                                                               select new
+                                     where o.WrkGrp == "comp" && o.Active == true
+                                     select new
                                      {
-                                                                                   o.LeaveTypeCode,
-                                                                                   o.LeaveTypeName
-                                                                               }).ToList<dynamic>();
-
+                                         o.LeaveTypeCode,
+                                         o.LeaveTypeName
+                                     }).ToList<dynamic>();
                 return LeaveTypeData;
             }
-            catch
-            {
-                return null;
-            }
+            catch { return null; }
         }
     }
 }

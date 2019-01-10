@@ -45,8 +45,8 @@ namespace AttendanceWebApp.Controllers
                 Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["IsHod"] = Convert.ToString(requestData.IsHod);
-                Session["IsSecUser"] = Convert.ToString(requestData.IsSecUser); //For Gate Pass OUT/IN
-                Session["IsGpReleaser"] = Convert.ToString(requestData.IsGpReleaser);   //For Gate Pass Release
+                Session["IsSecUser"] = Convert.ToString(requestData.IsSecUser);
+                Session["IsGpReleaser"] = Convert.ToString(requestData.IsGpReleaser);
                 Session["IsAdmin"] = Convert.ToString(requestData.IsAdmin);
 
                 var IsReleaser = requestData.IsReleaser;
@@ -68,13 +68,16 @@ namespace AttendanceWebApp.Controllers
                         {
                             Session["UserRole"] = "IsHrRelease";
                         }
-                        else if (IsAdmin == true)
-                        {
-                            Session["UserRole"] = "IsAdmin";
-                        }
                         else
                         {
-                            Session["UserRole"] = "IsUser";
+                            if (IsAdmin == true)
+                            {
+                                Session["UserRole"] = "IsAdmin";
+                            }
+                            else
+                            {
+                                Session["UserRole"] = "IsUser";
+                            }
                         }
                     }
                 }
@@ -86,7 +89,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        ///Logout
         public ActionResult UserLogin()
         {
             Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");

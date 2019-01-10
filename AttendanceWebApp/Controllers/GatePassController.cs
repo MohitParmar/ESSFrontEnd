@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AttendanceWebApp.Controllers
 {
     public class GatePassController : Controller
     {
-        //Generate Gate Pass For Regular Company Employees
         public ActionResult GatePass()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -21,7 +19,6 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        //Generate Gate Pass For Contractual & Other Workgroup Employees
         public ActionResult ContractualGatePass()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -46,8 +43,21 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        public ActionResult GatePassInOut() { return View(); }
+        public ActionResult GatePassInOut()
+        {
+            if (Convert.ToBoolean(Session["IsSecUser"]) == true || Session["UserRole"].ToString() == "IsAdmin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("AuthorizationError", "CustomError");
+            }
+        }
 
-        public ActionResult GPSecReport() { return View(); }
+        public ActionResult GPSecReport()
+        {
+            return View();
+        }
     }
 }

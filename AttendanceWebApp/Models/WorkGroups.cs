@@ -6,13 +6,15 @@ namespace AttendanceWebApp.Models
 {
     public class WorkGroups
     {
-        [Key, Column(Order = 0)]
+        [Key,
+        Column(Order = 0)]
         [StringLength(2)]
         public string CompCode { get; set; }
 
         public virtual Company Company { get; set; }
 
-        [Key, Column(Order = 1)]
+        [Key,
+        Column(Order = 1)]
         [Required]
         [StringLength(10)]
         public string WrkGrp { get; set; }
@@ -22,7 +24,7 @@ namespace AttendanceWebApp.Models
 
         public DateTime? AddDt { get; set; }
 
-        [StringLength(8)]                       // Ex. 20005116
+        [StringLength(8)]
         public string AddUser { get; set; }
     }
 }

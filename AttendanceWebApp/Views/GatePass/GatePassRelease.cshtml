@@ -3,12 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
-<script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
 
@@ -43,14 +37,7 @@
 </style>
 
 <script>
-    window.onload = function () {
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
-        $('#FromDt').val(firstDay);
-        $('#ToDt').val(firstDay);
-    }
+    window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate()); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(firstDay); }
 </script>
 
 <div ng-app="myApp">
@@ -64,6 +51,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><strong>Pending For Gate Pass Release List</strong></div>
                         <div class="panel-body">
+                            <div style="text-align:center;">
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </div>
                             <div ng-init="GetGPLists()">
                                 <div class="table-responsive">
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
@@ -93,7 +83,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                            <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
+                                                ng-show="d.gatePassStatus === 'N'">
                                                 <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:left;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
