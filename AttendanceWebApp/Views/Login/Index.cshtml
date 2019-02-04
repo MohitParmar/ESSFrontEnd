@@ -28,7 +28,6 @@
     <script src="~/Scripts/Module/app.js"></script>
     <script src="~/Scripts/Jquery/jquery-1.9.1.js"></script>
     <script src="~/Scripts/Jquery/jquery-ui.min.js"></script>
-    <script src="~/Scripts/CommonFunction.js"></script>
 
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
     <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
@@ -81,6 +80,7 @@
                     </div>
                     <div class="login-actions">
                         <input type="submit" id="btnOK" class="button btn btn-warning btn-large" style="margin-top:0;" value="Login" ng-click="UserLogin(usr)" />
+                        @*<input type="submit" id="btnOK" class="button btn btn-primary btn-large" style="margin-top:0;" value="Login" ng-click="UserLogin(usr)" />*@
                     </div>
                 </fieldset>
             </div>

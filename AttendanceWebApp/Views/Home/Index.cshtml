@@ -22,14 +22,14 @@
 
 @* Check User ID & Password is Same *@
 <script type="text/javascript">
-    $(window).on('load', function ()
-    {
+    $(window).on('load', function () {
+        $('#testModal').modal('show');
+
         var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
         var sPass = "@Session["Pass"].ToString()";
         var sWrkgrp = "@Session["WrkGrp"]";
 
-        if (sEmpUnqId === sPass && sWrkgrp === "COMP")
-        {
+        if (sEmpUnqId === sPass && sWrkgrp === "COMP") {
             $('#myModal').modal('show');
         }
     });
@@ -210,5 +210,21 @@
                 </div>
             </div>
         </div>
+        @*<div class="modal modal-content" id="testModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                 style="position:fixed">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Test Model</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table table-responsive">
+                            <tr>
+                                <td><label>Test Model 1</label></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>*@
     </div>
 </div>

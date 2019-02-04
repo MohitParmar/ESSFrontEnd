@@ -1,79 +1,48 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
-
 app.controller('UniformController', function ($scope, $http, $filter) {
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
-    $scope.alluserlist = [];
     $scope.currentPage = 1; $scope.itemsPerPage = 10;
-
+    $scope.alluserlist = [];
+    $scope.jsondata;
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
-
-    $scope.jsondata;
     $scope.ResetView = function () { window.location.reload(true); }    //Reload Page
     var d = new Date(); var Currentyear = (d.getFullYear());
-
     //Add/Update Uniform Details
     $scope.AddUniformDetails = function (entity) {
         if ((typeof (entity) === "undefined") || (typeof (entity.TrouserSize) === "undefined") || (typeof (entity.ShirtSize) === "undefined")) { alert("Please Fill All Required Details .. "); return false; }
         var jsonObj = {};
-        jsonObj.EmpUnqId = $('#myEmpUnqId').val(); jsonObj.Year = Currentyear; jsonObj.TrouserSize = entity.TrouserSize; jsonObj.ShirtSize = entity.ShirtSize; jsonObj.UpdUser = $('#myEmpUnqId').val(); jsonObj = JSON.stringify(jsonObj);
-        var Unf = new XMLHttpRequest();
-        Unf.open('POST', $scope._Conpath + 'EmpUniform/UpdateUniform', true);
-        Unf.setRequestHeader("Content-type", "application/json");
+        jsonObj.EmpUnqId = $('#myEmpUnqId').val(); jsonObj.Year = Currentyear; jsonObj.TrouserSize = entity.TrouserSize; jsonObj.ShirtSize = entity.ShirtSize;
+        jsonObj.UpdUser = $('#myEmpUnqId').val(); jsonObj = JSON.stringify(jsonObj);
+        var Unf = new XMLHttpRequest(); Unf.open('POST', $scope._Conpath + 'EmpUniform/UpdateUniform', true); Unf.setRequestHeader("Content-type", "application/json");
         Unf.onreadystatechange = function () {
             if (Unf.readyState === 4 && Unf.status === 200) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Uniform Details Updated Successfully.. </strong></div>"; $('#MessageBox').show();
-                document.getElementById("txtShirtSize").value = "";
-                document.getElementById("txtTrouserSize").value = "";
+                document.getElementById("txtShirtSize").value = ""; document.getElementById("txtTrouserSize").value = "";
                 $scope.GetUniformDetails();
             } else if (Unf.status === 400) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Uniform Details not Saved.. </strong></div>"; $('#MessageBox').show();
-                document.getElementById("txtShirtSize").value = "";
-                document.getElementById("txtTrouserSize").value = "";
+                document.getElementById("txtShirtSize").value = ""; document.getElementById("txtTrouserSize").value = "";
             }
         };
         Unf.send(jsonObj);
     };
-
     //Get Uniform Details of Selected User 
-    $scope.GetUniformDetails = function () {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', $scope._Conpath + 'EmpUniform/GetEmpUniform?year=' + Currentyear + ' &empUnqId=' + $('#myEmpUnqId').val(), true);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); $scope.data = json; $scope.$digest(); } };
-        xhr.send();
-    };
-
+    $scope.GetUniformDetails = function () { var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'EmpUniform/GetEmpUniform?year=' + Currentyear + ' &empUnqId=' + $('#myEmpUnqId').val(), true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); $scope.data = json; $scope.$digest(); } }; xhr.send(); };
     //Get Uniform Details of All User 
     $scope.GetAllUserUniformDetails = function () {
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-        var xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', $scope._Conpath + 'EmpUniform/GetEmpUniform?year=' + Currentyear, true);
-        xhr1.setRequestHeader('Accept', 'application/json');
+        var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'EmpUniform/GetEmpUniform?year=' + Currentyear, true); xhr1.setRequestHeader('Accept', 'application/json');
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4) {
-                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-                $scope.jsondata = xhr1.responseText; var json = JSON.parse(xhr1.responseText);
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); $scope.jsondata = xhr1.responseText; var json = JSON.parse(xhr1.responseText);
                 $scope.Alldata = json; $scope.Alldata = $filter('orderBy')($scope.Alldata, '-updTime'); $scope.$digest();
             }
         };
         xhr1.send();
     };
-
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
-
-    //Export to Excel CSV File Grid Data
-    $scope.exportAllData = function () {
-        setTimeout(function () {
-            $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-            var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            var FileName = "Uniform_Master_List_" + d;
-            $scope.JSONToCSVConvertor($scope.jsondata, FileName, true);
-            $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-        }, 100);
-    };
-
-    //Convert Json Data to CSV 
+    $scope.exportAllData = function () { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = "Uniform_Master_List_" + d; $scope.JSONToCSVConvertor($scope.jsondata, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {
         var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
         var CSV = ''; CSV += ReportTitle + '\r\n\n'; //Set Report title in first row or line
@@ -85,6 +54,4 @@ app.controller('UniformController', function ($scope, $http, $filter) {
         var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
 });
-
-//Date Picker
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }; var options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } } });

@@ -300,7 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
-    <Content Include="Content\BarCodeGenerate\JsBarcode.all.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
@@ -442,7 +441,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
-    <Content Include="Scripts\CommonFunction.js" />
     <Content Include="Scripts\Controller\default.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />

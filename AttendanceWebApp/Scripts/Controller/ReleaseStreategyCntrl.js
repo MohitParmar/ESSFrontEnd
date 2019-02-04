@@ -1,11 +1,9 @@
 ﻿angular.module('myApp.Controllers').controller("ReleaseStreategyCntrloller", ['$scope', '$http', function ($scope, $http) {
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
     $scope.alluserlist = [];
-
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
-
-    $scope.ResetView = function () { window.location.reload(true); };
+    $scope.ResetView = function () { window.location.reload(true); };   //Page Reload
     jQuery.support.cors = true;
     //Get Employee details entered by user
     $scope.GetEmpInfo = function () {
@@ -16,19 +14,20 @@
             if (emp.readyState === 4) {
                 var json1 = JSON.parse(emp.responseText); $scope.empdata = json1;
                 var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=LA&empUnqId=' + e_Code, true); rel.setRequestHeader('Accept', 'application/json');
-                rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send();
-                $scope.$digest();
+                rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } };
+                rel.send(); $scope.$digest();
             } else if (emp.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); }
         };
         emp.send();
     };
-    //Popup Model
-    $scope.PopulateData = function () { $('#ConformModel').modal('show'); };
+    $scope.PopulateData = function () { $('#ConformModel').modal('show'); };    //Popup Model
     //Get Employee details entered by user
     $scope.GetReleaserInfo = function () {
         $('#tbl_rlsdtl').show();
         var rls_Code = $('#Rel_Empid').val(); if (rls_Code === '') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Releaser Employee Code.. </strong></div>"; $('#MessageBox').show(); return false; }
-        var rls = new XMLHttpRequest(); rls.open('GET', $scope._Conpath + 'ChangeRelease/GetReleaseAuth?empunqid=' + rls_Code, true); rls.setRequestHeader('Accept', 'application/json'); rls.onreadystatechange = function () { if (rls.readyState === 4) { var json2 = JSON.parse(rls.responseText); $scope.rdata = json2; $scope.$digest(); } else if (rls.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); } }; rls.send();
+        var rls = new XMLHttpRequest(); rls.open('GET', $scope._Conpath + 'ChangeRelease/GetReleaseAuth?empunqid=' + rls_Code, true);
+        rls.setRequestHeader('Accept', 'application/json');
+        rls.onreadystatechange = function () { if (rls.readyState === 4) { var json2 = JSON.parse(rls.responseText); $scope.rdata = json2; $scope.$digest(); } else if (rls.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); } }; rls.send();
     };
     //Add New Releaser
     $scope.AddReleaser = function (data) {
@@ -48,7 +47,8 @@
     $scope.RemoveReleaser = function () { var index = $scope.rlsdata.releaseStrategyLevels.indexOf($scope.rlsdata.releaseStrategyLevels.releaseStrategyLevel); $scope.rlsdata.releaseStrategyLevels.splice(index, 1); };
     //Create / Update Release Strategy
     $scope.CreateReleaseStrategy = function () {
-        var d2 = new Date(); var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate(), d2.getHours(), d2.getMinutes(), d2.getSeconds()); var now = (today.getFullYear()) + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        var d2 = new Date(); var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate(), d2.getHours(), d2.getMinutes(), d2.getSeconds());
+        var now = (today.getFullYear()) + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
         var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length;
         if (rowCounts <= 1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Select At least One Releaser..</strong></div>"; $('#MessageBox').show(); return false; }
         var jsonObj = {};
@@ -56,11 +56,15 @@
         TableData = JSON.stringify(TableData);
         function storeTblValues() {
             var TableData = new Array();
-            $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "releaseGroupCode": "LA", "releaseStrategy": $(tr).find('td:eq(0)').text(), "releaseStrategyLevel": $(tr).find('td:eq(1)').text(), "releaseCode": $(tr).find('td:eq(2)').text(), "isFinalRelease": "false" } });
-            TableData.shift();// first row will be empty - so remove
-            jsonObj.releaseGroupCode = 'LA'; jsonObj.releaseStrategy = $scope.empdata[0]['empUnqId']; jsonObj.releaseStrategyName = $scope.empdata[0]['empName']; jsonObj.releaseStrategyLevels = TableData; jsonObj.UpdDt = now; jsonObj.UpdUser = $('#myEmpUnqId').val(); return jsonObj;
+            $('#aliasTable tr').each(function (row, tr) {
+                TableData[row] = { "releaseGroupCode": "LA", "releaseStrategy": $(tr).find('td:eq(0)').text(), "releaseStrategyLevel": $(tr).find('td:eq(1)').text(), "releaseCode": $(tr).find('td:eq(2)').text(), "isFinalRelease": "false" }
+            });
+            TableData.shift();      // first row will be empty - so remove
+            jsonObj.releaseGroupCode = 'LA'; jsonObj.releaseStrategy = $scope.empdata[0]['empUnqId']; jsonObj.releaseStrategyName = $scope.empdata[0]['empName'];
+            jsonObj.releaseStrategyLevels = TableData; jsonObj.UpdDt = now; jsonObj.UpdUser = $('#myEmpUnqId').val(); return jsonObj;
         }
-        var xhr = new XMLHttpRequest(); xhr.open('POST', $scope._Conpath + 'ChangeRelease/ChangeReleaseStrategy', true); xhr.setRequestHeader("Content-type", "application/json");
+        var xhr = new XMLHttpRequest(); xhr.open('POST', $scope._Conpath + 'ChangeRelease/ChangeReleaseStrategy', true);
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Release Strategy Saved..</strong></div>"; $('#MessageBox').show();

@@ -2,17 +2,9 @@
     ViewBag.Title = "Full Leave Cancellation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
-<script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Scripts/Controller/ShortLeaveCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
-
 <style type="text/css">
     .right-inner-addon {
         position: relative;
@@ -29,14 +21,12 @@
             pointer-events: none;
         }
 </style>
-
 <div ng-app="myApp" ng-controller="ShortLeaveController">
     <div class="container">
         <input type="hidden" value="" id="previousMonthdate" />
         <input type="hidden" value="LA" id="releaseGroupCode" />
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
-            @* Leave Application List *@
             <div class="col-sm-8">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Leave Application List</strong></div>
@@ -83,14 +73,7 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td style="text-align:center;">
-                                                <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger"
-                                                        ng-disabled="ld.openmonthflg === false"
-                                                        ng-click="FullLeaveCancel('{{ld.releaseGroupCode}}',{{ld.leaveAppId}})">
-                                                    <i class="icon-remove"></i>
-                                                    Cancel
-                                                </button>
-                                            </td>
+                                            <td style="text-align:center;"><button type="button" value="Cancel" id="btnCancel" class="btn btn-danger" ng-disabled="ld.openmonthflg === false" ng-click="FullLeaveCancel('{{ld.releaseGroupCode}}',{{ld.leaveAppId}})"><i class="icon-remove"></i>Cancel</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -101,24 +84,14 @@
                     <div class="panel-footer"><strong>Note For Leave Group : LA - Leave Application</strong><br /></div>
                 </div>
             </div>
-            @* Right Pane Start *@
             <div class="col-sm-4">
-                @* Leave Balance List *@
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>Leave Balance</strong></div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
                                 <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;">Type</th>
-                                            <th style="text-align:center;">Open</th>
-                                            <th style="text-align:center;">Availed</th>
-                                            <th style="text-align:center;">Encashed</th>
-                                            <th style="text-align:center;">Balance</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th style="text-align:center;">Type</th><th style="text-align:center;">Open</th><th style="text-align:center;">Availed</th><th style="text-align:center;">Encashed</th><th style="text-align:center;">Balance</th></tr></thead>
                                     <tbody>
                                         <tr ng-repeat="d in data">
                                             <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
@@ -133,19 +106,13 @@
                         </div>
                     </div>
                 </div>
-                @* Holiday List Of Current User *@
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>Holiday List</strong></div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                             <div class="table-responsive">
                                 <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;">Date</th>
-                                            <th style="text-align:center;">Festival Name</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th style="text-align:center;">Date</th><th style="text-align:center;">Festival Name</th></tr></thead>
                                     <tbody>
                                         <tr ng-repeat="hld in hlddata">
                                             <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>
@@ -158,7 +125,6 @@
                     </div>
                 </div>
             </div>
-            @* Right Pane End *@
         </div>
     </div>
 </div>
