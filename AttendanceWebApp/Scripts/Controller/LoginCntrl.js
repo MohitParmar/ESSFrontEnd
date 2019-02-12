@@ -32,7 +32,7 @@
                 jsonObj1.DeptCode = $scope.Udata[0]["deptCode"]; jsonObj1.StatCode = $scope.Udata[0]["statCode"]; jsonObj1.GradeCode = $scope.Udata[0]["gradeCode"];
                 jsonObj1.OtFlag = $scope.Udata[0]["otFlag"]; jsonObj1.CatCode = $scope.Udata[0]["catCode"]; jsonObj1.isReleaser = $scope.Udata[0]["isReleaser"];
                 jsonObj1.isHrUser = $scope.Udata[0]["isHrUser"]; jsonObj1.isHod = $scope.Udata[0]["isHod"]; jsonObj1.isGpReleaser = $scope.Udata[0]["isGpReleaser"];
-                jsonObj1.isSecUser = $scope.Udata[0]["isSecUser"]; jsonObj1.isAdmin = $scope.Udata[0]["isAdmin"];
+                jsonObj1.isSecUser = $scope.Udata[0]["isSecUser"]; jsonObj1.isAdmin = $scope.Udata[0]["isAdmin"]; jsonObj1.Location = $scope.Udata[0]["location"];
                 //jsonObj1.headerdetail = headerdetail;
                 jsonObj1 = JSON.stringify(jsonObj1);
                 //Go to Login Controller for Set Session Values

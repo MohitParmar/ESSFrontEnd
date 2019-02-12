@@ -117,18 +117,20 @@
                                                 <th style="text-align:center;width: 38px;">Days</th>
                                                 <th style="text-align:center;width: 61px;">Half Day</th>
                                                 <th style="text-align:center;width: 65px;">Is Posted</th>
-                                                <th style="text-align:center;">Update Date</th>
-                                                <th style="text-align:center;">Update User</th>
-
+                                                <th style="text-align:center;width: 116px;" ng-click="sort('postedDt')">
+                                                    Posted Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='postedDt'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;width:82px;">Posted User</th>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" /></td>
-                                                <td colspan="8"></td>
-                                                <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.updUser" /></td>
+                                                <td colspan="9"></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.postUser" /></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,7 +144,7 @@
                                                 <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">
                                                     {{s}}
                                                 </td>
-                                                <td colspan="8">
+                                                <td colspan="10">
                                                     <table id="aliasTable" class="table table-bordered table-hover">
                                                         <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
@@ -155,12 +157,12 @@
                                                             <td style="text-align:center;width:61px;">
                                                                 <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
                                                             </td>
-                                                            <td style="text-align:center;width:59px;">{{lrd.isPosted}}</td>
+                                                            <td style="text-align:center;width:65px;">{{lrd.isPosted}}</td>
+                                                            <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yy hh:mm:ss'}}</td>
+                                                            <td style="text-align:center;width:77px;">{{lrd.postUser}}</td>
                                                         </tr>
                                                     </table>
                                                 </td>
-                                                <td>{{d.updDt | date:'dd/MM/yy hh:mm:ss'}}</td>
-                                                <td style="text-align:center;">{{d.updUser}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

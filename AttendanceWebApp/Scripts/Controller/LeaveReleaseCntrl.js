@@ -40,7 +40,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                 xhr2.onreadystatechange = function () { if (xhr2.readyState === 4) { var jsonvar1 = JSON.parse(xhr2.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } };
                 xhr2.send();
                 //Get Posted Leave Entries
-                var pstl = new XMLHttpRequest(); pstl.open('GET', $scope._Conpath + 'leaveentry?empunqid=' + objarr[0]["empUnqId"] + '&year=' + d.getFullYear(), true);
+                var pstl = new XMLHttpRequest(); pstl.open('GET', $scope._Conpath + 'leaveentry?empunqid=' + objarr[0]["empUnqId"], true);
                 pstl.setRequestHeader('Accept', 'application/json');
                 pstl.onreadystatechange = function () {
                     if (pstl.readyState === 4) {

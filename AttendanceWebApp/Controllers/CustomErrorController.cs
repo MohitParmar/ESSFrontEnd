@@ -11,5 +11,10 @@ namespace AttendanceWebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult UnderMaintainance()
+        {
+            return View();
+        }
     }
 }

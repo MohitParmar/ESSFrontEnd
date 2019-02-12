@@ -25,5 +25,17 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        public ActionResult LeaveApplicationView()
+        {
+            if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("AuthorizationError", "CustomError");
+            }
+        }
     }
 }

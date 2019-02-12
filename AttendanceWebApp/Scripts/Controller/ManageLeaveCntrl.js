@@ -21,7 +21,7 @@ app.controller('ManageLeaveMasterController', function ($scope, $http, $filter) 
     $scope.GetEmpInfo = function () {
         var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#eCode').val(), true); emp.setRequestHeader('Accept', 'application/json');
         emp.onreadystatechange = function () {
-            if (emp.readyState === 4) { var json1 = JSON.parse(emp.responseText); $scope.empdata = json1; $scope.$digest(); $scope.GetRelesaseStratey(); $scope.GetLeaveRequestLists(); }
+            if (emp.readyState === 4) { var json1 = JSON.parse(emp.responseText); $scope.empdata = json1; $scope.$digest(); $scope.GetRelesaseStratey(); $scope.GetLeaveRequestLists(); $scope.GetLeave(); $scope.GetPostedLeave(); }
             else if (emp.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); }
         };
         emp.send();
@@ -47,11 +47,14 @@ app.controller('ManageLeaveMasterController', function ($scope, $http, $filter) 
                         myArray[cnt]["leaveAppId"] = la[i].leaveAppId; myArray[cnt]["yearMonth"] = la[i].yearMonth; myArray[cnt]["addDt"] = la[i].addDt;
                         myArray[cnt]["releaseDate"] = releaseDate; myArray[cnt]["updDt"] = la[i].updDt; myArray[cnt]["empUnqId"] = la[i].empUnqId;
                         myArray[cnt]["empName"] = empName; myArray[cnt]["statName"] = statName; myArray[cnt]["postedBy"] = la[i].updUser;
+                        myArray[cnt]["relremarks"] = la[i].remarks;
                         //Leave Application Details 
                         myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks; myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem;
                         myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode; myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt;
                         myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt; myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays;
                         myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag; myArray[cnt]["isPosted"] = leaveApplicationDetails[l].isPosted;
+                        myArray[cnt]["cancelled"] = leaveApplicationDetails[l].cancelled; myArray[cnt]["parentId"] = leaveApplicationDetails[l].parentId;
+                        myArray[cnt]["postUser"] = leaveApplicationDetails[l].postUser; myArray[cnt]["postedDt"] = leaveApplicationDetails[l].postedDt;
                         cnt++;
                     } leaveApplicationDetails = "";
                 } $scope.lappdata = myArray; $scope.lappdata = $filter('orderBy')($scope.lappdata, '-leaveAppId'); $scope.curPage = 0; $scope.pageSize = 10; $scope.$digest();
@@ -159,6 +162,10 @@ app.controller('ManageLeaveMasterController', function ($scope, $http, $filter) 
             } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Not Rejected Please Try again.. </strong></div>"; $('#MessageBox').show(); }
         }; rej.send(tbldata);
     };
+    //Get Leave Balance of Login Member
+    $scope.GetLeave = function () { var d = new Date(); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'LeaveBalance/GetLeaveBalance?empUnqId=' + $('#eCode').val() + '&yearmonth=' + d.getFullYear(), true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.data = json; $scope.$digest(); } }; req.send(); };
+    //Get Actual Posted Leave Application List by HR Department
+    $scope.GetPostedLeave = function () { var d = new Date(); var pstl = new XMLHttpRequest(); pstl.open('GET', $scope._Conpath + 'leaveentry?empunqid=' + $('#eCode').val(), true); pstl.setRequestHeader('Accept', 'application/json'); pstl.onreadystatechange = function () { if (pstl.readyState === 4) { var json = JSON.parse(pstl.responseText); $scope.pladata = json; $scope.pladata = $filter('orderBy')($scope.pladata, '-fromDt'); $scope.curPage1 = 0; $scope.pageSize1 = 5; $scope.$digest(); } }; pstl.send(); };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }; var options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } } });

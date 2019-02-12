@@ -160,7 +160,7 @@
                         <div class="panel-body" style="overflow:auto;">
                             <div ng-init="GetPostedLeave()">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed table-hover">
+                                    <table class="table table-bordered table-condensed table-hover table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">Type</th>
@@ -170,8 +170,8 @@
                                                 <th style="text-align:center;">Half Day</th>
                                             </tr>
                                         </thead>
-                                        <tbody dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
-                                            <tr>
+                                        <tbody>
+                                            <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
                                                 <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
                                                 <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>

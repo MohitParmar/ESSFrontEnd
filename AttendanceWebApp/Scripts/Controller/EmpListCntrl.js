@@ -9,7 +9,15 @@ app.controller('EmployeeListCntroller', function ($scope, $http) {
     //Get Lsit of Employees List when Login User is Releaser 
     $scope.GetReleaseStrategy = function () { var rls = new XMLHttpRequest(); rls.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?empunqid=' + $('#myEmpUnqId').val(), true); rls.setRequestHeader('Accept', 'application/json'); rls.onreadystatechange = function () { if (rls.readyState === 4) { var json = JSON.parse(rls.responseText); $scope.rlsdata = json; $scope.$digest(); } }; rls.send(); };
     //Get Lsit of Employees List when Login User is Releaser 
-    $scope.GetEmployeeList = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var empdtl = new XMLHttpRequest(); empdtl.open('GET', $scope._Conpath + 'Employee/GetEmployees', true); empdtl.setRequestHeader('Accept', 'application/json'); empdtl.onreadystatechange = function () { if (empdtl.readyState === 4) { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); $scope.jsondata = empdtl.responseText; var json = JSON.parse(empdtl.responseText); $scope.alldata = json; $scope.$digest(); } }; empdtl.send(); };
+    $scope.GetEmployeeList = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var empdtl = new XMLHttpRequest();
+        empdtl.open('GET', $scope._Conpath + 'Employee/GetEmployees?location=' + $('#myLoc').val(), true); empdtl.setRequestHeader('Accept', 'application/json'); empdtl.onreadystatechange = function () {
+            if (empdtl.readyState === 4) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); $scope.jsondata = empdtl.responseText;
+                var json = JSON.parse(empdtl.responseText); $scope.alldata = json; $scope.$digest();
+            }
+        }; empdtl.send();
+    };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };   //Sort DATA
     //Export to Excel
     $scope.exportAllData = function () { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = "User_Address_Report_" + d; $scope.JSONToCSVConvertor($scope.jsondata, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); };

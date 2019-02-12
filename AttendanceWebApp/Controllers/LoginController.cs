@@ -48,6 +48,7 @@ namespace AttendanceWebApp.Controllers
                 Session["IsSecUser"] = Convert.ToString(requestData.IsSecUser);
                 Session["IsGpReleaser"] = Convert.ToString(requestData.IsGpReleaser);
                 Session["IsAdmin"] = Convert.ToString(requestData.IsAdmin);
+                Session["Loc"] = Convert.ToString(requestData.Location);
 
                 var IsReleaser = requestData.IsReleaser;
                 var IsHrUser = requestData.IsHrUser;
@@ -115,6 +116,7 @@ namespace AttendanceWebApp.Controllers
             Session["IsSecUser"] = null;
             Session["IsGpReleaser"] = null;
             Session["IsAdmin"] = null;
+            Session["Loc"] = null;
 
             return RedirectToAction("Index", "Login");
         }

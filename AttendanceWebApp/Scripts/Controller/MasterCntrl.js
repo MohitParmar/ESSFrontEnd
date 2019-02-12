@@ -7,7 +7,19 @@ app.controller('MasterCntrloller', function ($scope, $http) {
     //Get User Release Strategy of Login /Member
     $scope.GetRelesaseStratey = function (rls) { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + rls + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };
     //List Of Public Holidays
-    $scope.ListOfholiday = function () { var dyear = new Date(); var hld = new XMLHttpRequest(); hld.open('GET', $scope._Conpath + 'Holiday/GetHolidays?compcode=' + $('#myCompCode').val() + '&wrkGrp=' + $('#myWrkGrp').val() + '&tYear=' + dyear.getFullYear(), true); hld.setRequestHeader('Accept', 'application/json'); hld.onreadystatechange = function () { if (hld.readyState === 4) { var json = JSON.parse(hld.responseText); $scope.hlddata = json; $scope.$digest(); } }; hld.send(); };
+    $scope.ListOfholiday = function () {
+        var dyear = new Date(); var hld = new XMLHttpRequest();
+        hld.open('GET', $scope._Conpath + 'Holiday/GetHolidays?compcode=' + $('#myCompCode').val() + '&wrkGrp=' + $('#myWrkGrp').val() + '&tYear=' +
+            dyear.getFullYear() + '&location=' + $('#myLoc').val(), true);
+        hld.setRequestHeader('Accept', 'application/json');
+        hld.onreadystatechange = function () {
+            if (hld.readyState === 4) {
+                var json = JSON.parse(hld.responseText);
+                $scope.hlddata = json; $scope.$digest();
+            }
+        };
+        hld.send();
+    };
     //Get Leave Balance of Login Member
     $scope.GetLeave = function () { var d = new Date(); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'LeaveBalance/GetLeaveBalance?empUnqId=' + $('#myEmpUnqId').val() + '&yearmonth=' + d.getFullYear(), true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.data = json; $scope.$digest(); } }; req.send(); };
     //Load / Unload Div control in User Manual

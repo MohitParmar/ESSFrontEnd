@@ -27,13 +27,6 @@
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
     <script src="~/Scripts/Controller/default.js"></script>
 
-    @*<link href="~/Content/css/pages/dashboard.css" rel="stylesheet">*@
-    @*<script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>*@
-    @*<script src="~/Scripts/Jquery/jquery-ui.js"></script>*@
-    @*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
-    @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>*@
-    @*<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />*@
-
     <style>
         .Requed {
             color: red;
@@ -73,7 +66,15 @@
 
     @* Function For Sync All Master Data Of Employees *@
     <script>
-        function AutoSync() { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync', true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };
+        function AutoSync() { var xhr = new XMLHttpRequest();
+            xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=@Session["Loc"].ToString()', true);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText);
+                }
+            };
+            xhr.send(); };
     </script>
 
     @* COFF Application Authoriization *@
@@ -114,6 +115,8 @@
     <input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" />
     <input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" />
     <input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />
+    <input type="hidden" value="@Session["Loc"]" id="myLoc" />
+
     @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
     <input type="hidden" value="" id="myIPAddress" />
     <div class="navbar navbar-fixed-top">
@@ -203,6 +206,7 @@
                         <ul class="dropdown-menu">
                             <li id="mnuReleaserEmpReport"><a href="/Report/EmployeeList">Employee List</a></li>
                             <li id="mnuLeaveReport"><a href="/Report/LeaveReport">Leave Report</a></li>
+                            <li id="mnuLeaveApplicationDetails"><a href="/LeavePosting/LeaveApplicationView">User Leave Application Details</a></li>
                             <li id="mnuPostedLeaveReport"><a href="/Report/PostedLeaveReport">Posted Leave Report</a></li>
                             <li id="mnuPostedByReport"><a href="/Report/PostedByReport">Posted By HR Report</a></li>
                             <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
@@ -239,7 +243,7 @@
     <div class="navbar-fixed-bottom" style="height:30px;">
         <div class="navbar-inner">
             <div class="container">
-                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD.</b></span> (<label id="ipAdd"></label>)</div>
+                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD. (IPU)</b></span> (<label id="ipAdd"></label>)</div>
             </div>
         </div>
     </div>

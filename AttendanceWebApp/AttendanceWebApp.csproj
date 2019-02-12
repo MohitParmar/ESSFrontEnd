@@ -299,6 +299,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -642,6 +643,8 @@
     <Content Include="Views\GatePass\GPSecReport.cshtml" />
     <Content Include="Views\CustomError\AuthorizationError.cshtml" />
     <Content Include="Views\Master\ManageLeaveMaster.cshtml" />
+    <Content Include="Views\LeavePosting\LeaveApplicationView.cshtml" />
+    <Content Include="Views\CustomError\UnderMaintainance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
