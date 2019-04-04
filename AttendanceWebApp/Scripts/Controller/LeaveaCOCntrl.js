@@ -3,6 +3,7 @@
     $scope.alluserlist = [];
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $scope.loc = $('#myLoc').val();
     $scope.ResetView = function () { window.location.reload(true); };   //Reload Page
     //Get Release Strategy
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };
@@ -19,7 +20,8 @@
     $scope.ToValidate = function () {
         var FromDate = $("#FromDt option:selected").text(); var chkTo = document.getElementById('ToDt'); var ToDate = chkTo.value;
         var date1 = new Date(FromDate); var date2 = new Date(ToDate); var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if (diff > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; }
+        if ($scope.loc === "IPU") { if (diff > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; } }
+        else { if (diff > 91) { alert("Please Select Correct Date for COff Apply .. "); return false; } }
         $('#TotalDays').text = diff; document.getElementById("TotalDays").value = diff;
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date..</strong></div>"; $('#MessageBox').show(); return false; } else { return true; }
     };
@@ -38,9 +40,10 @@
         //enable Checkbox for Half Day Leave Apply
         if ((typeof (entity) === "undefined") || (typeof (entity.ToDt) === "undefined") || (typeof (entity.Remarks) === "undefined") || FromDate === "") { alert("Please Fill All Required Details .. "); return false; }
         var LeaveTypeCode = $('#txtLeaveTypeCode').val(); var Totaldays = 1; var Remarks = entity.Remarks.replace("'", ""); var ToDate = entity.ToDt;
-        var date1 = new Date(FromDate); var date2 = new Date(ToDate);
-        var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if (coffdays > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; }
+        var date1 = new Date(FromDate); var date2 = new Date(ToDate); var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
+        if ($scope.loc === "IPU") { if (coffdays > 8) { alert("Please Select Correct Date for COff Apply .. "); return false; } }
+        else { if (coffdays > 91) { alert("Please Select Correct Date for COff Apply .. "); return false; } }
+
         // Week Off Apply //if (coffdays > 4) { alert("Please Select Correct Date for COff Apply .. "); return false; }
 
         ///Get Grid Data

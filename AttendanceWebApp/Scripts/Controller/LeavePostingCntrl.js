@@ -34,9 +34,14 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                 }
             } return tbl;
         }
+
         var xhr1 = new XMLHttpRequest(); xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
+                if (value2 === "R") {
+                    var rlsmail = new XMLHttpRequest(); rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=LA&id=' + value, true);
+                    rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
+                }
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Leave Posted / Rejected Sucesfully.. </strong>" + "</div>"; $('#MessageBox').show();
                 TableData = "";
             }
@@ -71,10 +76,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-                $scope.InfoPL = xhr.responseText;
-                var json = JSON.parse(xhr.responseText);
-                var temparr = new Array();
-                var url_string = window.location.href; var url = new URL(url_string); var tmpflg = url.searchParams.get("flg");
+                $scope.InfoPL = xhr.responseText; var json = JSON.parse(xhr.responseText); var temparr = new Array(); var tmpflg = url.searchParams.get("flg");   //var url_string = window.location.href; var url = new URL(url_string); 
                 var count = 0;
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
@@ -84,10 +86,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                             var tmpparentId = json[key].leaveApplicationDetails[key2].parentId;     //Full Leavea Cancelled
                             if (tmpflg === 'N') { if (tmpisPosted === 'N' && tmpcancelled === false && tmpparentId === 0) { temparr[count] = json[key]; count++; break; } }
                             else if (tmpflg === 'P') { if (tmpisPosted === 'P') { temparr[count] = json[key]; count++; break; } }
-                            else if (tmpflg === 'C') {
-                                //if ((tmpcancelled === true || tmpparentId !== 0)) {
-                                if ((tmpcancelled === true && tmpparentId === 0) || (tmpcancelled === false && tmpparentId !== 0)) { temparr[count] = json[key]; count++; break; }
-                            }
+                            else if (tmpflg === 'C') { if ((tmpcancelled === true && tmpparentId === 0) || (tmpcancelled === false && tmpparentId !== 0)) { temparr[count] = json[key]; count++; break; } }//if ((tmpcancelled === true || tmpparentId !== 0)) {
                         }
                     }
                 } $scope.lappdata = temparr; $scope.lappdata = $filter('orderBy')($scope.lappdata, '-leaveAppId'); $scope.curPage = 0; $scope.pageSize = 25; $scope.$digest();
@@ -97,30 +96,12 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
     //Populate Model for Attendance Report by Leave Application User
     $scope.PopulateData = function (id) {
         document.getElementById("FDt").value = ""; document.getElementById("TDt").value = ""; $scope.popupid = id; document.getElementById("eid").innerHTML = $scope.popupid;
-        $('#ConformModel').modal('show');
-        var d = new Date();
-        var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'LeaveBalance/GetLeaveBalance?empUnqId=' + id + '&yearmonth=' + d.getFullYear() + '&flag=true', true);
-        req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.lbaldata = json; $scope.$digest(); } }; req.send();
+        $('#ConformModel').modal('show'); var d = new Date();
+        var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'LeaveBalance/GetLeaveBalance?empUnqId=' + id + '&yearmonth=' + d.getFullYear() + '&flag=true', true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.lbaldata = json; $scope.$digest(); } }; req.send();
         $scope.PerformanceAttendanceRpt(id);
     };
     //Performance Report Method with Employee Code / SEarch Dates
-    $scope.PerformanceAttendanceRpt = function (data) {
-        var str = $scope.popupid; if (str === "") { return false; }
-        var pr = new XMLHttpRequest();
-        if ((typeof (data) === "undefined") || (typeof (data.fdt) === "undefined") || (typeof (data.tdt) === "undefined")) {
-            pr.open('GET', $scope._Conpath + 'Employee/PerfAttd?empunqid=' + str + '&flag=PERF', true);
-        }
-        else { pr.open('GET', $scope._Conpath + 'Employee/PerfAttd?empunqid=' + str + '&flag=PERF&fromdate=' + data.fdt + '&todate=' + data.tdt, true); }
-        pr.setRequestHeader('Accept', 'application/json');
-        pr.onreadystatechange = function () {
-            if (pr.readyState === 4) {
-                var json = JSON.parse(pr.responseText); $scope.prdata = json; $scope.prdata = $filter('orderBy')($scope.prdata, '-attdDate'); $scope.curPage1 = 0;
-                $scope.pageSize1 = 31; $scope.$digest();
-            }
-        };
-        pr.send();
-    };
+    $scope.PerformanceAttendanceRpt = function (data) { var str = $scope.popupid; if (str === "") { return false; } var pr = new XMLHttpRequest(); if ((typeof (data) === "undefined") || (typeof (data.fdt) === "undefined") || (typeof (data.tdt) === "undefined")) { pr.open('GET', $scope._Conpath + 'Employee/PerfAttd?empunqid=' + str + '&flag=PERF', true); } else { pr.open('GET', $scope._Conpath + 'Employee/PerfAttd?empunqid=' + str + '&flag=PERF&fromdate=' + data.fdt + '&todate=' + data.tdt, true); } pr.setRequestHeader('Accept', 'application/json'); pr.onreadystatechange = function () { if (pr.readyState === 4) { var json = JSON.parse(pr.responseText); $scope.prdata = json; $scope.prdata = $filter('orderBy')($scope.prdata, '-attdDate'); $scope.curPage1 = 0; $scope.pageSize1 = 31; $scope.$digest(); } }; pr.send(); };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; }
     $scope.exportAllData = function () { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = "Posting_Leave_Application_List_" + d; $scope.JSONToCSVConvertor($scope.InfoPL, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {

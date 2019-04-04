@@ -32,8 +32,6 @@ namespace AttendanceWebApp.Models
 
         public DbSet<Stations> Stations { get; set; }
 
-        public DbSet<Sections> Sections { get; set; }
-
         public DbSet<Categories> Categories { get; set; }
 
         public DbSet<EmpTypes> EmpTypes { get; set; }

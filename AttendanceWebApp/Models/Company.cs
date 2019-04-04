@@ -11,5 +11,8 @@ namespace AttendanceWebApp.Models
 
         [StringLength(50)]
         public string CompName { get; set; }
+
+        [StringLength(5)]
+        public string Location { get; set; }
     }
 }

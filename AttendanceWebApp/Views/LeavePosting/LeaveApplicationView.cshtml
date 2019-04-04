@@ -1,185 +1,185 @@
-﻿    @{
-        ViewBag.Title = "LeaveApplicationView";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "LeaveApplicationView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
     }
 
-    <script src="~/Content/DirPAgination/dirPagination.js"></script>
-    <script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
+    .mainImaage {
+        display: block;
+        width: 100%;
+        height: 50%;
+        padding-bottom: 5%;
+    }
+</style>
 
-    <style type="text/css">
-        .ng-table-pager {
-            display: none;
-        }
-
-        .mainImaage {
-            display: block;
-            width: 100%;
-            height: 50%;
-            padding-bottom: 5%;
-        }
-    </style>
-
-    <div ng-app="myApp" ng-controller="ManageLeaveMasterController">
-        <div class="container" id="mainContainer">
-            <div class="row">
-                <div class="col-lg-8">
-                    <input type="hidden" value="LA" id="releaseGroupCode" />
-                    <div class="panel panel-info">
-                        <div class="panel-heading"><strong>User Leave Application Details</strong></div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-responsive" style="text-align:center;">
+<div ng-app="myApp" ng-controller="ManageLeaveMasterController">
+    <div class="container" id="mainContainer">
+        <div class="row">
+            <div class="col-lg-8">
+                <input type="hidden" value="LA" id="releaseGroupCode" />
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>User Leave Application Details</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-responsive" style="text-align:center;">
+                                <tr>
+                                    <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                        <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-hover table-condensed">
+                                <tbody>
                                     <tr>
-                                        <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                                            <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                        <td style="text-align:right;"><label>Emp.Code :</label></td>
+                                        <td><input class="form-control" type="text" id="eCode" /></td>
+                                        <td>
+                                            <button type="submit" id="btnSearch" class="btn btn-info" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                                <i class="icon-search"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <table class="table" id="tbl_empdtl">
+                                                <tr dir-paginate="e in empdata|itemsPerPage:5">
+                                                    <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
+                                                    <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
-                                </table>
-                                <table class="table table-hover table-condensed">
-                                    <tbody>
-                                        <tr>
-                                            <td style="text-align:right;"><label>Emp.Code :</label></td>
-                                            <td><input class="form-control" type="text" id="eCode" /></td>
-                                            <td>
-                                                <button type="submit" id="btnSearch" class="btn btn-info" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                                    <i class="icon-search"></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <table class="table" id="tbl_empdtl">
-                                                    <tr dir-paginate="e in empdata|itemsPerPage:5">
-                                                        <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
-                                                        <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            @*Leave Application Details *@
-                            <div class="table-responsive">
-                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="aliasTable">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
-                                            <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
-                                            <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
-                                                Status
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
-                                            <th style="text-align:center;">Remarks</th>
-                                            <th style="text-align:center;">Reason</th>
-                                            <th style="text-align:center;">Leave Item</th>
-                                            <th style="text-align:center;">Type</th>
-                                            <th style="text-align:center;">from Date</th>
-                                            <th style="text-align:center;">To Date</th>
-                                            <th style="text-align:center;">Days</th>
-                                            <th style="text-align:center;">Half Day</th>
-                                            <th style="text-align:center;">Post.Date</th>
-                                            <th style="text-align:center;">Is Posted</th>
-                                            <th style="text-align:center;">Posted By </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
-                                            ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
-                                            <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;"
-                                                ng-style="
+                                </tbody>
+                            </table>
+                        </div>
+                        @*Leave Application Details *@
+                        <div class="table-responsive">
+                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="aliasTable">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
+                                        <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
+                                        <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                            Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;">Remarks</th>
+                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">Leave Item</th>
+                                        <th style="text-align:center;">Type</th>
+                                        <th style="text-align:center;">from Date</th>
+                                        <th style="text-align:center;">To Date</th>
+                                        <th style="text-align:center;">Days</th>
+                                        <th style="text-align:center;">Half Day</th>
+                                        <th style="text-align:center;">Post.Date</th>
+                                        <th style="text-align:center;">Is Posted</th>
+                                        <th style="text-align:center;">Posted By </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1"
+                                        ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;"
+                                            ng-style="
                                                 d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                 d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
                                                 d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
-                                                {{d.releaseStatusCode}}
-                                            </td>
-                                            <td style="text-align:left;">{{d.relremarks}}</td>
-                                            <td style="text-align:left;">{{d.remarks}}</td>
-                                            <td style="text-align:center;">{{d.leaveAppItem}}</td>
-                                            <td style="text-align:center;">{{d.leaveTypeCode}}</td>
-                                            <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;">{{d.totalDays}}</td>
-                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
-                                            <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
-                                            <td style="text-align:center;"
-                                                ng-style="
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="text-align:left;">{{d.relremarks}}</td>
+                                        <td style="text-align:left;">{{d.remarks}}</td>
+                                        <td style="text-align:center;">{{d.leaveAppItem}}</td>
+                                        <td style="text-align:center;">{{d.leaveTypeCode}}</td>
+                                        <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.totalDays}}</td>
+                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
+                                        <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                        <td style="text-align:center;"
+                                            ng-style="
                                                 d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                 d.isPosted==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
                                                 d.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
-                                                {{d.isPosted}}
-                                            </td>
-                                            <td style="text-align:center;">{{d.postUser}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                            </div>
+                                            {{d.isPosted}}
+                                        </td>
+                                        <td style="text-align:center;">{{d.postUser}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    @* Leave Balance Grid  *@
-                    <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Leave Balance</strong></div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;">Type</th>
-                                            <th style="text-align:center;">Open</th>
-                                            <th style="text-align:center;">Availed</th>
-                                            <th style="text-align:center;">Encashed</th>
-                                            <th style="text-align:center;">Balance</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr dir-paginate="d in data|itemsPerPage:10">
-                                            <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
-                                            <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
-                                            <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
-                                            <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
-                                            <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed-d.encashed}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+            </div>
+            <div class="col-sm-4">
+                @* Leave Balance Grid  *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Type</th>
+                                        <th style="text-align:center;">Open</th>
+                                        <th style="text-align:center;">Availed</th>
+                                        <th style="text-align:center;">Encashed</th>
+                                        <th style="text-align:center;">Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in data|itemsPerPage:10">
+                                        <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
+                                        <td style="text-align:center;" data-title="'Open'" id="Opening">{{d.opening}}</td>
+                                        <td style="text-align:center;" data-title="'Availed'" id="Availed">{{d.availed}}</td>
+                                        <td style="text-align:center;" data-title="'Encashed'" id="Encashed">{{d.encashed}}</td>
+                                        <td style="text-align:center;" data-title="'Balance'" id="Balance">{{d.opening-d.availed-d.encashed}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    @* Posted Leave Requests Grid  *@
-                    <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Posted Leave Application List From HR</strong></div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;">Type</th>
-                                            <th style="text-align:center;">From Date</th>
-                                            <th style="text-align:center;">To Date</th>
-                                            <th style="text-align:center;">Days</th>
-                                            <th style="text-align:center;">Half Day</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
-                                            <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
-                                            <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
-                                            <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
-                                            <td style="text-align:center;" data-title="'LeaveDeducted'">{{pld.leaveDed}}</td>
-                                            <td style="text-align:center;" data-title="'halfDayFlag'">
-                                                <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_2"></dir-pagination-controls>
-                            </div>
+                </div>
+                @* Posted Leave Requests Grid  *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Posted Leave Application List From HR</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Type</th>
+                                        <th style="text-align:center;">From Date</th>
+                                        <th style="text-align:center;">To Date</th>
+                                        <th style="text-align:center;">Days</th>
+                                        <th style="text-align:center;">Half Day</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
+                                        <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
+                                        <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;" data-title="'LeaveDeducted'">{{pld.leaveDed}}</td>
+                                        <td style="text-align:center;" data-title="'halfDayFlag'">
+                                            <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_2"></dir-pagination-controls>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

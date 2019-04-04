@@ -110,7 +110,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Sr No.</th>
-                                                <th style="text-align:center;">Leave Group</th>
+                                                <th style="text-align:center;">Location</th>
                                                 <th style="text-align:center;width: 60px;">App.Id</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">App.Date</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">Rel.Date</th>
@@ -134,7 +134,9 @@
                                                 <th style="text-align:center;">Action</th>
                                             </tr>
                                             <tr>
-                                                <td colspan="6"></td>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.location" /></td>
+                                                <td colspan="4"></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" /></td>
@@ -145,12 +147,12 @@
                                             <tr dir-paginate="d in pdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td style="text-align:center;">{{d.releaseGroupCode}}</td>
+                                                <td style="text-align:center;">{{d.location}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppId}}</td>
                                                 <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yy'}}</td>
                                                 @*<td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">{{lr.releaseDate | date:'dd/MM/yy'}}</td>*@
-                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted == 'F'">{{d.updDt | date:'dd/MM/yy'}}</label></td>
+                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:center;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.statName}}</td>

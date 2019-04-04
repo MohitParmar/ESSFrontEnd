@@ -24,7 +24,11 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); rlsarr = json; $scope.data = json; $scope.data = $filter('orderBy')($scope.data, '-leaveAppId'); $scope.curPage1 = 0; $scope.pageSize1 = 10; $scope.$digest(); } }; xhr.send();
     };
     //Popup the Model
-    $scope.PopulateData = function (LeaveAppId, empunqid) { $scope.LeaveAppId = LeaveAppId; $scope.empunqid = empunqid; $scope.GetLeaveApplicationDetails(); $('#ConformModel').modal('show'); };
+    $scope.PopulateData = function (LeaveAppId, empunqid) {
+        $scope.LeaveAppId = LeaveAppId; $scope.empunqid = empunqid;
+        var bal = new XMLHttpRequest(); bal.open('GET', $scope._Conpath + 'LeaveBalance/GetLeaveBalance?empUnqId=' + empunqid + '&yearmonth=' + d.getFullYear() + '&flag=true', true); bal.setRequestHeader('Accept', 'application/json'); bal.onreadystatechange = function () { if (bal.readyState === 4) { var json = JSON.parse(bal.responseText); $scope.lbaldata = json; $scope.$digest(); } }; bal.send();
+        $scope.GetLeaveApplicationDetails(); $('#ConformModel').modal('show');
+    };
     //Get Leave Application Details from Leave Application ID
     $scope.GetLeaveApplicationDetails = function () {
         var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'LeaveApplication/GetLeaveApplication?leaveAppId=' + $scope.LeaveAppId, true);

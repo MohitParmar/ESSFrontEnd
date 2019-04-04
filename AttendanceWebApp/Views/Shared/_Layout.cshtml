@@ -27,6 +27,7 @@
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
     <script src="~/Scripts/Controller/default.js"></script>
 
+    @* Stylesheet *@
     <style>
         .Requed {
             color: red;
@@ -44,10 +45,8 @@
         #Home-Index #topBar {
             display: none;
         }
-    </style>
 
-    @* Dropdown Mwnu Style *@
-    <style>
+        /*Dropdown Mwnu Style*/
         .dropdown-submenu {
             position: relative;
         }
@@ -57,45 +56,33 @@
                 left: 100%;
                 margin-top: -1px;
             }
-    </style>
 
+        /*Body Background Add this class in body tag*/
+        .bg {
+            background-image: url(../../ESS_Images/body.jpg);
+            height: 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
     @* Submenu Script *@
     <script>
         $(document).ready(function () { $('.dropdown-submenu a.test').on("click", function (e) { $(this).next('ul').toggle(); e.stopPropagation(); e.preventDefault(); }); });
     </script>
-
     @* Function For Sync All Master Data Of Employees *@
     <script>
-        function AutoSync() { var xhr = new XMLHttpRequest();
-            xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=@Session["Loc"].ToString()', true);
-            xhr.setRequestHeader('Accept', 'application/json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert(xhr.responseText);
-                }
-            };
-            xhr.send(); };
+        function AutoSync(data) { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };
     </script>
-
     @* COFF Application Authoriization *@
     <script>
         function COFF() { var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; }; }
     </script>
-
     @* Get IP Address *@
     <script type="text/javascript">
-        $(document).ready(function ubsrt() {
-            window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-            var pc = new RTCPeerConnection({ iceServers: [] }),
-            noop = function () { };
-            pc.createDataChannel("");
-            pc.createOffer(pc.setLocalDescription.bind(pc), noop);
-            pc.onicecandidate = function (ice) {
-                if (!ice || !ice.candidate || !ice.candidate.candidate) { return; };
-                var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-                $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop;
-            };
-        });
+        $(document).ready(function () { var foo = "@Session["Loc"]"; if (foo === "IPU") { $('#footext').text("JINDAL SAW LTD. (IPU)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "NKP") { $('#footext').text("JINDAL SAW LTD. (NKP)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "KJSAW") { $('#footext').text("JSAW -"); $('#headtext').text("Employee Self Service Portal - JSAW"); }; if (foo === "KJQTL") { $('#footext').text("JQTL -"); $('#headtext').text("Employee Self Service Portal - JQTL"); }; });
+        $(document).ready(function ubsrt() { window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { }; pc.createDataChannel(""); pc.createOffer(pc.setLocalDescription.bind(pc), noop); pc.onicecandidate = function (ice) { if (!ice || !ice.candidate || !ice.candidate.candidate) { return; }; var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1]; $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop; }; });
     </script>
 </head>
 <body>
@@ -116,7 +103,6 @@
     <input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" />
     <input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />
     <input type="hidden" value="@Session["Loc"]" id="myLoc" />
-
     @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
     <input type="hidden" value="" id="myIPAddress" />
     <div class="navbar navbar-fixed-top">
@@ -128,7 +114,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float:left;height:56px;width:56px;" />
-                <label class="navbar-brand" style="color:white">Employee Self Service Portal - Jindal SAW Ltd.</label>
+                <label class="navbar-brand" style="color:white" id="headtext"></label>
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         <li class="dropdown">
@@ -143,6 +129,7 @@
                                 <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
                                 <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
                                 <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
+                                @*<li id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>*@
                                 @*<li id="mnuMediclaimMaster"><a href="/Master/MediclaimMaster">Mediclaim Details</a></li>*@
                                 @*<li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>*@
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
@@ -155,7 +142,7 @@
             </div>
         </div>
     </div>
-    <div class="subnavbar">
+    <div class="subnavbar" id="mnubar">
         <div class="subnavbar-inner">
             <div class="container">
                 <ul class="mainnav">
@@ -220,7 +207,7 @@
                     <li class="dropdown" id="mnuUitility">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuAutoSync"><a href="#" onclick="AutoSync()">Sync Employees</a></li>
+                            <li id="mnuAutoSync"><a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a></li>
                             <li id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
                             <li id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
                         </ul>
@@ -243,7 +230,7 @@
     <div class="navbar-fixed-bottom" style="height:30px;">
         <div class="navbar-inner">
             <div class="container">
-                <div class="brand" style="text-align:center;color:white"><span><b>JINDAL SAW LTD. (IPU)</b></span> (<label id="ipAdd"></label>)</div>
+                <div class="brand" style="text-align:center;color:white"><span><label id="footext"></label> (<label id="ipAdd"></label>)</span></div>
             </div>
         </div>
     </div>

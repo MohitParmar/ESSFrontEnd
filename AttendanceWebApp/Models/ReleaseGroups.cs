@@ -14,5 +14,6 @@ namespace AttendanceWebApp.Models
 
         public static readonly string LeaveApplication = "LA";
         public static readonly string OutStationDuty = "OD";
+        public static readonly string GatePass = "GP";
     }
 }

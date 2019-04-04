@@ -8,12 +8,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
     <title>Employee Self Service Portal - Login</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -28,10 +25,8 @@
     <script src="~/Scripts/Module/app.js"></script>
     <script src="~/Scripts/Jquery/jquery-1.9.1.js"></script>
     <script src="~/Scripts/Jquery/jquery-ui.min.js"></script>
-
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
     <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
-
     <script src="~/Scripts/Controller/LoginCntrl.js"></script>
 
     <style>
@@ -45,6 +40,22 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: all .2s ease-in-out;
+        }
+
+        .w3-display-topright {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        /*Body Background Add this class in body tag*/
+        .bg {
+            background-image: url(../../ESS_Images/body.jpg);
+            height: 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
         }
     </style>
 
@@ -62,6 +73,7 @@
                 </div>
             </div>
         </div>
+        @*style="backface-visibility:visible;background-color:#f9f9f978;"*@
         <div class="account-container">
             <div class="content clearfix">
                 <div id="MessageBox"></div>

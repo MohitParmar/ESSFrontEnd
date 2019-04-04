@@ -1,0 +1,649 @@
+﻿@{
+    ViewBag.Title = "IncomeTaxDeclaration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/IncomeTaxCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    .accordion {
+        /*background-color: #eee;color: #444;cursor: pointer;*/
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        .accordion:after {
+            content: '\002B';
+            float: right;
+        }
+
+    .actives:after {
+        content: "\2212";
+    }
+
+    .panelacc {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+</style>
+
+<div ng-app="myApp" ng-controller="IncomeTaxController">
+    <div class="container">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>INCOME TAX DECLARATION</strong></div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">Instructions</a></li>
+                            <li><a data-toggle="tab" href="#menu1">General Information</a></li>
+                            <li><a data-toggle="tab" href="#menu2">PART : A</a></li>
+                            <li><a data-toggle="tab" href="#menu3">PART : B</a></li>
+                            <li><a data-toggle="tab" href="#menu4">PART : C</a></li>
+                            <li><a data-toggle="tab" href="#menu5">PART : D</a></li>
+                            <li><a data-toggle="tab" href="#menu6">PART : E</a></li>
+                            <li><a data-toggle="tab" href="#menu7">PART : F</a></li>
+                        </ul>
+                        <div class="tab-content table-responsive">
+                            @* Instructions *@
+                            <div id="home" class="tab-pane active">
+                                <h3>Instructions</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* General Personla Information *@
+                            <div id="menu1" class="tab-pane" ng-init="GetUserPerasonalInfo()">
+                                <h3>
+                                    DETAILS OF INVESTMENTS & RENT PAID FOR THE FINANCIAL YEAR
+                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                </h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive" dir-paginate="d in UserInfo|itemsPerPage:5">
+                                    <tbody>
+                                        <tr>
+                                            <td><p>Name : </p></td>
+                                            <td><p>{{d.empName}}</p></td>
+                                            <td><p>Employee ID : </p></td>
+                                            <td><p>{{d.empUnqId}} / {{d.sapId}}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>PAN No : </p></td>
+                                            <td><p>{{d.idPrf2No}}</p></td>
+                                            <td><p>Contact No.</p></td>
+                                            <td><p>{{d.contactNo}}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Designation : </p></td>
+                                            <td><p>{{d.desgName}}</p></td>
+                                            <td><p>DOJ : </p></td>
+                                            <td><p>{{d.joinDt | date:'dd/MM/yyyy'}}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Parmanent Address : </p></td>
+                                            <td><p>{{d.perAdd1}} {{d.perAdd2}} {{d.perCity}} {{d.perState}} {{d.perPin}}</p></td>
+                                            <td><p>Location : </p></td>
+                                            <td><p>{{d.unitName}}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Email : </p></td>
+                                            <td><p>{{d.email}}</p></td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <p>
+                                                    I undertake to make the following investments qualifying under the provisions of  The Income Tax Act, 1961 during the financial year
+                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script> and submit the investment proof thereof alongwith Rent Receipts (if applicable) by February 7,
+                                                    <script>document.write(new Date().getFullYear() + 1)</script>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">&laquo; Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next &raquo;</a></div>
+                            </div>
+                            @* PART : A *@
+                            <div id="menu2" class="tab-pane fade" ng-init="GetUserPerasonalInfo()">
+                                <h3>RENT PAID PER MONTH</h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive" dir-paginate="d in UserInfo|itemsPerPage:5">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">A</th>
+                                            <th style="text-align:center;">RENT PAID PER MONTH</th>
+                                            <th style="text-align:center;">From</th>
+                                            <th style="text-align:center;">To</th>
+                                            <th style="text-align:center;">Rent P.M.(Rs.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2" style="text-align:center;"><p>1</p></td>
+                                            <td rowspan="2"><p>(IF the rent amount changes during the financial year please specify the amount and the period separately)(Submission of copies of rent receipts, L&L Agreement  etc are essential for considering the exemption)</p></td>
+                                            <td>
+                                                <p>
+                                                    Apr -
+                                                    <script>document.write(new Date().getFullYear());</script>
+
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    Mar -
+                                                    <script>document.write((new Date().getFullYear() + 1));</script>
+                                                </p>
+                                            </td>
+                                            <td><input type="text" class="form-control" id="rentpm" placeholder="0" ng-model="New.REntpm" ng-change="calcRent()" style="text-align:right;" /></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input type="text" class="form-control" id="renttotal" value="0" style="text-align:right;" readonly /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>2</p></td>
+                                            <td colspan="4">
+                                                <p>Complete Address of Rented house :</p><input type="text" class="form-control" id="presentAddress" value="{{d.preAdd1}} {{d.preAdd2}} {{d.preAdd3}} {{d.preAdd4}} {{d.preDistrict}} {{d.preState}} {{d.prePin}}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>3</p></td>
+                                            <td><p>Name of Landlord</p></td>
+                                            <td colspan="3"><input type="text" class="form-control" id="landlord" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>4</p></td>
+                                            <td><p>PAN of Landlord is mandtory (if rent is more than Rs. 8333/- P.M.)</p></td>
+                                            <td colspan="3"><input type="text" class="form-control" id="rental" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* PART : B *@
+                            <div id="menu3" class="tab-pane fade">
+                                <h3>
+                                    If joined after
+                                    <script>document.write("01.04." + new Date().getFullYear().toString().substr(-2));</script>, attach Form 16 of certificate of taxable salary for F.Y.
+                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                </h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    Taxable salary of previous Co. from
+                                                    <script>document.write("01.04." + new Date().getFullYear().toString().substr(-2));</script> till joining to Jindal
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_salary" placeholder="0" ng-model="New.p_salary" style="text-align:right;" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Tax deducted by previous Co. on above</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_taxdeduct" placeholder="0" ng-model="New.p_taxdeduct" style="text-align:right;" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* PART : C *@
+                            <div id="menu4" class="tab-pane fade">
+                                <h3>Investments U/S 80C, 80CCC, 80CCD capped at Rs 1.50 Lac</h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">C</th>
+                                            <th style="text-align:center;">Investments U/S 80C, 80CCC, 80CCD capped at Rs 1.50 Lac</th>
+                                            <th style="text-align:center;" colspan="2">AMOUNT</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <th style="text-align:center;">Provisional</th>
+                                            <th style="text-align:center;">Actual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;"><p>1</p></td>
+                                            <td><p>Employee Contribution to PF</p></td>
+                                            <td colspan="2"><p>Will be considered by system</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>2</p></td>
+                                            <td colspan="3">
+                                                <button class="accordion">Public Provident Fund</button>
+                                                <div class="panelacc">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" id="txtppf" placeholder="Ente Text" ng-model="New.txtppf" /></td>
+                                                            <td><input type="text" class="form-control" id="p_ppf" placeholder="0" ng-model="New.p_ppf" ng-change="Total80c()" style="text-align:right;" /></td>
+                                                            <td><input type="text" class="form-control" id="a_ppf" placeholder="0" ng-model="New.a_ppf" ng-change="Total80c()" style="text-align:right;" /></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>3</p></td>
+                                            <td><p>5 year tax savings deposit with Bank</p></td>
+                                            <td><input type="text" class="form-control" id="p_deposit" placeholder="0" ng-model="New.p_deposit" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_deposit" placeholder="0" ng-model="New.a_deposit" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>4</p></td>
+                                            <td><p>Insurance Premium</p></td>
+                                            <td><input type="text" class="form-control" id="p_insurance" placeholder="0" ng-model="New.p_insurance" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_insurance" placeholder="0" ng-model="New.a_insurance" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>5</p></td>
+                                            <td><p>NSC</p></td>
+                                            <td><input type="text" class="form-control" id="p_nsc" placeholder="0" ng-model="New.p_nsc" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_nsc" placeholder="0" ng-model="New.a_nsc" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>6</p></td>
+                                            <td><p>Tax Saving Mutual Fund</p></td>
+                                            <td><input type="text" class="form-control" id="p_mfund" placeholder="0" ng-model="New.p_mfund" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_mfund" placeholder="0" ng-model="New.a_mfund" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>7</p></td>
+                                            <td><p>Housing Loan Repayment Principal amount only</p></td>
+                                            <td><input type="text" class="form-control" id="p_houseloan" placeholder="0" ng-model="New.p_houseloan" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_houseloan" placeholder="0" ng-model="New.a_houseloan" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" style="text-align:center;"><p>8</p></td>
+                                            <td colspan="3"><p>Tuition Fees  paid to schhol / college - Child 1</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control" id="p_child1name" placeholder="Enter Child 1 Name" ng-model="New.p_child1name" /></td>
+                                            <td><input type="text" class="form-control" id="p_child1fees" placeholder="0" ng-model="New.p_child1fees" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_child1fees" placeholder="0" ng-model="New.a_child1fees" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" style="text-align:center;"><p>9</p></td>
+                                            <td colspan="3"><p>Tuition Fees  paid to schhol / college - Child 2</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control" id="p_child2name" placeholder="Enter Child 2 Name" ng-model="New.p_child2name" /></td>
+                                            <td><input type="text" class="form-control" id="p_child2fees" placeholder="0" ng-model="New.p_child2fees" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_child2fees" placeholder="0" ng-model="New.a_child2fees" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>10</p></td>
+                                            <td><p>Contribution to Notified Pension Scheme</p></td>
+                                            <td><input type="text" class="form-control" id="p_pensionscheme" placeholder="0" ng-model="New.p_pensionscheme" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_pensionscheme" placeholder="0" ng-model="New.a_pensionscheme" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" style="text-align:center;"><p>11</p></td>
+                                            <td colspan="3"><p>Others, (Please specify if any)</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control" id="p_otherstxt" placeholder="Enter Text" ng-model="New.p_otherstxt" /></td>
+                                            <td><input type="text" class="form-control" id="p_others" placeholder="0" ng-model="New.p_others" ng-change="Total80c()" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_others" placeholder="0" ng-model="New.a_others" ng-change="Total80c()" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr style="background-color:lightskyblue;">
+                                            <td colspan="2"><p><b>Total Investments U/S 80C - limited to Rs 1,50,000/- only</b></p></td>
+                                            <td style="font-weight:bold;"><input type="text" class="form-control" id="p_total" style="text-align:right;" value="0" readonly /></td>
+                                            <td style="font-weight:bold;"><input type="text" class="form-control" id="a_total" style="text-align:right;" value="0" readonly /></td>
+                                        </tr>
+                                        @*<tr>
+                                                <td colspan="3"><p>Total Difference</p></td>
+                                                <td><input type="text" class="form-control" id="total_diff" value="0" style="text-align:right;" readonly /></td>
+                                            </tr>*@
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* PART : D *@
+                            <div id="menu5" class="tab-pane fade">
+                                <h3>OTHER PERMITTED DEDUCTIONS</h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">D</th>
+                                            <th style="text-align:center;">OTHER PERMITTED DEDUCTIONS</th>
+                                            <th colspan="2" style="text-align:center;">AMOUNT</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <th style="text-align:center;">Provisional</th>
+                                            <th style="text-align:center;">Actual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;"><p>1</p></td>
+                                            <td><p>Rajiv Gandhi  Equity Scheme</p></td>
+                                            <td><input type="text" class="form-control" id="p_equityscheme" placeholder="0" ng-model="New.p_equityscheme" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_equityscheme" placeholder="0" ng-model="New.a_equityscheme" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="4" style="text-align:center;">2</td>
+                                            <td><p>Mediclaim premium paid other than cash U/S 80D (premium for Senior Citizens(above 60 years) Rs. 50,000/- else Rs. 30,000/-) including Rs. 5000/- for preventive health check up</p></td>
+                                            <td><input type="text" class="form-control" id="p_mediclaimpremium" placeholder="0" ng-model="New.p_mediclaimpremium" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_mediclaimpremium" placeholder="0" ng-model="New.a_mediclaimpremium" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>:- for self, spouse & dependent children</p></td>
+                                            <td><input type="text" class="form-control" id="p_mediclaimpremiumforfamily" placeholder="0" ng-model="New.p_mediclaimpremiumforfamily" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_mediclaimpremiumforfamily" placeholder="0" ng-model="New.a_mediclaimpremiumforfamily" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>:- For parents ( please mention the age also)</p></td>
+                                            <td><input type="text" class="form-control" id="p_mediclaimpremiumforparents" placeholder="0" ng-model="New.p_mediclaimpremiumforparents" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_mediclaimpremiumforparents" placeholder="0" ng-model="New.a_mediclaimpremiumforparents" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>:- Payment for Preventive Health Checkup</p></td>
+                                            <td><input type="text" class="form-control" id="p_mediclaimpremiumforhealth" placeholder="0" ng-model="New.p_mediclaimpremiumforhealth" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_mediclaimpremiumforhealth" placeholder="0" ng-model="New.a_mediclaimpremiumforhealth" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>3</p></td>
+                                            <td><p>80E - Repayment of Interest against Educational Loan for higher education of self, spouse % children</p></td>
+                                            <td><input type="text" class="form-control" id="p_eduloan" placeholder="0" ng-model="New.p_eduloan" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_eduloan" placeholder="0" ng-model="New.a_eduloan" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>4</p></td>
+                                            <td><p>80U - Permanent Physical Disability (Certificate from Prescribed Authority Required)</p></td>
+                                            <td><input type="text" class="form-control" id="p_disablity" placeholder="0" ng-model="New.p_disablity" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_disablity" placeholder="0" ng-model="New.a_disablity" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>5</p></td>
+                                            <td><p>National Pension Scheme (NPS)</p></td>
+                                            <td><input type="text" class="form-control" id="p_NPS" placeholder="0" ng-model="New.p_NPS" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_NPS" placeholder="0" ng-model="New.a_NPS" style="text-align:right;" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* PART : E *@
+                            <div id="menu6" class="tab-pane fade">
+                                <h3>Exemptions under Section 24</h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">E</th>
+                                            <th style="text-align:center;">Exemptions under Section 24</th>
+                                            <th colspan="2" style="text-align:center;">AMOUNT</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <th style="text-align:center;">Provisional</th>
+                                            <th style="text-align:center;">Actual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;"><p>1</p></td>
+                                            <td><p>Address of Property Purchased / Contructed</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_addofproperty" placeholder="Enter Text" ng-model="New.p_addofproperty" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>2</p></td>
+                                            <td><p>Status of Property (Self Occupied / Letout / Vacant)</p></td>
+                                            <td colspan="2">
+                                                <select id="p_statusofproperty" class="form-control" required>
+                                                    <option>---Select---</option>
+                                                    <option value="Self" title="Self Occupied">Self Occupied</option>
+                                                    <option value="Letout" title="Letout">Letout</option>
+                                                    <option value="Vacant" title="Vacant">Vacant</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>3</p></td>
+                                            <td><p>Housing Loan Taken From (Bank Name)</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_hloanbank" placeholder="Enter Text" ng-model="New.p_hloanbank" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>4</p></td>
+                                            <td><p>Aforesaid Housing Laon Amount</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_hloanAforesaid" placeholder="0" ng-model="New.p_hloanAforesaid" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>5</p></td>
+                                            <td><p>Date on Which Loan Taken</p></td>
+                                            <td colspan="2">
+                                                <div class="right-inner-addon">
+                                                    <i class="icon-calendar"></i>
+                                                    <input class="form-control" type="text" id="p_loantakendate" ng-model="New.p_loantakendate" data-date-format="yyyy/MM/dd" datepicker>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>6</p></td>
+                                            <td><p>Purpose of Loan (Construction / Purchase / Repairs)</p></td>
+                                            <td colspan="2">
+                                                <select id="p_purposeofloan" class="form-control" required>
+                                                    <option>---Select---</option>
+                                                    <option value="Construction" title="Construction">Construction</option>
+                                                    <option value="Purchase" title="Purchase">Purchase</option>
+                                                    <option value="Repairs" title="Repairs">Repairs</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>7</p></td>
+                                            <td><p>Date on Which Contruction is / will be Completed</p></td>
+                                            <td colspan="2">
+                                                <div class="right-inner-addon">
+                                                    <i class="icon-calendar"></i>
+                                                    <input class="form-control" type="text" id="p_datecontcomplete" ng-model="New.p_datecontcomplete" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>8</p></td>
+                                            <td><p>Date of Possession of Property</p></td>
+                                            <td colspan="2">
+                                                <div class="right-inner-addon">
+                                                    <i class="icon-calendar"></i>
+                                                    <input class="form-control" type="text" id="p_datepsproperty" ng-model="New.p_datepsproperty" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="4" style="text-align:center;"><p>9</p></td>
+                                            <td><p>Ownership (Joint / Sale)</p></td>
+                                            <td colspan="2">
+                                                <select id="p_ownership" class="form-control" required>
+                                                    <option>---Select---</option>
+                                                    <option value="Joint" title="Joint">Joint</option>
+                                                    <option value="Sale" title="Sale">Sale</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Name of Joint Owner(s)</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_jointownername" placeholder="Enter Text" ng-model="New.p_jointownername" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Relationship with Joint Owner(s)</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_jointownerrelationship" placeholder="0" ng-model="New.p_jointownerrelationship" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Share of Joint Owner(s) in Property</p></td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_jointownershare" placeholder="0" ng-model="New.p_jointownershare" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;"><p>10</p></td>
+                                            <td>
+                                                <p>
+                                                    Rental Income for FY
+                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script> (If house is given on rent)
+                                                </p>
+                                            </td>
+                                            <td colspan="2"><input type="text" class="form-control" id="p_rentalincome" placeholder="0" ng-model="New.p_rentalincome" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" style="text-align:center;"><p>11</p></td>
+                                            <td><p>Interest on Housing Loan (Tax Exemption - Self Occupied Property acquired /constructed before 01-04-1999 -  Rs.30,000 elgible & Self Occupied Property acquired /constructed after 01-04-1999  - Rs.200,000 eligble)</p></td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    Amount of Interest for the F.Y.
+                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>
+                                                </p>
+                                            </td>
+                                            <td><input type="text" class="form-control" id="p_amountofinterest" placeholder="0" ng-model="New.p_amountofinterest" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_amountofinterest" placeholder="0" ng-model="New.a_amountofinterest" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Amount of Interest for Pre-Contruction Period (as per IT Rule)</p></td>
+                                            <td><input type="text" class="form-control" id="p_amountofinterestasperit" placeholder="0" ng-model="New.p_amountofinterestasperit" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_amountofinterestasperit" placeholder="0" ng-model="New.a_amountofinterestasperit" style="text-align:right;" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
+                            </div>
+                            @* PART : F *@
+                            <div id="menu7" class="tab-pane fade">
+                                <h3>Particulars of Income from other sources (optional)</h3>
+                                <table class="table table-bordered table-condensed table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">F</th>
+                                            <th style="text-align:center;">Particulars of Income from other sources (optional)</th>
+                                            <th colspan="2" style="text-align:center;">Amount</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <th style="text-align:center;">Provisional</th>
+                                            <th style="text-align:center;">Actual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;"><p>1</p></td>
+                                            <td><p>Interest</p></td>
+                                            <td><input type="text" class="form-control" id="p_optionalinterest" placeholder="0" ng-model="New.p_optionalinterest" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_optionalinterest" placeholder="0" ng-model="New.a_optionalinterest" style="text-align:right;" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" style="text-align:center;"><p>2</p></td>
+                                            <td colspan="3"><p>Other Incomes (specify)</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control" id="p_otherincometext" placeholder="Enter Text" ng-model="New.p_otherincometext" /></td>
+                                            <td><input type="text" class="form-control" id="p_optionalotherincome" placeholder="0" ng-model="New.p_optionalotherincome" style="text-align:right;" /></td>
+                                            <td><input type="text" class="form-control" id="a_optionalotherincome" placeholder="0" ng-model="New.a_optionalotherincome" style="text-align:right;" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                            </div>
+                        </div>
+                        <hr />
+                        <br />
+                        <div style="float:right;"><button type="submit" id="btnsave" class="btn btn-success"><i class="icon-save"></i> Submit</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Accordian*@
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("actives");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>

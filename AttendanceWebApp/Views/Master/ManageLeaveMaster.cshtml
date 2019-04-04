@@ -183,8 +183,6 @@
                                             <table class="table" id="tbl_empdtl">
                                                 <tr dir-paginate="e in empdata|itemsPerPage:5">
                                                     <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
-                                                    <td style="text-align:center;">Father Name : <label>{{e.fatherName}}</label></td>
-                                                    <td style="text-align:center;">Department : <label>{{e.deptName}}</label></td>
                                                     <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
                                                 </tr>
                                             </table>
@@ -198,31 +196,39 @@
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="aliasTable">
                                 <thead>
                                     <tr>
+                                        <th style="text-align:center;">Year Month</th>
+                                        <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
+                                        <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
                                         <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
-                                            Release Status
+                                            Status
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;">Year Month</th>
+                                        <th style="text-align:center;">Remarks</th>
                                         <th style="text-align:center;" ng-click="sort('leaveAppId')">App.Id</th>
-                                        <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
-                                        <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
-                                        <th style="text-align:center;" ng-click="sort('updDt')">Post.Date</th>
-                                        <th style="text-align:center;">Leave Reason</th>
-                                        <th style="text-align:center;">Leave App Item</th>
+                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">Item</th>
                                         <th style="text-align:center;">Type</th>
                                         <th style="text-align:center;">from Date</th>
                                         <th style="text-align:center;">To Date</th>
                                         <th style="text-align:center;">Days</th>
                                         <th style="text-align:center;">Half Day</th>
-                                        <th style="text-align:center;" ng-click="sort('isPosted')">Is Posted</th>
-                                        <th style="text-align:center;" ng-click="sort('postedBy')">Posted By</th>
+                                        <th style="text-align:center;">Camcel</th>
+                                        <th style="text-align:center;">Parent</th>
+                                        <th style="text-align:center;">Can.Post</th>
+                                        <th style="text-align:center;" ng-click="sort('isPosted')">Posted</th>
+                                        <th style="text-align:center;" ng-click="sort('postedDt')">Post Date</th>
+                                        <th style="text-align:center;" ng-click="sort('postUser')">Post User</th>
                                         <th style="text-align:center;">Update</th>
                                         <th style="text-align:center;" colspan="2">Reject</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                                    <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
+                                        ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                        <td style="text-align:center;">{{d.yearMonth}}</td>
+                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="
                                             d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -230,11 +236,8 @@
                                             d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
                                             {{d.releaseStatusCode}}
                                         </td>
-                                        <td style="text-align:center;">{{d.yearMonth}}</td>
+                                        <td style="text-align:left;">{{d.relremarks}}</td>
                                         <td style="text-align:center;">{{d.leaveAppId}}</td>
-                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
-                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
-                                        <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.updDt | date:'dd/MM/yy'}}</label></td>
                                         <td style="text-align:left;">{{d.remarks}}</td>
                                         <td style="text-align:center;">{{d.leaveAppItem}}</td>
                                         <td style="text-align:center;">{{d.leaveTypeCode}}</td>
@@ -242,6 +245,9 @@
                                         <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.totalDays}}</td>
                                         <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
+                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.cancelled}}" disabled="disabled"></td>
+                                        <td style="text-align:center;">{{d.parentId}}</td>
+                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.isCancelledPosted}}" disabled="disabled"></td>
                                         <td style="text-align:center;"
                                             ng-style="
                                             d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -249,7 +255,8 @@
                                             d.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
                                             {{d.isPosted}}
                                         </td>
-                                        <td style="text-align:center;">{{d.postedBy}}</td>
+                                        <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                        <td style="text-align:center;">{{d.postUser}}</td>
                                         <td style="text-align:center;">
                                             <button class="btn btn-info" id="btnEdit" value="Edit" ng-click="PopulateData({{d.leaveAppId}},{{d.leaveAppItem}})">
                                                 <i class="icon-edit"></i>

@@ -237,8 +237,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     };
     //Get All Gate Pass Informatinon for HR Department
     $scope.AllGatePassInfo = function (gpdata) {
-        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-        var FromDate, ToDate;
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var FromDate, ToDate;
         if ((typeof (gpdata) === "undefined") || (typeof (gpdata.FromDt) === "undefined") || (typeof (gpdata.ToDt) === "undefined")) {
             var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
             FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate();
@@ -257,16 +256,17 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                 var myArray = [];
                 for (var i = 0; i < la.length; i++) {
                     myArray.push([]);
-                    myArray[i]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[i]["gatePassNo"] = la[i].gatePassNo;
-                    myArray[i]["gatePassDate"] = la[i].gatePassDate.replace("T00:00:00", ""); myArray[i]["empUnqId"] = la[i].empUnqId;
-                    myArray[i]["empName"] = la[i].empName; myArray[i]["deptName"] = la[i].deptName; myArray[i]["statName"] = la[i].statName;
-                    var outtime = la[i].gateOutDateTime; if (outtime !== null) { outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); myArray[i]["gateOutDateTime"] = outtime; myArray[i]["gateOutDateTimeORG"] = la[i].gateOutDateTime; } else { myArray[i]["gateOutDateTime"] = outtime; }
-                    var intime = la[i].gateInDateTime; if (intime !== null) { intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5); myArray[i]["gateInDateTime"] = intime; } else { myArray[i]["gateInDateTime"] = intime; }
+                    //myArray[i]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[i]["gatePassNo"] = la[i].gatePassNo; myArray[i]["deptName"] = la[i].deptName;
+                    //myArray[i]["barCode"] = la[i].barCode;
+                    myArray[i]["gatePassDate"] = la[i].gatePassDate.substring(0, la[i].gatePassDate.indexOf("T")); myArray[i]["empUnqId"] = la[i].empUnqId;
+                    myArray[i]["empName"] = la[i].empName; myArray[i]["wrkGrp"] = la[i].wrkGrp; myArray[i]["catName"] = la[i].catName; myArray[i]["desgName"] = la[i].desgName;
+                    myArray[i]["statName"] = la[i].statName;
+                    var outtime = la[i].gateOutDateTime; if (outtime !== null) { outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); myArray[i]["gateOutDateTime"] = outtime; myArray[i]["gateOutDateTimeORG"] = la[i].gateOutDateTime.replace("T", " "); } else { myArray[i]["gateOutDateTime"] = outtime; myArray[i]["gateOutDateTimeORG"] = outtime; }
+                    var intime = la[i].gateInDateTime; if (intime !== null) { intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5); myArray[i]["gateInDateTime"] = intime; myArray[i]["gateInDateTimeORG"] = la[i].gateInDateTime.replace("T", " "); } else { myArray[i]["gateInDateTime"] = intime; myArray[i]["gateInDateTimeORG"] = intime; }
                     myArray[i]["gpTotalCount"] = ""; myArray[i]["reason"] = la[i].reason; myArray[i]["typeofGatePass"] = la[i].modeName;
-                    myArray[i]["placeOfVisit"] = la[i].placeOfVisit; myArray[i]["statusName"] = la[i].statusName; myArray[i]["barCode"] = la[i].barCode;
-                    myArray[i]["catName"] = la[i].catName; myArray[i]["desgName"] = la[i].desgName; myArray[i]["wrkGrp"] = la[i].wrkGrp;
-                    myArray[i]["addUser"] = la[i].addUser; myArray[i]["gpRemarks"] = la[i].gpRemarks; myArray[i]["attdGpOutTime"] = la[i].attdGpOutTime;
-                    myArray[i]["attdGpInTime"] = la[i].attdGpInTime;
+                    myArray[i]["placeOfVisit"] = la[i].placeOfVisit; myArray[i]["statusName"] = la[i].statusName; myArray[i]["addUser"] = la[i].addUser;
+                    myArray[i]["gpRemarks"] = la[i].gpRemarks; myArray[i]["attdGpOutTime"] = la[i].attdGpOutTime ? la[i].attdGpOutTime.replace("T", " ") : la[i].attdGpOutTime;
+                    myArray[i]["attdGpInTime"] = la[i].attdGpInTime ? la[i].attdGpInTime.replace("T", " ") : la[i].attdGpInTime;
                 }
                 //Count Hours & Minutes & Add in SAcope Object
                 for (var j = 0; j < la.length; j++) {
@@ -281,70 +281,36 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                         myArray[j]["gpTotalCount"] = humanReadable.hours + ":" + Math.floor(humanReadable.minutes);
                     }
                 }
-                $scope.alldata = myArray; $scope.alldata = $filter('orderBy')($scope.alldata, '-gatePassNo'); $scope.GPInfo = $scope.alldata; $scope.$digest();
+                $scope.alldata = myArray; $scope.alldata = $filter('orderBy')($scope.alldata, '-gateOutDateTime'); $scope.GPInfo = $scope.alldata; $scope.$digest();
             }
         }; all.send();
     };
     //Gate Out Info
     $scope.NewGPInfo = function () {
-        //var today = new Date(); var yesterday = new Date(today); yesterday.setDate(today.getDate() - 1); var dd = yesterday.getDate(); var mm = yesterday.getMonth() + 1; var yyyy = yesterday.getFullYear();
-        //if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm }; yesterday = yyyy + '/' + mm + '/' + dd;
+        var prev = new Date(); var FromDate = new Date(prev); FromDate.setDate(prev.getDate() - 1); var dd = FromDate.getDate(); var mm = FromDate.getMonth() + 1; var yyyy = FromDate.getFullYear(); if (dd < 10) { dd = '0' + dd; } if (mm < 10) { mm = '0' + mm; }; FromDate = yyyy + '/' + mm + '/' + dd;
+        var today = new Date(); var ToDate = new Date(today); ToDate.setDate(today.getDate()); var dd2 = ToDate.getDate(); var mm2 = ToDate.getMonth() + 1; var yyyy2 = ToDate.getFullYear(); if (dd2 < 10) { dd2 = '0' + dd2; } if (mm2 < 10) { mm2 = '0' + mm2; }; ToDate = yyyy2 + '/' + mm2 + '/' + dd2;
+        var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var count = 0;
-        var d3 = new Date();
-        var iodate = new Date(d3.getFullYear(), d3.getMonth(), d3.getDate());
-        //var FromDate = yesterday;
-        var FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1);
-        var ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
-        var date1 = new Date(FromDate); var date2 = new Date(ToDate);
-        if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var out = new XMLHttpRequest(); out.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true); out.setRequestHeader("Content-type", "application/json");
         out.onreadystatechange = function () {
             if (out.readyState === 4 && out.status === 200) {
                 var json = JSON.parse(out.responseText); var la = new Array; la = json; var outArray = [];
-                for (var i = 0; i < la.length; i++) {
-                    var rlssts = la[i].releaseStatusCode; var gpsts = la[i].statusName;
-                    if (rlssts === 'F' && gpsts === 'New') {
-                        outArray.push([]);
-                        outArray[count]["gatePassNo"] = la[i].gatePassNo; outArray[count]["empUnqId"] = la[i].empUnqId;
-                        outArray[count]["empName"] = la[i].empName; outArray[count]["typeofGatePass"] = la[i].modeName; //Type Of GatePAss
-                        outArray[count]["barCode"] = la[i].barCode;
-                        count++;
-                    };
-                }
+                for (var i = 0; i < la.length; i++) { var rlssts = la[i].releaseStatusCode; var gpsts = la[i].statusName; if (rlssts === 'F' && gpsts === 'New') { outArray.push([]); outArray[count]["gatePassNo"] = la[i].gatePassNo; outArray[count]["empUnqId"] = la[i].empUnqId; outArray[count]["empName"] = la[i].empName; outArray[count]["typeofGatePass"] = la[i].modeName; outArray[count]["barCode"] = la[i].barCode; count++; }; }
                 $scope.outdata = outArray; $scope.outdata = $filter('orderBy')($scope.outdata, '-gatePassNo'); $scope.$digest();
             }
         }; out.send();
     };
     //Gate In Info
     $scope.OutGPInfo = function () {
-        //var today = new Date(); var yesterday = new Date(today); yesterday.setDate(today.getDate() - 1); var dd = yesterday.getDate(); var mm = yesterday.getMonth() + 1; //January is 0!
-        //var yyyy = yesterday.getFullYear(); if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm }; yesterday = yyyy + '/' + mm + '/' + dd;
+        var prev = new Date(); var FromDate = new Date(prev); FromDate.setDate(prev.getDate() - 1); var dd = FromDate.getDate(); var mm = FromDate.getMonth() + 1; var yyyy = FromDate.getFullYear(); if (dd < 10) { dd = '0' + dd; } if (mm < 10) { mm = '0' + mm; }; FromDate = yyyy + '/' + mm + '/' + dd;
+        var today = new Date(); var ToDate = new Date(today); ToDate.setDate(today.getDate()); var dd2 = ToDate.getDate(); var mm2 = ToDate.getMonth() + 1; var yyyy2 = ToDate.getFullYear(); if (dd2 < 10) { dd2 = '0' + dd2; } if (mm2 < 10) { mm2 = '0' + mm2; }; ToDate = yyyy2 + '/' + mm2 + '/' + dd2;
+        var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var count1 = 0;
-        var d4 = new Date(); var iodate = new Date(d4.getFullYear(), d4.getMonth(), d4.getDate());
-        //var FromDate = yesterday;
-        var FromDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + (iodate.getDate() - 1);
-        var ToDate = (iodate.getFullYear()) + '/' + (iodate.getMonth() + 1) + '/' + iodate.getDate();
-        var date1 = new Date(FromDate); var date2 = new Date(ToDate);
-        if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         var ingp = new XMLHttpRequest(); ingp.open('GET', $scope._Conpath + 'GatePass/GetGatePass?fromDt=' + FromDate + '&toDt=' + ToDate, true); ingp.setRequestHeader("Content-type", "application/json");
         ingp.onreadystatechange = function () {
             if (ingp.readyState === 4 && ingp.status === 200) {
                 var json = JSON.parse(ingp.responseText); var la = new Array; la = json; var inArray = [];
-                for (var i = 0; i < la.length; i++) {
-                    var gpsts = la[i].statusName; var mode = la[i].modeName;
-                    if (gpsts === 'Out' && mode !== 'Duty Off') {
-                        inArray.push([]);
-                        inArray[count1]["gatePassNo"] = la[i].gatePassNo; inArray[count1]["empUnqId"] = la[i].empUnqId;
-                        inArray[count1]["empName"] = la[i].empName; inArray[count1]["typeofGatePass"] = mode; //Type Of GatePAss
-                        var outtime = la[i].gateOutDateTime;
-                        if (outtime !== null) {
-                            outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); inArray[count1]["gateOutDateTime"] = outtime;
-                            inArray[count1]["gateOutDateTimeORG"] = la[i].gateOutDateTime;
-                        }
-                        inArray[count1]["barCode"] = la[i].barCode;
-                        count1++;
-                    };
-                }
+                for (var i = 0; i < la.length; i++) { var gpsts = la[i].statusName; var mode = la[i].modeName; if (gpsts === 'Out' && mode !== 'Duty Off') { inArray.push([]); inArray[count1]["gatePassNo"] = la[i].gatePassNo; inArray[count1]["empUnqId"] = la[i].empUnqId; inArray[count1]["empName"] = la[i].empName; inArray[count1]["typeofGatePass"] = mode; var outtime = la[i].gateOutDateTime; if (outtime !== null) { outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5); inArray[count1]["gateOutDateTime"] = outtime; inArray[count1]["gateOutDateTimeORG"] = la[i].gateOutDateTime; } inArray[count1]["barCode"] = la[i].barCode; count1++; }; }
                 $scope.indata = inArray; $scope.indata = $filter('orderBy')($scope.indata, '-gateOutDateTimeORG'); $scope.$digest();
             }
         }; ingp.send();

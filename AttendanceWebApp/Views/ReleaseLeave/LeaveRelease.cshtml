@@ -18,6 +18,11 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Leave Application Details</h4>
+                            <table class="table table-condensed table-responsive">
+                                <tr>
+                                    <th dir-paginate="bal in lbaldata|itemsPerPage:10" style="text-align:center;">{{bal.leaveTypeCode}} : {{bal.opening-bal.availed-bal.encashed}}</th>
+                                </tr>
+                            </table>
                         </div>
                         <div class="content" style="padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
@@ -42,17 +47,18 @@
                                         </thead>
                                         <tbody ng-repeat="ld in lappdata">
                                             <tr>
-                                                <td style="text-align:center;" id="unitName" ng-repeat="u in ld.units track by $index" ng-if="$index==1" data-title="'unitName'">
+                                                <td style="text-align:center;" id="unitName" ng-repeat="u in ld.units track by $index" ng-if="$index==2" data-title="'unitName'">
                                                     {{u}}
                                                 </td>
                                                 <td style="text-align:center;" id="deptName" ng-repeat="dept in ld.departments track by $index" ng-if="$index==1"
                                                     data-title="'deptName'">
                                                     {{dept}}
                                                 </td>
-                                                <td style="text-align:center;" id="statName" ng-repeat="s in ld.stations track by $index" ng-if="$index==1" data-title="'statName'">
+                                                <td style="text-align:center;" id="statName" ng-repeat="s in ld.stations track by $index" ng-if="$index==2" data-title="'statName'">
                                                     {{s}}
                                                 </td>
-                                                <td style="text-align:center;" id="catName" ng-repeat="catg in ld.categories" ng-show="catg[1]">{{catg}}</td>
+                                                <td style="text-align:center;" id="catName" ng-repeat="catg in ld.categories track by $index" ng-show="$index==1">{{catg}}</td>
+                                                @*<td style="text-align:center;" id="catName" ng-repeat="catg in ld.categories" ng-show="catg[1]">{{catg}}</td>*@
                                             </tr>
                                         </tbody>
                                     </table>

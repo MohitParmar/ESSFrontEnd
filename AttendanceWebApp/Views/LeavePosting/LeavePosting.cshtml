@@ -219,11 +219,7 @@
                                         <tr>
                                             @*<th><input id="chk" type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>*@
                                             <th>Sr No.</th>
-                                            <th style="text-align:center;padding:3px;width:44px;" ng-click="sort('releaseGroupCode')">
-                                                Leave Group
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseGroupCode'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
+                                            <th style="text-align:center;padding:3px;width:44px;">Location</th>
                                             <th style="text-align:center;padding:3px;width:40px;" ng-click="sort('leaveAppId')">
                                                 App.ID
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
@@ -261,17 +257,12 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td>@*<input class="form-control" type="text" ng-model="search.releaseGroupCode" style="margin:0;padding:1px;" />*@</td>
-                                            <td>@*<input class="form-control" type="text" ng-model="search.leaveAppId" style="margin:0;padding:1px;" />*@</td>
-                                            <td>@*<input class="form-control" type="text" ng-model="search.addDt" style="margin:0;padding:1px;" />*@</td>
-                                            <td></td>
+                                            <td><input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" /></td>
+                                            <td colspan="3"></td>
                                             <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;" /></td>
+                                            <td></td>
                                             <td><input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.categories" style="margin:0;padding:1px;width:50px;" /></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="4"></td>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage" pagination-id="pg2">
@@ -279,7 +270,10 @@
                                             @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
                                             @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                            <td style="text-align:center;padding:3px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==23"
+                                                data-title="'location'">
+                                                {{l}}
+                                            </td>
                                             <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
                                             <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">
@@ -290,7 +284,7 @@
                                                 data-title="'empName'">
                                                 {{e}}
                                             </td>
-                                            <td style="text-align:center;padding:3px;" id="statName" ng-repeat="s in d.stations" ng-if="$index==1" data-title="'statName'">
+                                            <td style="text-align:center;padding:3px;" id="statName" ng-repeat="s in d.stations" ng-if="$index==2" data-title="'statName'">
                                                 {{s}}
                                             </td>
                                             <td style="text-align:center;padding:3px;" id="catName" ng-repeat="catg in d.categories" ng-if="$index==1" data-title="'catName'">

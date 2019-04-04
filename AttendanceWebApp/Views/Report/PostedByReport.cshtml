@@ -100,8 +100,9 @@
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                @* Coilumn wise Search box *@
+                                                @* Column wise Search box *@
                                                 <th>Sr No.</th>
+                                                <th style="text-align:center;">Location</th>
                                                 <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
                                                     Emp.Code
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
@@ -126,21 +127,21 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                                <td></td>
                                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" /></td>
                                                 <td colspan="9"></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.postUser" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveApplicationDetails" /></td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                                <td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==23" data-title="'location'">{{l}}</td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">
-                                                    {{e}}
-                                                </td>
+                                                <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">{{e}}</td>
                                                 <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">
                                                     {{s}}
                                                 </td>
@@ -157,7 +158,12 @@
                                                             <td style="text-align:center;width:61px;">
                                                                 <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
                                                             </td>
-                                                            <td style="text-align:center;width:65px;">{{lrd.isPosted}}</td>
+                                                            <td style="text-align:center;width:65px;"
+                                                                ng-style="
+                                                                lrd.isPosted==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                                lrd.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
+                                                                {{lrd.isPosted}}
+                                                            </td>
                                                             <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yy hh:mm:ss'}}</td>
                                                             <td style="text-align:center;width:77px;">{{lrd.postUser}}</td>
                                                         </tr>
@@ -172,8 +178,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
-                        <strong>Note For Is Posted : P - Partial Posted, F - Fully Posted</strong>
+                        <strong>Note For Is Posted : <text style="color:#ff9800;"> P - Partial Posted </text>, <text style="color:#4CAF50;">F - Fully Posted </text></strong>
                     </div>
                 </div>
             </div>
