@@ -50,14 +50,15 @@
                                     <table class="table table-bordered table-condensed table-hover" id="myTable">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;padding:3px;">
-                                                    <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
+                                                <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('addDt')">
+                                                    App.Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
-                                                <th style="text-align:center;padding:3px;width:56px;">
-                                                    <a href="" ng-click="predicate = 'addDt'; reverse=!reverse">App.Date</a>
-                                                </th>
-                                                <th style="text-align:center;padding:3px;width:46px;">
-                                                    <a href="" ng-click="predicate = 'releaseStatusCode'; reverse=!reverse">Status</a>
+                                                <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('releaseStatusCode')">
+                                                    Status
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align:center;padding:3px;width:82px;">Remarks</th>
                                                 <th style="padding:0px;">
@@ -78,7 +79,6 @@
                                         </thead>
                                         <tbody dir-paginate="ld in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
                                             <tr ng-style="ld.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
-                                                <td id="releaseGroupCode" style="text-align:center;padding:3px;">{{ld.releaseGroupCode}}</td>
                                                 <td style="text-align:center;padding:3px;" data-title="'addDt'">{{ld.addDt| date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;padding:3px;" ng-style="
                                                     ld.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||

@@ -89,6 +89,7 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
+                                            <th>Sr No.</th>
                                             <th style="text-align:center;" ng-click="sort('gatePassDate')">
                                                 GP Date
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassDate'"
@@ -129,7 +130,7 @@
                                             <th style="text-align:center;">Tripod IN</th>
                                         </tr>
                                         <tr>
-                                            <td></td>
+                                            <td colspan="2"></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.wrkGrp" /></td>
@@ -147,6 +148,7 @@
                                             ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                       d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} "
                                             ng-show="d.statusName != 'New'">
+                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;width:185px;">{{d.empName}}</td>

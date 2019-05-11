@@ -136,14 +136,8 @@
                                         <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                             <td style="text-align:center;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
                                             <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
-                                            <td style="text-align:center;" id="empName"
-                                                ng-repeat="e in d.employee track by $index" ng-if="$index==10" data-title="'empName'">
-                                                {{e}}
-                                            </td>
-                                            <td style="text-align:center;" id="desgName"
-                                                ng-repeat="desg in d.employee track by $index" ng-if="$index==8" data-title="'desgName'">
-                                                {{desg}}
-                                            </td>
+                                            <td style="text-align:center;" id="empName" ng-repeat="e in d.employee track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
+                                            <td style="text-align:center;" id="desgName" ng-repeat="desg in d.employee track by $index" ng-if="$index==8" data-title="'desgName'">{{desg}}</td>
                                             <td style="padding:2px;">
                                                 <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
@@ -159,9 +153,7 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td style="padding:3px;">
-                                                <input class="form-control" type="text" id="Remarks" placeholder="Rejection" style="width:85px;" ng-model="N.Remarks">
-                                            </td>
+                                            <td style="padding:3px;"><input class="form-control" type="text" id="Remarks" placeholder="Rejection" style="width:85px;" ng-model="N.Remarks"></td>
                                             <td style="text-align:center;padding:3px;">
                                                 <input type="button" id="btnApprove" class="btn btn-success" value="Approve" style="padding:6px 6px;"
                                                        data-ng-click="UpdateLeaveReleaseStatus('F',{{d.leaveAppId}},N)" />
@@ -223,7 +215,7 @@
                                             ng-show="d.releaseStatusCode =='F'">
                                             <td style="text-align:center;padding-top:10px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
                                             <td style="text-align:center;padding-top:10px;">{{d.empUnqId}}</td>
-                                            <td style="text-align:center;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">
+                                            <td style="text-align:center;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">
                                                 {{e}}
                                             </td>
                                             <td colspan="7">

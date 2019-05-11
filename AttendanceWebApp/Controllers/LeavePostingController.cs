@@ -28,13 +28,20 @@ namespace AttendanceWebApp.Controllers
 
         public ActionResult LeaveApplicationView()
         {
-            if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
-                return RedirectToAction("AuthorizationError", "CustomError");
+                return RedirectToAction("Index", "Login");
             }
         }
     }

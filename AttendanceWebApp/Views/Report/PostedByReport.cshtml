@@ -139,10 +139,10 @@
                                             <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==23" data-title="'location'">{{l}}</td>
+                                                <td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==24" data-title="'location'">{{l}}</td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">{{e}}</td>
-                                                <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">
+                                                <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
+                                                <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">
                                                     {{s}}
                                                 </td>
                                                 <td colspan="10">

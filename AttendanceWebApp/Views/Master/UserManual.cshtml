@@ -10,7 +10,30 @@
         else if (loc === "KJQTL" || loc === "KJSAW") { $('#link').text("“http://172.16.16.77:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/KOSI.png"); };
         if (chk === "IsUser") { $('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide(); } if (chk === "IsReleaser") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); } if (chk === "IsHrUser") { $('#btnLA').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnLP').show(); } if (chk === "IsHrRelease") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLP').show(); }
     });
-    function LoadDiv(data) { if (data === "LR") { $('#div_LeaveRelease').show(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); }; if (data === "LA") { $('#div_LeaveApplication').show(); $('#div_LeaveRelease').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); }; if (data === "EM") { $('#div_UpdateEmailId').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); }; if (data === "RS") { $('#div_ReleaseStrategy').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); }; if (data === "LC") { $('#div_LeaveCancellation').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide(); $('#div_LeavePosting').hide(); }; if (data === "LP") { $('#div_LeavePosting').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); }; };
+    function LoadDiv(data) {
+        if (data === "IT") {
+            $('#div_IncomeTaxDeclaration').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+            $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide();
+        }; if (data === "LR") {
+            $('#div_LeaveRelease').show(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
+            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+        }; if (data === "LA") {
+            $('#div_LeaveApplication').show(); $('#div_LeaveRelease').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
+            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+        }; if (data === "EM") {
+            $('#div_UpdateEmailId').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_ReleaseStrategy').hide();
+            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+        }; if (data === "RS") {
+            $('#div_ReleaseStrategy').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+        }; if (data === "LC") {
+            $('#div_LeaveCancellation').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+            $('#div_ReleaseStrategy').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+        }; if (data === "LP") {
+            $('#div_LeavePosting').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+            $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_IncomeTaxDeclaration').hide();
+        };
+    };
 </script>
 <div class="container">
     <div class="row" id="div_Main">
@@ -18,12 +41,84 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>User Manuals</strong></div>
                 <div class="panel-body">
+                    <button class="btn btn-info" onclick="LoadDiv('IT')" id="btnIT">Income Tax Declaration</button>
                     <button class="btn btn-info" onclick="LoadDiv('LA')" id="btnLA">Leave Application</button>
                     <button class="btn btn-info" onclick="LoadDiv('LC')" id="btnLC">Leave Cancellation</button>
                     <button class="btn btn-info" onclick="LoadDiv('LR')" id="btnLR">Leave Release</button>
                     <button class="btn btn-info" onclick="LoadDiv('LP')" id="btnLP">Leave Posting</button>
                     <button class="btn btn-info" onclick="LoadDiv('EM')" id="btnEM">Update Email Id</button>
                     <button class="btn btn-info" onclick="LoadDiv('RS')" id="btnRS">Release Strategy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Income Tax Declaration *@
+    <div class="row" id="div_IncomeTaxDeclaration">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>Income Tax Declaration</strong></div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <strong>Income Tax Declaration</strong>
+                        <br /><br />
+                        <p>From your profile menu, select “Income Tax Declaration” : </p>
+                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX1.jpg" class="img-thumbnail" />
+                        <hr />
+                        <strong>The form is divided into 8 parts.</strong>
+                        <br /><br />
+                        <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                            <tbody>
+                                <tr>
+                                    <td><b>General Information</b></td>
+                                    <td><p>Contains general information (no inputs required).</p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part A</b></td>
+                                    <td><p>Employee to provide rent paid during the financial year along with address of rented house and name of landlord.  PAN of landlord is mandatory if total amount for the year exceeds Rs. 1,00,000 (Rs. 8,333 per month).  Please note that this option is not available for employees availing company provided accommodation. </p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part B</b></td>
+                                    <td><p>Employees joining after 1 April 2019 are required to update their taxable salary of previous company from 1st April till joining date and tax deducted by previous company.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part C</b></td>
+                                    <td>
+                                        <p>Investments done under section 80C, 80CCC, 80CCD are to be mentioned here.  There are sections created for entry of multiple records of various investment options.  Clicking on the header will bring up popup window to enter details.  For e.g., clicking on “Insurance Premium” will bring popup as follows:</p>
+                                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX2.jpg" class="img-thumbnail" />
+                                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX3.jpg" class="img-thumbnail" />
+                                        <hr />
+                                        <p>Fill out all the fields and press “ADD” button.  Pl note that at the time of providing Provisional information, actual date can be put as current date if actual payment is to be done later.  Repeat this step to enter details for all the policies:</p>
+                                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX4.jpg" class="img-thumbnail" />
+                                        <hr />
+                                        <p>In case of mistake in data entry, press “Del” button to remove the line, and re-enter corrected data.</p>
+                                        <p>Press close button <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX6.jpg" class="img-thumbnail" />  to close the form.  After closing the popup window, total premium amount will be displayed next to the insurance premium field:</p>
+                                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX5.jpg" class="img-thumbnail" />
+                                        <hr />
+                                        <p>Similarly, details of PPF, Long term bank deposits, Insurance, NSC, Tax saving Mutual funds/ULIP, Sukanya Samriddhi Yojna etc. can be entered.  Housing loan principal amount is also to be mentioned in this section is housing loan is taken.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part D</b></td>
+                                    <td><p>Other deductions under section 80D, 80E, 80U –medical insurance premium, interest on education loan etc. can be mentioned here.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part E</b></td>
+                                    <td><p>Details for Exemptions under section 24 (house loan) can be declared here. Employee needs to provide details such as Address of property, Status, Loan Bank name, Loan amount, amount of interest paid (or to be paid) during year.  (Note: Housing loan Principal amount is to be mentioned in Part C – Para 9).</p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part F</b></td>
+                                    <td><p>Any other income to be specified here</p></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Part G</b></td>
+                                    <td><p>Declaration (no inputs necessary).</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>User can press “Submit” button on any of the page any time to save information.</p>
+                        <img src="~/UserManuals/images/IncomeTaxDeclaration/ITAX7.jpg" class="img-thumbnail" />
+                        <p><b>Please Verify your details after Sumbmit Process Completed</b></p>
+                    </div>
                 </div>
             </div>
         </div>

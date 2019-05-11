@@ -102,7 +102,7 @@
                                         <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.totalDays}}</td>
                                         <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
-                                        <td style="text-align:center;"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                        <td style="text-align:center;"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
                                         <td style="text-align:center;"
                                             ng-style="
                                                 d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||

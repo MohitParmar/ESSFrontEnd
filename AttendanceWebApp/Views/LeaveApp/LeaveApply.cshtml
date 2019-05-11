@@ -62,7 +62,8 @@
                                     <td style="text-align:center;" colspan="4">
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" ng-change="YearValidate()" placeholder="Select From Date"
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                   ng-change="YearValidate()" placeholder="Select From Date"
                                                    datepicker required>
                                         </div>
                                     </td>
@@ -80,13 +81,6 @@
                                 <tr>
                                     <td><label>Leave Type :</label></td>
                                     <td style="text-align:center;" colspan="4">
-                                        @*<select class="form-control" id="leavetype" ng-model="new.leavetypecode" ng-change="setltlistvalue(new.leavetypecode)" required>
-                                                <option value="cl" title="cl">cl</option>
-                                                <option value="lw" title="lw">lw</option>
-                                                <option value="oh" title="oh">oh</option>
-                                                <option value="pl" title="pl">pl</option>
-                                                <option value="sl" title="sl">sl</option>
-                                            </select>*@
                                         <div ng-app="myApp" ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
                                             <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
                                                     ng-options="s.LeaveTypeCode as s.LeaveTypeCode for s in LList" ng-change="SetLTListValue(New.LeaveTypeCode)" required>
@@ -103,7 +97,7 @@
                                 </tr>
                                 <tr>
                                     <td><label>Half Day :</label></td>
-                                    <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" style="margin-top:0px;"></td>
+                                    <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" ng-change="ToValidate()" style="margin-top:0px;"></td>
                                     <td style="text-align:right;"><label>Total Days :</label></td>
                                     <td><input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required></td>
                                     <td style="text-align:right;">

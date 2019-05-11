@@ -1,0 +1,280 @@
+﻿@{
+    ViewBag.Title = "ITDeclarationReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/IncomeTaxCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+
+    .mainImaage {
+        display: block;
+        width: 100%;
+        height: 50%;
+        padding-bottom: 5%;
+    }
+</style>
+
+<div ng-app="myApp" ng-controller="IncomeTaxController">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>INCOME TAX DECLARATION Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('incometax_declaration_report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Income Tax Declaration
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div ng-init="GetITReport()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="5"></th>
+                                                <th colspan="3" style="text-align:center;">LIC</th>
+                                                <th colspan="3" style="text-align:center;">Contribution to ULIP</th>
+                                                <th colspan="3" style="text-align:center;">Subscription to approved mutual fund (Infrastructure)</th>
+                                                <th colspan="3" style="text-align:center;">Contribution to Public Provident Fund</th>
+                                                <th colspan="3" style="text-align:center;">Subscr to notified Central Govmt Savings certificate (NSC VIII issue)</th>
+                                                <th colspan="3" style="text-align:center;">Repayment of Housing loan</th>
+                                                <th colspan="3" style="text-align:center;">Subscription to notified mutual fund</th>
+                                                <th colspan="3" style="text-align:center;">Tuition fee - child 1</th>
+                                                <th colspan="3" style="text-align:center;">Tuition fee - child 2</th>
+                                                <th colspan="3" style="text-align:center;">Term Deposits under Section 80C</th>
+                                                <th></th>
+                                                <th colspan="6"></th>
+                                                <th></th>
+                                                <th colspan="10" style="text-align:center;">80CCF & 80d</th>
+                                                <th></th>
+                                                <th colspan="9" style="text-align:center;">Int on House Loan</th>
+                                                <th colspan="1"></th>
+                                                <th colspan="10" style="text-align:center;">HRA</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;" ng-click="sort('EmployeeCode')">
+                                                    E.code
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='EmployeeCode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;">Sap ID</th>
+                                                <th style="text-align:center;">Name</th>
+                                                <th style="text-align:center;">Start Date</th>
+                                                <th style="text-align:center;">End Date</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th style="text-align:center;">Investment Code</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Actual Amount</th>
+                                                <th></th>
+                                                <th style="text-align:center;">Code no</th>
+                                                <th style="text-align:center;">Name of Employee</th>
+                                                <th style="text-align:center;">Total</th>
+                                                <th style="text-align:center;">Provisional</th>
+                                                <th style="text-align:center;">Total</th>
+                                                <th style="text-align:center;">Diff</th>
+                                                <th></th>
+                                                <th style="text-align:center;">Sap ID</th>
+                                                <th style="text-align:center;">Long Term Mutual Fund</th>
+                                                <th style="text-align:center;">Rajiv Gandhi Equity Scheme</th>
+                                                <th style="text-align:center;">Medical Insurance Self/Spouse/Children</th>
+                                                <th style="text-align:center;">Medical Insurance For Parents</th>
+                                                <th style="text-align:center;">Preventive Health Checkup</th>
+                                                <th style="text-align:center;">Interest higher education loan</th>
+                                                <th style="text-align:center;">Physical Disability</th>
+                                                <th style="text-align:center;">Severe disability</th>
+                                                <th style="text-align:center;">NPS</th>
+                                                <th></th>
+                                                <th style="text-align:center;">Sap ID</th>
+                                                <th style="text-align:center;">START DATE</th>
+                                                <th style="text-align:center;">END DATE</th>
+                                                <th style="text-align:center;">Interest On Loan</th>
+                                                <th style="text-align:center;">Notional rent</th>
+                                                <th style="text-align:center;">Net</th>
+                                                <th style="text-align:center;">BANK NAME</th>
+                                                <th style="text-align:center;">PAN NO</th>
+                                                <th style="text-align:center;">OTHERS</th>
+                                                <th></th>
+                                                <th style="text-align:center;">Sap ID</th>
+                                                <th style="text-align:center;">START DATE</th>
+                                                <th style="text-align:center;">END DATE</th>
+                                                <th style="text-align:center;">ACCOMODATION TYPE</th>
+                                                <th style="text-align:center;">CITY CATEGORY</th>
+                                                <th style="text-align:center;">RENT PER MONTH</th>
+                                                <th style="text-align:center;">RENT TOTAL</th>
+                                                <th style="text-align:center;">HRA TO BE EXEMPTED</th>
+                                                <th style="text-align:center;">Landlord Name</th>
+                                                <th style="text-align:center;">Landlord Pan</th>
+                                            </tr>
+                                            <tr>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmployeeCode" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.SapID" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.Name" /></td>
+                                                <td colspan="32"></td>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.CodeNo" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpName" /></td>
+                                                <td colspan="4"></td>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.SapId_2" /></td>
+                                                <td colspan="9"></td>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.SapId_3" /></td>
+                                                <td colspan="5"></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.BankName" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PANNO" /></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.SapId_1" /></td>
+                                                <td colspan="2"></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.Acco_Type" /></td>
+                                                <td colspan="6"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in itddata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                                <td style="text-align:center;">{{d.EmployeeCode}}</td>
+                                                <td style="text-align:center;">{{d.SapID}}</td>
+                                                <td style="text-align:center;">{{d.Name}}</td>
+                                                <td style="text-align:center;">{{d.StartDate}}</td>
+                                                <td style="text-align:center;">{{d.EndDate}}</td>
+                                                <td style="text-align:center;">{{d.LIC_Code}}</td>@* LIC *@
+                                                <td style="text-align:center;">{{d.LIC_Pro}}</td>
+                                                <td style="text-align:center;">{{d.LIC_Act}}</td>
+                                                <td style="text-align:center;">{{d.ULIP_Code}}</td>@* Contribution to ULIP *@
+                                                <td style="text-align:center;">{{d.ULIP_Pro}}</td>
+                                                <td style="text-align:center;">{{d.ULIP_Act}}</td>
+                                                <td style="text-align:center;">{{d.MutualFund_Code}}</td>@*Subscription to approved mutual fund (Infrastructure)*@
+                                                <td style="text-align:center;">{{d.MutualFund_Pro}}</td>
+                                                <td style="text-align:center;">{{d.MutualFund_Act}}</td>
+                                                <td style="text-align:center;">{{d.PPF_Code}}</td>@*Contribution to Public Provident Fund*@
+                                                <td style="text-align:center;">{{d.PPF_Pro}}</td>
+                                                <td style="text-align:center;">{{d.PPF_Act}}</td>
+                                                <td style="text-align:center;">{{d.NSC_Code}}</td>@*Subscr to notified Central Govmt Savings certificate (NSC VIII issue)*@
+                                                <td style="text-align:center;">{{d.NSC_Pro}}</td>
+                                                <td style="text-align:center;">{{d.NSC_Act}}</td>
+                                                <td style="text-align:center;">{{d.HousingLoan_Code}}</td>@*Repayment of Housing loan*@
+                                                <td style="text-align:center;">{{d.HousingLoan_Pro}}</td>
+                                                <td style="text-align:center;">{{d.HousingLoan_Act}}</td>
+                                                <td style="text-align:center;">{{d.Notified_M_Fund_Code}}</td>@*Subscription to notified mutual fund*@
+                                                <td style="text-align:center;">{{d.Notified_M_Fund_Pro}}</td>
+                                                <td style="text-align:center;">{{d.Notified_M_Fund_Act}}</td>
+                                                <td style="text-align:center;">{{d.TutionFee_Child1_Code}}</td>@*Tuition fee - child 1*@
+                                                <td style="text-align:center;">{{d.TutionFee_Child1_Pro}}</td>
+                                                <td style="text-align:center;">{{d.TutionFee_Child1_Act}}</td>
+                                                <td style="text-align:center;">{{d.TutionFee_Child2_Code}}</td>@*Tuition fee - child 2*@
+                                                <td style="text-align:center;">{{d.TutionFee_Child2_Pro}}</td>
+                                                <td style="text-align:center;">{{d.TutionFee_Child2_Act}}</td>
+                                                <td style="text-align:center;">{{d.TermDeposit_Code}}</td>@*Term Deposits under Section 80C*@
+                                                <td style="text-align:center;">{{d.TermDeposit_Pro}}</td>
+                                                <td style="text-align:center;">{{d.TermDeposit_Act}}</td>
+                                                <td style="text-align:center;">{{d.b_1}}</td>
+                                                <td style="text-align:center;">{{d.CodeNo}}</td>
+                                                <td style="text-align:center;">{{d.EmpName}}</td>
+                                                <td style="text-align:center;">{{d.Total80C}}</td>
+                                                <td style="text-align:center;">{{d.Provisional}}</td>
+                                                <td style="text-align:center;">{{d.Total}}</td>
+                                                <td style="text-align:center;">{{d.Diff}}</td>
+                                                <td style="text-align:center;">{{d.b_2}}</td>
+                                                <td style="text-align:center;">{{d.SapId_2}}</td>
+                                                <td style="text-align:center;">{{d.LongTermMutualFund}}</td>@* 80CCF& 80d *@
+                                                <td style="text-align:center;">{{d.RajivGandhiEquity}}</td>
+                                                <td style="text-align:center;">{{d.MedicalPremiumSelf}}</td>
+                                                <td style="text-align:center;">{{d.MedicalPremiumParents}}</td>
+                                                <td style="text-align:center;">{{d.MedicalPreventiveHealthCheckup}}</td>
+                                                <td style="text-align:center;">{{d.EduLoanInterest}}</td>
+                                                <td style="text-align:center;">{{d.PhysicalDisability}}</td>
+                                                <td style="text-align:center;">{{d.SevereDisability}}</td>
+                                                <td style="text-align:center;">{{d.NPS}}</td>
+                                                <td style="text-align:center;">{{d.b_3}}</td>
+                                                <td style="text-align:center;">{{d.SapId_3}}</td>
+                                                <td style="text-align:center;">{{d.StartDate_2}}</td>@* Int on House Loan *@
+                                                <td style="text-align:center;">{{d.EndDate_2}}</td>
+                                                <td style="text-align:center;">{{d.InterestOnLoan}}</td>
+                                                <td style="text-align:center;">{{d.NationalRent}}</td>
+                                                <td style="text-align:center;">{{d.Net}}</td>
+                                                <td style="text-align:center;">{{d.BankName}}</td>
+                                                <td style="text-align:center;">{{d.PANNO}}</td>
+                                                <td style="text-align:center;">{{d.Others}}</td>
+                                                <td style="text-align:center;">{{d.b_4}}</td>
+                                                <td style="text-align:center;">{{d.SapId_1}}</td>
+                                                <td style="text-align:center;">{{d.StartDate_1}}</td>@* HRA *@
+                                                <td style="text-align:center;">{{d.EndDate_1}}</td>
+                                                <td style="text-align:center;">{{d.Acco_Type}}</td>
+                                                <td style="text-align:center;">{{d.CityCategory}}</td>
+                                                <td style="text-align:center;">{{d.RentPerMonth}}</td>
+                                                <td style="text-align:center;">{{d.RentPaid}}</td>
+                                                <td style="text-align:center;">{{d.HRA_Exempted}}</td>
+                                                <td style="text-align:center;">{{d.LandLordName}}</td>
+                                                <td style="text-align:center;">{{d.LandLordPan}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

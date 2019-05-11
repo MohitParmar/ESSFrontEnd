@@ -77,14 +77,16 @@ namespace AttendanceWebApp.Controllers
 
         [HttpGet]
         [System.Web.Http.ActionName("GetLeaveTypeList")]
-        public JsonResult GetLeaveTypeList()
+        public JsonResult GetLeaveTypeList(string compid)
         {
             try
             {
                 var LeaveTypeData = (from o in _context.LeaveTypes
-                                                           where o.WrkGrp == "comp" && o.Active == true
-                                                           select new
-                                     { o.LeaveTypeCode, o.LeaveTypeName }).ToList();
+                                     where
+                                     o.CompCode == compid &&
+                                     o.WrkGrp == "COMP" && o.Active == true
+
+                                     select new { o.LeaveTypeCode, o.LeaveTypeName }).ToList();
                 return Json(LeaveTypeData, JsonRequestBehavior.AllowGet);
             }
             catch

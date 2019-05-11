@@ -3,12 +3,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
-<script src="~/Scripts/Module/ng-table.src.js"></script>
-<script src="~/Scripts/Module/ng-tags-input.js"></script>
+@*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/ng-tags-input.js"></script>
+    <link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />*@
+
 <script src="~/Scripts/Module/app.js"></script>
-<link href="~/Content/ng-table.css" rel="stylesheet" media="screen" />
-<link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
 <script src="~/Scripts/Controller/LeaveaCOCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
 
@@ -55,7 +56,6 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                @* Create Leave Application *@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Comp Sentry Off Application</strong></div>
                     <div class="panel-body">
@@ -63,11 +63,9 @@
                             <table id="myTable" class="table table-responsive table-condensed">
                                 <tr>
                                     <td>
-                                        @*<label>Week Off Date :</label>*@
                                         <label>Holiday Date :</label>
                                     </td>
                                     <td style="text-align:center;" colspan="4">
-                                        @* Holiday COFF Apply *@
                                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                                             <select class="form-control" id="FromDt" ng-model="New.FromDt"
                                                     ng-options="hld.holidayDate as (hld.holidayDate|date:'yyyy-MM-dd') for hld in hlddata"
@@ -75,11 +73,6 @@
                                                 <option value="" selected>--- Select ---</option>
                                             </select>
                                         </div>
-                                        @* Week OFF Apply *@
-                                        @*<div class="right-inner-addon">
-                                            <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
-                                                placeholder="Select Week Off Date" datepicker required></div>*@
                                     </td>
                                 </tr>
                                 <tr>
@@ -119,7 +112,6 @@
                         </form>
                     </div>
                 </div>
-                @* Leave Request List *@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Request List</strong></div>
                     <div class="panel-body">
@@ -156,7 +148,6 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                @* Leave Balance List *@
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>Leave Balance</strong></div>
                     <div class="panel-body">
@@ -186,7 +177,6 @@
                         </div>
                     </div>
                 </div>
-                @* Holiday List Of Current User *@
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>Holiday List</strong></div>
                     <div class="panel-body">

@@ -152,7 +152,7 @@
                                                 <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yy'}}</td>
                                                 @*<td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">{{lr.releaseDate | date:'dd/MM/yy'}}</td>*@
-                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted == 'F'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:center;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.statName}}</td>
