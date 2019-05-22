@@ -8,29 +8,9 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.ITDInfo;
     $('.btnNext').click(function () { $('.nav-tabs > .active').next('li').find('a').trigger('click'); }); $('.btnPrevious').click(function () { $('.nav-tabs > .active').prev('li').find('a').trigger('click'); });
     $scope.SetBankPan = function (value) { $scope.bankPan = value.bankPan; $scope.bankName = value.bankName; };
-    $scope.CheckNPSLimit = function () {
-        var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") {
-            limit = document.getElementById("a_NPS").value; if (limit > 50000) { document.getElementById("a_NPS").value = "50000"; alert("System will consider 50000 only"); }
-        } else {
-            limit = document.getElementById("p_NPS").value; if (limit > 50000) { document.getElementById("p_NPS").value = "50000"; alert("System will consider 50000 only"); }
-        };
-    };
-    $scope.CheckPDisability = function () {
-        var act = $('#hidactualFlag').val(); var limit = 0;
-        if (act === "true") {
-            limit = document.getElementById("a_disablity").value; if (limit > 75000) { document.getElementById("a_disablity").value = "75000"; alert("System will consider 75000 only"); }
-        } else {
-            limit = document.getElementById("p_disablity").value; if (limit > 75000) { document.getElementById("p_disablity").value = "75000"; alert("System will consider 75000 only"); }
-        }
-    };
-    $scope.CheckSevereDisability = function () {
-        var act = $('#hidactualFlag').val(); var limit = 0;
-        if (act === "true") {
-            limit = document.getElementById("a_severedisablity").value; if (limit > 125000) { document.getElementById("a_severedisablity").value = "125000"; alert("System will Consider 125000 only"); }
-        } else {
-            limit = document.getElementById("p_severedisablity").value; if (limit > 125000) { document.getElementById("p_severedisablity").value = "125000"; alert("System will Consider 125000 only"); }
-        }
-    };
+    $scope.CheckNPSLimit = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_NPS").value; if (limit > 50000) { document.getElementById("a_NPS").value = "50000"; alert("System will consider 50000 only"); }; } else { limit = document.getElementById("p_NPS").value; if (limit > 50000) { document.getElementById("p_NPS").value = "50000"; alert("System will consider 50000 only"); }; }; };
+    $scope.CheckPDisability = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_disablity").value; if (limit > 75000) { document.getElementById("a_disablity").value = "75000"; alert("System will consider 75000 only"); }; } else { limit = document.getElementById("p_disablity").value; if (limit > 75000) { document.getElementById("p_disablity").value = "75000"; alert("System will consider 75000 only"); }; }; };
+    $scope.CheckSevereDisability = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_severedisablity").value; if (limit > 125000) { document.getElementById("a_severedisablity").value = "125000"; alert("System will Consider 125000 only"); }; } else { limit = document.getElementById("p_severedisablity").value; if (limit > 125000) { document.getElementById("p_severedisablity").value = "125000"; alert("System will Consider 125000 only"); }; }; };
     $scope.CheckLoanInterest = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_amountofinterest").value; } else { limit = document.getElementById("p_amountofinterest").value; }; if (limit > 0) { var bank = $scope.bankName; if (bank === "" || bank === "undefined") { alert("Please Select your Housing Loan Bank First"); document.getElementById("p_amountofinterest").value = 0; }; if (limit > 200000) { alert("System will consider 2,00,000 Only.."); if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); } }; }; };
     $scope.calcRent = function () { var renttotal = storeTblValues(); function storeTblValues() { var renttotal = new Array(); $('#renttable tr').each(function (row, tr) { if (row > 0) { renttotal[row] = { "rentpm1": $(tr).find('td:eq(1) input[type="text"]').val(), "rentpm2": $(tr).find('td:eq(2) input[type="text"]').val(), "rentpm3": $(tr).find('td:eq(3) input[type="text"]').val(), "rentpm4": $(tr).find('td:eq(4) input[type="text"]').val(), "rentpm5": $(tr).find('td:eq(5) input[type="text"]').val(), "rentpm6": $(tr).find('td:eq(6) input[type="text"]').val(), "rentpm7": $(tr).find('td:eq(7) input[type="text"]').val(), "rentpm8": $(tr).find('td:eq(8) input[type="text"]').val(), "rentpm9": $(tr).find('td:eq(9) input[type="text"]').val(), "rentpm10": $(tr).find('td:eq(10) input[type="text"]').val(), "rentpm11": $(tr).find('td:eq(11) input[type="text"]').val(), "rentpm12": $(tr).find('td:eq(12) input[type="text"]').val() } } }); renttotal.shift(); return renttotal; }; if (renttotal.length > 0) { var rentPM = 0; var act = $('#hidactualFlag').val(); if (act === "true") { rentPM = (parseInt(renttotal[1].rentpm1) || 0) + (parseInt(renttotal[1].rentpm2) || 0) + (parseInt(renttotal[1].rentpm3) || 0) + (parseInt(renttotal[1].rentpm4) || 0) + (parseInt(renttotal[1].rentpm5) || 0) + (parseInt(renttotal[1].rentpm6) || 0) + (parseInt(renttotal[1].rentpm7) || 0) + (parseInt(renttotal[1].rentpm8) || 0) + (parseInt(renttotal[1].rentpm9) || 0) + (parseInt(renttotal[1].rentpm10) || 0) + (parseInt(renttotal[1].rentpm11) || 0) + (parseInt(renttotal[1].rentpm12) || 0); } else { rentPM = (parseInt(renttotal[0].rentpm1) || 0) + (parseInt(renttotal[0].rentpm2) || 0) + (parseInt(renttotal[0].rentpm3) || 0) + (parseInt(renttotal[0].rentpm4) || 0) + (parseInt(renttotal[0].rentpm5) || 0) + (parseInt(renttotal[0].rentpm6) || 0) + (parseInt(renttotal[0].rentpm7) || 0) + (parseInt(renttotal[0].rentpm8) || 0) + (parseInt(renttotal[0].rentpm9) || 0) + (parseInt(renttotal[0].rentpm10) || 0) + (parseInt(renttotal[0].rentpm11) || 0) + (parseInt(renttotal[0].rentpm12) || 0); }; document.getElementById("renttotal").value = rentPM; var landlord = $('#landlord').val(); var rentalpan = $('#rentalpan').val(); if (rentPM > 100000 && (landlord === '' || rentalpan === '')) { alert("Landlord Name & PAN Number is Required."); } }; };
     $scope.calmediclaim = function () { var act = $('#hidactualFlag').val(); var mediclaimpremiumforfamily = 0, mediclaimpremiumforparents = 0, mediclaimpremiumforhealth = 0; if (act === "true") { mediclaimpremiumforfamily = parseInt(document.getElementById('a_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('a_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('a_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_a_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; } else { mediclaimpremiumforfamily = parseInt(document.getElementById('p_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('p_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('p_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_p_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; }; };
@@ -38,7 +18,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.PopulateNSCpmodel = function () { $('#model3').modal('show'); $scope.calNSC(); }; $scope.Populateppfmodel = function () { $('#model4').modal('show'); $scope.calPPF(); };
     $scope.PopulateFDModel = function () { $('#model5').modal('show'); $scope.calFD(); }; $scope.PopulateULIPModel = function () { $('#model6').modal('show'); $scope.calUlip(); };
     $scope.PopulateSSModel = function () { $('#model7').modal('show'); $scope.calSS(); };    //POPUP MODELS
-    $scope.GetActualInfo = function () { var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth); $scope.GetBankDetails(); $scope.GetTaxDeclaration(); }; }; req.send(); };//Get Actual Flag DetaiLS
+    $scope.GetEmpInfo = function () { var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#eCode').val(), true); emp.setRequestHeader('Accept', 'application/json'); emp.onreadystatechange = function () { if (emp.readyState === 4) { var json1 = JSON.parse(emp.responseText); $scope.empdata = json1; $scope.$digest(); document.getElementById("btnSearch").disabled = true; $scope.GetActualInfo(); } else if (emp.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); }; }; emp.send(); };
+    $scope.GetActualInfo = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth); $('#hidcloseFlag').val($scope.configdata.closeFlag); var clsflg = $scope.configdata.closeFlag; var ecode = $('#eCode').val() || 0; if (clsflg === true) { if (ecode === 0) { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); }; }; $scope.GetBankDetails(); $scope.GetTaxDeclaration(); }; }; req.send(); };//Get Actual Flag DetaiLS
     //Get TAX Declaration Details
     $scope.GetTaxDeclaration = function () {
         var act = $('#hidactualFlag').val(); var YearMonth = $('#hidyearMonth').val();
@@ -46,10 +27,23 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         //var YearMonth = (new Date().getFullYear()) + ((new Date().getFullYear() + 1).toString().substr(-2));
         //Get Address Details
         var addr = ""; var Udata1; var Uperdata2; var xy = {}; var xhr = new XMLHttpRequest();
-        xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true); xhr.setRequestHeader('Accept', 'application/json');
+        var ecode = $('#eCode').val() || 0;
+        if (ecode === 0) {
+            xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true);
+        } else {
+            xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + ecode, true);
+        };
+        xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var json1 = JSON.parse(xhr.responseText); $scope.Udata = json1; var per = new XMLHttpRequest(); per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=1', true); per.setRequestHeader('Accept', 'application/json'); per.onreadystatechange = function () {
+                var json1 = JSON.parse(xhr.responseText); $scope.Udata = json1; var per = new XMLHttpRequest();
+                if (ecode === 0) {
+                    per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=1', true);
+                } else {
+                    per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + ecode + '&mode=1', true);
+                };
+                per.setRequestHeader('Accept', 'application/json');
+                per.onreadystatechange = function () {
                     if (per.readyState === 4 && per.status === 200) {
                         var json = JSON.parse(per.responseText); $scope.Uperdata = json; Uperdata2 = $scope.Uperdata; Udata1 = $scope.Udata; angular.merge(xy, Udata1, Uperdata2);
                         $scope.UserInfo = xy; $scope.$digest();
@@ -80,7 +74,13 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         //Get Tax Declaration Details
         var rentDetails = new Array(); var ppfDetails = new Array(); var bankDeposits = new Array(); var insuranceDetails = new Array(); var nscDetails = new Array();
         var mutualFundDetails = new Array(); var ulipDetails = new Array(); var sukanyaDetails = new Array();
-        var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclaration?empUnqId=' + $('#myEmpUnqId').val() + '&yearMonth=' + $('#hidyearMonth').val() + '&actualFlag=' + $('#hidactualFlag').val(), true); xhr1.setRequestHeader('Accept', 'application/json');
+        var xhr1 = new XMLHttpRequest();
+        if (ecode === 0) {
+            xhr1.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclaration?empUnqId=' + $('#myEmpUnqId').val() + '&yearMonth=' + $('#hidyearMonth').val() + '&actualFlag=' + $('#hidactualFlag').val(), true);
+        } else {
+            xhr1.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclaration?empUnqId=' + ecode + '&yearMonth=' + $('#hidyearMonth').val() + '&actualFlag=' + $('#hidactualFlag').val(), true);
+        };
+        xhr1.setRequestHeader('Accept', 'application/json');
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4) {
                 var json = JSON.parse(xhr1.responseText); $scope.taxdata = json; $scope.$digest();
@@ -212,48 +212,24 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                     $('#txt_jointownershare').val($scope.taxdata[0].jointOwnerShare); $('#rentalincome').val($scope.taxdata[0].rentalIncomePerMonth);
                     $('#txt_otherincometext').val($scope.taxdata[0].otherIncomeDesc);
                 };
+                $('#loading').removeClass("activediv");
+                $('#loading').addClass("deactivediv");
             };
         }; xhr1.send();
     };
     //Controls readonly Provisional or Actual Wise
-    $scope.EnableCntrl = function (d) {
-        if (d === "true") {
-            $("#p_rentpm1").attr("readonly", true); $("#p_rentpm2").attr("readonly", true); $("#p_rentpm3").attr("readonly", true); $("#p_rentpm4").attr("readonly", true); $("#p_rentpm5").attr("readonly", true); $("#p_rentpm6").attr("readonly", true); $("#p_rentpm7").attr("readonly", true); $("#p_rentpm8").attr("readonly", true); $("#p_rentpm9").attr("readonly", true); $("#p_rentpm10").attr("readonly", true); $("#p_rentpm11").attr("readonly", true); $("#p_rentpm12").attr("readonly", true);
-            $("#p_fd").attr("readonly", true); $("#p_ppf").attr("readonly", true); $("#p_i3").attr("readonly", true); $("#p_nsc3").attr("readonly", true); $("#mf2").attr("readonly", true); $("#p_ulip").attr("readonly", true); $("#p_ssAmount").attr("readonly", true); $("#p_houseloan").attr("readonly", true); $("#p_childfees1").attr("readonly", true); $("#p_childfees2").attr("readonly", true); $("#p_pensionscheme").attr("readonly", true); $("#p_others1").attr("readonly", true); $("#p_others2").attr("readonly", true);
-            $("#p_equityscheme").attr("readonly", true); $("#p_mediclaimpremiumforfamily").attr("readonly", true); $("#p_mediclaimpremiumforparents").attr("readonly", true); $("#p_mediclaimpremiumforhealth").attr("readonly", true); $("#p_eduloan").attr("readonly", true); $("#p_disablity").attr("readonly", true); $("#p_severedisablity").attr("readonly", true); $("#p_NPS").attr("readonly", true);
-            $("#p_amountofinterest").attr("readonly", true); $("#p_amountofinterestasperit").attr("readonly", true); $("#p_optionalinterest").attr("readonly", true); $("#p_optionalotherincome").attr("readonly", true);
-        } else {
-            $("#a_rentpm1").attr("readonly", true); $("#a_rentpm2").attr("readonly", true); $("#a_rentpm3").attr("readonly", true); $("#a_rentpm4").attr("readonly", true); $("#a_rentpm5").attr("readonly", true); $("#a_rentpm6").attr("readonly", true); $("#a_rentpm7").attr("readonly", true); $("#a_rentpm8").attr("readonly", true); $("#a_rentpm9").attr("readonly", true); $("#a_rentpm10").attr("readonly", true); $("#a_rentpm11").attr("readonly", true); $("#a_rentpm12").attr("readonly", true);
-            $("#a_fd").attr("readonly", true); $("#a_ppf").attr("readonly", true); $("#a_i3").attr("readonly", true); $("#a_nsc3").attr("readonly", true); $("#i_nsc4").attr("readonly", true); $("#mf3").attr("readonly", true); $("#a_ulip").attr("readonly", true); $("#a_ssAmount").attr("readonly", true); $("#a_houseloan").attr("readonly", true); $("#a_childfees1").attr("readonly", true); $("#a_childfees2").attr("readonly", true); $("#a_pensionscheme").attr("readonly", true); $("#a_others1").attr("readonly", true); $("#a_others2").attr("readonly", true);
-            $("#a_equityscheme").attr("readonly", true); $("#a_mediclaimpremiumforfamily").attr("readonly", true); $("#a_mediclaimpremiumforparents").attr("readonly", true); $("#a_mediclaimpremiumforhealth").attr("readonly", true); $("#a_eduloan").attr("readonly", true); $("#a_disablity").attr("readonly", true); $("#a_severedisablity").attr("readonly", true); $("#a_NPS").attr("readonly", true);
-            $("#a_amountofinterest").attr("readonly", true); $("#a_amountofinterestasperit").attr("readonly", true); $("#a_optionalinterest").attr("readonly", true); $("#a_optionalotherincome").attr("readonly", true);
-        };
-    };
+    $scope.EnableCntrl = function (d) { if (d === "true") { $("#p_rentpm1").attr("readonly", true); $("#p_rentpm2").attr("readonly", true); $("#p_rentpm3").attr("readonly", true); $("#p_rentpm4").attr("readonly", true); $("#p_rentpm5").attr("readonly", true); $("#p_rentpm6").attr("readonly", true); $("#p_rentpm7").attr("readonly", true); $("#p_rentpm8").attr("readonly", true); $("#p_rentpm9").attr("readonly", true); $("#p_rentpm10").attr("readonly", true); $("#p_rentpm11").attr("readonly", true); $("#p_rentpm12").attr("readonly", true); $("#p_fd").attr("readonly", true); $("#p_ppf").attr("readonly", true); $("#p_i3").attr("readonly", true); $("#p_nsc3").attr("readonly", true); $("#mf2").attr("readonly", true); $("#p_ulip").attr("readonly", true); $("#p_ssAmount").attr("readonly", true); $("#p_houseloan").attr("readonly", true); $("#p_childfees1").attr("readonly", true); $("#p_childfees2").attr("readonly", true); $("#p_pensionscheme").attr("readonly", true); $("#p_others1").attr("readonly", true); $("#p_others2").attr("readonly", true); $("#p_equityscheme").attr("readonly", true); $("#p_mediclaimpremiumforfamily").attr("readonly", true); $("#p_mediclaimpremiumforparents").attr("readonly", true); $("#p_mediclaimpremiumforhealth").attr("readonly", true); $("#p_eduloan").attr("readonly", true); $("#p_disablity").attr("readonly", true); $("#p_severedisablity").attr("readonly", true); $("#p_NPS").attr("readonly", true); $("#p_amountofinterest").attr("readonly", true); $("#p_amountofinterestasperit").attr("readonly", true); $("#p_optionalinterest").attr("readonly", true); $("#p_optionalotherincome").attr("readonly", true); } else { $("#a_rentpm1").attr("readonly", true); $("#a_rentpm2").attr("readonly", true); $("#a_rentpm3").attr("readonly", true); $("#a_rentpm4").attr("readonly", true); $("#a_rentpm5").attr("readonly", true); $("#a_rentpm6").attr("readonly", true); $("#a_rentpm7").attr("readonly", true); $("#a_rentpm8").attr("readonly", true); $("#a_rentpm9").attr("readonly", true); $("#a_rentpm10").attr("readonly", true); $("#a_rentpm11").attr("readonly", true); $("#a_rentpm12").attr("readonly", true); $("#a_fd").attr("readonly", true); $("#a_ppf").attr("readonly", true); $("#a_i3").attr("readonly", true); $("#a_nsc3").attr("readonly", true); $("#i_nsc4").attr("readonly", true); $("#mf3").attr("readonly", true); $("#a_ulip").attr("readonly", true); $("#a_ssAmount").attr("readonly", true); $("#a_houseloan").attr("readonly", true); $("#a_childfees1").attr("readonly", true); $("#a_childfees2").attr("readonly", true); $("#a_pensionscheme").attr("readonly", true); $("#a_others1").attr("readonly", true); $("#a_others2").attr("readonly", true); $("#a_equityscheme").attr("readonly", true); $("#a_mediclaimpremiumforfamily").attr("readonly", true); $("#a_mediclaimpremiumforparents").attr("readonly", true); $("#a_mediclaimpremiumforhealth").attr("readonly", true); $("#a_eduloan").attr("readonly", true); $("#a_disablity").attr("readonly", true); $("#a_severedisablity").attr("readonly", true); $("#a_NPS").attr("readonly", true); $("#a_amountofinterest").attr("readonly", true); $("#a_amountofinterestasperit").attr("readonly", true); $("#a_optionalinterest").attr("readonly", true); $("#a_optionalotherincome").attr("readonly", true); }; };
     //Add insurance premium 
     $scope.AddPolicy = function () {
         var act = $('#hidactualFlag').val();
-        var i1 = document.getElementById('i1').value || 0; var i5 = document.getElementById('i5').value; if (i5 === "") { alert("Please Select Policy Date"); return false; };
-        var i2 = document.getElementById('i2').value || 0;
-        var premium = 0;
-        var Policydate = i5; var con_Policydate = new Date(Policydate); var new_Date = new Date("2012-04-01");
-        if (con_Policydate > new_Date) { premium = (i2) * 10 / 100; } else { premium = (i2) * 20 / 100; }
-        var p_i3 = document.getElementById('p_i3').value || 0; var a_i3 = document.getElementById('a_i3').value || 0;
-        if (act === "true") { if (premium <= a_i3) { a_i3 = premium; } } else { if (premium <= p_i3) { p_i3 = premium; } }
-        var i6 = document.getElementById('i6').value;
-        var i4 = document.getElementById('i4').value; var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length;
+        var i1 = document.getElementById('i1').value || 0; var i5 = document.getElementById('i5').value; if (i5 === "") { alert("Please Select Policy Date"); return false; }; var i2 = document.getElementById('i2').value || 0;
+        var premium = 0; var Policydate = i5; var con_Policydate = new Date(Policydate); var new_Date = new Date("2012-04-01"); if (con_Policydate > new_Date) { premium = (i2) * 10 / 100; } else { premium = (i2) * 20 / 100; };
+        var p_i3 = document.getElementById('p_i3').value || 0; var a_i3 = document.getElementById('a_i3').value || 0; if (act === "true") { if (premium <= a_i3) { a_i3 = premium; } } else { if (premium <= p_i3) { p_i3 = premium; } };
+        var i6 = document.getElementById('i6').value; var i4 = document.getElementById('i4').value;
+        var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length;
         for (var i = 0; i < rowCounts; i++) {
-            var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='i1' value='" + i1 + "'>" + i1 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='i5' value='" + i5 + "'>" + i5 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='i2' value='" + i2 + "'>" + i2 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" + p_i3 + "'>" + p_i3 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" + a_i3 + "'>" + a_i3 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='i6' value='" + i6 + "'>" + i6 + "</td>" +
-                "<td style='text-align:center;'><input type='hidden' name='i4' value='" + i4 + "'>" + i4 + "</td>" +
-                "<td style='text-align:center;'><input type='button' name='Del' value='Del' onclick='RemoveINS(this)' class='btn btn-danger'></td>" + "</tr>");
-            $("#aliasTable").append(row);
-            document.getElementById('i1').value = ""; document.getElementById('i5').value = ""; document.getElementById('i2').value = "";
-            document.getElementById("p_i3").value = ""; document.getElementById("a_i3").value = ""; document.getElementById('i6').value = "";
-            document.getElementById('i4').value = ""; break;
+            var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='i1' value='" + i1 + "'>" + i1 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='i5' value='" + i5 + "'>" + i5 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='i2' value='" + i2 + "'>" + i2 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" + p_i3 + "'>" + p_i3 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" + a_i3 + "'>" + a_i3 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='i6' value='" + i6 + "'>" + i6 + "</td>" + "<td style='text-align:center;'><input type='hidden' name='i4' value='" + i4 + "'>" + i4 + "</td>" + "<td style='text-align:center;'><input type='button' name='Del' value='Del' onclick='RemoveINS(this)' class='btn btn-danger'></td>" + "</tr>"); $("#aliasTable").append(row);
+            document.getElementById('i1').value = ""; document.getElementById('i5').value = ""; document.getElementById('i2').value = ""; document.getElementById("p_i3").value = ""; document.getElementById("a_i3").value = ""; document.getElementById('i6').value = ""; document.getElementById('i4').value = ""; break;
         }; $scope.calPolicy();
     };
     $scope.calPolicy = function () { var PremiumData = storeTblValues(); function storeTblValues() { var PremiumData = new Array(); $('#aliasTable tr').each(function (row, tr) { PremiumData[row] = { "i1": $(tr).find('td:eq(0)').text(), "i5": $(tr).find('td:eq(1)').text(), "i2": $(tr).find('td:eq(2)').text(), "p_i3": $(tr).find('td:eq(3)').text(), "a_i3": $(tr).find('td:eq(4)').text(), "i6": $(tr).find('td:eq(5)').text(), "i4": $(tr).find('td:eq(6)').text() } }); PremiumData.shift(); return PremiumData; }; var p_premiumCount = 0; for (var i = 0; i < PremiumData.length; i++) { p_premiumCount += parseInt(PremiumData[i]["p_i3"]) || 0; document.getElementById('tot_p_premium').value = p_premiumCount || 0; }; var a_premiumCount = 0; for (var i = 0; i < PremiumData.length; i++) { a_premiumCount += parseInt(PremiumData[i]["a_i3"]) || 0; document.getElementById('tot_a_premium').value = a_premiumCount || 0; }; $scope.Total80c(); };
@@ -277,24 +253,21 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.calSS = function () { var SS = storeTblValues(); function storeTblValues() { var SS = new Array(); $('#aliasTable7 tr').each(function (row, tr) { SS[row] = { "txt_SSAccName": $(tr).find('td:eq(0)').text(), "ssdate": $(tr).find('td:eq(1)').text(), "p_ssAmount": $(tr).find('td:eq(2)').text(), "a_ssAmount": $(tr).find('td:eq(3)').text() }; }); SS.shift(); return SS; }; var p_ssAmount = 0; for (var i = 0; i < SS.length; i++) { p_ssAmount += parseInt(SS[i]["p_ssAmount"]) || 0; document.getElementById('tot_p_ssAmt').value = p_ssAmount || 0; }; var a_ssAmount = 0; for (var i = 0; i < SS.length; i++) { a_ssAmount += parseInt(SS[i]["a_ssAmount"]) || 0; document.getElementById('tot_a_ssAmt').value = a_ssAmount || 0; }; $scope.Total80c(); };
     //Total 80C
     $scope.Total80c = function () {
-        //Provisional Total
-        var tot_p_ppf = parseInt(document.getElementById('tot_p_ppf').value) || 0; var tot_p_fd = parseInt(document.getElementById('tot_p_fd').value) || 0; var tot_p_premium = parseInt(document.getElementById('tot_p_premium').value) || 0; var tot_p_nsc = parseInt(document.getElementById('tot_p_nsc').value) || 0; var tot_p_mfund = parseInt(document.getElementById('tot_p_mfund').value) || 0; var tot_p_ulip = parseInt(document.getElementById('tot_p_ulip').value) || 0; var tot_p_ssAmt = parseInt(document.getElementById('tot_p_ssAmt').value) || 0;
-        var p_houseloan = parseInt(document.getElementById('p_houseloan').value) || 0; var p_childfees1 = parseInt(document.getElementById('p_childfees1').value) || 0; var p_childfees2 = parseInt(document.getElementById('p_childfees2').value) || 0; var p_others1 = parseInt(document.getElementById('p_others1').value) || 0; var p_others2 = parseInt(document.getElementById('p_others2').value) || 0;
-        var p_pensionscheme = parseInt(document.getElementById('p_pensionscheme').value) || 0; if (p_pensionscheme >= 200000) { alert("System Consider MAX 2,00,000 Only"); };
-        var p_total = tot_p_ppf + tot_p_fd + tot_p_premium + tot_p_nsc + tot_p_mfund + tot_p_ulip + tot_p_ssAmt + p_houseloan + p_childfees1 + p_childfees2 + p_pensionscheme + p_others1 + p_others2; document.getElementById("p_total").value = p_total;
-        //Actual Total
-        var tot_a_ppf = parseInt(document.getElementById('tot_a_ppf').value) || 0; var tot_a_fd = parseInt(document.getElementById('tot_a_fd').value) || 0; var tot_a_premium = parseInt(document.getElementById('tot_a_premium').value) || 0; var tot_a_nsc = parseInt(document.getElementById('tot_a_nsc').value) || 0; var tot_a_mfund = parseInt(document.getElementById('tot_a_mfund').value) || 0; var tot_a_ulip = parseInt(document.getElementById('tot_a_ulip').value) || 0; var tot_a_ssAmt = parseInt(document.getElementById('tot_a_ssAmt').value) || 0;
-        var a_houseloan = parseInt(document.getElementById('a_houseloan').value) || 0; var a_childfees1 = parseInt(document.getElementById('a_childfees1').value) || 0; var a_childfees2 = parseInt(document.getElementById('a_childfees2').value) || 0; var a_pensionscheme = parseInt(document.getElementById('a_pensionscheme').value) || 0; var a_others1 = parseInt(document.getElementById('a_others1').value) || 0; var a_others2 = parseInt(document.getElementById('a_others2').value) || 0;
-        var a_total = tot_a_ppf + tot_a_fd + tot_a_premium + tot_a_nsc + tot_a_mfund + tot_a_ulip + tot_a_ssAmt + a_houseloan + a_childfees1 + a_childfees2 + a_pensionscheme + a_others1 + a_others2; document.getElementById("a_total").value = a_total;
+        var tot_p_ppf = parseInt(document.getElementById('tot_p_ppf').value) || 0; var tot_p_fd = parseInt(document.getElementById('tot_p_fd').value) || 0; var tot_p_premium = parseInt(document.getElementById('tot_p_premium').value) || 0; var tot_p_nsc = parseInt(document.getElementById('tot_p_nsc').value) || 0; var tot_p_mfund = parseInt(document.getElementById('tot_p_mfund').value) || 0; var tot_p_ulip = parseInt(document.getElementById('tot_p_ulip').value) || 0; var tot_p_ssAmt = parseInt(document.getElementById('tot_p_ssAmt').value) || 0; var p_houseloan = parseInt(document.getElementById('p_houseloan').value) || 0; var p_childfees1 = parseInt(document.getElementById('p_childfees1').value) || 0; var p_childfees2 = parseInt(document.getElementById('p_childfees2').value) || 0; var p_others1 = parseInt(document.getElementById('p_others1').value) || 0; var p_others2 = parseInt(document.getElementById('p_others2').value) || 0; var p_pensionscheme = parseInt(document.getElementById('p_pensionscheme').value) || 0; var p_total = tot_p_ppf + tot_p_fd + tot_p_premium + tot_p_nsc + tot_p_mfund + tot_p_ulip + tot_p_ssAmt + p_houseloan + p_childfees1 + p_childfees2 + p_pensionscheme + p_others1 + p_others2; document.getElementById("p_total").value = p_total;//Provisional Total
+        var tot_a_ppf = parseInt(document.getElementById('tot_a_ppf').value) || 0; var tot_a_fd = parseInt(document.getElementById('tot_a_fd').value) || 0; var tot_a_premium = parseInt(document.getElementById('tot_a_premium').value) || 0; var tot_a_nsc = parseInt(document.getElementById('tot_a_nsc').value) || 0; var tot_a_mfund = parseInt(document.getElementById('tot_a_mfund').value) || 0; var tot_a_ulip = parseInt(document.getElementById('tot_a_ulip').value) || 0; var tot_a_ssAmt = parseInt(document.getElementById('tot_a_ssAmt').value) || 0; var a_houseloan = parseInt(document.getElementById('a_houseloan').value) || 0; var a_childfees1 = parseInt(document.getElementById('a_childfees1').value) || 0; var a_childfees2 = parseInt(document.getElementById('a_childfees2').value) || 0; var a_others1 = parseInt(document.getElementById('a_others1').value) || 0; var a_others2 = parseInt(document.getElementById('a_others2').value) || 0; var a_pensionscheme = parseInt(document.getElementById('a_pensionscheme').value) || 0; var a_total = tot_a_ppf + tot_a_fd + tot_a_premium + tot_a_nsc + tot_a_mfund + tot_a_ulip + tot_a_ssAmt + a_houseloan + a_childfees1 + a_childfees2 + a_pensionscheme + a_others1 + a_others2; document.getElementById("a_total").value = a_total;//Actual Total
     };
     //Submit Method
     $scope.AddDetails = function () {
         var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional
         var rnttotal = $('#renttotal').val() || 0; if (rnttotal > 100000) { var rntpan = $('#rentalpan').val() || ''; var rntname = $('#landlord').val() || ''; if (rntname === '' || rntpan === '') { alert("Landlord Name & PAN Number is Required Please fill Details."); return false; }; };
         var loan = 0;
+
         if (act === "true") { loan = $('#a_amountofinterest').val() || 0; } else { loan = $('#p_amountofinterest').val() || 0; };
         if (loan > 200000) { if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); }; };
-        if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) { alert("Please Select Your Housing Loan Bank before enter housing loan interest"); return false; };
+        if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) {
+            alert("Please Select Your Housing Loan Bank before enter housing loan interest");
+            return false;
+        };
         var jsonObj = {};
         var TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
@@ -304,18 +277,23 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             jsonObj.landLordPan = $('#rentalpan').val() || ''; jsonObj.prevCompSalary = $('#p_salary').val() || 0; jsonObj.prevCompTds = $('#p_taxdeduct').val() || 0;
             jsonObj.child1Name = $('#txt_childname1').val() || ''; jsonObj.child2Name = $('#txt_childname2').val() || ''; jsonObj.others1Desc = $('#txt_others1').val() || '';
             jsonObj.others2Desc = $('#txt_others2').val() || ''; jsonObj.medicalPremiumParentsAge = 0; jsonObj.propertyAddress = $('#txt_addofproperty').val() || '';
-            jsonObj.propertyStatus = $('#cmb_statusofproperty').val() || ''; jsonObj.loanBank = $scope.bankName || ''; jsonObj.loanBankPan = $scope.bankPan;
+            jsonObj.propertyStatus = $('#cmb_statusofproperty').val() || '';
+            if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) { alert("Please Select Your Housing Loan Bank"); return false; }
+            else { jsonObj.loanBank = $scope.bankName; jsonObj.loanBankPan = $scope.bankPan; };
             jsonObj.loanAmount = $('#hloanAforesaid').val() || 0; jsonObj.loanDate = $('#loantakendate').val() || ''; jsonObj.purpose = $('#cmb_purposeofloan').val() || '';
             jsonObj.constructionCompDate = $('#datecontcomplete').val() || ''; jsonObj.possessionDate = $('#datepsproperty').val() || ''; jsonObj.ownership = $('#cmb_ownership').val() || '';
             jsonObj.jointOwnerName = $('#txt_jointownername').val() || ''; jsonObj.jointOwnerRelation = $('#txt_jointownerrelationship').val() || '';
             jsonObj.jointOwnerShare = $('#txt_jointownershare').val() || 0; jsonObj.rentalIncomePerMonth = $('#rentalincome').val() || 0;
             jsonObj.otherIncomeDesc = $('#txt_otherincometext').val() || '';
-            jsonObj.updateDate = new Date();
+            jsonObj.updateUserId = $('#myEmpUnqId').val(); jsonObj.updateDate = new Date();
             if (jsonObj.actualFlag === true) {
                 jsonObj.totalPpfAmt = $('#tot_a_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_a_fd').val() || 0;
                 jsonObj.totalInsurancePremium = $('#tot_a_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_a_nsc').val() || 0;
                 jsonObj.totalMutualFund = $('#tot_a_mfund').val() || 0; jsonObj.totalUlip = $('#tot_a_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_a_ssAmt').val() || 0;
-                jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0;
+
+                jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0;
+
+                jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0;
                 jsonObj.tuitionFeeChild2 = $('#a_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#a_pensionscheme').val() || 0;
                 jsonObj.others1Amount = $('#a_others1').val() || 0; jsonObj.others2Amount = $('#a_others2').val() || 0;
                 jsonObj.rajivGandhiEquity = $('#a_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#a_mediclaimpremiumforfamily').val() || 0;
@@ -390,7 +368,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
             return jsonObj;
         };
-        debugger;
+
         var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true); tax.setRequestHeader('Content-type', 'application/json');
         tax.onreadystatechange = function () {
             if (tax.readyState === 4 && tax.status === 200) {
@@ -399,7 +377,137 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 $scope.ResetView();
             }
             else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
-                debugger;
+
+                var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; };
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + er + "</strong></div>"; $('#MessageBox').show();
+            };
+        }; tax.send(TableData);
+    };
+    //Submit Edit Details by Finance
+    $scope.UpdateDetailsFin = function () {
+
+        var ecode = $('#eCode').val() || 0;
+        if (ecode === 0) {
+            alert("Records not Updated");
+            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record not Updated.</strong></div>"; $('#MessageBox').show();
+            return false;
+        };
+        var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional
+        var rnttotal = $('#renttotal').val() || 0; if (rnttotal > 100000) { var rntpan = $('#rentalpan').val() || ''; var rntname = $('#landlord').val() || ''; if (rntname === '' || rntpan === '') { alert("Landlord Name & PAN Number is Required Please fill Details."); return false; }; };
+        var loan = 0;
+
+        if (act === "true") { loan = $('#a_amountofinterest').val() || 0; } else { loan = $('#p_amountofinterest').val() || 0; };
+        if (loan > 200000) { if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); }; };
+        if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) {
+            alert("Please Select Your Housing Loan Bank before enter housing loan interest");
+            return false;
+        };
+        var jsonObj = {};
+        var TableData = storeTblValues();
+        TableData = JSON.stringify(TableData);
+        function storeTblValues() {
+            jsonObj.yearMonth = $('#hidyearMonth').val(); jsonObj.empUnqId = ecode; jsonObj.actualFlag = $('#hidactualFlag').val();
+            jsonObj.totalRentPaid = $('#renttotal').val() || 0; jsonObj.rentHouseAddress = $('#presentAddress').val() || 0; jsonObj.landLordName = $('#landlord').val() || '';
+            jsonObj.landLordPan = $('#rentalpan').val() || ''; jsonObj.prevCompSalary = $('#p_salary').val() || 0; jsonObj.prevCompTds = $('#p_taxdeduct').val() || 0;
+            jsonObj.child1Name = $('#txt_childname1').val() || ''; jsonObj.child2Name = $('#txt_childname2').val() || ''; jsonObj.others1Desc = $('#txt_others1').val() || '';
+            jsonObj.others2Desc = $('#txt_others2').val() || ''; jsonObj.medicalPremiumParentsAge = 0; jsonObj.propertyAddress = $('#txt_addofproperty').val() || '';
+            jsonObj.propertyStatus = $('#cmb_statusofproperty').val() || '';
+
+            if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) { alert("Please Select Your Housing Loan Bank"); return false; }
+            else { jsonObj.loanBank = $scope.bankName; jsonObj.loanBankPan = $scope.bankPan; };
+
+            jsonObj.loanAmount = $('#hloanAforesaid').val() || 0; jsonObj.loanDate = $('#loantakendate').val() || ''; jsonObj.purpose = $('#cmb_purposeofloan').val() || '';
+            jsonObj.constructionCompDate = $('#datecontcomplete').val() || ''; jsonObj.possessionDate = $('#datepsproperty').val() || ''; jsonObj.ownership = $('#cmb_ownership').val() || '';
+            jsonObj.jointOwnerName = $('#txt_jointownername').val() || ''; jsonObj.jointOwnerRelation = $('#txt_jointownerrelationship').val() || '';
+            jsonObj.jointOwnerShare = $('#txt_jointownershare').val() || 0; jsonObj.rentalIncomePerMonth = $('#rentalincome').val() || 0;
+            jsonObj.otherIncomeDesc = $('#txt_otherincometext').val() || '';
+            jsonObj.updateUserId = $('#myEmpUnqId').val(); jsonObj.updateDate = new Date();
+            if (jsonObj.actualFlag === true) {
+                jsonObj.totalPpfAmt = $('#tot_a_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_a_fd').val() || 0;
+                jsonObj.totalInsurancePremium = $('#tot_a_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_a_nsc').val() || 0;
+                jsonObj.totalMutualFund = $('#tot_a_mfund').val() || 0; jsonObj.totalUlip = $('#tot_a_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_a_ssAmt').val() || 0;
+                jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0;
+                jsonObj.tuitionFeeChild2 = $('#a_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#a_pensionscheme').val() || 0;
+                jsonObj.others1Amount = $('#a_others1').val() || 0; jsonObj.others2Amount = $('#a_others2').val() || 0;
+                jsonObj.rajivGandhiEquity = $('#a_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#a_mediclaimpremiumforfamily').val() || 0;
+                jsonObj.medicalPremiumParents = $('#a_mediclaimpremiumforparents').val() || 0; jsonObj.medicalPreventiveHealthCheckup = $('#a_mediclaimpremiumforhealth').val() || 0;
+                jsonObj.educationLoanInterest = $('#a_eduloan').val() || 0; jsonObj.physicalDisability = $('#a_disablity').val() || 0; jsonObj.severeDisability = $('#a_severedisablity').val() || 0;
+                jsonObj.nationalPensionScheme = $('#a_NPS').val() || 0; jsonObj.interestOnLoan = $('#a_amountofinterest').val() || 0;
+                jsonObj.interestPreConstruction = $('#a_amountofinterestasperit').val() || 0; jsonObj.otherInterest = $('#a_optionalinterest').val() || 0;
+                jsonObj.otherIncomeAmount = $('#a_optionalotherincome').val() || 0;
+            } else {
+                jsonObj.totalPpfAmt = $('#tot_p_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_p_fd').val() || 0;
+                jsonObj.totalInsurancePremium = $('#tot_p_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_p_nsc').val() || 0;
+                jsonObj.totalMutualFund = $('#tot_p_mfund').val() || 0; jsonObj.totalUlip = $('#tot_p_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_p_ssAmt').val() || 0;
+                jsonObj.houseLoanPrincipal = $('#p_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#p_childfees1').val() || 0;
+                jsonObj.tuitionFeeChild2 = $('#p_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#p_pensionscheme').val() || 0;
+                jsonObj.others1Amount = $('#p_others1').val() || 0; jsonObj.others2Amount = $('#p_others2').val() || 0;
+                jsonObj.rajivGandhiEquity = $('#p_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#p_mediclaimpremiumforfamily').val() || 0;
+                jsonObj.medicalPremiumParents = $('#p_mediclaimpremiumforparents').val() || 0; jsonObj.medicalPreventiveHealthCheckup = $('#p_mediclaimpremiumforhealth').val() || 0;
+                jsonObj.educationLoanInterest = $('#p_eduloan').val() || 0; jsonObj.physicalDisability = $('#p_disablity').val() || 0; jsonObj.severeDisability = $('#p_severedisablity').val() || 0;
+                jsonObj.nationalPensionScheme = $('#p_NPS').val() || 0; jsonObj.interestOnLoan = $('#p_amountofinterest').val() || 0;
+                jsonObj.interestPreConstruction = $('#p_amountofinterestasperit').val() || 0; jsonObj.otherInterest = $('#p_optionalinterest').val() || 0;
+                jsonObj.otherIncomeAmount = $('#p_optionalotherincome').val() || 0;
+            };
+            //Add Details Table Records on actual flag wise
+            var RentData = new Array(); var PPFData = new Array(); var FDData = new Array(); var PremiumData = new Array(); var NSCData = new Array(); var MutualFund = new Array();
+            var ULIPData = new Array(); var SSData = new Array();
+            var companyaccomodation = $('#hidCompanyaccoFlag').val();
+            if (jsonObj.actualFlag === "true") {
+                if (companyaccomodation === "false") {
+                    $('#renttable tr').each(function (row, tr) {
+                        if (row === 2) {
+                            RentData[row] = {
+                                "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "empUnqIdYear": ecode + $('#hidyearMonth').val(),
+                                "april": $(tr).find('td:eq(1) input[type="text"]').val() || "0", "may": $(tr).find('td:eq(2) input[type="text"]').val() || "0", "june": $(tr).find('td:eq(3) input[type="text"]').val() || "0", "july": $(tr).find('td:eq(4) input[type="text"]').val() || "0",
+                                "august": $(tr).find('td:eq(5) input[type="text"]').val() || "0", "september": $(tr).find('td:eq(6) input[type="text"]').val() || "0", "october": $(tr).find('td:eq(7) input[type="text"]').val() || "0", "november": $(tr).find('td:eq(8) input[type="text"]').val() || "0",
+                                "december": $(tr).find('td:eq(9) input[type="text"]').val() || "0", "january": $(tr).find('td:eq(10) input[type="text"]').val() || "0", "february": $(tr).find('td:eq(11) input[type="text"]').val() || "0", "march": $(tr).find('td:eq(12) input[type="text"]').val() || "0"
+                            }
+                        };
+                    }); RentData.shift();
+                }
+                $('#aliasTable4 tr').each(function (row, tr) { if (row > 1) { PPFData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "ppfAcNo": $(tr).find('td:eq(0)').text(), "ppfDepositeDate": $(tr).find('td:eq(1)').text(), "ppfAmt": $(tr).find('td:eq(3)').text() } }; }); PPFData.shift();
+                $('#aliasTable5 tr').each(function (row, tr) { if (row > 1) { FDData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "bankAccountNo": $(tr).find('td:eq(0)').text(), "depositDate": $(tr).find('td:eq(1)').text(), "depositAmount": $(tr).find('td:eq(3)').text() } }; }); FDData.shift();
+                $('#aliasTable tr').each(function (row, tr) { if (row > 1) { PremiumData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "policyNo": $(tr).find('td:eq(0)').text(), "policyDate": $(tr).find('td:eq(1)').text(), "sumInsured": $(tr).find('td:eq(2)').text(), "annualPremiumAmount": $(tr).find('td:eq(4)').text(), "premiumPaidDate": $(tr).find('td:eq(5)').text(), "premiumDueDate": $(tr).find('td:eq(6)').text() } }; }); PremiumData.shift();
+                $('#aliasTable2 tr').each(function (row, tr) { if (row > 1) { NSCData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "nscNumber": $(tr).find('td:eq(0)').text(), "nscPurchaseDate": $(tr).find('td:eq(1)').text(), "nscAmount": $(tr).find('td:eq(3)').text(), "nscInterestAmount": $(tr).find('td:eq(4)').text() } }; }); NSCData.shift();
+                $('#aliasTable1 tr').each(function (row, tr) { if (row > 1) { MutualFund[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "mutualFundName": $(tr).find('td:eq(0)').text(), "mutualFundDate": $(tr).find('td:eq(1)').text(), "mutualFundAmount": $(tr).find('td:eq(3)').text() } }; }); MutualFund.shift();
+                $('#aliasTable6 tr').each(function (row, tr) { if (row > 1) { ULIPData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "ulipNo": $(tr).find('td:eq(0)').text(), "ulipDate": $(tr).find('td:eq(1)').text(), "ulipAmount": $(tr).find('td:eq(3)').text() } }; }); ULIPData.shift();
+                $('#aliasTable7 tr').each(function (row, tr) { if (row > 1) { SSData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "sukanyaName": $(tr).find('td:eq(0)').text(), "sukanyaDate": $(tr).find('td:eq(1)').text(), "sukanyaAmount": $(tr).find('td:eq(3)').text() } }; }); SSData.shift();
+            } else {
+                if (companyaccomodation === "false") {
+                    $('#renttable tr').each(function (row, tr) {
+                        if (row === 1) {
+                            RentData[row] = {
+                                "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "empUnqIdYear": ecode + $('#hidyearMonth').val(),
+                                "april": $(tr).find('td:eq(1) input[type="text"]').val() || "0", "may": $(tr).find('td:eq(2) input[type="text"]').val() || "0", "june": $(tr).find('td:eq(3) input[type="text"]').val() || "0", "july": $(tr).find('td:eq(4) input[type="text"]').val() || "0",
+                                "august": $(tr).find('td:eq(5) input[type="text"]').val() || "0", "september": $(tr).find('td:eq(6) input[type="text"]').val() || "0", "october": $(tr).find('td:eq(7) input[type="text"]').val() || "0", "november": $(tr).find('td:eq(8) input[type="text"]').val() || "0",
+                                "december": $(tr).find('td:eq(9) input[type="text"]').val() || "0", "january": $(tr).find('td:eq(10) input[type="text"]').val() || "0", "february": $(tr).find('td:eq(11) input[type="text"]').val() || "0", "march": $(tr).find('td:eq(12) input[type="text"]').val() || "0"
+                            }
+                        };
+                    }); RentData.shift();
+                }
+                $('#aliasTable4 tr').each(function (row, tr) { if (row > 1) { PPFData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "ppfAcNo": $(tr).find('td:eq(0)').text(), "ppfDepositeDate": $(tr).find('td:eq(1)').text(), "ppfAmt": $(tr).find('td:eq(2)').text() } }; }); PPFData.shift();
+                $('#aliasTable5 tr').each(function (row, tr) { if (row > 1) { FDData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "bankAccountNo": $(tr).find('td:eq(0)').text(), "depositDate": $(tr).find('td:eq(1)').text(), "depositAmount": $(tr).find('td:eq(2)').text() } }; }); FDData.shift();
+                $('#aliasTable tr').each(function (row, tr) { if (row > 1) { PremiumData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "policyNo": $(tr).find('td:eq(0)').text(), "policyDate": $(tr).find('td:eq(1)').text(), "sumInsured": $(tr).find('td:eq(2)').text(), "annualPremiumAmount": $(tr).find('td:eq(3)').text(), "premiumPaidDate": $(tr).find('td:eq(5)').text(), "premiumDueDate": $(tr).find('td:eq(6)').text() } }; }); PremiumData.shift();
+                $('#aliasTable2 tr').each(function (row, tr) { if (row > 1) { NSCData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "nscNumber": $(tr).find('td:eq(0)').text(), "nscPurchaseDate": $(tr).find('td:eq(1)').text(), "nscAmount": $(tr).find('td:eq(2)').text(), "nscInterestAmount": 0 } }; }); NSCData.shift();
+                $('#aliasTable1 tr').each(function (row, tr) { if (row > 1) { MutualFund[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "mutualFundName": $(tr).find('td:eq(0)').text(), "mutualFundDate": $(tr).find('td:eq(1)').text(), "mutualFundAmount": $(tr).find('td:eq(2)').text() } }; }); MutualFund.shift();
+                $('#aliasTable6 tr').each(function (row, tr) { if (row > 1) { ULIPData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "ulipNo": $(tr).find('td:eq(0)').text(), "ulipDate": $(tr).find('td:eq(1)').text(), "ulipAmount": $(tr).find('td:eq(2)').text() } }; }); ULIPData.shift();
+                $('#aliasTable7 tr').each(function (row, tr) { if (row > 1) { SSData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "sukanyaName": $(tr).find('td:eq(0)').text(), "sukanyaDate": $(tr).find('td:eq(1)').text(), "sukanyaAmount": $(tr).find('td:eq(2)').text() } }; }); SSData.shift();
+            };
+            if (RentData.length > 1) { RentData.shift(); }; if (PPFData.length > 1) { PPFData.shift(); }; if (FDData.length > 1) { FDData.shift(); };
+            if (PremiumData.length > 1) { PremiumData.shift(); }; if (NSCData.length > 1) { NSCData.shift(); }; if (MutualFund.length > 1) { MutualFund.shift(); };
+            if (ULIPData.length > 1) { ULIPData.shift(); }; if (SSData.length > 1) { SSData.shift(); };
+            jsonObj.rentDetails = RentData; jsonObj.ppfDetails = PPFData; jsonObj.bankDeposits = FDData; jsonObj.insuranceDetails = PremiumData; jsonObj.nscDetails = NSCData;
+            jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
+            return jsonObj;
+        };
+        var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true); tax.setRequestHeader('Content-type', 'application/json');
+        tax.onreadystatechange = function () {
+            if (tax.readyState === 4 && tax.status === 200) {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Your Tax Declaration Details Saved Successfully.</strong></div>"; $('#MessageBox').show();
+                alert("Your Tax Declaration Details Saved Successfully.");
+                $scope.ResetView();
+            } else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
                 var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; };
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + er + "</strong></div>"; $('#MessageBox').show();
             };
@@ -413,7 +521,6 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 var json = JSON.parse(gac.responseText); $scope.configdata = json; $scope.$digest();
                 var itd = new XMLHttpRequest(); itd.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarations?yearMonth=' + $scope.configdata.yearMonth, true); itd.setRequestHeader('Accept', 'application/json'); itd.onreadystatechange = function () {
                     if (itd.readyState === 4 && itd.status === 200) {
-                        debugger;
                         var json = JSON.parse(itd.responseText); $scope.itddata = json; var it = new Array; it = json; var myArray = [];
                         var dtStart = it[0].startDt.substring(0, it[0].startDt.indexOf("T")); dtStart = new Date(dtStart); dtStart = "0" + dtStart.getDate() + '.' + '0' + (dtStart.getMonth() + 1) + '.' + dtStart.getFullYear();
                         var dtEnd = it[0].endDt.substring(0, it[0].endDt.indexOf("T")); dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear();
@@ -437,7 +544,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability;
                             myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = "";
                             myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = "";
-                            myArray[i]["BankName"] = it[i].bankName;
+                            myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, "");
                             var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; };
                             if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = "";
                             myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = "";

@@ -17,9 +17,12 @@
                 var reqs = new XMLHttpRequest(); reqs.open('POST', '/Login/Users', true); reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-                        if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; } else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; } else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Report/PerformanceReport"; }//IS Releaser/IS User/Another User
-                        if ($scope.Udata[0]["isReleaser"] === true && $scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; } else if ($scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "GatePass/GatePassRelease"; }//IS Releaser /IS GPReleaser
-                        if ($scope.Udata[0]["isSecUser"] === true) { window.location.href = "GatePass/GatePassInOut"; }//IS Security USer
+                        if ($scope.Udata[0]["isReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
+                        else if ($scope.Udata[0]["wrkGrp"] === "COMP") { window.location.href = "Home/Index"; }
+                        else if ($scope.Udata[0]["wrkGrp"] !== "COMP") { window.location.href = "Report/PerformanceReport"; };      //IS Releaser/IS User/Another User
+                        if ($scope.Udata[0]["isReleaser"] === true && $scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "ReleaseLeave/LeaveRelease"; }
+                        else if ($scope.Udata[0]["isGpReleaser"] === true) { window.location.href = "GatePass/GatePassRelease"; };  //IS Releaser /IS GPReleaser
+                        if ($scope.Udata[0]["isSecUser"] === true) { window.location.href = "GatePass/GatePassInOut"; };            //IS Security USer
                     }
                 }; reqs.send(jsonObj1);
             }

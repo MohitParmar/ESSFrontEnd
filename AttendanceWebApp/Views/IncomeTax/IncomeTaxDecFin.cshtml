@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "IncomeTaxDeclaration";
+    ViewBag.Title = "IncomeTaxDecFin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -107,13 +107,31 @@
     <div class="container">
         <input type="hidden" value="" id="hidyearMonth" />
         <input type="hidden" value="" id="hidactualFlag" />
-        <input type="hidden" value="" id="hidcloseFlag" />
         <input type="hidden" value="" id="hidCompanyaccoFlag" />
         <div id="MessageBox" class="table-responsive"></div>
-        <div style="text-align:center;">
-            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
-        </div>
         <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Search Employee</strong></div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td style="text-align:right;"><label>Enter Employee Code :</label></td>
+                                <td><input class="form-control" type="text" id="eCode" /></td>
+                                <td>
+                                    <button type="button" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                        <i class="icon-search"></i>Search
+                                    </button>
+                                    <input type="reset" id="BtnCancel" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                                    <div style="text-align:center;">
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>INCOME TAX DECLARATION</strong></div>
@@ -129,9 +147,7 @@
                             <li><a data-toggle="tab" href="#menu7">PART : F</a></li>
                             <li><a data-toggle="tab" href="#menu8">PART : G</a></li>
                         </ul>
-                        <div class="tab-content table-responsive" id="maindiv">
-                            <div ng-init="GetActualInfo()" hidden="hidden"></div>
-                            @*<div ng-init="GetTaxDeclaration()" hidden="hidden"></div>*@
+                        <div class="tab-content table-responsive">
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
                                 <h3>Instructions</h3>
@@ -886,8 +902,8 @@
                                         <tr>
                                             <td style="text-align:center;"><p>11</p></td>
                                             <td><p>Contribution to Notified Pension Scheme</p></td>
-                                            <td><input type="text" class="form-control" id="p_pensionscheme" placeholder="0" ng-model="New.p_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly/></td>
-                                            <td><input type="text" class="form-control" id="a_pensionscheme" placeholder="0" ng-model="New.a_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly/></td>
+                                            <td><input type="text" class="form-control" id="p_pensionscheme" placeholder="0" ng-model="New.p_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly /></td>
+                                            <td><input type="text" class="form-control" id="a_pensionscheme" placeholder="0" ng-model="New.a_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly /></td>
                                         </tr>
                                         @* Others *@
                                         <tr>
@@ -1212,7 +1228,7 @@
                         </div>
                         <hr />
                         <br />
-                        <div style="float:right;"><button type="submit" id="btnsave" class="btn btn-success" ng-click="AddDetails()"><i class="icon-save"></i> Submit</button></div>
+                        <div style="float:right;"><button type="submit" id="btnsave" class="btn btn-success" ng-click="UpdateDetailsFin()"><i class="icon-save"></i> Submit</button></div>
                     </div>
                 </div>
             </div>
