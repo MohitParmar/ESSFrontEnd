@@ -2,3 +2,459 @@
     ViewBag.Title = "ITDeclarationSummary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/Controller/IncomeTaxCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="IncomeTaxController">
+    <div class="container">
+        <input type="hidden" value="" id="hidyearMonth" />
+        <input type="hidden" value="" id="hidactualFlag" />
+        <input type="hidden" value="" id="hidcloseFlag" />
+        <input type="hidden" value="" id="hidCompanyaccoFlag" />
+        <div style="text-align:center;">
+            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>INCOME TAX DECLARATION</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetITDeclarationSummary()" class="table-responsive">
+                            <table class="table table-bordered table-condensed table-responsive table-hover">
+                                <tbody dir-paginate="d in UserInfo|itemsPerPage:1">
+                                    <tr>
+                                        <td>Name : </td>
+                                        <td>{{d.empName}}</td>
+                                        <th><b>Employee ID : </b></th>
+                                        <td>{{d.empUnqId}} / {{d.sapId}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PAN No. :</td>
+                                        <td>{{d.idPrf2No}}</td>
+                                        <th><b>Contact No / Email :</b></th>
+                                        <td>{{d.contactNo}} , {{d.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Designation : </td>
+                                        <td>{{d.desgName}}</td>
+                                        <th><b>DOJ : </b></th>
+                                        <td>{{d.joinDt | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Permanent Address : </td>
+                                        <td>{{d.perAdd1}} {{d.perAdd2}} {{d.perCity}} {{d.perState}} {{d.perPin}}</td>
+                                        <th><b>Location :</b></th>
+                                        <td>{{d.unitName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table class="table table-bordered table-condensed table-responsive table-hover">
+                                                <tbody dir-paginate="s in taxdata|itemsPerPage:1">
+                                                    <tr>
+                                                        <th>A</th>
+                                                        <th>Rent Paid Per Month</th>
+                                                        <th>Total :</th>
+                                                        <th style="text-align:right;">{{s.totalRentPaid}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable8" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">April</th>
+                                                                        <th style="text-align:center;">May</th>
+                                                                        <th style="text-align:center;">June</th>
+                                                                        <th style="text-align:center;">July</th>
+                                                                        <th style="text-align:center;">August</th>
+                                                                        <th style="text-align:center;">September</th>
+                                                                        <th style="text-align:center;">Octomber</th>
+                                                                        <th style="text-align:center;">November</th>
+                                                                        <th style="text-align:center;">December</th>
+                                                                        <th style="text-align:center;">January</th>
+                                                                        <th style="text-align:center;">February</th>
+                                                                        <th style="text-align:center;">March</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td colspan="3"><b>Complete Address of Rented house : </b>{{d.preAdd1}} {{d.preAdd2}} {{d.preAdd3}} {{d.preAdd4}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Name of Landlord : </td>
+                                                        <td colspan="2">{{s.landLordName}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>PAN of Landlord is mandtory (if rent is more than Rs. 8333/- P.M.)</td>
+                                                        <td colspan="2">{{s.landLordPan}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th rowspan="3">B</th>
+                                                        <th colspan="3">If joined after 01.04.18, attach Form 16 of certificate of taxable salary for F.Y.</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>:-Taxable salary of previous Co. from April till joining to Jindal</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.prevCompSalary}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>:- Tax deducted by previous co. on above</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.prevCompTds}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>C</th>
+                                                        <th colspan="3">Investments U/S 80C, 80CCC, 80CCD capped at Rs 1.50 Lac</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Employee Contribution to PF</td>
+                                                        <td colspan="2">Will be considered by system</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">2</td>
+                                                        <td>Public Provident Fund</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalPpfAmt}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable4" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Account No.</th>
+                                                                        <th style="text-align:center;">Deposited Date</th>
+                                                                        <th style="text-align:center;">Pro.PPF Amount</th>
+                                                                        <th style="text-align:center;">Act.PPF Amount</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">3</td>
+                                                        <td>5 year tax savings deposit with Bank</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalBankDepositAmount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable5" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Account No.</th>
+                                                                        <th style="text-align:center;">Deposited Date</th>
+                                                                        <th style="text-align:center;">Pro.Amount</th>
+                                                                        <th style="text-align:center;">Act.Amount</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">4</td>
+                                                        <td>Insurance Premium</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalInsurancePremium}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Policy No.</th>
+                                                                        <th style="text-align:center;">Policy Date</th>
+                                                                        <th style="text-align:center;">Sum Insured</th>
+                                                                        <th style="text-align:center;">Pro. Annual Premium</th>
+                                                                        <th style="text-align:center;">Act. Annual Premium</th>
+                                                                        <th style="text-align:center;">Actual Date</th>
+                                                                        <th style="text-align:center;">Due Date</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">5</td>
+                                                        <td>NSC</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalNscAmount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable2" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">NSC NO.</th>
+                                                                        <th style="text-align:center;">DATE OF PURCHASE</th>
+                                                                        <th style="text-align:center;">PROVISIONAL AMOUNT</th>
+                                                                        <th style="text-align:center;">ACTUAL AMOUNT</th>
+                                                                        <th style="text-align:center;">INTEREST AMOUNT</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">6</td>
+                                                        <td>Tax Saving Mutual Fund</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalMutualFund}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable1" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Mutual fund name</th>
+                                                                        <th style="text-align:center;">Date</th>
+                                                                        <th style="text-align:center;">Provisional Amount</th>
+                                                                        <th style="text-align:center;">Actual Amount</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">7</td>
+                                                        <td>ULIP</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalUlip}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable6" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Account No.</th>
+                                                                        <th style="text-align:center;">Date</th>
+                                                                        <th style="text-align:center;">Pro.Amount</th>
+                                                                        <th style="text-align:center;">Act.Amount</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">8</td>
+                                                        <td>Sukanya Smridhi</td>
+                                                        <td>Total</td>
+                                                        <td style="text-align:right;">{{s.totalSukanya}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <table id="aliasTable7" class="data-table table table-hover table-bordered table-condensed table-striped table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">Account Name</th>
+                                                                        <th style="text-align:center;">Date</th>
+                                                                        <th style="text-align:center;">Pro.Amount</th>
+                                                                        <th style="text-align:center;">Act.Amount</th>
+                                                                        <th style="text-align:center;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody><tr></tr></tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Housing Loan Repayment Principal amount only</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.houseLoanPrincipal}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">10</td>
+                                                        <td>Tuition Fees  paid to schhol / college - Child 1</td>
+                                                        <td>Name : {{s.child1Name}}</td>
+                                                        <td style="text-align:right;">{{s.tuitionFeeChild1}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tuition Fees  paid to schhol / college - Child 2</td>
+                                                        <td>Name : {{s.child2Name}}</td>
+                                                        <td style="text-align:right;">{{s.tuitionFeeChild2}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>11</td>
+                                                        <td>Contribution to Notified Pension Scheme</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.notifiedPensionScheme}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">12</td>
+                                                        <td>Others, (Please specify if any)</td>
+                                                        <td>{{s.others1Desc}}</td>
+                                                        <td style="text-align:right;">{{s.others1Amount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Others, (Please specify if any)</td>
+                                                        <td>{{s.others2Desc}}</td>
+                                                        <td style="text-align:right;">{{s.others2Amount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>D</th>
+                                                        <th colspan="3">OTHER PERMITTED DEDUCTIONS</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Rajiv Gandhi  Equity Scheme</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.rajivGandhiEquity}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="4">2</td>
+                                                        <td colspan="3">Mediclaim premium paid other than cash U/S 80D</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>:- for self, spouse & dependent children</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.medicalPremiumSelf}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>:- For parents ( please mention the age also)</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.medicalPremiumParents}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>:- Payment for Preventive Health Checkup</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.medicalPreventiveHealthCheckup}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>80E - Repayment of Interest against Educational Loan for higher education of self, spouse % children</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.educationLoanInterest}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">4</td>
+                                                        <td>80U - Permanent Physical Disability</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.physicalDisability}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>80U - Severe Disability</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.severeDisability}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>National Pension Scheme (NPS)</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.nationalPensionScheme}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>E</th>
+                                                        <th colspan="3">Exemptions under Section 24</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Address of Property Purchased / Contructed</td>
+                                                        <td colspan="2">{{s.propertyAddress}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Status of Property (Self Occupied / Letout / Vacant)</td>
+                                                        <td colspan="2">{{s.propertyStatus}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Housing Loan Taken From (Bank Name)</td>
+                                                        <td colspan="2">{{s.loanBank}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Aforesaid Housing Laon Amount</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.loanAmount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Date on Which Loan Taken</td>
+                                                        <td colspan="2">{{s.loanDate}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Purpose of Loan (Construction / Purchase / Repairs)</td>
+                                                        <td colspan="2">{{s.purpose}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Date on Which Contruction is / will be Completed</td>
+                                                        <td colspan="2">{{s.constructionCompDate}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Date of Possession of Property</td>
+                                                        <td colspan="2">{{s.possessionDate}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Ownership (Joint or Sole)</td>
+                                                        <td colspan="2">{{s.ownership}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="4">10</td>
+                                                        <td colspan="3">If Joint Ownership</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Name of Joint Owner(s)</td>
+                                                        <td colspan="2">{{s.jointOwnerName}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Relationship with Joint Owner(s)</td>
+                                                        <td colspan="2">{{s.jointOwnerRelation}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Share of Joint Owner(s) in Property</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.jointOwnerShare}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>11</td>
+                                                        <td>Rental Income for FY 2018-19 (If house is given on rent)</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.rentalIncomePerMonth}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="3">12</td>
+                                                        <td colspan="3">Interest on Housing Loan</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Amount of Interest for the F.Y. 2018-2019</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.interestOnLoan}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Amount of Interest for Pre-Contruction Period (as per I T Rule)</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.interestPreConstruction}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>F</td>
+                                                        <td colspan="3">Particulars of Income from other sources (optional)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Interest</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.otherInterest}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Other Incomes (specify)</td>
+                                                        <td colspan="2" style="text-align:right;">{{s.otherIncomeDesc}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

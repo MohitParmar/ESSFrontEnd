@@ -14,10 +14,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.CheckLoanInterest = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_amountofinterest").value; } else { limit = document.getElementById("p_amountofinterest").value; }; if (limit > 0) { var bank = $scope.bankName; if (bank === "" || bank === "undefined") { alert("Please Select your Housing Loan Bank First"); document.getElementById("p_amountofinterest").value = 0; }; if (limit > 200000) { alert("System will consider 2,00,000 Only.."); if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); } }; }; };
     $scope.calcRent = function () { var renttotal = storeTblValues(); function storeTblValues() { var renttotal = new Array(); $('#renttable tr').each(function (row, tr) { if (row > 0) { renttotal[row] = { "rentpm1": $(tr).find('td:eq(1) input[type="text"]').val(), "rentpm2": $(tr).find('td:eq(2) input[type="text"]').val(), "rentpm3": $(tr).find('td:eq(3) input[type="text"]').val(), "rentpm4": $(tr).find('td:eq(4) input[type="text"]').val(), "rentpm5": $(tr).find('td:eq(5) input[type="text"]').val(), "rentpm6": $(tr).find('td:eq(6) input[type="text"]').val(), "rentpm7": $(tr).find('td:eq(7) input[type="text"]').val(), "rentpm8": $(tr).find('td:eq(8) input[type="text"]').val(), "rentpm9": $(tr).find('td:eq(9) input[type="text"]').val(), "rentpm10": $(tr).find('td:eq(10) input[type="text"]').val(), "rentpm11": $(tr).find('td:eq(11) input[type="text"]').val(), "rentpm12": $(tr).find('td:eq(12) input[type="text"]').val() } } }); renttotal.shift(); return renttotal; }; if (renttotal.length > 0) { var rentPM = 0; var act = $('#hidactualFlag').val(); if (act === "true") { rentPM = (parseInt(renttotal[1].rentpm1) || 0) + (parseInt(renttotal[1].rentpm2) || 0) + (parseInt(renttotal[1].rentpm3) || 0) + (parseInt(renttotal[1].rentpm4) || 0) + (parseInt(renttotal[1].rentpm5) || 0) + (parseInt(renttotal[1].rentpm6) || 0) + (parseInt(renttotal[1].rentpm7) || 0) + (parseInt(renttotal[1].rentpm8) || 0) + (parseInt(renttotal[1].rentpm9) || 0) + (parseInt(renttotal[1].rentpm10) || 0) + (parseInt(renttotal[1].rentpm11) || 0) + (parseInt(renttotal[1].rentpm12) || 0); } else { rentPM = (parseInt(renttotal[0].rentpm1) || 0) + (parseInt(renttotal[0].rentpm2) || 0) + (parseInt(renttotal[0].rentpm3) || 0) + (parseInt(renttotal[0].rentpm4) || 0) + (parseInt(renttotal[0].rentpm5) || 0) + (parseInt(renttotal[0].rentpm6) || 0) + (parseInt(renttotal[0].rentpm7) || 0) + (parseInt(renttotal[0].rentpm8) || 0) + (parseInt(renttotal[0].rentpm9) || 0) + (parseInt(renttotal[0].rentpm10) || 0) + (parseInt(renttotal[0].rentpm11) || 0) + (parseInt(renttotal[0].rentpm12) || 0); }; document.getElementById("renttotal").value = rentPM; var landlord = $('#landlord').val(); var rentalpan = $('#rentalpan').val(); if (rentPM > 100000 && (landlord === '' || rentalpan === '')) { alert("Landlord Name & PAN Number is Required."); } }; };
     $scope.calmediclaim = function () { var act = $('#hidactualFlag').val(); var mediclaimpremiumforfamily = 0, mediclaimpremiumforparents = 0, mediclaimpremiumforhealth = 0; if (act === "true") { mediclaimpremiumforfamily = parseInt(document.getElementById('a_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('a_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('a_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_a_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; } else { mediclaimpremiumforfamily = parseInt(document.getElementById('p_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('p_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('p_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_p_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; }; };
-    $scope.Populateipmodel = function () { $('#model1').modal('show'); $scope.calPolicy(); }; $scope.Populatemfmodel = function () { $('#model2').modal('show'); $scope.calMFUND(); };
-    $scope.PopulateNSCpmodel = function () { $('#model3').modal('show'); $scope.calNSC(); }; $scope.Populateppfmodel = function () { $('#model4').modal('show'); $scope.calPPF(); };
-    $scope.PopulateFDModel = function () { $('#model5').modal('show'); $scope.calFD(); }; $scope.PopulateULIPModel = function () { $('#model6').modal('show'); $scope.calUlip(); };
-    $scope.PopulateSSModel = function () { $('#model7').modal('show'); $scope.calSS(); };    //POPUP MODELS
+    $scope.Populateipmodel = function () { $('#model1').modal('show'); $scope.calPolicy(); }; $scope.Populatemfmodel = function () { $('#model2').modal('show'); $scope.calMFUND(); }; $scope.PopulateNSCpmodel = function () { $('#model3').modal('show'); $scope.calNSC(); }; $scope.Populateppfmodel = function () { $('#model4').modal('show'); $scope.calPPF(); }; $scope.PopulateFDModel = function () { $('#model5').modal('show'); $scope.calFD(); }; $scope.PopulateULIPModel = function () { $('#model6').modal('show'); $scope.calUlip(); }; $scope.PopulateSSModel = function () { $('#model7').modal('show'); $scope.calSS(); };    //POPUP MODELS
     $scope.GetEmpInfo = function () { var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#eCode').val(), true); emp.setRequestHeader('Accept', 'application/json'); emp.onreadystatechange = function () { if (emp.readyState === 4) { var json1 = JSON.parse(emp.responseText); $scope.empdata = json1; $scope.$digest(); document.getElementById("btnSearch").disabled = true; $scope.GetActualInfo(); } else if (emp.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); }; }; emp.send(); };
     $scope.GetActualInfo = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth); $('#hidcloseFlag').val($scope.configdata.closeFlag); var clsflg = $scope.configdata.closeFlag; var ecode = $('#eCode').val() || 0; if (clsflg === true) { if (ecode === 0) { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); }; }; $scope.GetBankDetails(); $scope.GetTaxDeclaration(); }; }; req.send(); };//Get Actual Flag DetaiLS
     //Get TAX Declaration Details
@@ -559,6 +556,225 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     };
     //Get Bank Details
     $scope.GetBankDetails = function () { var pan = new XMLHttpRequest(); pan.open('GET', $scope._Conpath + 'TaxDeclaration/GetBankNames?flag=BC', true); pan.setRequestHeader('Accept', 'application/json'); pan.onreadystatechange = function () { if (pan.readyState === 4) { var json = JSON.parse(pan.responseText); $scope.bdata = json; $scope.$digest(); }; }; pan.send(); };
+    //Get Tax Declaration Summary
+    $scope.GetITDeclarationSummary = function () {
+        debugger;
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
+        //Get Address Details
+        var Udata1; var Uperdata2; var xy = {};
+        var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true); xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var json1 = JSON.parse(xhr.responseText); $scope.Udata = json1;
+                var per = new XMLHttpRequest(); per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=1', true);
+                per.setRequestHeader('Accept', 'application/json'); per.onreadystatechange = function () {
+                    if (per.readyState === 4 && per.status === 200) {
+                        var json3 = JSON.parse(per.responseText); $scope.Uperdata = json3; Uperdata2 = $scope.Uperdata; Udata1 = $scope.Udata;
+                        angular.merge(xy, Udata1, Uperdata2); $scope.UserInfo = xy; $scope.$digest();
+                        var companyacco = $scope.UserInfo[0].companyAcc; $('#hidCompanyaccoFlag').val(companyacco);
+                    };
+                }; per.send();
+            };
+        }; xhr.send();
+        //Get Tax Declaration Details
+        var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json');
+        req.onreadystatechange = function () {
+            if (req.readyState === 4) {
+                var json4 = JSON.parse(req.responseText); $scope.configdata = json4; $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth);
+                var act = $('#hidactualFlag').val(); var YearMonth = $('#hidyearMonth').val();
+                var rentDetails = new Array(); var ppfDetails = new Array(); var bankDeposits = new Array(); var insuranceDetails = new Array(); var nscDetails = new Array(); var mutualFundDetails = new Array(); var ulipDetails = new Array(); var sukanyaDetails = new Array();
+                var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclaration?empUnqId=' + $('#myEmpUnqId').val() + '&yearMonth=' + $('#hidyearMonth').val() + '&actualFlag=' + $('#hidactualFlag').val(), true);
+                xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () {
+                    if (xhr1.readyState === 4 && xhr1.status === 200) {
+                        var json2 = JSON.parse(xhr1.responseText); $scope.taxdata = json2; $scope.$digest();
+                        if ($scope.taxdata.length > 0) {
+                            rentDetails = $scope.taxdata[0].rentDetails; ppfDetails = $scope.taxdata[0].ppfDetails; bankDeposits = $scope.taxdata[0].bankDeposits; insuranceDetails = $scope.taxdata[0].insuranceDetails;
+                            nscDetails = $scope.taxdata[0].nscDetails; mutualFundDetails = $scope.taxdata[0].mutualFundDetails; ulipDetails = $scope.taxdata[0].ulipDetails;
+                            sukanyaDetails = $scope.taxdata[0].sukanyaDetails;
+                            //Details Table Rent
+                            for (var r = 0; r < rentDetails.length; r++) {
+                                var d_rent = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf1' value='" + rentDetails[r].april + "'>" + rentDetails[r].april + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].may + "'>" + rentDetails[r].may + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].june + "'>" + rentDetails[r].june + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].july + "'>" + rentDetails[r].july + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].august + "'>" + rentDetails[r].august + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].september + "'>" + rentDetails[r].september + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].october + "'>" + rentDetails[r].october + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].november + "'>" + rentDetails[r].november + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].december + "'>" + rentDetails[r].december + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].january + "'>" + rentDetails[r].january + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].february + "'>" + rentDetails[r].february + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].march + "'>" + rentDetails[r].march + "</td>";
+                                d_rent += "</tr>";
+                                var dtlrent = $(d_rent);
+                                $("#aliasTable8").append(dtlrent);
+                            };
+                            //Detail Table PPF
+                            for (var j = 0; j < ppfDetails.length; j++) {
+                                var d_ppf = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf1' value='" + ppfDetails[j].ppfAcNo + "'>" + ppfDetails[j].ppfAcNo + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" +
+                                    ppfDetails[j].ppfDepositeDate.substring(0, ppfDetails[j].ppfDepositeDate.indexOf("T")) + "'>" +
+                                    ppfDetails[j].ppfDepositeDate.substring(0, ppfDetails[j].ppfDepositeDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_ppf +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_ppf' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ppf' value='" + ppfDetails[j].ppfAmt + "'>" + ppfDetails[j].ppfAmt + "</td>";
+                                }
+                                else {
+                                    d_ppf +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_ppf' value='" + ppfDetails[j].ppfAmt + "'>" + ppfDetails[j].ppfAmt + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ppf' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_ppf += "</tr>";
+                                var dtlppf = $(d_ppf);
+                                $("#aliasTable4").append(dtlppf);
+                            };
+                            //Detail Table Insurance
+                            for (var i = 0; i < insuranceDetails.length; i++) {
+                                var d_insurance = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='i1' value='" + insuranceDetails[i].policyNo + "'>" + insuranceDetails[i].policyNo + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='i5' value='" +
+                                    insuranceDetails[i].policyDate.substring(0, insuranceDetails[i].policyDate.indexOf("T")) + "'>" +
+                                    insuranceDetails[i].policyDate.substring(0, insuranceDetails[i].policyDate.indexOf("T")) + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='i2' value='" + insuranceDetails[i].sumInsured + "'>" + insuranceDetails[i].sumInsured + "</td>";
+                                if (act === "true") {
+                                    d_insurance +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" +
+                                        insuranceDetails[i].annualPremiumAmount + "'>" + insuranceDetails[i].annualPremiumAmount + "</td>";
+                                }
+                                else {
+                                    d_insurance +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" +
+                                        insuranceDetails[i].annualPremiumAmount + "'>" + insuranceDetails[i].annualPremiumAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_insurance += "<td style='text-align:center;'><input type='hidden' name='i6' value='" +
+                                    insuranceDetails[i].premiumPaidDate.substring(0, insuranceDetails[i].premiumPaidDate.indexOf("T")) + "'>" +
+                                    insuranceDetails[i].premiumPaidDate.substring(0, insuranceDetails[i].premiumPaidDate.indexOf("T")) + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='i4' value='" +
+                                    insuranceDetails[i].premiumDueDate.substring(0, insuranceDetails[i].premiumDueDate.indexOf("T")) + "'>" +
+                                    insuranceDetails[i].premiumDueDate.substring(0, insuranceDetails[i].premiumDueDate.indexOf("T")) + "</td>";
+
+                                d_insurance += "</tr>"; var dtlinsurance = $(d_insurance);
+                                $("#aliasTable").append(dtlinsurance);
+                            };
+                            //Detail Table NSC
+                            for (var k = 0; k < nscDetails.length; k++) {
+                                var d_nsc = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='nsc1' value='" + nscDetails[k].nscNumber + "'>" + nscDetails[k].nscNumber + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='nsc2' value='" +
+                                    nscDetails[k].nscPurchaseDate.substring(0, nscDetails[k].nscPurchaseDate.indexOf("T")) + "'>" +
+                                    nscDetails[k].nscPurchaseDate.substring(0, nscDetails[k].nscPurchaseDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_nsc += "<td style='text-align:center;'><input type='hidden' name='p_nsc3' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_nsc3' value='" + nscDetails[k].nscAmount + "'>" + nscDetails[k].nscAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='i_nsc4 value='" +
+                                        nscDetails[k].nscInterestAmount + "'>" + nscDetails[k].nscInterestAmount + "</td>";
+                                }
+                                else {
+                                    d_nsc +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_nsc3' value='" + nscDetails[k].nscAmount + "'>" + nscDetails[k].nscAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_nsc3' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='i_nsc4 value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_nsc += "</tr>";
+                                var dtlnsc = $(d_nsc);
+                                $("#aliasTable2").append(dtlnsc);
+                            };
+                            //Detail Table Mutual Fund
+                            for (var l = 0; l < mutualFundDetails.length; l++) {
+                                var d_mf = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='mf1' value='" +
+                                    mutualFundDetails[l].mutualFundName + "'>" + mutualFundDetails[l].mutualFundName + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='mf4' value='" +
+                                    mutualFundDetails[l].mutualFundDate.substring(0, mutualFundDetails[l].mutualFundDate.indexOf("T")) + "'>" +
+                                    mutualFundDetails[l].mutualFundDate.substring(0, mutualFundDetails[l].mutualFundDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_mf += "<td style='text-align:center;'><input type='hidden' name='p_mf' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_mf' value='" +
+                                        mutualFundDetails[l].mutualFundAmount + "'>" + mutualFundDetails[l].mutualFundAmount + "</td>";
+                                }
+                                else {
+                                    d_mf +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_mf' value='" +
+                                        mutualFundDetails[l].mutualFundAmount + "'>" + mutualFundDetails[l].mutualFundAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_mf' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_mf += "</tr>";
+                                var dtlmf = $(d_mf);
+                                $("#aliasTable1").append(dtlmf);
+                            };
+                            //Detail Table Bank Deposits
+                            for (var f = 0; f < bankDeposits.length; f++) {
+                                var d_fd = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='txt_FDAccno' value='" + bankDeposits[f].bankAccountNo + "'>" + bankDeposits[f].bankAccountNo + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='fddate' value='" +
+                                    bankDeposits[f].depositDate.substring(0, bankDeposits[f].depositDate.indexOf("T")) + "'>" +
+                                    bankDeposits[f].depositDate.substring(0, bankDeposits[f].depositDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_fd += "<td style='text-align:center;'><input type='hidden' name='p_fd' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_fd' value='" +
+                                        bankDeposits[f].depositAmount + "'>" + bankDeposits[f].depositAmount + "</td>";
+                                }
+                                else {
+                                    d_fd += "<td style='text-align:center;'><input type='hidden' name='p_fd' value='" +
+                                        bankDeposits[f].depositAmount + "'>" + bankDeposits[f].depositAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_fd' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_fd += "</tr>";
+                                var dtlfd = $(d_fd);
+                                $("#aliasTable5").append(dtlfd);
+                            };
+                            //Detail Table ULIP
+                            for (var u = 0; u < ulipDetails.length; u++) {
+                                var d_ulip = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='txt_ulipAccno' value='" + ulipDetails[u].ulipNo + "'>" + ulipDetails[u].ulipNo + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ulipdate' value='" +
+                                    ulipDetails[u].ulipDate.substring(0, ulipDetails[u].ulipDate.indexOf("T")) + "'>" +
+                                    ulipDetails[u].ulipDate.substring(0, ulipDetails[u].ulipDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_ulip += "<td style='text-align:center;'><input type='hidden' name='p_ulip' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ulip' value='" + ulipDetails[u].ulipAmount + "'>" + ulipDetails[u].ulipAmount + "</td>";
+                                }
+                                else {
+                                    d_ulip += "<td style='text-align:center;'><input type='hidden' name='p_ulip' value='" + ulipDetails[u].ulipAmount + "'>" + ulipDetails[u].ulipAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ulip' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_ulip += "</tr>";
+                                var dtlulip = $(d_ulip);
+                                $("#aliasTable6").append(dtlulip);
+                            };
+                            //Detail Table Sukanya Samridhi
+                            for (var s = 0; s < sukanyaDetails.length; s++) {
+                                var d_ss = "<tr>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='txt_SSAccName' value='" +
+                                    sukanyaDetails[s].sukanyaName + "'>" + sukanyaDetails[s].sukanyaName + "</td>" +
+                                    "<td style='text-align:center;'><input type='hidden' name='ssdate' value='" +
+                                    sukanyaDetails[s].sukanyaDate.substring(0, sukanyaDetails[s].sukanyaDate.indexOf("T")) + "'>" +
+                                    sukanyaDetails[s].sukanyaDate.substring(0, sukanyaDetails[s].sukanyaDate.indexOf("T")) + "</td>";
+                                if (act === "true") {
+                                    d_ss += "<td style='text-align:center;'><input type='hidden' name='p_ssAmount' value='" + 0 + "'>" + 0 + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ssAmount' value='" + sukanyaDetails[s].sukanyaAmount + "'>" + sukanyaDetails[s].sukanyaAmount + "</td>";
+                                }
+                                else {
+                                    d_ss +=
+                                        "<td style='text-align:center;'><input type='hidden' name='p_ssAmount' value='" + sukanyaDetails[s].sukanyaAmount + "'>" + sukanyaDetails[s].sukanyaAmount + "</td>" +
+                                        "<td style='text-align:center;'><input type='hidden' name='a_ssAmount' value='" + 0 + "'>" + 0 + "</td>";
+                                };
+                                d_ss += "</tr>";
+                                var dtlss = $(d_ss);
+                                $("#aliasTable7").append(dtlss);
+                            };
+                        };
+                        $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
+                    };
+                }; xhr1.send();
+            };
+        }; req.send();
+    };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
     $scope.exportAllData = function (t) { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); var FileName = t + d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); $scope.JSONToCSVConvertor($scope.ITDInfo, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData; var CSV = ''; CSV += ReportTitle + '\r\n\n'; if (ShowLabel) { var row = ""; for (var index in arrData[0]) { row += index + ','; }; row = row.slice(0, -1); CSV += row + '\r\n'; }; for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) { row += '"' + arrData[i][index] + '",'; } row.slice(0, row.length - 1); CSV += row + '\r\n'; }; if (CSV === '') { alert("Invalid data"); return; }; var fileName = ReportTitle.replace(/ /g, "_"); var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link); };
