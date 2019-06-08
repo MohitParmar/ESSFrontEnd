@@ -150,11 +150,104 @@
                         <div class="tab-content table-responsive">
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
-                                <h3>Instructions</h3>
-                                <p>
-                                    I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
-                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
-                                </p>
+                                <h3>Summary of Your Income Tax Declaration</h3>
+                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;"><p><b>Summary of Your Income Tax Declaration</b></p></th>
+                                            <th style="text-align:center;"><p><b>Provisional</b></p></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="t in taxdata|itemsPerPage:5">
+                                        <tr>
+                                            <td><label>Total of Rent Paid : </label></td>
+                                            <td style="text-align:right;background-color:yellow;"><b>{{t.totalRentPaid| number : 2}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Public Providund Fund : </label></td>
+                                            <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Bank Deposit  : </label></td>
+                                            <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Insurance Premium : </label></td>
+                                            <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of NSC : </label></td>
+                                            <td style="text-align:right;">{{t.totalNscAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Mutual Fund : </label></td>
+                                            <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of ULIP : </label></td>
+                                            <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Sukanya Smridhi : </label></td>
+                                            <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Tution Fees: </label></td>
+                                            <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of 80C : </label></td>
+                                            <td style="text-align:right;background-color:yellow;">
+                                                <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Mediclaim : </label></td>
+                                            <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Educational Loan Interest : </label></td>
+                                            <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Physical Disability : </label></td>
+                                            <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Severe Disability : </label></td>
+                                            <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>NPS : </label></td>
+                                            <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of 80D : </label></td>
+                                            <td style="text-align:right;background-color:yellow;"><b>{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup+t.educationLoanInterest+t.physicalDisability+t.severeDisability+t.nationalPensionScheme| number : 2}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Amount : </label></td>
+                                            <td style="text-align:right;">{{t.loanAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Interest Amount : </label></td>
+                                            <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*<h3>Instructions</h3>
+                                    <p>
+                                        I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
+                                        <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                    </p>*@
                                 <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
                             </div>
                             @* General Personal Information *@

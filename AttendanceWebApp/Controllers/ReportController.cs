@@ -7,66 +7,13 @@ namespace AttendanceWebApp.Controllers
 {
     public class ReportController : Controller
     {
-        public ActionResult LeaveReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        public ActionResult PendingLeavesForPostReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        public ActionResult PostedLeaveReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
+        //Releaser Reports
         public ActionResult EmployeeList()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        public ActionResult EmployeeReleaseStrategyList()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
+                    Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }
@@ -81,23 +28,38 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        public ActionResult PerformanceReport()
+        public ActionResult LeaveReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
+                    Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
         }
-
-        public ActionResult LeavePerformanceReport()
+        //HR Reports
+        public ActionResult PostedLeaveReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
@@ -109,7 +71,85 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult LeavePerformanceReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult PendingLeavesForPostReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult AllGatePassReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "9" ||
+                    Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult AllUsersDetailsReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "4" ||
+                    Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }
@@ -128,7 +168,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }
@@ -142,7 +182,38 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
+        
+        public ActionResult EmployeeReleaseStrategyList()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        //Common User Report
+        public ActionResult PerformanceReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        //Common User Gatepass Report
         public ActionResult PrintGatePassReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -154,38 +225,13 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
-        ///View All Gate Pass List
-        public ActionResult AllGatePassReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
+        //Releaser GatePass Report
         public ActionResult ReleaserGatePassReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        public ActionResult AllUsersDetailsReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin" ||
-                    (Session["UserRole"].ToString() == "IsReleaser" || Session["IsHod"].ToString() == "true"))
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
+                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }

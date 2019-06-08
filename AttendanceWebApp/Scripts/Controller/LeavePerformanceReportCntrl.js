@@ -1,27 +1,17 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('LeavePerformanceReportController', function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
-    $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = [];
-    $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
     $scope.lPerRpt; var tmparr1;
-    $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; } };
+    $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; }; };
     $scope.GetLeavePerformanceReport = function (dt) {
-        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-        var FromDate = dt.FromDt; var ToDate = dt.ToDt; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
-        var Perf = new XMLHttpRequest(); Perf.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate, true);
-        Perf.setRequestHeader('Accept', 'application/json');
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var FromDate = dt.FromDt; var ToDate = dt.ToDt; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } var Perf = new XMLHttpRequest(); Perf.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate, true); Perf.setRequestHeader('Accept', 'application/json');
         Perf.onreadystatechange = function () {
             if (Perf.readyState === 4) {
-                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-                var json = JSON.parse(Perf.responseText); $scope.perfdata = json; $scope.lPerRpt = json; var test = $scope.perfdata; var srtcv = test[0]; var arr = [];
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(Perf.responseText); $scope.perfdata = json; $scope.lPerRpt = json; var test = $scope.perfdata; var srtcv = test[0]; var arr = [];
                 //Get Columns Names using key & Store in Array arr[]
                 for (var key in srtcv) { var s = key; arr.push(key); }   //Replace Column Name
-                var tmparr1 = new Array(arr); $scope.headers = arr; var tmparr = new Array(arr.length);
-                for (var i = 0; i < arr.length; i++) { tmparr[i] = new Array(test.length); }
-                for (var i = 0; i < test.length; i++) { for (var j = 0; j < arr.length; j++) { var colname = arr[j]; var test0 = test[i][colname]; tmparr[j][i] = test0; } }
-                var transposedArray = transpose(tmparr); $scope.dta = transposedArray; $scope.lPerRpt = tmparr1.concat(transposedArray);
-                $scope.curPage = 0; $scope.pageSize = 25; $scope.$digest();
-            }
+                var tmparr1 = new Array(arr); $scope.headers = arr; var tmparr = new Array(arr.length); for (var i = 0; i < arr.length; i++) { tmparr[i] = new Array(test.length); }; for (var i = 0; i < test.length; i++) { for (var j = 0; j < arr.length; j++) { var colname = arr[j]; var test0 = test[i][colname]; tmparr[j][i] = test0; }; }; var transposedArray = transpose(tmparr); $scope.dta = transposedArray; $scope.lPerRpt = tmparr1.concat(transposedArray); $scope.curPage = 0; $scope.pageSize = 25; $scope.$digest();
+            };
         }; Perf.send();
     };
     function transpose(arr) { return Object.keys(arr[0]).map(function (c) { return arr.map(function (r) { return r[c]; }) }) };     //Conversion from Row to Columns For Array

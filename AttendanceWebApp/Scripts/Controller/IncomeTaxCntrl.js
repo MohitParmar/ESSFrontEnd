@@ -80,6 +80,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         xhr1.setRequestHeader('Accept', 'application/json');
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4) {
+                debugger;
                 var json = JSON.parse(xhr1.responseText); $scope.taxdata = json; $scope.$digest();
                 if ($scope.taxdata.length > 0) {
                     rentDetails = $scope.taxdata[0].rentDetails; ppfDetails = $scope.taxdata[0].ppfDetails; bankDeposits = $scope.taxdata[0].bankDeposits; insuranceDetails = $scope.taxdata[0].insuranceDetails;
@@ -209,8 +210,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                     $('#txt_jointownershare').val($scope.taxdata[0].jointOwnerShare); $('#rentalincome').val($scope.taxdata[0].rentalIncomePerMonth);
                     $('#txt_otherincometext').val($scope.taxdata[0].otherIncomeDesc);
                 };
-                $('#loading').removeClass("activediv");
-                $('#loading').addClass("deactivediv");
+                var lockEntry = $scope.taxdata[0].lockEntry; if (ecode === 0 && lockEntry === true) { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); };
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; xhr1.send();
     };
@@ -512,45 +513,11 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     };
     //Get Income Tax Declaration  Report Details
     $scope.GetITReport = function () {
-        var gac = new XMLHttpRequest(); gac.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true);
-        gac.setRequestHeader('Accept', 'application/json'); gac.onreadystatechange = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
+        var gac = new XMLHttpRequest(); gac.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); gac.setRequestHeader('Accept', 'application/json'); gac.onreadystatechange = function () {
             if (gac.readyState === 4) {
-                var json = JSON.parse(gac.responseText); $scope.configdata = json; $scope.$digest();
-                var itd = new XMLHttpRequest(); itd.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarations?yearMonth=' + $scope.configdata.yearMonth, true); itd.setRequestHeader('Accept', 'application/json'); itd.onreadystatechange = function () {
-                    if (itd.readyState === 4 && itd.status === 200) {
-                        var json = JSON.parse(itd.responseText); $scope.itddata = json; var it = new Array; it = json; var myArray = [];
-                        var dtStart = it[0].startDt.substring(0, it[0].startDt.indexOf("T")); dtStart = new Date(dtStart); dtStart = "0" + dtStart.getDate() + '.' + '0' + (dtStart.getMonth() + 1) + '.' + dtStart.getFullYear();
-                        var dtEnd = it[0].endDt.substring(0, it[0].endDt.indexOf("T")); dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear();
-                        for (var i = 0; i < it.length; i++) {
-                            myArray.push([]);
-                            myArray[i]["EmployeeCode"] = it[i].empUnqId; myArray[i]["SapID"] = it[i].sapId; myArray[i]["Name"] = it[i].empName; myArray[i]["StartDate"] = dtStart; myArray[i]["EndDate"] = dtEnd;
-                            myArray[i]["LIC_Code"] = it[i].insCode; myArray[i]["LIC_Pro"] = it[i].insPro; myArray[i]["LIC_Act"] = it[i].insAct;
-                            myArray[i]["ULIP_Code"] = it[i].ulipCode; myArray[i]["ULIP_Pro"] = it[i].ulipPro; myArray[i]["ULIP_Act"] = it[i].ulipAct;
-                            myArray[i]["MutualFund_Code"] = it[i].mfCode; myArray[i]["MutualFund_Pro"] = it[i].mfPro; myArray[i]["MutualFund_Act"] = it[i].mfAct;
-                            myArray[i]["PPF_Code"] = it[i].ppfCode; myArray[i]["PPF_Pro"] = it[i].ppfPro; myArray[i]["PPF_Act"] = it[i].ppfAct;
-                            myArray[i]["NSC_Code"] = it[i].nscCode; myArray[i]["NSC_Pro"] = it[i].nscPro; myArray[i]["NSC_Act"] = it[i].nscAct;
-                            myArray[i]["HousingLoan_Code"] = it[i].homeLoanCode; myArray[i]["HousingLoan_Pro"] = it[i].homeLoanPro; myArray[i]["HousingLoan_Act"] = it[i].homeLoanAct;
-                            myArray[i]["Notified_M_Fund_Code"] = it[i].notifiedMfCode; myArray[i]["Notified_M_Fund_Pro"] = it[i].notifiedMfPro; myArray[i]["Notified_M_Fund_Act"] = it[i].notifiedMfAct;
-                            myArray[i]["TutionFee_Child1_Code"] = it[i].child1Code; myArray[i]["TutionFee_Child1_Pro"] = it[i].child1Pro; myArray[i]["TutionFee_Child1_Act"] = it[i].child1Act;
-                            myArray[i]["TutionFee_Child2_Code"] = it[i].child2Code; myArray[i]["TutionFee_Child2_Pro"] = it[i].child2Pro; myArray[i]["TutionFee_Child2_Act"] = it[i].child2Act;
-                            myArray[i]["TermDeposit_Code"] = it[i].termDepoCode; myArray[i]["TermDeposit_Pro"] = it[i].termDepoPro; myArray[i]["TermDeposit_Act"] = it[i].termDepoAct; myArray[i]["b_1"] = "";
-                            myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0; myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = "";
-                            myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf; myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity;
-                            myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf; myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents;
-                            myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup; myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest;
-                            myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability;
-                            myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = "";
-                            myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = "";
-                            myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, "");
-                            var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; };
-                            if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = "";
-                            myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = "";
-                            if ($scope.configdata.actualFlag === "true") { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct; }
-                            else { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilPro; myArray[i]["RentPaid"] = it[i].rentPaidPro; };
-                            myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan;
-                        }; $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'sapId'); $scope.ITDInfo = $scope.itddata; $scope.$digest();
-                    };
-                }; itd.send();
+                var json = JSON.parse(gac.responseText); $scope.configdata = json; $scope.$digest(); var itd = new XMLHttpRequest(); itd.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarations?yearMonth=' + $scope.configdata.yearMonth, true); itd.setRequestHeader('Accept', 'application/json'); itd.onreadystatechange = function () { if (itd.readyState === 4 && itd.status === 200) { var json = JSON.parse(itd.responseText); $scope.itddata = json; var it = new Array; it = json; var myArray = []; var dtStart = it[0].startDt.substring(0, it[0].startDt.indexOf("T")); dtStart = new Date(dtStart); dtStart = "0" + dtStart.getDate() + '.' + '0' + (dtStart.getMonth() + 1) + '.' + dtStart.getFullYear(); var dtEnd = it[0].endDt.substring(0, it[0].endDt.indexOf("T")); dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear(); for (var i = 0; i < it.length; i++) { myArray.push([]); myArray[i]["EmployeeCode"] = it[i].empUnqId; myArray[i]["SapID"] = it[i].sapId; myArray[i]["Name"] = it[i].empName; myArray[i]["StartDate"] = dtStart; myArray[i]["EndDate"] = dtEnd; myArray[i]["LIC_Code"] = it[i].insCode; myArray[i]["LIC_Pro"] = it[i].insPro; myArray[i]["LIC_Act"] = it[i].insAct; myArray[i]["ULIP_Code"] = it[i].ulipCode; myArray[i]["ULIP_Pro"] = it[i].ulipPro; myArray[i]["ULIP_Act"] = it[i].ulipAct; myArray[i]["MutualFund_Code"] = it[i].mfCode; myArray[i]["MutualFund_Pro"] = it[i].mfPro; myArray[i]["MutualFund_Act"] = it[i].mfAct; myArray[i]["PPF_Code"] = it[i].ppfCode; myArray[i]["PPF_Pro"] = it[i].ppfPro; myArray[i]["PPF_Act"] = it[i].ppfAct; myArray[i]["NSC_Code"] = it[i].nscCode; myArray[i]["NSC_Pro"] = it[i].nscPro; myArray[i]["NSC_Act"] = it[i].nscAct; myArray[i]["HousingLoan_Code"] = it[i].homeLoanCode; myArray[i]["HousingLoan_Pro"] = it[i].homeLoanPro; myArray[i]["HousingLoan_Act"] = it[i].homeLoanAct; myArray[i]["Notified_M_Fund_Code"] = it[i].notifiedMfCode; myArray[i]["Notified_M_Fund_Pro"] = it[i].notifiedMfPro; myArray[i]["Notified_M_Fund_Act"] = it[i].notifiedMfAct; myArray[i]["TutionFee_Child1_Code"] = it[i].child1Code; myArray[i]["TutionFee_Child1_Pro"] = it[i].child1Pro; myArray[i]["TutionFee_Child1_Act"] = it[i].child1Act; myArray[i]["TutionFee_Child2_Code"] = it[i].child2Code; myArray[i]["TutionFee_Child2_Pro"] = it[i].child2Pro; myArray[i]["TutionFee_Child2_Act"] = it[i].child2Act; myArray[i]["TermDeposit_Code"] = it[i].termDepoCode; myArray[i]["TermDeposit_Pro"] = it[i].termDepoPro; myArray[i]["TermDeposit_Act"] = it[i].termDepoAct; myArray[i]["b_1"] = ""; myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0; myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = ""; myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf; myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity; myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf; myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents; myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup; myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = ""; myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = ""; myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, ""); var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; }; if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = ""; myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = ""; if ($scope.configdata.actualFlag === "true") { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct; } else { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilPro; myArray[i]["RentPaid"] = it[i].rentPaidPro; }; myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan; }; $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'sapId'); $scope.ITDInfo = $scope.itddata; $scope.$digest(); }; }; itd.send();
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; gac.send();
     };
@@ -558,7 +525,6 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.GetBankDetails = function () { var pan = new XMLHttpRequest(); pan.open('GET', $scope._Conpath + 'TaxDeclaration/GetBankNames?flag=BC', true); pan.setRequestHeader('Accept', 'application/json'); pan.onreadystatechange = function () { if (pan.readyState === 4) { var json = JSON.parse(pan.responseText); $scope.bdata = json; $scope.$digest(); }; }; pan.send(); };
     //Get Tax Declaration Summary
     $scope.GetITDeclarationSummary = function () {
-        debugger;
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         //Get Address Details
         var Udata1; var Uperdata2; var xy = {};

@@ -134,11 +134,104 @@
                             @*<div ng-init="GetTaxDeclaration()" hidden="hidden"></div>*@
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
-                                <h3>Instructions</h3>
-                                <p>
-                                    I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
-                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
-                                </p>
+                                <h3>Summary of Your Income Tax Declaration</h3>
+                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;"><p><b>Summary of Your Income Tax Declaration</b></p></th>
+                                            <th style="text-align:center;"><p><b>Provisional</b></p></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="t in taxdata|itemsPerPage:5">
+                                        <tr>
+                                            <td><label>Total of Rent Paid : </label></td>
+                                            <td style="text-align:right;background-color:yellow;"><b>{{t.totalRentPaid| number : 2}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Public Providund Fund : </label></td>
+                                            <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Bank Deposit  : </label></td>
+                                            <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Insurance Premium : </label></td>
+                                            <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of NSC : </label></td>
+                                            <td style="text-align:right;">{{t.totalNscAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Mutual Fund : </label></td>
+                                            <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of ULIP : </label></td>
+                                            <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Sukanya Smridhi : </label></td>
+                                            <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Tution Fees: </label></td>
+                                            <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of 80C : </label></td>
+                                            <td style="text-align:right;background-color:yellow;">
+                                                <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of Mediclaim : </label></td>
+                                            <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Educational Loan Interest : </label></td>
+                                            <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Physical Disability : </label></td>
+                                            <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Severe Disability : </label></td>
+                                            <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>NPS : </label></td>
+                                            <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Total of 80D : </label></td>
+                                            <td style="text-align:right;background-color:yellow;"><b>{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup+t.educationLoanInterest+t.physicalDisability+t.severeDisability+t.nationalPensionScheme| number : 2}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Amount : </label></td>
+                                            <td style="text-align:right;">{{t.loanAmount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Housing Loan Interest Amount : </label></td>
+                                            <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*<h3>Instructions</h3>
+                                    <p>
+                                        I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
+                                        <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                    </p>*@
                                 <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
                             </div>
                             @* General Personal Information *@
@@ -333,11 +426,6 @@
                                             <td>
                                                 <input type="text" class="form-control" id="p_taxdeduct" placeholder="0" ng-model="New.p_taxdeduct" style="text-align:right;"
                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p style="color:red;font-weight:bold">(Attach proof like Form 16 or Salary Certificate)</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -875,9 +963,6 @@
                                                             <td><input type="text" class="form-control" id="p_childfees2" placeholder="0" ng-model="New.p_childfees2" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                                             <td><input type="text" class="form-control" id="a_childfees2" placeholder="0" ng-model="New.a_childfees2" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="3"><p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p></td>
-                                                        </tr>
                                                     </table>
                                                 </div>
                                             </td>
@@ -886,8 +971,8 @@
                                         <tr>
                                             <td style="text-align:center;"><p>11</p></td>
                                             <td><p>Contribution to Notified Pension Scheme</p></td>
-                                            <td><input type="text" class="form-control" id="p_pensionscheme" placeholder="0" ng-model="New.p_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly/></td>
-                                            <td><input type="text" class="form-control" id="a_pensionscheme" placeholder="0" ng-model="New.a_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly/></td>
+                                            <td><input type="text" class="form-control" id="p_pensionscheme" placeholder="0" ng-model="New.p_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly /></td>
+                                            <td><input type="text" class="form-control" id="a_pensionscheme" placeholder="0" ng-model="New.a_pensionscheme" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly /></td>
                                         </tr>
                                         @* Others *@
                                         <tr>
@@ -943,6 +1028,12 @@
                                             <td><input type="text" class="form-control" id="p_equityscheme" placeholder="0" ng-model="New.p_equityscheme" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_equityscheme" placeholder="0" ng-model="New.a_equityscheme" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
+                                        @*<tr>
+                                                <td style="text-align:center;">2</td>
+                                                <td><p>Contribution to Certain Pension Funds</p></td>
+                                                <td><input type="text" class="form-control" id="p_pensionFunds" placeholder="0" ng-model="New.p_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_pensionFunds" placeholder="0" ng-model="New.a_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>*@
                                         <tr>
                                             <td rowspan="4" style="text-align:center;">2</td>
                                             <td><p>Medical insurance premium paid other than cash U/S 80D (premium for Senior Citizens(above 60 years) Rs. 50,000/- else Rs. 30,000/-) including Rs. 5000/- for preventive health check up</p></td>
@@ -950,20 +1041,66 @@
                                             <td><input type="text" class="form-control" id="tot_a_mediclaimpremium" placeholder="0" style="text-align:right;" readonly /></td>
                                         </tr>
                                         <tr>
-                                            <td><p>:- for self, spouse & dependent children</p></td>
+                                            <td>
+                                                @*<p>:- for self, spouse & dependent children Medical insurance premium (Non-Senior Citizen)</p>*@
+                                                <p>:- for self, spouse & dependent children</p>
+                                            </td>
                                             <td><input type="text" class="form-control" id="p_mediclaimpremiumforfamily" placeholder="0" ng-model="New.p_mediclaimpremiumforfamily" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_mediclaimpremiumforfamily" placeholder="0" ng-model="New.a_mediclaimpremiumforfamily" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
+                                        @*<tr>
+                                                <td><p>:- Medical insurance premium (Senior Citizen)</p></td>
+                                                <td><input type="text" class="form-control" id="p_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.p_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.a_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>*@
                                         <tr>
-                                            <td><p>:- For parents</p></td>
+                                            <td>
+                                                @*<p>:- For parents : Medical insurance premium(Payment on behalf of parents non-senior citizen)</p>*@
+                                                <p>:- For parents</p>
+                                            </td>
                                             <td><input type="text" class="form-control" id="p_mediclaimpremiumforparents" placeholder="0" ng-model="New.p_mediclaimpremiumforparents" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_mediclaimpremiumforparents" placeholder="0" ng-model="New.a_mediclaimpremiumforparents" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
+                                        @*<tr>
+                                                <td><p>:- For parents : Medical insurance premium(Payment on behalf of parents senior citizen)</p></td>
+                                                <td><input type="text" class="form-control" id="p_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.p_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.a_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>*@
                                         <tr>
                                             <td><p>:- Payment for Preventive Health Checkup</p></td>
+                                            @*<p>:- Payment for Preventive Health Check up Self</p>*@
                                             <td><input type="text" class="form-control" id="p_mediclaimpremiumforhealth" placeholder="0" ng-model="New.p_mediclaimpremiumforhealth" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_mediclaimpremiumforhealth" placeholder="0" ng-model="New.a_mediclaimpremiumforhealth" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
+                                        @*<tr>
+                                                <td><p>:- Payment for Preventive Health Check up Parents</p></td>
+                                                <td><input type="text" class="form-control" id="p_mphealthparents" placeholder="0" ng-model="New.p_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_mphealthparents" placeholder="0" ng-model="New.a_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p>Medical Expenditure for very senior Citizen (Self)</p></td>
+                                                <td><input type="text" class="form-control" id="p_medicalExpSelf" placeholder="0" ng-model="New.p_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_medicalExpSelf" placeholder="0" ng-model="New.a_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p>Medical Expenditure for very senior Citizen (Parents)</p></td>
+                                                <td><input type="text" class="form-control" id="p_medicalExpParents" placeholder="0" ng-model="New.p_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_medicalExpParents" placeholder="0" ng-model="New.a_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p>Medical Treatment for non-senior citizen</p></td>
+                                                <td><input type="text" class="form-control" id="p_medicalTreatment" placeholder="0" ng-model="New.p_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_medicalTreatment" placeholder="0" ng-model="New.a_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p>Medical Treartment for Senior Citizen</p></td>
+                                                <td><input type="text" class="form-control" id="p_medicalTreatmentSC" placeholder="0" ng-model="New.p_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_medicalTreatmentSC" placeholder="0" ng-model="New.a_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>*@
                                         <tr>
                                             <td style="text-align:center;"><p>3</p></td>
                                             <td><p>80E - Repayment of Interest against Educational Loan for higher education of self, spouse % children</p></td>
@@ -972,28 +1109,31 @@
                                         </tr>
                                         <tr>
                                             <td style="text-align:center;"><p>4</p></td>
-                                            <td>
-                                                <p>80U - Permanent Physical Disability (Certificate from Prescribed Authority Required)</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 75,000 Only</p>
-                                            </td>
+                                            <td><p>80U - Permanent Physical Disability (Certificate from Prescribed Authority Required)</p></td>
                                             <td><input type="text" class="form-control" id="p_disablity" placeholder="0" ng-model="New.p_disablity" ng-change="CheckPDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_disablity" placeholder="0" ng-model="New.a_disablity" ng-change="CheckPDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
                                         <tr>
                                             <td style="text-align:center;"><p>5</p></td>
-                                            <td>
-                                                <p>Deduction for Dependent with severe disability</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 1,25,000 Only</p>
-                                            </td>
+                                            <td><p>80U - Deduction for Dependent with Severe Disability</p></td>
                                             <td><input type="text" class="form-control" id="p_severedisablity" placeholder="0" ng-model="New.p_severedisablity" ng-change="CheckSevereDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_severedisablity" placeholder="0" ng-model="New.a_severedisablity" ng-change="CheckSevereDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>
+                                        @*<tr>
+                                                <td style="text-align:center;"><p>7</p></td>
+                                                <td><p>80U - Deduction for Self Disability</p></td>
+                                                <td><input type="text" class="form-control" id="p_selfdisablity" placeholder="0" ng-model="New.p_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_selfdisablity" placeholder="0" ng-model="New.a_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"><p>8</p></td>
+                                                <td><p>80U - Deduction for Self Severe Disability</p></td>
+                                                <td><input type="text" class="form-control" id="p_selfseveredisablity" placeholder="0" ng-model="New.p_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_selfseveredisablity" placeholder="0" ng-model="New.a_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                            </tr>*@
                                         <tr>
                                             <td style="text-align:center;"><p>6</p></td>
-                                            <td>
-                                                <p>National Pension Scheme (NPS)</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 50,000 Only</p>
-                                            </td>
+                                            <td><p>National Pension Scheme (NPS)</p></td>
                                             <td><input type="text" class="form-control" id="p_NPS" placeholder="0" ng-model="New.p_NPS" ng-change="CheckNPSLimit()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_NPS" placeholder="0" ng-model="New.a_NPS" ng-change="CheckNPSLimit()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                         </tr>

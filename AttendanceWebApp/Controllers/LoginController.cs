@@ -44,63 +44,22 @@ namespace AttendanceWebApp.Controllers
                 Session["CatCode"] = Convert.ToString(requestData.CatCode);
                 Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
-                Session["IsHod"] = Convert.ToString(requestData.IsHod);
-                Session["IsSecUser"] = Convert.ToString(requestData.IsSecUser);
-                Session["IsGpReleaser"] = Convert.ToString(requestData.IsGpReleaser);
-                Session["IsAdmin"] = Convert.ToString(requestData.IsAdmin);
                 Session["Loc"] = Convert.ToString(requestData.Location);
-
-                var IsReleaser = requestData.IsReleaser;
-                var IsHrUser = requestData.IsHrUser;
-                var IsAdmin = requestData.IsAdmin;
-                if (IsReleaser == true && IsHrUser == false)
-                {
-                    Session["UserRole"] = "IsReleaser";
-                }
-                else
-                {
-                    if (IsHrUser == true && IsReleaser == false)
-                    {
-                        Session["UserRole"] = "IsHrUser";
-                    }
-                    else
-                    {
-                        if (IsHrUser == true && IsReleaser == true)
-                        {
-                            Session["UserRole"] = "IsHrRelease";
-                        }
-                        else
-                        {
-                            if (IsAdmin == true)
-                            {
-                                Session["UserRole"] = "IsAdmin";
-                            }
-                            else
-                            {
-                                Session["UserRole"] = "IsUser";
-                            }
-                        }
-                    }
-                }
+                if (requestData.WrkGrp != "COMP" && requestData.RoleId != "2") { Session["UserRole"] = Convert.ToString(10); } 
+                else { Session["UserRole"] = Convert.ToString(requestData.RoleId); }
                 return null;
             }
-            catch
-            {
-                return null;
-            }
+            catch { return null; }
         }
 
         public ActionResult UserLogin()
         {
             Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
-            Response.AddHeader("Pragma", "no-cache");
-            Response.AddHeader("Expires", "0");
-
+            Response.AddHeader("Pragma", "no-cache"); Response.AddHeader("Expires", "0");
             Session.Abandon();
             Session.Clear();
             Response.Cookies.Clear();
             Session.RemoveAll();
-
             Session["EmpUnqId"] = null;
             Session["EmpName"] = null;
             Session["Pass"] = null;
@@ -111,13 +70,8 @@ namespace AttendanceWebApp.Controllers
             Session["StatCode"] = null;
             Session["GradeCode"] = null;
             Session["CatCode"] = null;
-            Session["IsHod"] = null;
             Session["UserRole"] = null;
-            Session["IsSecUser"] = null;
-            Session["IsGpReleaser"] = null;
-            Session["IsAdmin"] = null;
             Session["Loc"] = null;
-
             return RedirectToAction("Index", "Login");
         }
     }

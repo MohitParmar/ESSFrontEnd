@@ -23,7 +23,15 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
+                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
@@ -35,7 +43,15 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
+                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
@@ -45,7 +61,7 @@ namespace AttendanceWebApp.Controllers
 
         public ActionResult GatePassInOut()
         {
-            if (Convert.ToBoolean(Session["IsSecUser"]) == true || Session["UserRole"].ToString() == "IsAdmin")
+            if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
             {
                 return View();
             }
@@ -57,7 +73,14 @@ namespace AttendanceWebApp.Controllers
 
         public ActionResult GPSecReport()
         {
-            return View();
+            if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("AuthorizationError", "CustomError");
+            }
         }
     }
 }

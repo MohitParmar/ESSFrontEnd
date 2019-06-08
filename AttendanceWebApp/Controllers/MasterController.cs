@@ -7,11 +7,12 @@ namespace AttendanceWebApp.Controllers
 {
     public class MasterController : Controller
     {
+        //Create Or Update Releaser Strategies
         public ActionResult CreateReleaseStreategy()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "IsHrUser" || Session["UserRole"].ToString() == "IsHrRelease" || Session["UserRole"].ToString() == "IsAdmin")
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }
@@ -61,24 +62,12 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
-        public ActionResult MediclaimMaster()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
+        //Manage Leave Application Changes
         public ActionResult ManageLeaveMaster()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "IsAdmin")
+                if (Session["UserRole"].ToString() == "11")
                 {
                     return View();
                 }

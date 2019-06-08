@@ -169,7 +169,7 @@
             return jsonObj;
         }
         jQuery.support.cors = true;
-        debugger;
+        
         var xhr = new XMLHttpRequest(); xhr.open('POST', $scope._Conpath + 'LeaveApplication/CreateLeaveApplication', true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {

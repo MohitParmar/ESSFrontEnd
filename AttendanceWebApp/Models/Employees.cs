@@ -82,7 +82,6 @@ namespace AttendanceWebApp.Models
 
         public bool IsAdmin { get; set; }
 
-
         [StringLength(20)]
         public string Pass { get; set; }
 
@@ -90,5 +89,13 @@ namespace AttendanceWebApp.Models
 
         [StringLength(5)]
         public string Location { get; set; }
+
+        [StringLength(12)]
+        public string SapId { get; set; }
+
+        public bool CompanyAcc { get; set; }
+
+        [StringLength(3)]
+        public string RoleId { get; set; }
     }
 }

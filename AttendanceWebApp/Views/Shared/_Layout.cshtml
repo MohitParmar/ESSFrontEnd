@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
+@*@{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}*@
 
 <head>
     <title>@ViewBag.Title</title>
@@ -97,12 +97,9 @@
     <input type="hidden" value="@Session["CatCode"]" id="myCatCode" />
     <input type="hidden" value="@Session["GradeCode"]" id="myGradeCode" />
     <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
-    <input type="hidden" value="@Session["IsHod"]" id="myIsHod" />
-    <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
-    <input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" />
-    <input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" />
-    <input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />
     <input type="hidden" value="@Session["Loc"]" id="myLoc" />
+    <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
+    @*<input type="hidden" value="@Session["IsHod"]" id="myIsHod" /><input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" /><input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" /><input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />*@
     @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
     <input type="hidden" value="" id="myIPAddress" />
     <div class="navbar navbar-fixed-top">
@@ -126,15 +123,13 @@
                                 </strong>
                             </a>
                             <ul class="dropdown-menu">
-                                <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
-                                <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
-                                <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
-                                <li id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
-                                <li id="mnuITDeclarationSummary"><a href="/IncomeTax/ITDeclarationSummary">Income Tax Declaration Summary</a></li>
-                                @*<li id="mnuMediclaimMaster"><a href="/Master/MediclaimMaster">Mediclaim Details</a></li>*@
-                                @*<li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>*@
-                                <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
-                                <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
+                                <li hidden="hidden" id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
+                                <li hidden="hidden" id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
+                                <li hidden="hidden" id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
+                                <li hidden="hidden" id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
+                                <li hidden="hidden" id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
+                                <li hidden="hidden" id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
+                                <li hidden="hidden" id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
                             </ul>
                         </li>
@@ -143,80 +138,80 @@
             </div>
         </div>
     </div>
-    <div class="subnavbar" id="mnubar">
+    <div class="subnavbar" id="mnubar" hidden="hidden">
         <div class="subnavbar-inner">
             <div class="container">
                 <ul class="mainnav">
-                    <li class="active"><a href="/Home/Index" id="mnuDashboard"><i class="icon-dashboard"></i><span>Dashboard</span></a></li>
-                    <li class="dropdown" id="mnuMaster">
+                    <li hidden="hidden" class="active" id="mnuDashboard"><a href="/Home/Index"><i class="icon-dashboard"></i><span>Dashboard</span></a></li>
+                    <li hidden="hidden" class="dropdown" id="mnuMaster">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Streategy Master</a></li>
-                            <li id="mnuITDFinance"><a href="/IncomeTax/IncomeTaxDecFin">IncomeTax Declaration Edit For Finance</a></li>
+                            <li hidden="hidden" id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Streategy Master</a></li>
+                            <li hidden="hidden" id="mnuITDFinance"><a href="/IncomeTax/IncomeTaxDecFin">IncomeTax Declaration Edit For Finance</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuLeave">
+                    <li hidden="hidden" class="dropdown" id="mnuLeave">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Leave</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuLeaveRules"><a href="/LeaveApp/LeaveRules">Leave Rules</a></li>
-                            <li id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
-                            <li id="mnuCOffApplication"><a href="#" onclick="COFF()">COFF Application</a></li>
+                            <li hidden="hidden" id="mnuLeaveRules"><a href="/LeaveApp/LeaveRules">Leave Rules</a></li>
+                            <li hidden="hidden" id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
+                            <li hidden="hidden" id="mnuCOffApplication"><a href="#" onclick="COFF()">COFF Application</a></li>
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
-                                    <li id="mnuShortLeaveCancel"><a href="/LeaveApp/LeaveCancellation">Short Leave Cancel</a></li>
-                                    <li id="mnuFullLeaveCancel"><a href="/LeaveApp/FullLeaveCancel">Full Leave Cancel</a></li>
+                                    <li hidden="hidden" id="mnuShortLeaveCancel"><a href="/LeaveApp/LeaveCancellation">Short Leave Cancel</a></li>
+                                    <li hidden="hidden" id="mnuFullLeaveCancel"><a href="/LeaveApp/FullLeaveCancel">Full Leave Cancel</a></li>
                                 </ul>
                             </li>
-                            <li id="mnuLeaveRelease"><a href="/ReleaseLeave/LeaveRelease">Leave Release</a></li>
-                            <li class="dropdown-submenu" id="mnuLeavePosting">
+                            <li hidden="hidden" id="mnuLeaveRelease"><a href="/ReleaseLeave/LeaveRelease">Leave Release</a></li>
+                            <li hidden="hidden" class="dropdown-submenu" id="mnuLeavePosting">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Posting <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
-                                    <li id="mnuFullLeavePosting"><a href="/LeavePosting/LeavePosting?flg=N">Full Leave Posting</a></li>
-                                    <li id="mnuPartialLeavePosting"><a href="/LeavePosting/LeavePosting?flg=P">Partial Leave Posting</a></li>
-                                    <li id="mnuCancelledLeavePosting"><a href="/LeavePosting/LeavePosting?flg=C">Canceled Leave Posting</a></li>
+                                    <li hidden="hidden" id="mnuFullLeavePosting"><a href="/LeavePosting/LeavePosting?flg=N">Full Leave Posting</a></li>
+                                    <li hidden="hidden" id="mnuPartialLeavePosting"><a href="/LeavePosting/LeavePosting?flg=P">Partial Leave Posting</a></li>
+                                    <li hidden="hidden" id="mnuCancelledLeavePosting"><a href="/LeavePosting/LeavePosting?flg=C">Canceled Leave Posting</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuGatePass">
+                    <li hidden="hidden" class="dropdown" id="mnuGatePass">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuCreateGatePass"><a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a></li>
-                            <li id="mnuContCreateGatePass"><a href="/GatePass/ContractualGatePass">New Gate Pass (Others)</a></li>
-                            <li id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Gate Pass List</a></li>
-                            <li id="mnuGatePassRelease"><a href="/GatePass/GatePassRelease">Gate Pass Release</a></li>
-                            <li id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
-                            <li id="mnuGatePassInOut"><a href="/GatePass/GatePassInOut">Gate Pass IN/OUT</a></li>
+                            <li hidden="hidden" id="mnuCreateGatePass"><a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a></li>
+                            <li hidden="hidden" id="mnuContCreateGatePass"><a href="/GatePass/ContractualGatePass">New Gate Pass (Others)</a></li>
+                            <li hidden="hidden" id="mnuPrintGatePass"><a href="/Report/PrintGatePassReport">Gate Pass List</a></li>
+                            <li hidden="hidden" id="mnuGatePassRelease"><a href="/GatePass/GatePassRelease">Gate Pass Release</a></li>
+                            <li hidden="hidden" id="mnuRelGatePassReport"><a href="/Report/ReleaserGatePassReport">Gate Pass Report</a></li>
+                            <li hidden="hidden" id="mnuGatePassInOut"><a href="/GatePass/GatePassInOut">Gate Pass IN/OUT</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuReport">
+                    <li hidden="hidden" class="dropdown" id="mnuReport">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuReleaserEmpReport"><a href="/Report/EmployeeList">Employee List</a></li>
-                            <li id="mnuLeaveReport"><a href="/Report/LeaveReport">Leave Report</a></li>
-                            <li id="mnuITDReport"><a href="/IncomeTax/ITDeclarationReport">IncomeTax Declaration Report</a></li>
-                            <li id="mnuLeaveApplicationDetails"><a href="/LeavePosting/LeaveApplicationView">User Leave Application Details</a></li>
-                            <li id="mnuPostedLeaveReport"><a href="/Report/PostedLeaveReport">Posted Leave Report</a></li>
-                            <li id="mnuPostedByReport"><a href="/Report/PostedByReport">Posted By HR Report</a></li>
-                            <li id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
-                            <li id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
-                            <li id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>
-                            <li id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Details Report</a></li>
-                            <li id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
-                            <li id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
+                            <li hidden="hidden" id="mnuReleaserEmpReport"><a href="/Report/EmployeeList">Employee List</a></li>
+                            <li hidden="hidden" id="mnuLeaveReport"><a href="/Report/LeaveReport">Leave Report</a></li>
+                            <li hidden="hidden" id="mnuITDReport"><a href="/IncomeTax/ITDeclarationReport">IncomeTax Declaration Report</a></li>
+                            <li hidden="hidden" id="mnuLeaveApplicationDetails"><a href="/LeavePosting/LeaveApplicationView">User Leave Application Details</a></li>
+                            <li hidden="hidden" id="mnuPostedLeaveReport"><a href="/Report/PostedLeaveReport">Posted Leave Report</a></li>
+                            <li hidden="hidden" id="mnuPostedByReport"><a href="/Report/PostedByReport">Posted By HR Report</a></li>
+                            <li hidden="hidden" id="mnuLeavePerformanceReport"><a href="/Report/LeavePerformanceReport">Leave Performance Report</a></li>
+                            <li hidden="hidden" id="mnuPendingLeavesForPostReport"><a href="/Report/PendingLeavesForPostReport">Pending For Post - Export To Excel</a></li>
+                            <li hidden="hidden" id="mnuAllGatePassReport"><a href="/Report/AllGatePassReport">All Users Gate Pass Report</a></li>
+                            <li hidden="hidden" id="mnuUserPresentAddressReport"><a href="/Report/AllUsersDetailsReport">Employees Details Report</a></li>
+                            <li hidden="hidden" id="mnuUniformMasterReport"><a href="/Report/UniformMasterReport">Uniform Master Report</a></li>
+                            <li hidden="hidden" id="mnuEmpRlsStrLstReport"><a href="/Report/EmployeeReleaseStrategyList">Release Strategy Report</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuUitility">
+                    <li hidden="hidden" class="dropdown" id="mnuUitility">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuAutoSync"><a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a></li>
-                            <li id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
-                            <li id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
+                            <li hidden="hidden" id="mnuAutoSync"><a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a></li>
+                            <li hidden="hidden" id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
+                            <li hidden="hidden" id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
                         </ul>
                     </li>
-                    <li id="mnuUserManual"><a href="~/Master/UserManual" id="mnuManual"><i class="icon-file"></i><span>User Manual</span></a></li>
-                    <li id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster" id="mnuManage"><i class="icon-code"></i><span>Manage Leave</span></a></li>
+                    <li hidden="hidden" id="mnuUserManual"><a href="~/Master/UserManual"><i class="icon-file"></i><span>User Manual</span></a></li>
+                    <li hidden="hidden" id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster"><i class="icon-code"></i><span>Manage Leave</span></a></li>
                 </ul>
             </div>
         </div>

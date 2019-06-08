@@ -22,19 +22,31 @@
 <div ng-app="myApp" ng-controller="ManageLeaveMasterController">
     <div class="container" id="mainContainer">
         <div class="row">
+            <div class="col-lg-12">
+                <strong>Leave Releasers / Day Gate Pass Releasers</strong>
+                <table class="table table-responsive">
+                    <tr>
+                        <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                            <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                        </td>
+                    </tr>
+                </table>
+                <strong>Night Gate Pass Releasers</strong>
+                <table class="table table-responsive">
+                    <tr>
+                        <td ng-repeat="gp in GPdata.gpReleaseStrategyLevels" ng-show="gp.isGpNightReleaser == true" style="text-align:center;">
+                            <b>{{gp.empName}}</b>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="col-lg-8">
                 <input type="hidden" value="LA" id="releaseGroupCode" />
+                <input type="hidden" value="GP" id="gpreleaseGroupCode" />
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>User Leave Application Details</strong></div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-responsive" style="text-align:center;">
-                                <tr>
-                                    <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                                        <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
-                                    </td>
-                                </tr>
-                            </table>
                             <table class="table table-hover table-condensed">
                                 <tbody>
                                     <tr>
