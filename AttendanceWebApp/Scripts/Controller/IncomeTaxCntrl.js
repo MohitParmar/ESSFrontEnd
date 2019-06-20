@@ -4,8 +4,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.currentPage = 1; $scope.itemsPerPage = 50; $scope.alluserlist = [];
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
     $scope.ResetView = function () { window.location.reload(true); };
-    jQuery.support.cors = true;
-    $scope.ITDInfo;
+    jQuery.support.cors = true; $scope.ITDInfo;
     $('.btnNext').click(function () { $('.nav-tabs > .active').next('li').find('a').trigger('click'); }); $('.btnPrevious').click(function () { $('.nav-tabs > .active').prev('li').find('a').trigger('click'); });
     $scope.SetBankPan = function (value) { $scope.bankPan = value.bankPan; $scope.bankName = value.bankName; };
     $scope.CheckNPSLimit = function () { var act = $('#hidactualFlag').val(); var limit = 0; if (act === "true") { limit = document.getElementById("a_NPS").value; if (limit > 50000) { document.getElementById("a_NPS").value = "50000"; alert("System will consider 50000 only"); }; } else { limit = document.getElementById("p_NPS").value; if (limit > 50000) { document.getElementById("p_NPS").value = "50000"; alert("System will consider 50000 only"); }; }; };
@@ -205,7 +204,9 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                     $scope.bankName = $scope.taxdata[0].loanBank; $scope.bankPan = $scope.taxdata[0].loanBankPan; $('#hloanAforesaid').val($scope.taxdata[0].loanAmount);
                     if ($scope.taxdata[0].loanDate != "" && $scope.taxdata[0].loanDate != null) { $('#loantakendate').val($scope.taxdata[0].loanDate.substring(0, $scope.taxdata[0].loanDate.indexOf("T"))); };
                     $('#cmb_purposeofloan').val($scope.taxdata[0].purpose);
-                    $('#datecontcomplete').val($scope.taxdata[0].constructionCompDate); $('#datepsproperty').val($scope.taxdata[0].possessionDate); $('#cmb_ownership').val($scope.taxdata[0].ownership);
+                    if ($scope.taxdata[0].constructionCompDate != "" && $scope.taxdata[0].constructionCompDate != null) { $('#datecontcomplete').val($scope.taxdata[0].constructionCompDate.substring(0, $scope.taxdata[0].constructionCompDate.indexOf("T"))); };//$('#datecontcomplete').val($scope.taxdata[0].constructionCompDate);
+                    if ($scope.taxdata[0].possessionDate != "" && $scope.taxdata[0].possessionDate != null) { $('#datepsproperty').val($scope.taxdata[0].possessionDate.substring(0, $scope.taxdata[0].possessionDate.indexOf("T"))); };//$('#datepsproperty').val($scope.taxdata[0].possessionDate);
+                    $('#cmb_ownership').val($scope.taxdata[0].ownership);
                     $('#txt_jointownername').val($scope.taxdata[0].jointOwnerName); $('#txt_jointownerrelationship').val($scope.taxdata[0].jointOwnerRelation);
                     $('#txt_jointownershare').val($scope.taxdata[0].jointOwnerShare); $('#rentalincome').val($scope.taxdata[0].rentalIncomePerMonth);
                     $('#txt_otherincometext').val($scope.taxdata[0].otherIncomeDesc);
@@ -511,236 +512,10 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             };
         }; tax.send(TableData);
     };
-    //Get Income Tax Declaration  Report Details
-    $scope.GetITReport = function () {
-        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-        var gac = new XMLHttpRequest(); gac.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); gac.setRequestHeader('Accept', 'application/json'); gac.onreadystatechange = function () {
-            if (gac.readyState === 4) {
-                var json = JSON.parse(gac.responseText); $scope.configdata = json; $scope.$digest(); var itd = new XMLHttpRequest(); itd.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarations?yearMonth=' + $scope.configdata.yearMonth, true); itd.setRequestHeader('Accept', 'application/json'); itd.onreadystatechange = function () { if (itd.readyState === 4 && itd.status === 200) { var json = JSON.parse(itd.responseText); $scope.itddata = json; var it = new Array; it = json; var myArray = []; var dtStart = it[0].startDt.substring(0, it[0].startDt.indexOf("T")); dtStart = new Date(dtStart); dtStart = "0" + dtStart.getDate() + '.' + '0' + (dtStart.getMonth() + 1) + '.' + dtStart.getFullYear(); var dtEnd = it[0].endDt.substring(0, it[0].endDt.indexOf("T")); dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear(); for (var i = 0; i < it.length; i++) { myArray.push([]); myArray[i]["EmployeeCode"] = it[i].empUnqId; myArray[i]["SapID"] = it[i].sapId; myArray[i]["Name"] = it[i].empName; myArray[i]["StartDate"] = dtStart; myArray[i]["EndDate"] = dtEnd; myArray[i]["LIC_Code"] = it[i].insCode; myArray[i]["LIC_Pro"] = it[i].insPro; myArray[i]["LIC_Act"] = it[i].insAct; myArray[i]["ULIP_Code"] = it[i].ulipCode; myArray[i]["ULIP_Pro"] = it[i].ulipPro; myArray[i]["ULIP_Act"] = it[i].ulipAct; myArray[i]["MutualFund_Code"] = it[i].mfCode; myArray[i]["MutualFund_Pro"] = it[i].mfPro; myArray[i]["MutualFund_Act"] = it[i].mfAct; myArray[i]["PPF_Code"] = it[i].ppfCode; myArray[i]["PPF_Pro"] = it[i].ppfPro; myArray[i]["PPF_Act"] = it[i].ppfAct; myArray[i]["NSC_Code"] = it[i].nscCode; myArray[i]["NSC_Pro"] = it[i].nscPro; myArray[i]["NSC_Act"] = it[i].nscAct; myArray[i]["HousingLoan_Code"] = it[i].homeLoanCode; myArray[i]["HousingLoan_Pro"] = it[i].homeLoanPro; myArray[i]["HousingLoan_Act"] = it[i].homeLoanAct; myArray[i]["Notified_M_Fund_Code"] = it[i].notifiedMfCode; myArray[i]["Notified_M_Fund_Pro"] = it[i].notifiedMfPro; myArray[i]["Notified_M_Fund_Act"] = it[i].notifiedMfAct; myArray[i]["TutionFee_Child1_Code"] = it[i].child1Code; myArray[i]["TutionFee_Child1_Pro"] = it[i].child1Pro; myArray[i]["TutionFee_Child1_Act"] = it[i].child1Act; myArray[i]["TutionFee_Child2_Code"] = it[i].child2Code; myArray[i]["TutionFee_Child2_Pro"] = it[i].child2Pro; myArray[i]["TutionFee_Child2_Act"] = it[i].child2Act; myArray[i]["TermDeposit_Code"] = it[i].termDepoCode; myArray[i]["TermDeposit_Pro"] = it[i].termDepoPro; myArray[i]["TermDeposit_Act"] = it[i].termDepoAct; myArray[i]["b_1"] = ""; myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0; myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = ""; myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf; myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity; myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf; myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents; myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup; myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = ""; myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = ""; myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, ""); var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; }; if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = ""; myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = ""; if ($scope.configdata.actualFlag === "true") { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct; } else { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilPro; myArray[i]["RentPaid"] = it[i].rentPaidPro; }; myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan; }; $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'sapId'); $scope.ITDInfo = $scope.itddata; $scope.$digest(); }; }; itd.send();
-                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-            };
-        }; gac.send();
-    };
+    //Get Income Tax Declaration Report Details
+    $scope.GetITReport = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var gac = new XMLHttpRequest(); gac.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); gac.setRequestHeader('Accept', 'application/json'); gac.onreadystatechange = function () { if (gac.readyState === 4) { var json = JSON.parse(gac.responseText); $scope.configdata = json; $scope.$digest(); var itd = new XMLHttpRequest(); itd.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarations?yearMonth=' + $scope.configdata.yearMonth, true); itd.setRequestHeader('Accept', 'application/json'); itd.onreadystatechange = function () { if (itd.readyState === 4 && itd.status === 200) { var json = JSON.parse(itd.responseText); $scope.itddata = json; var it = new Array; it = json; var myArray = []; var dtStart = it[0].startDt.substring(0, it[0].startDt.indexOf("T")); dtStart = new Date(dtStart); dtStart = "0" + dtStart.getDate() + '.' + '0' + (dtStart.getMonth() + 1) + '.' + dtStart.getFullYear(); var dtEnd = it[0].endDt.substring(0, it[0].endDt.indexOf("T")); dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear(); for (var i = 0; i < it.length; i++) { myArray.push([]); myArray[i]["EmployeeCode"] = it[i].empUnqId; myArray[i]["SapID"] = it[i].sapId; myArray[i]["Name"] = it[i].empName; myArray[i]["StartDate"] = dtStart; myArray[i]["EndDate"] = dtEnd; myArray[i]["LIC_Code"] = it[i].insCode; myArray[i]["LIC_Pro"] = it[i].insPro; myArray[i]["LIC_Act"] = it[i].insAct; myArray[i]["ULIP_Code"] = it[i].ulipCode; myArray[i]["ULIP_Pro"] = it[i].ulipPro; myArray[i]["ULIP_Act"] = it[i].ulipAct; myArray[i]["MutualFund_Code"] = it[i].mfCode; myArray[i]["MutualFund_Pro"] = it[i].mfPro; myArray[i]["MutualFund_Act"] = it[i].mfAct; myArray[i]["PPF_Code"] = it[i].ppfCode; myArray[i]["PPF_Pro"] = it[i].ppfPro; myArray[i]["PPF_Act"] = it[i].ppfAct; myArray[i]["NSC_Code"] = it[i].nscCode; myArray[i]["NSC_Pro"] = it[i].nscPro; myArray[i]["NSC_Act"] = it[i].nscAct; myArray[i]["HousingLoan_Code"] = it[i].homeLoanCode; myArray[i]["HousingLoan_Pro"] = it[i].homeLoanPro; myArray[i]["HousingLoan_Act"] = it[i].homeLoanAct; myArray[i]["Notified_M_Fund_Code"] = it[i].notifiedMfCode; myArray[i]["Notified_M_Fund_Pro"] = it[i].notifiedMfPro; myArray[i]["Notified_M_Fund_Act"] = it[i].notifiedMfAct; myArray[i]["TutionFee_Child1_Code"] = it[i].child1Code; myArray[i]["TutionFee_Child1_Pro"] = it[i].child1Pro; myArray[i]["TutionFee_Child1_Act"] = it[i].child1Act; myArray[i]["TutionFee_Child2_Code"] = it[i].child2Code; myArray[i]["TutionFee_Child2_Pro"] = it[i].child2Pro; myArray[i]["TutionFee_Child2_Act"] = it[i].child2Act; myArray[i]["TermDeposit_Code"] = it[i].termDepoCode; myArray[i]["TermDeposit_Pro"] = it[i].termDepoPro; myArray[i]["TermDeposit_Act"] = it[i].termDepoAct; myArray[i]["b_1"] = ""; myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0; myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = ""; myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf; myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity; myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf; myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents; myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup; myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = ""; myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = ""; var bname = it[i].bankName; if (bname === null) { myArray[i]["BankName"] = ""; } else { myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, ""); } var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; }; if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = ""; myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = ""; if ($scope.configdata.actualFlag === "true") { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct; } else { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilPro; myArray[i]["RentPaid"] = it[i].rentPaidPro; }; myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan; myArray[i]["LockEntry"] = it[i].lockEntry; }; $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'sapId'); $scope.ITDInfo = $scope.itddata; $scope.$digest(); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }; }; itd.send(); }; }; gac.send(); };
     //Get Bank Details
     $scope.GetBankDetails = function () { var pan = new XMLHttpRequest(); pan.open('GET', $scope._Conpath + 'TaxDeclaration/GetBankNames?flag=BC', true); pan.setRequestHeader('Accept', 'application/json'); pan.onreadystatechange = function () { if (pan.readyState === 4) { var json = JSON.parse(pan.responseText); $scope.bdata = json; $scope.$digest(); }; }; pan.send(); };
-    //Get Tax Declaration Summary
-    $scope.GetITDeclarationSummary = function () {
-        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
-        //Get Address Details
-        var Udata1; var Uperdata2; var xy = {};
-        var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true); xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var json1 = JSON.parse(xhr.responseText); $scope.Udata = json1;
-                var per = new XMLHttpRequest(); per.open('GET', $scope._Conpath + 'Employee/GetEmpDetails?empunqid=' + $('#myEmpUnqId').val() + '&mode=1', true);
-                per.setRequestHeader('Accept', 'application/json'); per.onreadystatechange = function () {
-                    if (per.readyState === 4 && per.status === 200) {
-                        var json3 = JSON.parse(per.responseText); $scope.Uperdata = json3; Uperdata2 = $scope.Uperdata; Udata1 = $scope.Udata;
-                        angular.merge(xy, Udata1, Uperdata2); $scope.UserInfo = xy; $scope.$digest();
-                        var companyacco = $scope.UserInfo[0].companyAcc; $('#hidCompanyaccoFlag').val(companyacco);
-                    };
-                }; per.send();
-            };
-        }; xhr.send();
-        //Get Tax Declaration Details
-        var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = function () {
-            if (req.readyState === 4) {
-                var json4 = JSON.parse(req.responseText); $scope.configdata = json4; $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth);
-                var act = $('#hidactualFlag').val(); var YearMonth = $('#hidyearMonth').val();
-                var rentDetails = new Array(); var ppfDetails = new Array(); var bankDeposits = new Array(); var insuranceDetails = new Array(); var nscDetails = new Array(); var mutualFundDetails = new Array(); var ulipDetails = new Array(); var sukanyaDetails = new Array();
-                var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclaration?empUnqId=' + $('#myEmpUnqId').val() + '&yearMonth=' + $('#hidyearMonth').val() + '&actualFlag=' + $('#hidactualFlag').val(), true);
-                xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () {
-                    if (xhr1.readyState === 4 && xhr1.status === 200) {
-                        var json2 = JSON.parse(xhr1.responseText); $scope.taxdata = json2; $scope.$digest();
-                        if ($scope.taxdata.length > 0) {
-                            rentDetails = $scope.taxdata[0].rentDetails; ppfDetails = $scope.taxdata[0].ppfDetails; bankDeposits = $scope.taxdata[0].bankDeposits; insuranceDetails = $scope.taxdata[0].insuranceDetails;
-                            nscDetails = $scope.taxdata[0].nscDetails; mutualFundDetails = $scope.taxdata[0].mutualFundDetails; ulipDetails = $scope.taxdata[0].ulipDetails;
-                            sukanyaDetails = $scope.taxdata[0].sukanyaDetails;
-                            //Details Table Rent
-                            for (var r = 0; r < rentDetails.length; r++) {
-                                var d_rent = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf1' value='" + rentDetails[r].april + "'>" + rentDetails[r].april + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].may + "'>" + rentDetails[r].may + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].june + "'>" + rentDetails[r].june + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].july + "'>" + rentDetails[r].july + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].august + "'>" + rentDetails[r].august + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].september + "'>" + rentDetails[r].september + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].october + "'>" + rentDetails[r].october + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].november + "'>" + rentDetails[r].november + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].december + "'>" + rentDetails[r].december + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].january + "'>" + rentDetails[r].january + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].february + "'>" + rentDetails[r].february + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" + rentDetails[r].march + "'>" + rentDetails[r].march + "</td>";
-                                d_rent += "</tr>";
-                                var dtlrent = $(d_rent);
-                                $("#aliasTable8").append(dtlrent);
-                            };
-                            //Detail Table PPF
-                            for (var j = 0; j < ppfDetails.length; j++) {
-                                var d_ppf = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf1' value='" + ppfDetails[j].ppfAcNo + "'>" + ppfDetails[j].ppfAcNo + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ppf2' value='" +
-                                    ppfDetails[j].ppfDepositeDate.substring(0, ppfDetails[j].ppfDepositeDate.indexOf("T")) + "'>" +
-                                    ppfDetails[j].ppfDepositeDate.substring(0, ppfDetails[j].ppfDepositeDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_ppf +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_ppf' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ppf' value='" + ppfDetails[j].ppfAmt + "'>" + ppfDetails[j].ppfAmt + "</td>";
-                                }
-                                else {
-                                    d_ppf +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_ppf' value='" + ppfDetails[j].ppfAmt + "'>" + ppfDetails[j].ppfAmt + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ppf' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_ppf += "</tr>";
-                                var dtlppf = $(d_ppf);
-                                $("#aliasTable4").append(dtlppf);
-                            };
-                            //Detail Table Insurance
-                            for (var i = 0; i < insuranceDetails.length; i++) {
-                                var d_insurance = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='i1' value='" + insuranceDetails[i].policyNo + "'>" + insuranceDetails[i].policyNo + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='i5' value='" +
-                                    insuranceDetails[i].policyDate.substring(0, insuranceDetails[i].policyDate.indexOf("T")) + "'>" +
-                                    insuranceDetails[i].policyDate.substring(0, insuranceDetails[i].policyDate.indexOf("T")) + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='i2' value='" + insuranceDetails[i].sumInsured + "'>" + insuranceDetails[i].sumInsured + "</td>";
-                                if (act === "true") {
-                                    d_insurance +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" +
-                                        insuranceDetails[i].annualPremiumAmount + "'>" + insuranceDetails[i].annualPremiumAmount + "</td>";
-                                }
-                                else {
-                                    d_insurance +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_i3' value='" +
-                                        insuranceDetails[i].annualPremiumAmount + "'>" + insuranceDetails[i].annualPremiumAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_i3' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_insurance += "<td style='text-align:center;'><input type='hidden' name='i6' value='" +
-                                    insuranceDetails[i].premiumPaidDate.substring(0, insuranceDetails[i].premiumPaidDate.indexOf("T")) + "'>" +
-                                    insuranceDetails[i].premiumPaidDate.substring(0, insuranceDetails[i].premiumPaidDate.indexOf("T")) + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='i4' value='" +
-                                    insuranceDetails[i].premiumDueDate.substring(0, insuranceDetails[i].premiumDueDate.indexOf("T")) + "'>" +
-                                    insuranceDetails[i].premiumDueDate.substring(0, insuranceDetails[i].premiumDueDate.indexOf("T")) + "</td>";
-
-                                d_insurance += "</tr>"; var dtlinsurance = $(d_insurance);
-                                $("#aliasTable").append(dtlinsurance);
-                            };
-                            //Detail Table NSC
-                            for (var k = 0; k < nscDetails.length; k++) {
-                                var d_nsc = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='nsc1' value='" + nscDetails[k].nscNumber + "'>" + nscDetails[k].nscNumber + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='nsc2' value='" +
-                                    nscDetails[k].nscPurchaseDate.substring(0, nscDetails[k].nscPurchaseDate.indexOf("T")) + "'>" +
-                                    nscDetails[k].nscPurchaseDate.substring(0, nscDetails[k].nscPurchaseDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_nsc += "<td style='text-align:center;'><input type='hidden' name='p_nsc3' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_nsc3' value='" + nscDetails[k].nscAmount + "'>" + nscDetails[k].nscAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='i_nsc4 value='" +
-                                        nscDetails[k].nscInterestAmount + "'>" + nscDetails[k].nscInterestAmount + "</td>";
-                                }
-                                else {
-                                    d_nsc +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_nsc3' value='" + nscDetails[k].nscAmount + "'>" + nscDetails[k].nscAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_nsc3' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='i_nsc4 value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_nsc += "</tr>";
-                                var dtlnsc = $(d_nsc);
-                                $("#aliasTable2").append(dtlnsc);
-                            };
-                            //Detail Table Mutual Fund
-                            for (var l = 0; l < mutualFundDetails.length; l++) {
-                                var d_mf = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='mf1' value='" +
-                                    mutualFundDetails[l].mutualFundName + "'>" + mutualFundDetails[l].mutualFundName + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='mf4' value='" +
-                                    mutualFundDetails[l].mutualFundDate.substring(0, mutualFundDetails[l].mutualFundDate.indexOf("T")) + "'>" +
-                                    mutualFundDetails[l].mutualFundDate.substring(0, mutualFundDetails[l].mutualFundDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_mf += "<td style='text-align:center;'><input type='hidden' name='p_mf' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_mf' value='" +
-                                        mutualFundDetails[l].mutualFundAmount + "'>" + mutualFundDetails[l].mutualFundAmount + "</td>";
-                                }
-                                else {
-                                    d_mf +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_mf' value='" +
-                                        mutualFundDetails[l].mutualFundAmount + "'>" + mutualFundDetails[l].mutualFundAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_mf' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_mf += "</tr>";
-                                var dtlmf = $(d_mf);
-                                $("#aliasTable1").append(dtlmf);
-                            };
-                            //Detail Table Bank Deposits
-                            for (var f = 0; f < bankDeposits.length; f++) {
-                                var d_fd = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='txt_FDAccno' value='" + bankDeposits[f].bankAccountNo + "'>" + bankDeposits[f].bankAccountNo + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='fddate' value='" +
-                                    bankDeposits[f].depositDate.substring(0, bankDeposits[f].depositDate.indexOf("T")) + "'>" +
-                                    bankDeposits[f].depositDate.substring(0, bankDeposits[f].depositDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_fd += "<td style='text-align:center;'><input type='hidden' name='p_fd' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_fd' value='" +
-                                        bankDeposits[f].depositAmount + "'>" + bankDeposits[f].depositAmount + "</td>";
-                                }
-                                else {
-                                    d_fd += "<td style='text-align:center;'><input type='hidden' name='p_fd' value='" +
-                                        bankDeposits[f].depositAmount + "'>" + bankDeposits[f].depositAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_fd' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_fd += "</tr>";
-                                var dtlfd = $(d_fd);
-                                $("#aliasTable5").append(dtlfd);
-                            };
-                            //Detail Table ULIP
-                            for (var u = 0; u < ulipDetails.length; u++) {
-                                var d_ulip = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='txt_ulipAccno' value='" + ulipDetails[u].ulipNo + "'>" + ulipDetails[u].ulipNo + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ulipdate' value='" +
-                                    ulipDetails[u].ulipDate.substring(0, ulipDetails[u].ulipDate.indexOf("T")) + "'>" +
-                                    ulipDetails[u].ulipDate.substring(0, ulipDetails[u].ulipDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_ulip += "<td style='text-align:center;'><input type='hidden' name='p_ulip' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ulip' value='" + ulipDetails[u].ulipAmount + "'>" + ulipDetails[u].ulipAmount + "</td>";
-                                }
-                                else {
-                                    d_ulip += "<td style='text-align:center;'><input type='hidden' name='p_ulip' value='" + ulipDetails[u].ulipAmount + "'>" + ulipDetails[u].ulipAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ulip' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_ulip += "</tr>";
-                                var dtlulip = $(d_ulip);
-                                $("#aliasTable6").append(dtlulip);
-                            };
-                            //Detail Table Sukanya Samridhi
-                            for (var s = 0; s < sukanyaDetails.length; s++) {
-                                var d_ss = "<tr>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='txt_SSAccName' value='" +
-                                    sukanyaDetails[s].sukanyaName + "'>" + sukanyaDetails[s].sukanyaName + "</td>" +
-                                    "<td style='text-align:center;'><input type='hidden' name='ssdate' value='" +
-                                    sukanyaDetails[s].sukanyaDate.substring(0, sukanyaDetails[s].sukanyaDate.indexOf("T")) + "'>" +
-                                    sukanyaDetails[s].sukanyaDate.substring(0, sukanyaDetails[s].sukanyaDate.indexOf("T")) + "</td>";
-                                if (act === "true") {
-                                    d_ss += "<td style='text-align:center;'><input type='hidden' name='p_ssAmount' value='" + 0 + "'>" + 0 + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ssAmount' value='" + sukanyaDetails[s].sukanyaAmount + "'>" + sukanyaDetails[s].sukanyaAmount + "</td>";
-                                }
-                                else {
-                                    d_ss +=
-                                        "<td style='text-align:center;'><input type='hidden' name='p_ssAmount' value='" + sukanyaDetails[s].sukanyaAmount + "'>" + sukanyaDetails[s].sukanyaAmount + "</td>" +
-                                        "<td style='text-align:center;'><input type='hidden' name='a_ssAmount' value='" + 0 + "'>" + 0 + "</td>";
-                                };
-                                d_ss += "</tr>";
-                                var dtlss = $(d_ss);
-                                $("#aliasTable7").append(dtlss);
-                            };
-                        };
-                        $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-                    };
-                }; xhr1.send();
-            };
-        }; req.send();
-    };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; };
     $scope.exportAllData = function (t) { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); var FileName = t + d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); $scope.JSONToCSVConvertor($scope.ITDInfo, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData; var CSV = ''; CSV += ReportTitle + '\r\n\n'; if (ShowLabel) { var row = ""; for (var index in arrData[0]) { row += index + ','; }; row = row.slice(0, -1); CSV += row + '\r\n'; }; for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) { row += '"' + arrData[i][index] + '",'; } row.slice(0, row.length - 1); CSV += row + '\r\n'; }; if (CSV === '') { alert("Invalid data"); return; }; var fileName = ReportTitle.replace(/ /g, "_"); var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link); };

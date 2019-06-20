@@ -8,8 +8,8 @@
         if (loc === "IPU") { $('#link').text("“http://172.16.12.44:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/IPU.png"); }
         else if (loc === "NKP") { $('#link').text("“http://172.16.10.9:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/NKP.png"); }
         else if (loc === "KJQTL" || loc === "KJSAW") { $('#link').text("“http://172.16.16.77:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/KOSI.png"); };
-        if (chk === "1") { $('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide(); }
-        if (chk === "2") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); }
+        if (chk === "1" || chk === "4" || chk === "7" || chk === "9") { $('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide(); }
+        if (chk === "2" || chk === "6") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); }
         if (chk === "3") { $('#btnLA').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnLP').show(); }
         if (chk === "8") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLP').show(); }
     });

@@ -111,33 +111,18 @@
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Search Employee</strong></div>
-                    <div class="panel-body">
-                        <table class="table table-bordered">
-                            <tr>
-                                <td style="text-align:right;"><label>Enter Employee Code :</label></td>
-                                <td><input class="form-control" type="text" id="eCode" /></td>
-                                <td>
-                                    <button type="button" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                        <i class="icon-search"></i>Search
-                                    </button>
-                                    <input type="reset" id="BtnCancel" class="btn btn-default" value="Reset" ng-click="ResetView()" />
-                                    <div style="text-align:center;">
-                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="input-group form">
+                    <input type="text" class="form-control" id="eCode" placeholder="Search Employee Code">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()">Search</button>
+                        <button class="btn btn-default" type="reset" id="BtnCancel" value="Reset" ng-click="ResetView()">Reset</button>
+                    </span>
                 </div>
-            </div>
-            <div class="col-sm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>INCOME TAX DECLARATION</strong></div>
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home">Instructions</a></li>
+                            <li class="active"><a data-toggle="tab" href="#home">Summary</a></li>
                             <li><a data-toggle="tab" href="#menu1">General Information</a></li>
                             <li><a data-toggle="tab" href="#menu2">PART : A</a></li>
                             <li><a data-toggle="tab" href="#menu3">PART : B</a></li>
@@ -150,95 +135,87 @@
                         <div class="tab-content table-responsive">
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
-                                <h3>Summary of Your Income Tax Declaration</h3>
+                                <h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>
                                 <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;"><p><b>Summary of Your Income Tax Declaration</b></p></th>
-                                            <th style="text-align:center;"><p><b>Provisional</b></p></th>
+                                            <th style="text-align:center;"><p><b>Description</b></p></th>
+                                            <th style="text-align:center;"><p><b>Provisional Amount</b></p></th>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="t in taxdata|itemsPerPage:5">
                                         <tr>
-                                            <td><label>Total of Rent Paid : </label></td>
+                                            <td><label>Rent Paid</label></td>
                                             <td style="text-align:right;background-color:yellow;"><b>{{t.totalRentPaid| number : 2}}</b></td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Public Providund Fund : </label></td>
+                                            <td><label>Public Provident Fund</label></td>
                                             <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Bank Deposit  : </label></td>
+                                            <td><label>Bank Deposit</label></td>
                                             <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Insurance Premium : </label></td>
+                                            <td><label>Insurance Premium</label></td>
                                             <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of NSC : </label></td>
+                                            <td><label>NSC</label></td>
                                             <td style="text-align:right;">{{t.totalNscAmount| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Mutual Fund : </label></td>
+                                            <td><label>Mutual Fund</label></td>
                                             <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of ULIP : </label></td>
+                                            <td><label>ULIP</label></td>
                                             <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Sukanya Smridhi : </label></td>
+                                            <td><label>Sukanya Samridhi</label></td>
                                             <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td><label>Housing Loan Principal Amount</label></td>
                                             <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Tution Fees: </label></td>
+                                            <td><label>Tution Fees</label></td>
                                             <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Housing Loan Pricipal Amount : </label></td>
+                                            <td><label>Other Investment</label></td>
                                             <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of 80C : </label></td>
+                                            <td><label>Total Investment u/s 80C</label></td>
                                             <td style="text-align:right;background-color:yellow;">
                                                 <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of Mediclaim : </label></td>
+                                            <td><label>Mediclaim u/s 80D</label></td>
                                             <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Educational Loan Interest : </label></td>
+                                            <td><label>Educational Loan Interest u/s 80E</label></td>
                                             <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Physical Disability : </label></td>
+                                            <td><label>Physical Disability u/s 80U</label></td>
                                             <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Severe Disability : </label></td>
+                                            <td><label>Severe Disability u/s 80U</label></td>
                                             <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>NPS : </label></td>
+                                            <td><label>NPS</label></td>
                                             <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
                                         </tr>
                                         <tr>
-                                            <td><label>Total of 80D : </label></td>
-                                            <td style="text-align:right;background-color:yellow;"><b>{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup+t.educationLoanInterest+t.physicalDisability+t.severeDisability+t.nationalPensionScheme| number : 2}}</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>Housing Loan Amount : </label></td>
-                                            <td style="text-align:right;">{{t.loanAmount| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>Housing Loan Interest Amount : </label></td>
+                                            <td><label>Housing Loan Interest</label></td>
                                             <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
                                         </tr>
                                     </tbody>
@@ -444,11 +421,6 @@
                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p style="color:red;font-weight:bold">(Attach proof like Form 16 or Salary Certificate)</p>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
@@ -496,7 +468,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
@@ -561,7 +532,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
@@ -712,7 +682,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
@@ -780,7 +749,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed">
                                                                             <thead>
                                                                                 <tr>
@@ -845,7 +813,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
@@ -910,7 +877,6 @@
                                                             <div class="content" style="padding: 4px 15px 15px 15px;">
                                                                 <div class="body_panel">
                                                                     <div class="table-responsive">
-                                                                        <p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
@@ -963,7 +929,6 @@
                                             <td style="text-align:center;"><p>9</p></td>
                                             <td>
                                                 <p>Housing Loan Repayment Principal amount only</p>
-                                                @*<p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p>*@
                                             </td>
                                             <td><input type="text" class="form-control" id="p_houseloan" placeholder="0" ng-model="New.p_houseloan" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_houseloan" placeholder="0" ng-model="New.a_houseloan" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
@@ -983,9 +948,6 @@
                                                             <td><input type="text" class="form-control" id="txt_childname2" placeholder="Child 2 Name" ng-model="New.txt_childname2" /></td>
                                                             <td><input type="text" class="form-control" id="p_childfees2" placeholder="0" ng-model="New.p_childfees2" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                                             <td><input type="text" class="form-control" id="a_childfees2" placeholder="0" ng-model="New.a_childfees2" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3"><p style="color:red;font-weight:bold">System will consider Maximum 1,50,000 Only</p></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -1083,7 +1045,6 @@
                                             <td style="text-align:center;"><p>4</p></td>
                                             <td>
                                                 <p>80U - Permanent Physical Disability (Certificate from Prescribed Authority Required)</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 75,000 Only</p>
                                             </td>
                                             <td><input type="text" class="form-control" id="p_disablity" placeholder="0" ng-model="New.p_disablity" ng-change="CheckPDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_disablity" placeholder="0" ng-model="New.a_disablity" ng-change="CheckPDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
@@ -1092,7 +1053,6 @@
                                             <td style="text-align:center;"><p>5</p></td>
                                             <td>
                                                 <p>Deduction for Dependent with severe disability</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 1,25,000 Only</p>
                                             </td>
                                             <td><input type="text" class="form-control" id="p_severedisablity" placeholder="0" ng-model="New.p_severedisablity" ng-change="CheckSevereDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_severedisablity" placeholder="0" ng-model="New.a_severedisablity" ng-change="CheckSevereDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
@@ -1101,7 +1061,6 @@
                                             <td style="text-align:center;"><p>6</p></td>
                                             <td>
                                                 <p>National Pension Scheme (NPS)</p>
-                                                <p style="color:red;font-weight:bold">System will consider Maximum 50,000 Only</p>
                                             </td>
                                             <td><input type="text" class="form-control" id="p_NPS" placeholder="0" ng-model="New.p_NPS" ng-change="CheckNPSLimit()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                             <td><input type="text" class="form-control" id="a_NPS" placeholder="0" ng-model="New.a_NPS" ng-change="CheckNPSLimit()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
@@ -1251,7 +1210,6 @@
                                                     Amount of Interest for the F.Y.
                                                     <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>
                                                 </p>
-                                                <p style="color:red;font-weight:bold">System will consider 2,00,000 Only</p>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="p_amountofinterest" placeholder="0" ng-model="New.p_amountofinterest" style="text-align:right;"

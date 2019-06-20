@@ -61,25 +61,77 @@ namespace AttendanceWebApp.Controllers
 
         public ActionResult GatePassInOut()
         {
-            if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+            if (Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
-                return RedirectToAction("AuthorizationError", "CustomError");
+                return RedirectToAction("Index", "Login");
             }
         }
 
         public ActionResult GPSecReport()
         {
-            if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+            if (Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {
-                return RedirectToAction("AuthorizationError", "CustomError");
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult VehicleGatePassInOut()
+        {
+            if (Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult VehicleGatePassReport()
+        {
+            if (Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "5" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
             }
         }
     }

@@ -22,39 +22,28 @@
                         <div class="content" style="padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tbody>
+                                    <div class="input-group form">
+                                        <input type="text" class="form-control" placeholder="Search Releaser" id="Rel_Empid" name="Rel_Empid">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetReleaserInfo()"><i class="icon-search"></i></button>
+                                        </span>
+                                    </div>
+                                    <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
+                                        <thead>
                                             <tr>
-                                                <td><label>Enter Releaser Employee Code</label></td>
-                                                <td><input class="form-control" type="text" id="Rel_Empid" name="Rel_Empid" required></td>
-                                                <td>
-                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetReleaserInfo()">
-                                                        <i class="icon-search"></i>
-                                                    </button>
-                                                </td>
+                                                <th style="text-align:center;"><label>Release Code</label></th>
+                                                <th style="text-align:center;"><label>Releaser Code</label></th>
+                                                <th style="text-align:center;"><label>Releaser Name</label></th>
+                                                <th style="text-align:center;"><label>Add</label></th>
                                             </tr>
-                                            <tr>
-                                                <td colspan="3">
-                                                    <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="text-align:center;"><label>Release Code</label></th>
-                                                                <th style="text-align:center;"><label>Releaser Code</label></th>
-                                                                <th style="text-align:center;"><label>Releaser Name</label></th>
-                                                                <th style="text-align:center;"><label>Add</label></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="rls in rdata">
-                                                                <td style="text-align:center;">{{rls.releaseCode}}</td>
-                                                                <td style="text-align:center;">{{rls.empUnqId}}</td>
-                                                                <td style="text-align:center;">{{rls.empName}}</td>
-                                                                <td>
-                                                                    <button type="submit" id="btnOK" class="btn btn-default" value="Add" name="Add" ng-click="AddReleaser('{{rls.releaseCode}}')">OK</button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="rls in rdata">
+                                                <td style="text-align:center;">{{rls.releaseCode}}</td>
+                                                <td style="text-align:center;">{{rls.empUnqId}}</td>
+                                                <td style="text-align:center;">{{rls.empName}}</td>
+                                                <td>
+                                                    <button type="submit" id="btnOK" class="btn btn-default" value="Add" name="Add" ng-click="AddReleaser('{{rls.releaseCode}}')">OK</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -71,30 +60,31 @@
                     <div class="panel-heading"><strong>Create / Update Release Strategy</strong></div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5">
-                                            Employee Details
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:center;"><label>Select Employee</label></td>
-                                        <td><input class="form-control" type="text" id="eCode" name="eCode"></td>
-                                        <td>
-                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                                <i class="icon-search"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="d in empdata">
-                                        <td style="text-align:center;"><label>Employee Code : {{d.empUnqId}} </label></td>
-                                        <td style="text-align:center;"><label>Employee Name : {{d.empName}}</label></td>
-                                        <td style="text-align:center;">Father Name : <label>{{d.fatherName}}</label></td>
-                                    </tr>
-                                </tbody>
+                            <table class="table-condensed">
+                                <tr>
+                                    <td>
+                                        <div class="input-group form">
+                                            <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="icon-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr ng-repeat="d in empdata">
+                                                    <th><b>Employee Code : </b></th>
+                                                    <td>{{d.empUnqId}}</td>
+                                                    <th><b>Employee Name : </b></th>
+                                                    <td>{{d.empName}}</td>
+                                                    <th><b>Father Name : </b></th>
+                                                    <td>{{d.fatherName}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
                             </table>
                             <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
                                 <thead>
