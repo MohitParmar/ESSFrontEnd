@@ -13,7 +13,7 @@ namespace AttendanceWebApp.Controllers
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
                 if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
-                    Session["UserRole"].ToString() == "11")
+                    Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
                 {
                     return View();
                 }
@@ -33,7 +33,7 @@ namespace AttendanceWebApp.Controllers
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
                 if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
-                    Session["UserRole"].ToString() == "11")
+                    Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
                 {
                     return View();
                 }
@@ -231,7 +231,7 @@ namespace AttendanceWebApp.Controllers
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
                 if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
-                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
                 {
                     return View();
                 }

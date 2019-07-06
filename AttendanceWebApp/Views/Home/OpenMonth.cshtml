@@ -46,17 +46,20 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="text-align:right;"><label>Select Date : </label></td>
                                     <td>
-                                        <div class="right-inner-addon">
-                                            <i class="icon-calendar"></i>
-                                            <input class="form-control" type="text" id="yearMonth" ng-model="New.yearMonth" data-date-format="yyyy/MM/dd" datepicker>
+                                        <div class="input-group form">
+                                            <div class="right-inner-addon">
+                                                <i class="icon-calendar"></i>
+                                                <input class="form-control" type="text" id="yearMonth" ng-model="New.yearMonth" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Select Open Month Date"
+                                                       datepicker>
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button type="submit" id="btnSearch" class="btn btn-success" value="Search" name="Search" ng-click="ChangeOpenMonth(New)">
+                                                    Submit
+                                                </button>
+                                            </span>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <button type="submit" id="btnSearch" class="btn btn-success" value="Search" name="Search" ng-click="ChangeOpenMonth(New)">
-                                            Submit
-                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

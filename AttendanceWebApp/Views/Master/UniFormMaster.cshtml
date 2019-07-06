@@ -54,9 +54,6 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label>Year</label>
-                                        </td>
-                                        <td>
                                             <input class="form-control" type="text" id="txtYear" name="Year" disabled="disabled">
                                         </td>
                                         <td><label>Trouser Size</label></td>
@@ -68,11 +65,13 @@
                                             <input class="form-control" type="text" id="txtShirtSize" name="ShirtSize" placeholder="Shirt Size" ng-model="New.ShirtSize" required>
                                         </td>
                                         <td>
-                                            <input id="btnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
-                                            <button id="btnCreate" type="button" class="btn btn-primary" style="text-align:right;" value="Submit" name="Submit"
-                                                    ng-click="AddUniformDetails(New)">
-                                                Submit
-                                            </button>
+                                            <span class="input-group-btn">
+                                                <button id="btnCreate" type="button" class="btn btn-primary" style="text-align:right;" value="Submit" name="Submit"
+                                                        ng-click="AddUniformDetails(New)">
+                                                    Submit
+                                                </button>
+                                                <input id="btnCancel" type="reset" class="btn btn-success" value="Reset" ng-click="ResetView()" />
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>

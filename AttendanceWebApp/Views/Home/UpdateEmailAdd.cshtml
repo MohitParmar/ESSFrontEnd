@@ -19,9 +19,12 @@
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered table-condensed">
                                     <tr dir-paginate="d in Udata|itemsPerPage:5">
-                                        <td><label>Employee Code: </label> {{d.empUnqId}}</td>
-                                        <td><label>Employee Name: </label> {{d.empName}}</td>
-                                        <td><label>Email ID: </label> {{d.email}}</td>
+                                        <th>Employee Code </th>
+                                        <td><b>{{d.empUnqId}}</b></td>
+                                        <th>Employee Name </th>
+                                        <td><b>{{d.empName}}</b></td>
+                                        <th>Email ID </th>
+                                        <td><b>{{d.email}}</b></td>
                                     </tr>
                                 </table>
                                 <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
@@ -31,13 +34,16 @@
                             <table id="myTable" class="table table-responsive">
                                 <tbody>
                                     <tr>
-                                        <td><label>Email Address</label></td>
-                                        <td><input class="form-control" type="email" id="eMailID" name="eMailID" ng-model="New.eMailID" required></td>
                                         <td>
-                                            <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Notification Email ID"
-                                                    name="Save" ng-click="EmpeMail(New)">
-                                                Update Email ID
-                                            </button>
+                                            <div class="input-group form">
+                                                <input class="form-control" type="email" id="eMailID" name="eMailID" ng-model="New.eMailID" placeholder="Enter Email Address ex : abc@gmail.com" required>
+                                                <span class="input-group-btn">
+                                                    <button id="btnSave" type="button" class="btn btn-primary btn-custom" style="text-align:right;" value="Notification Email ID"
+                                                            name="Save" ng-click="EmpeMail(New)">
+                                                        Update Email ID
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

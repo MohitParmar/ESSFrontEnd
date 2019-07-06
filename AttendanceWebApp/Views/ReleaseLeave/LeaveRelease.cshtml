@@ -151,6 +151,9 @@
                                                             <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
                                                         </td>
                                                     </tr>
+                                                    <tr ng-show="d.cancelled === true">
+                                                        <td colspan="7"><strong><text style="color:#f44336;">Please Note : This is Cancelled Leave.</text></strong></td>
+                                                    </tr>
                                                 </table>
                                             </td>
                                             <td style="padding:3px;"><input class="form-control" type="text" id="Remarks" placeholder="Rejection" style="width:85px;" ng-model="N.Remarks"></td>

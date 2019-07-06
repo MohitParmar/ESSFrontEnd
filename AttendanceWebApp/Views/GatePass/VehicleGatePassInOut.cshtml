@@ -103,19 +103,19 @@
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">LogID</th>
+                                            <th style="text-align:center;">LogDate</th>
                                             <th style="text-align:center;">VehicleNo</th>
                                             <th style="text-align:center;">Start KM</th>
                                             <th style="text-align:center;">DriverName</th>
-                                            <th style="text-align:center;">LogDate</th>
                                             <th style="text-align:center;">PlaceToVisit</th>
                                             <th style="text-align:center;">Action</th>
                                         </tr>
                                         <tr>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.LogID" /></td>
+                                            <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VehicleNo" /></td>
                                             <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DriverName" /></td>
-                                            <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PlaceToVisit" /></td>
                                             <td></td>
                                         </tr>
@@ -123,10 +123,10 @@
                                     <tbody>
                                         <tr dir-paginate="d in outdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
                                             <td style="font-size:large;text-align:center;">{{d.LogID}}</td>
+                                            <td style="font-size:large;text-align:center;">{{d.LogDate |date:"dd/MM/yyyy"}}</td>
                                             <td style="font-size:large;">{{d.VehicleNo}}</td>
                                             <td style="font-size:large;">{{d.StartKM}}</td>
                                             <td style="font-size:large;">{{d.DriverName}}</td>
-                                            <td style="font-size:large;text-align:center;">{{d.LogDate |date:"dd/MM/yyyy"}}</td>
                                             <td style="font-size:large;">{{d.PlaceToVisit}}</td>
                                             <td style="text-align:center;">
                                                 <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnOut" name="btnOut" value="OUT"
@@ -143,18 +143,18 @@
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">LogID</th>
+                                            <th style="text-align:center;">LogDate</th>
                                             <th style="text-align:center;">VehicleNo</th>
                                             <th style="text-align:center;">DriverName</th>
-                                            <th style="text-align:center;">LogDate</th>
                                             <th style="text-align:center;">PlaceToVisit</th>
                                             <th style="text-align:center;">Outtime</th>
                                             <th style="text-align:center;">Action</th>
                                         </tr>
                                         <tr>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.LogID" /></td>
+                                            <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VehicleNo" /></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DriverName" /></td>
-                                            <td></td>
                                             <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PlaceToVisit" /></td>
                                             <td colspan="2"></td>
                                         </tr>
@@ -162,9 +162,9 @@
                                     <tbody>
                                         <tr dir-paginate="i in indata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
                                             <td style="font-size:large;text-align:center;">{{i.LogID}}</td>
+                                            <td style="font-size:large;text-align:center;">{{i.LogDate |date:"dd/MM/yyyy"}}</td>
                                             <td style="font-size:large;">{{i.VehicleNo}}</td>
                                             <td style="font-size:large;">{{i.DriverName}}</td>
-                                            <td style="font-size:large;text-align:center;">{{i.LogDate |date:"dd/MM/yyyy"}}</td>
                                             <td style="font-size:large;">{{i.PlaceToVisit}}</td>
                                             <td style="font-size:large;text-align:center;">{{i.Outtime |date:"dd/MM/yyyy"}}</td>
                                             <td style="text-align:center;">

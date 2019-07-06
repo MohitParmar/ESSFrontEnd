@@ -36,240 +36,242 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                @* JOB Profile Details *@
-                <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Job Profile</strong></div>
-                    <div class="panel-body">
-                        <div ng-init="GetUserInfo()">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in Udata|itemsPerPage:5">
-                                    <tr>
-                                        <th colspan="4" style="text-align:center;"><h4><b>Employee Code : {{d.empUnqId}}</b></h4></th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:16.6%"><label>Employee Name</label></td>
-                                        <td style="width:30%">{{d.empName}}</td>
-                                        <td style="width:16.6%"><label>Father Name</label></td>
-                                        <td style="width:30%">{{d.fatherName}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Company Name</label></td>
-                                        <td>{{d.compName}}</td>
-                                        <td><label>Work Group</label></td>
-                                        <td>{{d.wrkGrpDesc}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Unit Name</label></td>
-                                        <td>{{d.unitName}}</td>
-                                        <td><label>Department Name</label></td>
-                                        <td>{{d.deptName}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Station Name</label></td>
-                                        <td>{{d.statName}}</td>
-                                        <td><label>Category Name</label></td>
-                                        <td>{{d.catName}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Employee Type Name</label></td>
-                                        <td>{{d.empTypeName}}</td>
-                                        <td><label>Grade Name</label></td>
-                                        <td>{{d.gradeName}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Designation Name</label></td>
-                                        <td>{{d.desgName}}</td>
-                                        <td><label>Email Address</label></td>
-                                        <td>{{d.email}}</td>
-                                    </tr>
-                                </table>
+                <div class="table-responsive">
+                    @* JOB Profile Details *@
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Job Profile</strong></div>
+                        <div class="panel-body">
+                            <div ng-init="GetUserInfo()">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in Udata|itemsPerPage:5">
+                                        <tr>
+                                            <th colspan="4" style="text-align:center;"><h4><b>Employee Code : {{d.empUnqId}}</b></h4></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:16.6%"><label>Employee Name</label></td>
+                                            <td style="width:30%">{{d.empName}}</td>
+                                            <td style="width:16.6%"><label>Father Name</label></td>
+                                            <td style="width:30%">{{d.fatherName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Company Name</label></td>
+                                            <td>{{d.compName}}</td>
+                                            <td><label>Work Group</label></td>
+                                            <td>{{d.wrkGrpDesc}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Unit Name</label></td>
+                                            <td>{{d.unitName}}</td>
+                                            <td><label>Department Name</label></td>
+                                            <td>{{d.deptName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Station Name</label></td>
+                                            <td>{{d.statName}}</td>
+                                            <td><label>Category Name</label></td>
+                                            <td>{{d.catName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Employee Type Name</label></td>
+                                            <td>{{d.empTypeName}}</td>
+                                            <td><label>Grade Name</label></td>
+                                            <td>{{d.gradeName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Designation Name</label></td>
+                                            <td>{{d.desgName}}</td>
+                                            <td><label>Email Address</label></td>
+                                            <td>{{d.email}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                @* Personal Information *@
-                <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Personal Information</strong></div>
-                    <div class="panel-body">
-                        <div ng-init="GetUserPerasonalInfo()">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="pd in Uperdata|itemsPerPage:5">
-                                    <tr>
-                                        <th colspan="4" style="text-align:center;"><h4><b>SAP ID : {{pd.sapId}}</b></h4></th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:16.6%"><label>Joining Date</label></td>
-                                        <td style="width:30%">{{pd.joinDt | date:'dd/MM/yyyy'}}</td>
-                                        <td style="width:16.6%"><label>Adhar No.</label></td>
-                                        <td style="width:30%">{{pd.aadharNo}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Birth Date</label></td>
-                                        <td>{{pd.birthDate | date:'dd/MM/yyyy'}}</td>
-                                        <td><label>Birth Place</label></td>
-                                        <td>{{pd.birthPlace}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Contact No.</label></td>
-                                        <td>{{pd.contactNo}}</td>
-                                        <td><label>Blood Group </label></td>
-                                        <td>{{pd.bloodGroup}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Religion</label></td>
-                                        <td>{{pd.religion}}</td>
-                                        <td><label>Category</label></td>
-                                        <td>{{pd.category}}</td>
-                                    </tr>
-                                    @* Address Details *@
-                                    <tr>
-                                        <th colspan="2" style="text-align:center;"><h4><b>Permanent Address</b></h4></th>
-                                        <th colspan="2" style="text-align:center;"><h4><b>Present Address</b></h4></th>
-                                    </tr>
-                                    <tr>
-                                        @* Parmanent Address *@
-                                        <td colspan="2">
-                                            <table class="table table-hover table-bordered table-condensed table-striped">
-                                                <tr>
-                                                    <td style="width:35%;"><label>Address 1</label></td>
-                                                    <td style="width:65%;">{{pd.perAdd1}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Address 2</label></td>
-                                                    <td>{{pd.perAdd2}}</td>
-                                                </tr>
-                                                <tr><td><label>Address 3</label></td><td>{{pd.perAdd3}}</td></tr>
-                                                <tr>
-                                                    <td><label>Address 4</label></td>
-                                                    <td>{{pd.perAdd4}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>City</label></td>
-                                                    <td>{{pd.perCity}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>District</label></td>
-                                                    <td>{{pd.perDistrict}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>State</label></td>
-                                                    <td>{{pd.perState}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>PinCode</label></td>
-                                                    <td>{{pd.perPin}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Contact No.</label></td>
-                                                    <td>{{pd.perPhone}}<br /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Resident No.</label></td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        @* Present Address *@
-                                        <td colspan="2">
-                                            <table class="table table-hover table-bordered table-condensed table-striped">
-                                                <tbody>
+                    @* Personal Information *@
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Personal Information</strong></div>
+                        <div class="panel-body">
+                            <div ng-init="GetUserPerasonalInfo()">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="pd in Uperdata|itemsPerPage:5">
+                                        <tr>
+                                            <th colspan="4" style="text-align:center;"><h4><b>SAP ID : {{pd.sapId}}</b></h4></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:16.6%"><label>Joining Date</label></td>
+                                            <td style="width:30%">{{pd.joinDt | date:'dd/MM/yyyy'}}</td>
+                                            <td style="width:16.6%"><label>Adhar No.</label></td>
+                                            <td style="width:30%">{{pd.aadharNo}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Birth Date</label></td>
+                                            <td>{{pd.birthDate | date:'dd/MM/yyyy'}}</td>
+                                            <td><label>Birth Place</label></td>
+                                            <td>{{pd.birthPlace}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Contact No.</label></td>
+                                            <td>{{pd.contactNo}}</td>
+                                            <td><label>Blood Group </label></td>
+                                            <td>{{pd.bloodGroup}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Religion</label></td>
+                                            <td>{{pd.religion}}</td>
+                                            <td><label>Category</label></td>
+                                            <td>{{pd.category}}</td>
+                                        </tr>
+                                        @* Address Details *@
+                                        <tr>
+                                            <th colspan="2" style="text-align:center;"><h4><b>Permanent Address</b></h4></th>
+                                            <th colspan="2" style="text-align:center;"><h4><b>Present Address</b></h4></th>
+                                        </tr>
+                                        <tr>
+                                            @* Parmanent Address *@
+                                            <td colspan="2">
+                                                <table class="table table-hover table-bordered table-condensed table-striped">
                                                     <tr>
                                                         <td style="width:35%;"><label>Address 1</label></td>
-                                                        <td style="width:65%;">{{pd.preAdd1}}</td>
+                                                        <td style="width:65%;">{{pd.perAdd1}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>Address 2</label></td>
-                                                        <td>{{pd.preAdd2}}</td>
+                                                        <td>{{pd.perAdd2}}</td>
                                                     </tr>
+                                                    <tr><td><label>Address 3</label></td><td>{{pd.perAdd3}}</td></tr>
                                                     <tr>
-                                                        <td><label>Village</label></td>
-                                                        <td>{{pd.preAdd3}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label>Taluka</label></td>
-                                                        <td>{{pd.preAdd4}}</td>
+                                                        <td><label>Address 4</label></td>
+                                                        <td>{{pd.perAdd4}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>City</label></td>
-                                                        <td>{{pd.preCity}}</td>
+                                                        <td>{{pd.perCity}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>District</label></td>
-                                                        <td>{{pd.preDistrict}}</td>
+                                                        <td>{{pd.perDistrict}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>State</label></td>
-                                                        <td>{{pd.preState}}</td>
+                                                        <td>{{pd.perState}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>PinCode</label></td>
-                                                        <td>{{pd.prePin}}</td>
+                                                        <td>{{pd.perPin}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>Contact No.</label></td>
-                                                        <td>{{pd.prePhone}}</td>
+                                                        <td>{{pd.perPhone}}<br /></td>
                                                     </tr>
                                                     <tr>
                                                         <td><label>Resident No.</label></td>
-                                                        <td>{{pd.preResPhone}}</td>
+                                                        <td></td>
                                                     </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    @* Documents Details *@
-                                    <tr>
-                                        <th colspan="4" style="text-align:center;"><h4><b>Document Details</b></h4></th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <table class="table table-hover table-bordered table-condensed table-striped">
-                                                <tr>
-                                                    <td style="width:16.6%"><label>ID Proof 1</label></td>
-                                                    <td style="width:16.6%">{{pd.idPrf1}}</td>
-                                                    <td style="width:16.6%"><label>ID Proof No 1 </label></td>
-                                                    <td style="width:16.6%">{{pd.idPrf1No}}</td>
-                                                    <td style="width:16.6%"><label>ID Proof 1 Exp. ON</label></td>
-                                                    <td style="width:16.6%">{{pd.idPrf1ExpOn | date:'dd/MM/yyyy'}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>ID Proof 2</label></td>
-                                                    <td>{{pd.idPrf2}}</td>
-                                                    <td><label>ID Proof No 2</label></td>
-                                                    <td>{{pd.idPrf2No}}</td>
-                                                    <td><label>ID Proof 2 Exp. ON</label></td>
-                                                    <td>{{pd.idPrf2ExpOn | date:'dd/MM/yyyy'}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>ID Proof 3</label></td>
-                                                    <td>{{pd.idPrf3}}</td>
-                                                    <td><label>ID Proof No 3</label></td>
-                                                    <td>{{pd.idPrf3No}}</td>
-                                                    <td><label>ID Proof 3 Exp. ON</label></td>
-                                                    <td>{{pd.idPrf3ExpOn | date:'dd/MM/yyyy'}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    @* Bank Details *@
-                                    <tr>
-                                        <th colspan="4" style="text-align:center;"><h4><b>Bank Details</b></h4></th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <table class="table table-hover table-bordered table-condensed table-striped">
-                                                <tr>
-                                                    <td style="width:16.6%"><label>Bank Account No</label></td>
-                                                    <td style="width:16.6%">{{pd.bankAcNo}}</td>
-                                                    <td style="width:16.6%"><label>Bank IFSC Code</label></td>
-                                                    <td style="width:16.6%">{{pd.bankIfsc}}</td>
-                                                    <td style="width:16.6%"><label>Bank Name</label></td>
-                                                    <td style="width:16.6%">{{pd.bankName}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
+                                                </table>
+                                            </td>
+                                            @* Present Address *@
+                                            <td colspan="2">
+                                                <table class="table table-hover table-bordered table-condensed table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width:35%;"><label>Address 1</label></td>
+                                                            <td style="width:65%;">{{pd.preAdd1}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Address 2</label></td>
+                                                            <td>{{pd.preAdd2}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Village</label></td>
+                                                            <td>{{pd.preAdd3}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Taluka</label></td>
+                                                            <td>{{pd.preAdd4}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>City</label></td>
+                                                            <td>{{pd.preCity}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>District</label></td>
+                                                            <td>{{pd.preDistrict}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>State</label></td>
+                                                            <td>{{pd.preState}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>PinCode</label></td>
+                                                            <td>{{pd.prePin}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Contact No.</label></td>
+                                                            <td>{{pd.prePhone}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Resident No.</label></td>
+                                                            <td>{{pd.preResPhone}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        @* Documents Details *@
+                                        <tr>
+                                            <th colspan="4" style="text-align:center;"><h4><b>Document Details</b></h4></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <table class="table table-hover table-bordered table-condensed table-striped">
+                                                    <tr>
+                                                        <td style="width:16.6%"><label>ID Proof 1</label></td>
+                                                        <td style="width:16.6%">{{pd.idPrf1}}</td>
+                                                        <td style="width:16.6%"><label>ID Proof No 1 </label></td>
+                                                        <td style="width:16.6%">{{pd.idPrf1No}}</td>
+                                                        <td style="width:16.6%"><label>ID Proof 1 Exp. ON</label></td>
+                                                        <td style="width:16.6%">{{pd.idPrf1ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>ID Proof 2</label></td>
+                                                        <td>{{pd.idPrf2}}</td>
+                                                        <td><label>ID Proof No 2</label></td>
+                                                        <td>{{pd.idPrf2No}}</td>
+                                                        <td><label>ID Proof 2 Exp. ON</label></td>
+                                                        <td>{{pd.idPrf2ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>ID Proof 3</label></td>
+                                                        <td>{{pd.idPrf3}}</td>
+                                                        <td><label>ID Proof No 3</label></td>
+                                                        <td>{{pd.idPrf3No}}</td>
+                                                        <td><label>ID Proof 3 Exp. ON</label></td>
+                                                        <td>{{pd.idPrf3ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        @* Bank Details *@
+                                        <tr>
+                                            <th colspan="4" style="text-align:center;"><h4><b>Bank Details</b></h4></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <table class="table table-hover table-bordered table-condensed table-striped">
+                                                    <tr>
+                                                        <td style="width:16.6%"><label>Bank Account No</label></td>
+                                                        <td style="width:16.6%">{{pd.bankAcNo}}</td>
+                                                        <td style="width:16.6%"><label>Bank IFSC Code</label></td>
+                                                        <td style="width:16.6%">{{pd.bankIfsc}}</td>
+                                                        <td style="width:16.6%"><label>Bank Name</label></td>
+                                                        <td style="width:16.6%">{{pd.bankName}}</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -27,6 +27,7 @@
                                 <table data-show-filter="true" class="table table-bordered table-condensed table-responsive">
                                     <thead>
                                         <tr>
+                                            <th>Sr No.</th>
                                             <th style="text-align:center;" ng-click="sort('year')">
                                                 Year
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='year'"
@@ -54,6 +55,7 @@
                                             </th>
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td><input class="form-control" type="text" ng-model="search.year" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
                                             <td><input class="form-control" type="text" ng-model="search.trouserSize" style="margin:0;padding:1px;" /></td>
@@ -62,7 +64,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr dir-paginate="d in Alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50">
+                                        <tr dir-paginate="d in Alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;">{{d.year}}</td>
                                             <td style="text-align:center;">{{d.empUnqId}}</td>
                                             <td style="text-align:center;">{{d.trouserSize}}</td>

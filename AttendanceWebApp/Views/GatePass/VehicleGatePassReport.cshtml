@@ -82,8 +82,16 @@
                 @* Vehicle Gate Pass Information *@
                 <div class="panel-heading">
                     <strong>VEHICLE GATE PASS IN/OUT LIST</strong>
+                    <div style="float:right;">
+                        <a style="float: right;" href="#" ng-click="exportAllData()">
+                            <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Vehicle Gate Pass Report
+                        </a>
+                    </div>
                 </div>
                 <div class="table-responsive" ng-init="VehicleGatePassReport()">
+                    <div style="text-align:center;">
+                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                    </div>
                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                         <thead>
                             <tr>
@@ -114,6 +122,7 @@
                                 </th>
                                 <th style="text-align:center;">Start KM</th>
                                 <th style="text-align:center;">End KM</th>
+                                <th style="text-align:center;">Total KM</th>
                                 <th style="text-align:center;">Trip From</th>
                                 <th style="text-align:center;">Trip VIA</th>
                                 <th style="text-align:center;">Place To Visit</th>
@@ -123,13 +132,13 @@
                                 <td></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VehicleNo" /></td>
                                 <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DriverName" /></td>
-                                <td colspan="7"></td>
+                                <td colspan="8"></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr dir-paginate="d in vgprdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:250" current-page="currentPage"
                                 ng-style="d.InTime==='' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
-                                d.InTime!=='' && {'background-color':'#dff0d8','color':'#468847'} " ng-show="d.VehicleStatus != 'N'">
+                                d.InTime!=='' && {'background-color':'#dff0d8','color':'#468847'}">
                                 <td style="text-align:center;">{{d.LogID}}</td>
                                 <td style="text-align:center;">{{d.LogDate | date:'dd/MM/yy'}}</td>
                                 <td style="text-align:left;">{{d.VehicleNo}}</td>
@@ -138,6 +147,7 @@
                                 <td style="text-align:center;width:105px;">{{d.InTime | date:'dd/MM/yy hh:mm'}}</td>
                                 <td style="text-align:center;">{{d.StartKM}}</td>
                                 <td style="text-align:center;">{{d.EndKM}}</td>
+                                <td style="text-align:center;">{{d.TotalKM}}</td>
                                 <td style="text-align:left;">{{d.TripFrom}}</td>
                                 <td style="text-align:left;">{{d.TripVIA}}</td>
                                 <td style="text-align:left;">{{d.PlaceToVisit}}</td>

@@ -44,7 +44,6 @@
     <script src="~/Scripts/Module/ng-tags-input.js"></script>
     @*<script src="~/Scripts/Module/app.js"></script>*@
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
-
     <script src="~/Content/DirPAgination/dirPagination.js"></script>
     <script src="~/Scripts/Controller/MasterCntrl.js"></script>
     <script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
@@ -185,12 +184,15 @@
                             <table class="table table-hover table-condensed">
                                 <tbody>
                                     <tr>
-                                        <td style="text-align:right;"><label>Enter Employee Code :</label></td>
-                                        <td><input class="form-control" type="text" id="eCode" /></td>
                                         <td>
-                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                                <i class="icon-search"></i>Search
-                                            </button>
+                                            <div class="input-group form">
+                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                                <span class="input-group-btn">
+                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                                        <i class="icon-search"></i>Search
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </td>
                                         <td>
                                             <table class="table" id="tbl_empdtl">

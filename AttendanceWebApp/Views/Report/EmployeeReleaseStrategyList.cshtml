@@ -84,7 +84,7 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="d in rlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
-                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;">{{d.Employee_Code}}</td>
                                             <td style="text-align:Left;">{{d.NAME}}</td>
                                             <td style="text-align:center;">{{d.WORK_GROUP}}</td>

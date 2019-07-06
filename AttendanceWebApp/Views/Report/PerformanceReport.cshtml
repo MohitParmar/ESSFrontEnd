@@ -17,22 +17,24 @@
                         <strong>Leave Performance Report</strong>
                         <div style="float:right;">
                             <a style="float: right;" href="#" ng-click="exportAllData('performance_report_')">
-                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Export to Excel
                             </a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <button class="btn btn-success" id="btnPerf" ng-click="PerformanceAttendanceRpt('PERF')">Attendance Report</button>
-                            <button class="btn btn-info" id="btnPunch" ng-click="PerformanceAttendanceRpt('PUNCH')">Cafeteria Punch Report</button>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="btnPerf" ng-click="PerformanceAttendanceRpt('PERF')">Attendance Report</button>
+                                <button class="btn btn-info" id="btnPunch" ng-click="PerformanceAttendanceRpt('PUNCH')">Cafeteria Punch Report</button>
+                            </span>
                             <hr />
                             <div ng-init="PerformanceAttendanceRpt('PERF')" id="rptPerformance">
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;" ng-click="sort('attdDate')">
+                                            <th style="text-align:center;" ng-click="sort('AttdDate')">
                                                 Date
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='attdDate'"
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='AttdDate'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;"><label>Shift</label></th>
@@ -52,22 +54,22 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="d in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_1">
-                                            <td style="text-align:center;">{{d.attdDate| date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;">{{d.scheDuleShift}}</td>
-                                            <td style="text-align:center;">{{d.consShift}}</td>
-                                            <td style="text-align:center;">{{d.consIn| date:'dd/MM/yy HH:mm:ss'}}</td>
-                                            <td style="text-align:center;">{{d.consOut| date:'dd/MM/yy HH:mm:ss'}}</td>
-                                            <td style="text-align:center;">{{d.consWrkHrs}}</td>
-                                            <td style="text-align:center;">{{d.consOverTime}}</td>
-                                            <td style="text-align:center;">{{d.status}}</td>
-                                            <td style="text-align:center;" ng-style="d.halfDay===true && {'background-color':'#DC143C'}">
-                                                <input type="checkbox" ng-checked="{{d.halfDay}}" disabled="disabled" />
+                                            <td style="text-align:center;">{{d.AttdDate| date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.ScheDuleShift}}</td>
+                                            <td style="text-align:center;">{{d.ConsShift}}</td>
+                                            <td style="text-align:center;">{{d.ConsIn| date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsOut| date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsWrkHrs}}</td>
+                                            <td style="text-align:center;">{{d.ConsOverTime}}</td>
+                                            <td style="text-align:center;">{{d.Status}}</td>
+                                            <td style="text-align:center;" ng-style="d.HalfDay===true && {'background-color':'#DC143C'}">
+                                                <input type="checkbox" ng-checked="{{d.HalfDay}}" disabled="disabled" />
                                             </td>
-                                            <td style="text-align:center;">{{d.leaveType}}</td>
-                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.leaveHalf}}" disabled="disabled" /></td>
-                                            <td style="text-align:center;">{{d.earlycome}}</td>
-                                            <td style="text-align:center;">{{d.earlyGoing}}</td>
-                                            <td style="text-align:center;">{{d.lateCome}}</td>
+                                            <td style="text-align:center;">{{d.LeaveType}}</td>
+                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.LeaveHalf}}" disabled="disabled" /></td>
+                                            <td style="text-align:center;">{{d.Earlycome}}</td>
+                                            <td style="text-align:center;">{{d.EarlyGoing}}</td>
+                                            <td style="text-align:center;">{{d.LateCome}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
