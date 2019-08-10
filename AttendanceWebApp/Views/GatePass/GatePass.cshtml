@@ -34,14 +34,7 @@
 </style>
 
 <script>
-    function validateCode() {
-        var pin = document.getElementById('txtEmpCode').value;
-        if (pin.length > 8 || pin.length < 8) {
-            alert("Please Enter Employee Code in 8 Digit");
-            document.getElementById('txtEmpCode').value = "";
-            document.getElementById("txtEmpCode").focus();
-        };
-    }
+    function validateCode() { var pin = document.getElementById('txtEmpCode').value; var loc = $('#myLoc').val(); if (loc === "IPU") { if (pin.length > 8 || pin.length < 8) { alert("Please Enter Employee Code in 8 Digit"); document.getElementById('txtEmpCode').value = ""; document.getElementById("txtEmpCode").focus(); }; }; if (loc === "BEL") { if (pin.length > 4 || pin.length < 4) { alert("Please Enter Employee Code in 4 Digit"); document.getElementById('txtEmpCode').value = ""; document.getElementById("txtEmpCode").focus(); }; }; };
 </script>
 
 <div ng-app="myApp">

@@ -1,0 +1,258 @@
+﻿@{
+    ViewBag.Title = "Gate Pass Advice List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
+<script type="text/javascript">function RemoveMaterial(element) { var tables = document.getElementById('editTable'); tables.deleteRow(element.closest('tr').rowIndex); };</script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp" ng-controller="GPAdviceController">
+    <div class="container">
+        <div class="row">
+            @* Popup Model For View Material Details of Selected GP Advice *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="        width: 650px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Material Details </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-condensed" id="aliasTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">Sr No.</th>
+                                                <th style="text-align: center;">Material Code</th>
+                                                <th style="text-align: center;">Material Description</th>
+                                                <th style="text-align: center;">Material Quantity</th>
+                                                <th style="text-align: center;">Approx Value</th>
+                                                <th style="text-align: center;">HSN Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="l in pdata">
+                                            <tr ng-repeat="ld in l.gpAdviceDetails">
+                                                <td style="text-align: center;">{{ld.gpAdviceItem}}</td>
+                                                <td style="text-align: center;">{{ld.materialCode}}</td>
+                                                <td style="text-align: left;">{{ld.materialDesc}}</td>
+                                                <td style="text-align: center;">{{ld.materialQty}}</td>
+                                                <td style="text-align: right;">{{ld.approxValue}}</td>
+                                                <td style="text-align: center;">{{ld.hsnCode}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Popup Model For Edit/Update GP Advice Details  *@
+            <div class="modal fade" id="EditModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="margin-left: 131px;margin-right: 131px;width: 1104px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Edit Gate Pass Advice Details</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                @* Update New Gate Pass Advice *@
+                                <div class="table-responsive">
+                                    <form role="form" name="GPAdviceForm" novalidate>
+                                        <table id="myTable" class="table table-condensed table-bordered">
+                                            <tbody ng-repeat="lr in pdata">
+                                                <tr>
+                                                    <th style="text-align: center;">GATE PASS TYPE</th>
+                                                    <th style="text-align: center;">REASONS</th>
+                                                    <th style="text-align: center;">WORK ORDER NO</th>
+                                                    <th style="text-align: center;">VENDER CODE</th>
+                                                    <th style="text-align: center;">VENDER NAME</th>
+                                                    <th style="text-align: center;" colspan="3">VENDER ADDRESS</th>
+                                                </tr>
+                                                <tr>
+                                                    <td hidden="hidden"><input class="form-control" type="text" id="gpAdviceNo" value="{{lr.gpAdviceNo}}"></td>
+                                                    <td>
+                                                        <select class="form-control" id="GpAdviceType">
+                                                            <option value="R" title="RGP" selected>RGP</option>
+                                                            <option value="N" title="NRGP">NRGP</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class="form-control" type="text" id="txtPurpose" name="Purpose" value="{{lr.purpose}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtWONO" name="WONO" value="{{lr.workOrderNo}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtVenderCode" name="VenderCode" value="{{lr.vendorCode}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtVenderName" name="VenderName" value="{{lr.vendorName}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtVenderAdd1" name="VenderAdd1" value="{{lr.vendorAddress1}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtVenderAdd2" name="VenderAdd2" value="{{lr.vendorAddress2}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtVenderAdd3" name="VenderAdd3" value="{{lr.vendorAddress3}}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: center;">APPROX. RETURN DATE</th>
+                                                    <th style="text-align: center;">Mode Of Transport.</th>
+                                                    <th style="text-align: center;">Transporter Name</th>
+                                                    <th style="text-align: center;">MATERIAL CODE</th>
+                                                    <th style="text-align: center;">MATERIAL DESC.</th>
+                                                    <th style="text-align: center;">QUANTITY</th>
+                                                    <th style="text-align: center;">APPROX. VALUE</th>
+                                                    <th style="text-align: center;">HSN CODE</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="right-inner-addon">
+                                                            <i class="icon-calendar"></i>
+                                                            <input class="form-control" type="text" id="ApproxDt" ng-model="A.ApproxDt" data-date-format="yyyy/MM/dd" datepicker>
+                                                        </div>
+                                                    </td>
+                                                    <td><input class="form-control" type="text" id="txtModeOfTransport" name="ModeOfTransport" value="{{lr.modeOfTransport}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtTransporterName" name="TransporterName" value="{{lr.transporterName}}"></td>
+                                                    <td><input class="form-control" type="text" id="txtMaterialCode" name="MaterialCode" ng-model="M.MaterialCode"></td>
+                                                    <td><input class="form-control" type="text" id="txtMaterialDesc" name="MaterialDesc" ng-model="M.MaterialDesc"></td>
+                                                    <td><input class="form-control" type="text" id="txtMaterialQty" name="MaterialQty" ng-model="M.MaterialQty"></td>
+                                                    <td><input class="form-control" type="text" id="txtApproxValue" name="ApproxValue" ng-model="M.ApproxValue"></td>
+                                                    <td><input class="form-control" type="text" id="txtHsnCode" name="HsnCode" ng-model="M.HsnCode"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="text-align: right;">
+                                                        <strong>STEP - 1 : Add To List</strong>&nbsp;
+                                                        <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddMaterial(M,true)">
+                                                            <i class="icon-plus-sign"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table id="editTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;">Sr.No.</th>
+                                                    <th style="text-align: center;">Material Code</th>
+                                                    <th style="text-align: center;">Material Description</th>
+                                                    <th style="text-align: center;">Quantity</th>
+                                                    <th style="text-align: center;">Approx value</th>
+                                                    <th style="text-align: center;">HSN Code</th>
+                                                    <th style="text-align: center;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="lr in pdata">
+                                                <tr ng-repeat="lrd in lr.gpAdviceDetails">
+                                                    <td style="text-align: center;">{{lrd.gpAdviceItem}}</td>
+                                                    <td style="text-align: center;">{{lrd.materialCode}}</td>
+                                                    <td style="text-align: left;">{{lrd.materialDesc}}</td>
+                                                    <td style="text-align: center;">{{lrd.materialQty}}</td>
+                                                    <td style="text-align: right;">{{lrd.approxValue}}</td>
+                                                    <td style="text-align: center;">{{lrd.hsnCode}}</td>
+                                                    <td style="text-align: center;"><input type='button' name='Del' value='Del' onclick='RemoveMaterial(this)' class='btn btn-danger'></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-condensed">
+                                            <tr>
+                                                <td style="text-align: left;"><strong>STEP - 2 : Update Gate Pass Advice</strong></td>
+                                                <td style="text-align: right;">
+                                                    <button id="btnSubmit" type="button" class="btn btn-success" value="Submit" name="submit" ng-click="GenerateGPAdvice(A,true)">
+                                                        Update Gate Pass Advice
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Main View *@
+            <div class="col-sm-12">
+                <input type="hidden" value="GA" id="releaseGroupCode" />
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Gate Pass Advice List</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetGPAListInfo()">
+                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="tbl_print">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">DATE</th>
+                                        <th style="text-align: center;">Release Status</th>
+                                        <th style="text-align: center;">MODE</th>
+                                        <th style="text-align: center;">PURPOSE</th>
+                                        <th style="text-align: center;">WONO</th>
+                                        <th style="text-align: center;">VENDER NAME</th>
+                                        <th style="text-align: center;">APPROX RETURN DATE</th>
+                                        <th style="text-align: center;">Post Status</th>
+                                        <th style="text-align: center;">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in gpalist|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                        <td style="text-align: center;">{{d.gpAdviceDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;" ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="text-align: center;">{{d.gpAdviceType}}</td>
+                                        <td>{{d.purpose}}</td>
+                                        <td style="text-align: center;">{{d.workOrderNo}}</td>
+                                        <td>{{d.vendorName}}</td>
+                                        <td style="text-align: center;">{{d.approxDateOfReturn | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;" ng-style="
+                                                    d.gpAdviceStatus==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                    d.gpAdviceStatus==='N' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
+                                            {{d.gpAdviceStatus}}
+                                        </td>
+                                        <td style="text-align: center;padding: 3px;">
+                                            <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}},false)">
+                                                <i class="icon-info-sign"></i>
+                                            </button>
+                                            <button class="btn btn-primary" id="btnedit" ng-click="PopulateEdit({{d.gpAdviceNo}},{{d.yearMonth}})" ng-show="d.releaseStatusCode == 'N'">
+                                                <i class="icon-edit-sign"></i>
+                                            </button>
+                                            <button class="btn btn-danger" id="btndelete" ng-show="d.releaseStatusCode == 'N'" ng-click="PostGpAdvice({{d.gpAdviceNo}},{{d.yearMonth}},'R')">
+                                                <i class="icon-remove-sign"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Mode : R - RGP, N - NRGP </strong><br />
+                        <strong>Note For Status :  N - Not released,<text style="color: #ff9800;"> P - Partially released</text>,<text style="color: #4CAF50;"> F - Fully released</text>,<text style="color: #f44336;"> R - Release rejected</text></strong><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

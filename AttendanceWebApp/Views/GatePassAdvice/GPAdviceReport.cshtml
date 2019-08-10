@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Gate Pass Advice Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
+
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(lastDay);
+    }
+</script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp">
+    <div ng-controller="GPAdviceController">
+        <div class="container">
+            <div class="row">
+                @* Popup Model For Approve/Reject Leave Application  *@
+                <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:650px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Material Details </h4>
+                            </div>
+                            <div class="content" style="padding: 4px 15px 15px 15px;">
+                                <div class="body_panel">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-condensed" id="aliasTable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center;">Sr No.</th>
+                                                    <th style="text-align:center;">Material Code</th>
+                                                    <th style="text-align:center;">Material Description</th>
+                                                    <th style="text-align:center;">Material Quantity</th>
+                                                    <th style="text-align:center;">Approx Value</th>
+                                                    <th style="text-align:center;">HSN Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="l in pdata">
+                                                <tr ng-repeat="ld in l.gpAdviceDetails">
+                                                    <td style="text-align:center;">{{ld.gpAdviceItem}}</td>
+                                                    <td style="text-align:center;">{{ld.materialCode}}</td>
+                                                    <td style="text-align:left;">{{ld.materialDesc}}</td>
+                                                    <td style="text-align:center;">{{ld.materialQty}}</td>
+                                                    <td style="text-align:right;">{{ld.approxValue}}</td>
+                                                    <td style="text-align:center;">{{ld.hsnCode}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Main Model Display All List*@
+                <div class="col-sm-12">
+                    <input type="hidden" value="GA" id="releaseGroupCode" />
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <strong>Pending Gate Pass Advice List</strong>
+                            @*<div style="float:right;">
+                                    <a style="float: right;" href="#" ng-click="exportAllData()">
+                                        <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                    </a>
+                                </div>*@
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-responsive table-condensed">
+                                <tr>
+                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GatePassAdviceReport(New)">
+                                            <i class="icon-search"></i>
+                                            Search
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div ng-init="GatePassAdviceReport()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Reelase Status</th>
+                                                <th style="text-align:center;">DATE</th>
+                                                <th style="text-align:center;">FROM</th>
+                                                <th style="text-align:center;">MODE</th>
+                                                <th style="text-align:center;">PURPOSE</th>
+                                                <th style="text-align:center;">WONO</th>
+                                                <th style="text-align:center;">VENDER NAME</th>
+                                                <th style="text-align:center;">APPROX RETURN DATE</th>
+                                                <th style="text-align:center;">Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="d in gparpt|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                            <tr ng-show="d.releaseStatusCode !== 'N'">
+                                                <td style="text-align: center;" ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
+                                                    {{d.releaseStatusCode}}
+                                                </td>
+                                                <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yy'}}</td>
+                                                <td>{{d.empName}}</td>
+                                                <td style="text-align:center;">{{d.gpAdviceType}}</td>
+                                                <td>{{d.purpose}}</td>
+                                                <td style="text-align:center;">{{d.workOrderNo}}</td>
+                                                <td>{{d.vendorName}}</td>
+                                                <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;padding:3px;">
+                                                    <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}})">
+                                                        <i class="icon-info-sign"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -21,7 +21,21 @@ app.controller('ShortLeaveController', function ($scope, $http, $filter) {
     };//Get Leave Application List By ECode
     $scope.PopulateData = function (LeaveAppId) { $scope.LeaveAppId = LeaveAppId; $scope.GetLeaveApplicationDetails(); };
     //Get Login User Leave Application Details from Application Id
-    $scope.GetLeaveApplicationDetails = function () { var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'LeaveApplication/GetLeaveApplication?leaveAppId=' + $scope.LeaveAppId, true); xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () { if (xhr1.readyState === 4) { var jsonvar = JSON.parse(xhr1.responseText); var leavedetail = jsonvar[0].leaveApplicationDetails; for (var i = 0; i < leavedetail.length; i++) { var partialpost = leavedetail[i].isPosted; if (partialpost === 'P') { $scope.postflg = true; } else { $scope.postflg = false; } }; if ($scope.postflg === false) { $scope.lappdata = jsonvar; $scope.$digest(); } else { alert("This Application is partially posted. Please Contact to HR Department."); }; if ($scope.postflg === false || typeof ($scope.postflg) === "undefined") { $('#ConformModel').modal('show'); }; if ($scope.postflg === true) { return false; }; } }; xhr1.send(); };
+    $scope.GetLeaveApplicationDetails = function () {
+        var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'LeaveApplication/GetLeaveApplication?leaveAppId=' + $scope.LeaveAppId, true);
+        xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4) {
+                var jsonvar = JSON.parse(xhr1.responseText); var leavedetail = jsonvar[0].leaveApplicationDetails; for (var i = 0; i < leavedetail.length; i++) {
+                    var partialpost = leavedetail[i].isPosted; if (partialpost === 'P') { $scope.postflg = true; } else { $scope.postflg = false; }
+                }; if ($scope.postflg === false) {
+                    $scope.lappdata = jsonvar; $scope.$digest();
+                } else {
+                    alert("This Application is partially posted. Please Contact to HR Department.");
+                }; if ($scope.postflg === false || typeof ($scope.postflg) === "undefined") { $('#ConformModel').modal('show'); };
+                if ($scope.postflg === true) { return false; };
+            };
+        }; xhr1.send();
+    };
     $scope.LeaveCancel = function (entity) {
         var d = new Date(); var year = d.getFullYear().toString(); var month = d.getMonth() + 1; var yearmonth = year + (month.toString()); var Remarks = entity.Remarks;
         var FromDate = entity.FromDt; var farray = FromDate.split("-"); FromDate = farray[0] + '/' + farray[1] + '/' + farray[2];

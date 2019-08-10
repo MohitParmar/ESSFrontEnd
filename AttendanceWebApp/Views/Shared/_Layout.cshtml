@@ -129,6 +129,7 @@
                                 <li hidden="hidden" id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
                                 <li hidden="hidden" id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
                                 <li hidden="hidden" id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
+                                <li hidden="hidden" id="mnuUserManual"><a href="~/Master/UserManual">User Manual</a></li>
                                 <li hidden="hidden" id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
                             </ul>
@@ -185,6 +186,16 @@
                             <li hidden="hidden" id="mnuGatePassInOut"><a href="/GatePass/GatePassInOut">Gate Pass IN/OUT</a></li>
                         </ul>
                     </li>
+                    <li hidden="hidden" class="dropdown" id="mnuGPAdvice">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bookmark-empty"></i><span>Gate Pass Advice</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li hidden="hidden" id="mnuGPAdviceGenerate"><a href="/GatePassAdvice/GenerateGPAdvice">Generate Gate Pass Advice</a></li>
+                            <li hidden="hidden" id="mnuGPAdviceRelease"><a href="~/GatePassAdvice/ReleaseGPAdvice">Gate Pass Advice Release</a></li>
+                            <li hidden="hidden" id="mnuGPAdviceList"><a href="/GatePassAdvice/GetGPAdviceList">Gate Pass Advice List</a></li>
+                            <li hidden="hidden" id="mnuGPAdvicePost"><a href="~/GatePassAdvice/POSTGPAdvice">Gate Pass Advice Post</a></li>
+                            <li hidden="hidden" id="mnuGPAdviceReport"><a href="~/GatePassAdvice/GPAdviceReport">Gate Pass Advice Report</a></li>
+                        </ul>
+                    </li>
                     <li hidden="hidden" class="dropdown" id="mnuReport">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -209,10 +220,9 @@
                             <li hidden="hidden" id="mnuAutoSync"><a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a></li>
                             <li hidden="hidden" id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
                             <li hidden="hidden" id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
+                            <li hidden="hidden" id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster">Manage Leave</a></li>
                         </ul>
                     </li>
-                    <li hidden="hidden" id="mnuUserManual"><a href="~/Master/UserManual"><i class="icon-file"></i><span>User Manual</span></a></li>
-                    <li hidden="hidden" id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster"><i class="icon-code"></i><span>Manage Leave</span></a></li>
                 </ul>
             </div>
         </div>

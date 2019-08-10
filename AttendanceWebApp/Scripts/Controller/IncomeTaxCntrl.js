@@ -76,7 +76,6 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         xhr1.setRequestHeader('Accept', 'application/json');
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4) {
-                debugger;
                 var json = JSON.parse(xhr1.responseText); $scope.taxdata = json; $scope.$digest();
                 if ($scope.taxdata.length > 0) {
                     rentDetails = $scope.taxdata[0].rentDetails; ppfDetails = $scope.taxdata[0].ppfDetails; bankDeposits = $scope.taxdata[0].bankDeposits; insuranceDetails = $scope.taxdata[0].insuranceDetails;

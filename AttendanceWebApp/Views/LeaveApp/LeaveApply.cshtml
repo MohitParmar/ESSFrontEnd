@@ -178,7 +178,31 @@
                         </div>
                     </div>
                 </div>
-                @* Holiday List Of Current User *@
+                @* Optional Holiday List *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Optional Holiday List</strong></div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfOptionalholiday()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ophld in opthlddata">
+                                            <td style="text-align:center;" data-title="'Optional Holiday Date'" id="holidayDate">{{ophld.holidayDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:Left;" data-title="'Optional Holiday Name'" id="holidayName">{{ophld.holidayName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Holiday List *@
                 <div class="panel panel-info">
                     <div class="panel-heading"><strong>Holiday List</strong></div>
                     <div class="panel-body">

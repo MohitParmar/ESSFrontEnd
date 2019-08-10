@@ -91,7 +91,7 @@
                                                     <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                         <tr ng-repeat="lrd in ld.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="padding:2px;text-align:left;width:91px;">{{(ld.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                            <td style="padding:2px;padding-left:5px;text-align:left;width:91px;">{{(ld.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                             <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                             <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
                                                             <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>

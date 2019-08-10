@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "GP Advice Posting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="GPAdviceController">
+        <div class="container">
+            <input type="hidden" value="GA" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                @* Popup Model For Approve/Reject Leave Application  *@
+                <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:650px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Material Details </h4>
+                            </div>
+                            <div class="content" style="padding: 4px 15px 15px 15px;">
+                                <div class="body_panel">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-condensed" id="aliasTable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center;">Sr No.</th>
+                                                    <th style="text-align:center;">Material Code</th>
+                                                    <th style="text-align:center;">Material Description</th>
+                                                    <th style="text-align:center;">Material Quantity</th>
+                                                    <th style="text-align:center;">Approx Value</th>
+                                                    <th style="text-align:center;">HSN Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="l in pdata">
+                                                <tr ng-repeat="ld in l.gpAdviceDetails">
+                                                    <td style="text-align:center;">{{ld.gpAdviceItem}}</td>
+                                                    <td style="text-align:center;">{{ld.materialCode}}</td>
+                                                    <td style="text-align:left;">{{ld.materialDesc}}</td>
+                                                    <td style="text-align:center;">{{ld.materialQty}}</td>
+                                                    <td style="text-align:right;">{{ld.approxValue}}</td>
+                                                    <td style="text-align:center;">{{ld.hsnCode}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Main Model Display All Pending For Apporoval Leave Application List*@
+                <div class="col-sm-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <strong>Pending Gate Pass Advice List</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-init="GetGPALists()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">DATE</th>
+                                                <th style="text-align:center;">FROM</th>
+                                                <th style="text-align:center;">MODE</th>
+                                                <th style="text-align:center;">PURPOSE</th>
+                                                <th style="text-align:center;">WONO</th>
+                                                <th style="text-align:center;">VENDER NAME</th>
+                                                <th style="text-align:center;">APPROX RETURN DATE</th>
+                                                <th style="text-align:center;">Remarks</th>
+                                                <th style="text-align:center;">ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="d in gparlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                            <tr>
+                                                <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yy'}}</td>
+                                                <td>{{d.empName}}</td>
+                                                <td style="text-align:center;">{{d.gpAdviceType}}</td>
+                                                <td>{{d.purpose}}</td>
+                                                <td style="text-align:center;">{{d.workOrderNo}}</td>
+                                                <td>{{d.vendorName}}</td>
+                                                <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yy'}}</td>
+                                                <td><input class="form-control" type="text" id="Remarks" placeholder="Remarks" ng-model="N.Remarks"></td>
+                                                <td style="text-align:center;padding:3px;">
+                                                    <button class="btn btn-success" id="btnSubmit" ng-click="PostGpAdvice({{d.gpAdviceNo}},{{d.yearMonth}},'F')">
+                                                        <i class="icon-ok-sign"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger" id="btndelete" ng-click="PostGpAdvice({{d.gpAdviceNo}},{{d.yearMonth}},'R')">
+                                                        <i class="icon-remove-sign"></i>
+                                                    </button>
+                                                    <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}})">
+                                                        <i class="icon-info-sign"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

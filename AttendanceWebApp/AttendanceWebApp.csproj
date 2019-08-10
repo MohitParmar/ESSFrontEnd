@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -245,19 +247,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content\App_Start\AuthConfig.cs">
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Content\App_Start\BundleConfig.cs" />
-    <Compile Include="Content\App_Start\FilterConfig.cs" />
-    <Compile Include="Content\App_Start\IdentityConfig.cs" />
-    <Compile Include="Content\App_Start\RouteConfig.cs" />
-    <Compile Include="Content\App_Start\Startup.Auth.cs" />
-    <Compile Include="Content\App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomErrorController.cs" />
+    <Compile Include="Controllers\GatePassAdviceController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncomeTaxController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\LeaveAppController.cs" />
     <Compile Include="Controllers\LeavePostingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -291,7 +299,6 @@
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReleaseGroups.cs" />
-    <Compile Include="Models\Sections.cs" />
     <Compile Include="Models\Stations.cs" />
     <Compile Include="Models\Units.cs" />
     <Compile Include="Models\WorkGroups.cs" />
@@ -299,7 +306,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
+    <Content Include="ESS_Images\GatePass.png" />
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -446,7 +455,9 @@
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
     <Content Include="Scripts\Controller\GatePassCntrl.js" />
+    <Content Include="Scripts\Controller\GPAdviceCntrl.js" />
     <Content Include="Scripts\Controller\HomeCntrl.js" />
+    <Content Include="Scripts\Controller\IncomeTaxCntrl.js" />
     <Content Include="Scripts\Controller\LeaveaCOCntrl.js" />
     <Content Include="Scripts\Controller\LeaveCntrl.js" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
@@ -462,7 +473,6 @@
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\Jquery 3.2.1\JQuery Slim Version 3.2.1\jquery-3.2.1.slim.min.map" />
     <Content Include="Content\Jquery 3.2.1\jquery-3.2.1.min.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -473,6 +483,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\ESS.pubxml" />
     <Content Include="Scripts\Angular\angular.min.js.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -490,6 +501,7 @@
     <Content Include="Scripts\Controller\ReleaseStreategyCntrl.js" />
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
+    <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -518,6 +530,13 @@
     <Content Include="Scripts\Module\ngTable.js" />
     <Content Include="Scripts\PopupDate\datepickr.css" />
     <Content Include="Scripts\PopupDate\datepickr.min.js" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX1.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX2.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX3.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX4.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX5.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX6.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX7.jpg" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %2810%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %283%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %284%29.png" />
@@ -527,7 +546,10 @@
     <Content Include="UserManuals\images\LeaveaApplication\1 %288%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %289%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1%282%29.png" />
-    <Content Include="UserManuals\images\LeaveaApplication\1.png" />
+    <Content Include="UserManuals\images\LeaveaApplication\BEL.png" />
+    <Content Include="UserManuals\images\LeaveaApplication\IPU.png" />
+    <Content Include="UserManuals\images\LeaveaApplication\KOSI.png" />
+    <Content Include="UserManuals\images\LeaveaApplication\NKP.png" />
     <Content Include="UserManuals\images\LeaveCancellation\2 %281%29.png" />
     <Content Include="UserManuals\images\LeaveCancellation\2 %282%29.png" />
     <Content Include="UserManuals\images\LeaveCancellation\2 %283%29.png" />
@@ -578,6 +600,8 @@
     <Content Include="UserManuals\images\UpdateEmailId\1 %283%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %284%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %285%29.png" />
+    <Content Include="Views\IncomeTax\IncomeTaxDeclaration.cshtml" />
+    <Content Include="Views\IncomeTax\ITDeclarationReport.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -645,6 +669,14 @@
     <Content Include="Views\Master\ManageLeaveMaster.cshtml" />
     <Content Include="Views\LeavePosting\LeaveApplicationView.cshtml" />
     <Content Include="Views\CustomError\UnderMaintainance.cshtml" />
+    <Content Include="Views\IncomeTax\IncomeTaxDecFin.cshtml" />
+    <Content Include="Views\GatePass\VehicleGatePassInOut.cshtml" />
+    <Content Include="Views\GatePass\VehicleGatePassReport.cshtml" />
+    <Content Include="Views\GatePassAdvice\GenerateGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\GetGPAdviceList.cshtml" />
+    <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
