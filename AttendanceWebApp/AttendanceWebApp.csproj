@@ -306,6 +306,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\FileUploadXLSXLib\jszip.js" />
+    <Content Include="Content\FileUploadXLSXLib\xlsx.full.min.js" />
+    <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
     <Content Include="ESS_Images\GatePass.png" />
@@ -430,7 +433,6 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\ui-grid\ui-grid.css" />
     <Content Include="Content\ui-grid\ui-grid.js" />
-    <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\ErrorImages\55RWL.png" />
     <Content Include="ESS_Images\ess-logo-login.ico" />
     <Content Include="ESS_Images\excel.ico" />
@@ -677,6 +679,8 @@
     <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
     <Content Include="Views\GatePassAdvice\GetGPAdviceList.cshtml" />
     <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
+    <Content Include="Views\GatePassAdvice\MasterUpload.cshtml" />
+    <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

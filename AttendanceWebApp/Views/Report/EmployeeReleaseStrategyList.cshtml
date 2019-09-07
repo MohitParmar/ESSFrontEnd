@@ -29,25 +29,30 @@
                                         <tr>
                                             <th>Sr No.</th>
                                             <th style="text-align:center;" ng-click="sort('Employee_Code')">
-                                                Employee Code<span class="glyphicon sort-icon" ng-show="sortKey=='Employee_Code'"
-                                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='Employee_Code'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('NAME')">
-                                                Name<span class="glyphicon sort-icon" ng-show="sortKey=='NAME'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='NAME'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Work Group</th>
                                             <th style="text-align:center;" ng-click="sort('DEPARTMENT')">
-                                                Department<span class="glyphicon sort-icon" ng-show="sortKey=='DEPARTMENT'"
-                                                                ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Department
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='DEPARTMENT'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('STATION')">
-                                                Station<span class="glyphicon sort-icon" ng-show="sortKey=='STATION'"
-                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Station
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='STATION'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('EMAIL')">
-                                                Email<span class="glyphicon sort-icon" ng-show="sortKey=='EMAIL'"
-                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Email
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EMAIL'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Release Group</th>
                                             <th style="text-align:center;">Release Strategy</th>
@@ -63,23 +68,53 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.Employee_Code" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.NAME" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.Employee_Code" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.NAME" />
+                                            </td>
                                             <td></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.DEPARTMENT" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.STATION" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.EMAIL" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.DEPARTMENT" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.STATION" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.EMAIL" />
+                                            </td>
                                             <td></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASE_STRATEGY" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_CODE" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_ID" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_NAME" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_CODE" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_ID" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_NAME" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_CODE" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_ID" /></td>
-                                            <td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_NAME" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASE_STRATEGY" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_CODE" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_ID" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_1_NAME" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_CODE" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_ID" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_2_NAME" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_CODE" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_ID" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search.RELEASER_3_NAME" />
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>

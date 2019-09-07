@@ -71,14 +71,18 @@
                     <div class="panel-body">
                         <table class="table table-responsive table-condensed">
                             <tr>
-                                <td><label>Select From Date : </label></td>
+                                <td>
+                                    <label>Select From Date : </label>
+                                </td>
                                 <td>
                                     <div class="right-inner-addon">
                                         <i class="icon-calendar"></i>
                                         <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                     </div>
                                 </td>
-                                <td><label>Select To Date : </label></td>
+                                <td>
+                                    <label>Select To Date : </label>
+                                </td>
                                 <td>
                                     <div class="right-inner-addon">
                                         <i class="icon-calendar"></i>
@@ -127,19 +131,27 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                                </td>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" />
+                                                </td>
                                                 <td colspan="9"></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveApplicationDetails" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveApplicationDetails" />
+                                                </td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==24" data-title="'location'">{{l}}</td>
+                                                <td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==25" data-title="'location'">{{l}}</td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
                                                 <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">

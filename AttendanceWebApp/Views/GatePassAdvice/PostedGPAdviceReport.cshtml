@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "GP Advice Posting";
+﻿
+@{
+    ViewBag.Title = "Posted Gate Pass Advice Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -166,11 +167,11 @@
                                         <td>
                                             <div class="right-inner-addon">
                                                 <i class="icon-calendar"></i>
-                                                <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" datepicker>
+                                                <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                             </div>
                                         </td>
                                         <td>
-                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetGPAPost(New,'true')">
+                                            <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetGPAPost(New,'false')">
                                                 <i class="icon-search"></i>
                                                 Search
                                             </button>
@@ -183,7 +184,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div ng-init="GetGPAPost(New,'true')">
+                            <div ng-init="GetGPAPost(New,'false')">
                                 <div class="table-responsive">
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
@@ -211,9 +212,13 @@
                                                 <th style="text-align:center;">RETURN DATE</th>
                                                 <th style="text-align:center;">REQUISITIONER</th>
                                                 <th style="text-align:center;">PO TERMS</th>
-                                                <th style="text-align:center;">SAP GP No.</th>
-                                                <th style="text-align:center;">Remarks</th>
-                                                <th style="text-align:center;">ACTION</th>
+                                                <th style="text-align: center;" ng-click="sort('gpAdviceStatus')">
+                                                    Status
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceStatus'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;">SAP GP NO</th>
+                                                <th style="text-align:center;">Preview</th>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
@@ -230,7 +235,11 @@
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.vendorName" />
                                                 </td>
-                                                <td colspan="6"></td>
+                                                <td colspan="4"></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.sapGpNumber" />
+                                                </td>
+                                                <td></td>
                                             </tr>
                                         </thead>
                                         <tbody dir-paginate="d in gpapostlist|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1" current-page="currentPage">
@@ -238,28 +247,22 @@
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceNo}}</td>
-                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td>{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceType}}</td>
-                                                <td style="text-align:left;">{{d.purpose}}</td>
-                                                <td style="text-align:left;">{{d.workOrderNo}}</td>
-                                                <td style="text-align:left;">{{d.vendorName}}</td>
+                                                <td>{{d.purpose}}</td>
+                                                <td style="text-align:center;">{{d.workOrderNo}}</td>
+                                                <td>{{d.vendorName}}</td>
                                                 <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yy'}}</td>
-                                                <td style="text-align:left;">{{d.requisitioner}}</td>
-                                                <td style="text-align:left;">{{d.poTerms}}</td>
-                                                <td>
-                                                    <input class="form-control" type="text" id="SAPGPNO" placeholder="GP Number" style="width:85px;" ng-model="N.SAPGPNumber">
+                                                <td>{{d.requisitioner}}</td>
+                                                <td>{{d.poTerms}}</td>
+                                                <td style="text-align:center;" ng-style="
+                                                    d.gpAdviceStatus==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                    d.gpAdviceStatus==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'}">
+                                                    {{d.gpAdviceStatus}}
                                                 </td>
-                                                <td>
-                                                    <input class="form-control" type="text" id="Remarks" placeholder="Remarks" style="width:85px;" ng-model="N.Remarks">
-                                                </td>
-                                                <td style="text-align:center;padding:3px;">
-                                                    <button class="btn btn-success" id="btnSubmit" ng-click="PostGpAdvice(N,{{d.gpAdviceNo}},{{d.yearMonth}},'F')">
-                                                        <i class="icon-ok-sign"></i>
-                                                    </button>
-                                                    <button class="btn btn-danger" id="btndelete" ng-click="PostGpAdvice(N,{{d.gpAdviceNo}},{{d.yearMonth}},'R')">
-                                                        <i class="icon-remove-sign"></i>
-                                                    </button>
-                                                    <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}})">
+                                                <td style="text-align:center;">{{d.sapGpNumber}}</td>
+                                                <td style="text-align: center;">
+                                                    <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}},false)">
                                                         <i class="icon-info-sign"></i>
                                                     </button>
                                                 </td>
@@ -272,6 +275,8 @@
                         </div>
                         <div class="panel-footer">
                             <strong>Note For Mode : R - RGP, N - NRGP </strong>
+                            <br />
+                            <strong>Note For Posting Status :  N - Not Posted,<text style="color: #4CAF50;"> F - Fully Posted</text>,<text style="color: #f44336;"> R - Posting Rejected</text></strong>
                             <br />
                         </div>
                     </div>

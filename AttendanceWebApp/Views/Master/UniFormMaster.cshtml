@@ -47,7 +47,9 @@
             @* Add / Update Uniform Details *@
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Update Uniform Details</strong></div>
+                    <div class="panel-heading">
+                        <strong>Update Uniform Details</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed">
@@ -56,11 +58,15 @@
                                         <td>
                                             <input class="form-control" type="text" id="txtYear" name="Year" disabled="disabled">
                                         </td>
-                                        <td><label>Trouser Size</label></td>
+                                        <td>
+                                            <label>Trouser Size</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtTrouserSize" name="TrouserSize" placeholder="Trouser Size" ng-model="New.TrouserSize" required>
                                         </td>
-                                        <td><label>Shirt Size</label></td>
+                                        <td>
+                                            <label>Shirt Size</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtShirtSize" name="ShirtSize" placeholder="Shirt Size" ng-model="New.ShirtSize" required>
                                         </td>
@@ -86,7 +92,9 @@
             @* Get Uniform Details *@
             <div class="col-sm-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Details Of Uniform</strong></div>
+                    <div class="panel-heading">
+                        <strong>Details Of Uniform</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetUniformDetails()">
                             <div class="table-responsive">

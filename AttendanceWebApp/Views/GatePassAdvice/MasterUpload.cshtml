@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Master Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
+
+<script src="~/Content/FileUploadXLSXLib/jszip.js"></script>
+<script src="~/Content/FileUploadXLSXLib/xlsx.full.min.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="GPAdviceController">
+        <div class="container">
+            <input type="hidden" value="GA" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Upload Master Details</strong>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" name="GPAdviceForm" novalidate>
+                                <div class="input-group form">
+                                    <input type="file" id="fileUpload" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" id="upload" value="Upload" class="btn btn-primary" ng-click="Upload()"><i class="icon-upload"></i>&nbsp;Upload</button>
+                                    </span>
+                                    @*<div id="dvExcel"></div>*@
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-footer">
+                            <strong>Note : <text style="color:#f44336;">File Format required XLS/XLSX Only</text></strong>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

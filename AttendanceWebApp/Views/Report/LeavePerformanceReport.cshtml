@@ -54,13 +54,17 @@
                         <div class="table-responsive">
                             <table class="table table-condensed">
                                 <tr>
-                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
                                     <td>
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
                                             <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                         </div>
-                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
                                     <td>
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
@@ -76,10 +80,16 @@
                                 </tr>
                             </table>
                             <table class="table table-reponsive table-bordered table-condensed">
-                                <tr><td><input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search" /></td></tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" type="text" style="margin:0;padding:1px;" ng-model="search" />
+                                    </td>
+                                </tr>
                             </table>
                             <table class="table table-bordered table-striped table-hover table-condensed">
-                                <tr><th ng-repeat="h in headers track by $index">{{h}}</th></tr>
+                                <tr>
+                                    <th ng-repeat="h in headers track by $index">{{h}}</th>
+                                </tr>
                                 <tr dir-paginate="s in dta |orderBy:sortKey:reverse|filter:search|itemsPerPage:25">
                                     <td ng-repeat="r in s track by $index">{{r}}</td>
                                 </tr>

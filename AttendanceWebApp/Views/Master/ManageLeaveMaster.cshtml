@@ -83,7 +83,11 @@
                 <input type="hidden" value="LA" id="releaseGroupCode" />
                 <input type="hidden" value="GP" id="gpreleaseGroupCode" />
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><div class="panel-title" style="text-align:center;"><strong>Manage Leave Master Module</strong></div></div>
+                    <div class="panel-heading">
+                        <div class="panel-title" style="text-align:center;">
+                            <strong>Manage Leave Master Module</strong>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <div id="MessageBox" class="table-responsive"></div>
                         <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -100,7 +104,9 @@
                                                     <table id="myTable" class="table table-responsive table-condensed">
                                                         <tbody>
                                                             <tr>
-                                                                <td><label>From Date :</label></td>
+                                                                <td>
+                                                                    <label>From Date :</label>
+                                                                </td>
                                                                 <td style="text-align:center;" colspan="4">
                                                                     <div class="right-inner-addon">
                                                                         <i class="icon-calendar"></i>
@@ -110,7 +116,9 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td><label>To Date :</label></td>
+                                                                <td>
+                                                                    <label>To Date :</label>
+                                                                </td>
                                                                 <td style="text-align:center;" colspan="4">
                                                                     <div class="right-inner-addon">
                                                                         <i class="icon-calendar"></i>
@@ -120,7 +128,9 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td><label>Leave Type :</label></td>
+                                                                <td>
+                                                                    <label>Leave Type :</label>
+                                                                </td>
                                                                 <td style="text-align:center;" colspan="4">
                                                                     <div ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
                                                                         <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
@@ -131,16 +141,26 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td><label>Leave Reason : </label></td>
+                                                                <td>
+                                                                    <label>Leave Reason : </label>
+                                                                </td>
                                                                 <td colspan="4">
                                                                     <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td><label>Half Day :</label></td>
-                                                                <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" style="margin-top:0px;"></td>
-                                                                <td style="text-align:right;"><label>Total Days :</label></td>
-                                                                <td><input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required></td>
+                                                                <td>
+                                                                    <label>Half Day :</label>
+                                                                </td>
+                                                                <td style="width:61px;">
+                                                                    <input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" style="margin-top:0px;">
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                    <label>Total Days :</label>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot>
@@ -197,8 +217,14 @@
                                         <td>
                                             <table class="table" id="tbl_empdtl">
                                                 <tr dir-paginate="e in empdata|itemsPerPage:5">
-                                                    <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
-                                                    <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
+                                                    <td style="text-align:center;">
+                                                        Emp.Name :
+                                                        <label>{{e.empName}}</label>
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        Station :
+                                                        <label>{{e.statName}}</label>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -259,10 +285,16 @@
                                         <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.totalDays}}</td>
-                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
-                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.cancelled}}" disabled="disabled"></td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-checked="{{d.cancelled}}" disabled="disabled">
+                                        </td>
                                         <td style="text-align:center;">{{d.parentId}}</td>
-                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.isCancelledPosted}}" disabled="disabled"></td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-checked="{{d.isCancelledPosted}}" disabled="disabled">
+                                        </td>
                                         <td style="text-align:center;"
                                             ng-style="
                                             d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -270,14 +302,18 @@
                                             d.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
                                             {{d.isPosted}}
                                         </td>
-                                        <td style="text-align:center;"><label ng-show="d.isPosted == 'F' || d.isPosted == 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                        <td style="text-align:center;">
+                                            <label ng-show="d.isPosted == 'F' || d.isPosted == 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
+                                        </td>
                                         <td style="text-align:center;">{{d.postUser}}</td>
                                         <td style="text-align:center;">
                                             <button class="btn btn-info" id="btnEdit" value="Edit" ng-click="PopulateData({{d.leaveAppId}},{{d.leaveAppItem}})">
                                                 <i class="icon-edit"></i>
                                             </button>
                                         </td>
-                                        <td style="text-align:center;"><input type="text" id="rejRemarks" class="form-control" ng-model="r.remarks" /></td>
+                                        <td style="text-align:center;">
+                                            <input type="text" id="rejRemarks" class="form-control" ng-model="r.remarks" />
+                                        </td>
                                         <td style="text-align:center;">
                                             <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="LeaveReject(r,{{d.leaveAppId}},{{d.yearMonth}})">
                                                 <i class="icon-remove"></i>

@@ -37,19 +37,45 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='AttdDate'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;"><label>Shift</label></th>
-                                            <th style="text-align:center;"><label>Cons Shift</label></th>
-                                            <th style="text-align:center;"><label>In</label></th>
-                                            <th style="text-align:center;"><label>Out</label></th>
-                                            <th style="text-align:center;"><label>Wrking Hrs</label></th>
-                                            <th style="text-align:center;"><label>Over Time</label></th>
-                                            <th style="text-align:center;"><label>Status</label></th>
-                                            <th style="text-align:center;"><label>Half Day</label></th>
-                                            <th style="text-align:center;"><label>Leave Type</label></th>
-                                            <th style="text-align:center;"><label>Leave Half</label></th>
-                                            <th style="text-align:center;"><label>Early come</label></th>
-                                            <th style="text-align:center;"><label>Early Going</label></th>
-                                            <th style="text-align:center;"><label>Late Come</label></th>
+                                            <th style="text-align:center;">
+                                                <label>Shift</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Cons Shift</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>In</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Out</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Wrking Hrs</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Over Time</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Status</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Half Day</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Leave Type</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Leave Half</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Early come</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Early Going</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Late Come</label>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,7 +92,9 @@
                                                 <input type="checkbox" ng-checked="{{d.HalfDay}}" disabled="disabled" />
                                             </td>
                                             <td style="text-align:center;">{{d.LeaveType}}</td>
-                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.LeaveHalf}}" disabled="disabled" /></td>
+                                            <td style="text-align:center;">
+                                                <input type="checkbox" ng-checked="{{d.LeaveHalf}}" disabled="disabled" />
+                                            </td>
                                             <td style="text-align:center;">{{d.Earlycome}}</td>
                                             <td style="text-align:center;">{{d.EarlyGoing}}</td>
                                             <td style="text-align:center;">{{d.LateCome}}</td>
@@ -84,9 +112,15 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='punchDate'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;"><label>In / Out</label></th>
-                                            <th style="text-align:center;"><label>Machine IP</label></th>
-                                            <th style="text-align:center;"><label>Machine Desc</label></th>
+                                            <th style="text-align:center;">
+                                                <label>In / Out</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Machine IP</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Machine Desc</label>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>

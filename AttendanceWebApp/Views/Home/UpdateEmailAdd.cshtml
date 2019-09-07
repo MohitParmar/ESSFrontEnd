@@ -13,18 +13,26 @@
                 <div id="MessageBox" class="table-responsive"></div>
                 @* Add / Update Email Address in ESS Database *@
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Update Email Id</strong></div>
+                    <div class="panel-heading">
+                        <strong>Update Email Id</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetUserInfo()">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered table-condensed">
                                     <tr dir-paginate="d in Udata|itemsPerPage:5">
                                         <th>Employee Code </th>
-                                        <td><b>{{d.empUnqId}}</b></td>
+                                        <td>
+                                            <b>{{d.empUnqId}}</b>
+                                        </td>
                                         <th>Employee Name </th>
-                                        <td><b>{{d.empName}}</b></td>
+                                        <td>
+                                            <b>{{d.empName}}</b>
+                                        </td>
                                         <th>Email ID </th>
-                                        <td><b>{{d.email}}</b></td>
+                                        <td>
+                                            <b>{{d.email}}</b>
+                                        </td>
                                     </tr>
                                 </table>
                                 <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>

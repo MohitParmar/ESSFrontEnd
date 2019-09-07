@@ -71,21 +71,27 @@
                     <div class="panel-body">
                         <table class="table table-responsive table-condensed">
                             <tr>
-                                <td><label>Select From Date : </label></td>
+                                <td>
+                                    <label>Select From Date : </label>
+                                </td>
                                 <td>
                                     <div class="right-inner-addon">
                                         <i class="icon-calendar"></i>
                                         <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                     </div>
                                 </td>
-                                <td><label>Select To Date : </label></td>
+                                <td>
+                                    <label>Select To Date : </label>
+                                </td>
                                 <td>
                                     <div class="right-inner-addon">
                                         <i class="icon-calendar"></i>
                                         <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                     </div>
                                 </td>
-                                <td><label>Is Posted : </label></td>
+                                <td>
+                                    <label>Is Posted : </label>
+                                </td>
                                 <td>
                                     <select id="cmbIsPosted" class="form-control" required>
                                         <option value="N" title="Not Posted">Not Posted</option>
@@ -135,11 +141,19 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.location" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.location" />
+                                                </td>
                                                 <td colspan="4"></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" />
+                                                </td>
                                                 <td colspan="10"></td>
                                             </tr>
                                         </thead>
@@ -152,7 +166,9 @@
                                                 <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yy'}}</td>
                                                 @*<td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">{{lr.releaseDate | date:'dd/MM/yy'}}</td>*@
-                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                                <td style="text-align:center;padding:3px;" id="updDt">
+                                                    <label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
+                                                </td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:center;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.statName}}</td>
@@ -162,7 +178,9 @@
                                                 <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;">{{d.totalDays}}</td>
-                                                <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
+                                                <td style="text-align:center;">
+                                                    <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
+                                                </td>
                                                 <td style="text-align:center;">{{d.isPosted}}</td>
                                                 @*<td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==10" data-title="'empName'">{{e}}</td>
                                                     <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==1" data-title="'statName'">{{s}}</td>
@@ -181,7 +199,9 @@
                                                             </tr>
                                                         </table>
                                                     </td>*@
-                                                <td><input type="text" id="remarks" ng-model="N.Remarks" class="form-control" placeholder="Rejection Remarks" /></td>
+                                                <td>
+                                                    <input type="text" id="remarks" ng-model="N.Remarks" class="form-control" placeholder="Rejection Remarks" />
+                                                </td>
                                                 <td>
                                                     @* ng-repeat="lrd in d.leaveApplicationDetails" *@
                                                     <input type="button" id="btnReject" value="Reject" class="btn btn-danger"
@@ -196,7 +216,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
+                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <br />
                         <strong>Note For Is Posted : N - Not Posted, F - Fully Posted</strong>
                     </div>
                 </div>

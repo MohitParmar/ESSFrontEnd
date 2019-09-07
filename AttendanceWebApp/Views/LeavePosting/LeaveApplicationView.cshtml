@@ -44,7 +44,9 @@
                 <input type="hidden" value="LA" id="releaseGroupCode" />
                 <input type="hidden" value="GP" id="gpreleaseGroupCode" />
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>User Leave Application Details</strong></div>
+                    <div class="panel-heading">
+                        <strong>User Leave Application Details</strong>
+                    </div>
                     <div class="panel-body">
                         @*Leave Application Details *@
                         <div class="table-responsive">
@@ -64,8 +66,14 @@
                                         <td>
                                             <table class="table" id="tbl_empdtl">
                                                 <tr dir-paginate="e in empdata|itemsPerPage:5">
-                                                    <td style="text-align:center;">Emp.Name : <label>{{e.empName}}</label></td>
-                                                    <td style="text-align:center;">Station : <label>{{e.statName}}</label></td>
+                                                    <td style="text-align:center;">
+                                                        Emp.Name :
+                                                        <label>{{e.empName}}</label>
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        Station :
+                                                        <label>{{e.statName}}</label>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -114,8 +122,12 @@
                                         <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">{{d.totalDays}}</td>
-                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled"></td>
-                                        <td style="text-align:center;"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yy'}}</label></td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
+                                        </td>
                                         <td style="text-align:center;"
                                             ng-style="
                                                 d.isPosted==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -135,7 +147,9 @@
             <div class="col-sm-4">
                 @* Leave Balance Grid  *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Balance</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
@@ -163,7 +177,9 @@
                 </div>
                 @* Posted Leave Requests Grid  *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Posted Leave Application List From HR</strong></div>
+                    <div class="panel-heading">
+                        <strong>Posted Leave Application List From HR</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">

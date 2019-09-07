@@ -29,7 +29,9 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Leave Application List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Application List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetShortLeaveLists()">
                             <div class="table-responsive">
@@ -73,7 +75,9 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td style="text-align:center;"><button type="button" value="Cancel" id="btnCancel" class="btn btn-danger" ng-disabled="ld.openmonthflg === false" ng-click="FullLeaveCancel('{{ld.releaseGroupCode}}',{{ld.leaveAppId}})"><i class="icon-remove"></i>Cancel</button></td>
+                                            <td style="text-align:center;">
+                                                <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger" ng-disabled="ld.openmonthflg === false" ng-click="FullLeaveCancel('{{ld.releaseGroupCode}}',{{ld.leaveAppId}})"><i class="icon-remove"></i>Cancel</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -81,17 +85,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer"><strong>Note For Leave Group : LA - Leave Application</strong><br /></div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <br />
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Balance</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
                                 <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead><tr><th style="text-align:center;">Type</th><th style="text-align:center;">Open</th><th style="text-align:center;">Availed</th><th style="text-align:center;">Encashed</th><th style="text-align:center;">Balance</th></tr></thead>
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">Open</th>
+                                            <th style="text-align:center;">Availed</th>
+                                            <th style="text-align:center;">Encashed</th>
+                                            <th style="text-align:center;">Balance</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr ng-repeat="d in data">
                                             <td style="text-align:center;" data-title="'Leave Type'" id="LeaveTypeCode">{{d.leaveTypeCode}}</td>
@@ -107,12 +124,19 @@
                     </div>
                 </div>
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Holiday List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                             <div class="table-responsive">
                                 <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
-                                    <thead><tr><th style="text-align:center;">Date</th><th style="text-align:center;">Festival Name</th></tr></thead>
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr ng-repeat="hld in hlddata">
                                             <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>

@@ -32,18 +32,19 @@
             pointer-events: none;
         }
 </style>
+
 <div ng-app="myApp" ng-controller="GPAdviceController">
     <div class="container">
         <div class="row">
             @* Popup Model For View Material Details of Selected GP Advice *@
             <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content" style="        width: 650px;">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Material Details </h4>
                         </div>
-                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-condensed" id="aliasTable">
@@ -52,7 +53,7 @@
                                                 <th style="text-align: center;">Sr No.</th>
                                                 <th style="text-align: center;">Material Code</th>
                                                 <th style="text-align: center;">Material Description</th>
-                                                <th style="text-align: center;">Material Quantity</th>
+                                                <th style="text-align: center;">Quantity</th>
                                                 <th style="text-align: center;">Approx Value</th>
                                                 <th style="text-align: center;">HSN Code</th>
                                             </tr>
@@ -90,6 +91,11 @@
                                         <table id="myTable" class="table table-condensed table-bordered">
                                             <tbody ng-repeat="lr in pdata">
                                                 <tr>
+                                                    <th colspan="10">
+                                                        <h4>Gate Pass Advice No. : {{lr.gpAdviceNo}}</h4>
+                                                    </th>
+                                                </tr>
+                                                <tr>
                                                     <th style="text-align: center;">GATE PASS TYPE</th>
                                                     <th style="text-align: center;">REASONS</th>
                                                     <th style="text-align: center;">WORK ORDER NO</th>
@@ -98,48 +104,92 @@
                                                     <th style="text-align: center;" colspan="3">VENDER ADDRESS</th>
                                                 </tr>
                                                 <tr>
-                                                    <td hidden="hidden"><input class="form-control" type="text" id="gpAdviceNo" value="{{lr.gpAdviceNo}}"></td>
+                                                    <td hidden="hidden">
+                                                        <input class="form-control" type="text" id="gpAdviceNo" value="{{lr.gpAdviceNo}}">
+                                                    </td>
                                                     <td>
-                                                        <select class="form-control" id="GpAdviceType">
+                                                        <select class="form-control" id="GpAdviceType" ng-model="N.gpAdviceType">
                                                             <option value="R" title="RGP" selected>RGP</option>
                                                             <option value="N" title="NRGP">NRGP</option>
                                                         </select>
                                                     </td>
-                                                    <td><input class="form-control" type="text" id="txtPurpose" name="Purpose" value="{{lr.purpose}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtWONO" name="WONO" value="{{lr.workOrderNo}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtVenderCode" name="VenderCode" value="{{lr.vendorCode}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtVenderName" name="VenderName" value="{{lr.vendorName}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtVenderAdd1" name="VenderAdd1" value="{{lr.vendorAddress1}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtVenderAdd2" name="VenderAdd2" value="{{lr.vendorAddress2}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtVenderAdd3" name="VenderAdd3" value="{{lr.vendorAddress3}}"></td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtPurpose" name="Purpose" value="{{lr.purpose}}">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtWONO" name="WONO" value="{{lr.workOrderNo}}">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtVenderCode" name="VenderCode" value="{{lr.vendorCode}}" ng-change="GetMasterData('v')">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtVenderName" name="VenderName" value="{{lr.vendorName}}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtVenderAdd1" name="VenderAdd1" value="{{lr.vendorAddress1}}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtVenderAdd2" name="VenderAdd2" value="{{lr.vendorAddress2}}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtVenderAdd3" name="VenderAdd3" value="{{lr.vendorAddress3}}" readonly>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="text-align: center;">APPROX. RETURN DATE</th>
-                                                    <th style="text-align: center;">Mode Of Transport.</th>
-                                                    <th style="text-align: center;">Transporter Name</th>
-                                                    <th style="text-align: center;">MATERIAL CODE</th>
-                                                    <th style="text-align: center;">MATERIAL DESC.</th>
-                                                    <th style="text-align: center;">QUANTITY</th>
-                                                    <th style="text-align: center;">APPROX. VALUE</th>
-                                                    <th style="text-align: center;">HSN CODE</th>
+                                                    <th style="text-align:center;">APPROX. RETURN DATE</th>
+                                                    <th style="text-align:center;">Mode Of Transport.</th>
+                                                    <th style="text-align:center;">Transporter Name</th>
+                                                    <th style="text-align:center;">MATERIAL CODE</th>
+                                                    <th style="text-align:center;">MATERIAL DESC.</th>
+                                                    <th style="text-align:center;">QUANTITY</th>
+                                                    <th style="text-align:center;">APPROX. VALUE</th>
+                                                    <th style="text-align:center;">HSN CODE</th>
                                                 </tr>
                                                 <tr>
                                                     <td>
                                                         <div class="right-inner-addon">
                                                             <i class="icon-calendar"></i>
-                                                            <input class="form-control" type="text" id="ApproxDt" ng-model="A.ApproxDt" data-date-format="yyyy/MM/dd" datepicker>
+                                                            <input class="form-control" type="text" id="ApproxDt" ng-model="A.ApproxDt" ng-change="ToValidate()" data-date-format="yyyy/MM/dd" datepicker>
                                                         </div>
                                                     </td>
-                                                    <td><input class="form-control" type="text" id="txtModeOfTransport" name="ModeOfTransport" value="{{lr.modeOfTransport}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtTransporterName" name="TransporterName" value="{{lr.transporterName}}"></td>
-                                                    <td><input class="form-control" type="text" id="txtMaterialCode" name="MaterialCode" ng-model="M.MaterialCode"></td>
-                                                    <td><input class="form-control" type="text" id="txtMaterialDesc" name="MaterialDesc" ng-model="M.MaterialDesc"></td>
-                                                    <td><input class="form-control" type="text" id="txtMaterialQty" name="MaterialQty" ng-model="M.MaterialQty"></td>
-                                                    <td><input class="form-control" type="text" id="txtApproxValue" name="ApproxValue" ng-model="M.ApproxValue"></td>
-                                                    <td><input class="form-control" type="text" id="txtHsnCode" name="HsnCode" ng-model="M.HsnCode"></td>
+                                                    <td>
+                                                        <select id="ModeOfTransport" class="form-control" ng-model="N.ModeOfTransport">
+                                                            <option value="BYHAND" title="By Hand" selected>By Hand / Self</option>
+                                                            <option value="BYCOURIER" title="By Courier">By Courier</option>
+                                                            <option value="BYROAD" title="By Road">By Road</option>
+                                                            <option value="BYRAIL" title="By Rail">By Rail</option>
+                                                            <option value="BYAIR" title="By Air">By Air</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtTransporterName" name="TransporterName" value="{{lr.transporterName}}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtMaterialCode" name="MaterialCode" ng-model="M.MaterialCode" ng-change="GetMasterData('m')">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtMaterialDesc" name="MaterialDesc" ng-model="M.MaterialDesc">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtMaterialQty" name="MaterialQty" ng-model="M.MaterialQty">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtApproxValue" name="ApproxValue" ng-model="M.ApproxValue">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtHsnCode" name="HsnCode" ng-model="M.HsnCode">
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" style="text-align: right;">
+                                                    <th style="text-align: center;">REQUISITIONER</th>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtRequisitioner" name="Requisitioner" value="{{lr.requisitioner}}">
+                                                    </td>
+                                                    <th style="text-align: center;">PO TERMS</th>
+                                                    <td>
+                                                        <input class="form-control" type="text" id="txtPoTerms" name="PoTerms" value="{{lr.poTerms}}">
+                                                    </td>
+                                                    <td colspan="4" style="text-align: right;">
                                                         <strong>STEP - 1 : Add To List</strong>&nbsp;
                                                         <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddMaterial(M,true)">
                                                             <i class="icon-plus-sign"></i>
@@ -168,13 +218,17 @@
                                                     <td style="text-align: center;">{{lrd.materialQty}}</td>
                                                     <td style="text-align: right;">{{lrd.approxValue}}</td>
                                                     <td style="text-align: center;">{{lrd.hsnCode}}</td>
-                                                    <td style="text-align: center;"><input type='button' name='Del' value='Del' onclick='RemoveMaterial(this)' class='btn btn-danger'></td>
+                                                    <td style="text-align: center;">
+                                                        <input type='button' name='Del' value='Del' onclick='RemoveMaterial(this)' class='btn btn-danger'>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <table class="table table-condensed">
                                             <tr>
-                                                <td style="text-align: left;"><strong>STEP - 2 : Update Gate Pass Advice</strong></td>
+                                                <td style="text-align: left;">
+                                                    <strong>STEP - 2 : Update Gate Pass Advice</strong>
+                                                </td>
                                                 <td style="text-align: right;">
                                                     <button id="btnSubmit" type="button" class="btn btn-success" value="Submit" name="submit" ng-click="GenerateGPAdvice(A,true)">
                                                         Update Gate Pass Advice
@@ -194,26 +248,68 @@
                 <input type="hidden" value="GA" id="releaseGroupCode" />
                 <div id="MessageBox" class="table-responsive"></div>
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Gate Pass Advice List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Gate Pass Advice List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetGPAListInfo()">
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="tbl_print">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center;">DATE</th>
-                                        <th style="text-align: center;">Release Status</th>
-                                        <th style="text-align: center;">MODE</th>
+                                        <th style="text-align: center;">Sr No.</th>
+                                        <th style="text-align: center;" ng-click="sort('gpAdviceDate')">
+                                            Advice DATE
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('gpAdviceNo')">
+                                            Advice No
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceNo'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('releaseStatusCode')">
+                                            Release Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('gpAdviceType')">
+                                            MODE
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceType'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                         <th style="text-align: center;">PURPOSE</th>
                                         <th style="text-align: center;">WONO</th>
                                         <th style="text-align: center;">VENDER NAME</th>
-                                        <th style="text-align: center;">APPROX RETURN DATE</th>
-                                        <th style="text-align: center;">Post Status</th>
+                                        <th style="text-align: center;">RETURN DATE</th>
+                                        <th style="text-align: center;">Requisitioner</th>
+                                        <th style="text-align: center;">PoTerms</th>
+                                        <th style="text-align: center;">Sap GP No</th>
                                         <th style="text-align: center;">ACTION</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gpAdviceNo" />
+                                        </td>
+                                        <td colspan="3"></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.workOrderNo" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.vendorName" />
+                                        </td>
+                                        <td colspan="3"></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.sapGpNumber" />
+                                        </td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr dir-paginate="d in gpalist|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                    <tr dir-paginate="d in gpalist|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                        <td style="text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="text-align: center;">{{d.gpAdviceDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;">{{d.gpAdviceNo}}</td>
                                         <td style="text-align: center;" ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -222,22 +318,20 @@
                                         </td>
                                         <td style="text-align: center;">{{d.gpAdviceType}}</td>
                                         <td>{{d.purpose}}</td>
-                                        <td style="text-align: center;">{{d.workOrderNo}}</td>
+                                        <td style="text-align: left;">{{d.workOrderNo}}</td>
                                         <td>{{d.vendorName}}</td>
                                         <td style="text-align: center;">{{d.approxDateOfReturn | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align: center;" ng-style="
-                                                    d.gpAdviceStatus==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
-                                                    d.gpAdviceStatus==='N' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
-                                            {{d.gpAdviceStatus}}
-                                        </td>
+                                        <td style="text-align: left;">{{d.requisitioner}}</td>
+                                        <td style="text-align: left;">{{d.poTerms}}</td>
+                                        <td style="text-align: center;">{{d.sapGpNumber}}</td>
                                         <td style="text-align: center;padding: 3px;">
                                             <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}},false)">
                                                 <i class="icon-info-sign"></i>
                                             </button>
-                                            <button class="btn btn-primary" id="btnedit" ng-click="PopulateEdit({{d.gpAdviceNo}},{{d.yearMonth}})" ng-show="d.releaseStatusCode == 'N'">
+                                            <button class="btn btn-primary" id="btnedit" ng-click="PopulateEdit({{d.gpAdviceNo}},{{d.yearMonth}})" ng-show="d.releaseStatusCode == 'N' && d.gpAdviceStatus!='R'">
                                                 <i class="icon-edit-sign"></i>
                                             </button>
-                                            <button class="btn btn-danger" id="btndelete" ng-show="d.releaseStatusCode == 'N'" ng-click="PostGpAdvice({{d.gpAdviceNo}},{{d.yearMonth}},'R')">
+                                            <button class="btn btn-danger" id="btndelete" ng-click="PostGpAdvice('Self Cancelled',{{d.gpAdviceNo}},{{d.yearMonth}},'R')" ng-show="d.releaseStatusCode == 'N' && d.gpAdviceStatus!='R'">
                                                 <i class="icon-remove-sign"></i>
                                             </button>
                                         </td>
@@ -248,8 +342,12 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Mode : R - RGP, N - NRGP </strong><br />
-                        <strong>Note For Status :  N - Not released,<text style="color: #ff9800;"> P - Partially released</text>,<text style="color: #4CAF50;"> F - Fully released</text>,<text style="color: #f44336;"> R - Release rejected</text></strong><br />
+                        <strong>Note For Mode : R - RGP, N - NRGP </strong>
+                        <br />
+                        <strong>Note For Release Status :  N - Not released,<text style="color: #ff9800;"> P - Partially released</text>,<text style="color: #4CAF50;"> F - Fully released</text>,<text style="color: #f44336;"> R - Release rejected</text></strong>
+                        <br />
+                        <strong>Note For Posting Status :  N - Not Posted,<text style="color: #4CAF50;"> F - Fully Posted</text>,<text style="color: #f44336;"> R - Posting Rejected</text></strong>
+                        <br />
                     </div>
                 </div>
             </div>

@@ -45,7 +45,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>Pending For Gate Pass Release List</strong></div>
+                        <div class="panel-heading">
+                            <strong>Pending For Gate Pass Release List</strong>
+                        </div>
                         <div class="panel-body">
                             <div style="text-align:center;">
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
@@ -70,11 +72,19 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
+                                                </td>
                                                 <td></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" /></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" />
+                                                </td>
                                                 <td colspan="2"></td>
                                             </tr>
                                         </thead>

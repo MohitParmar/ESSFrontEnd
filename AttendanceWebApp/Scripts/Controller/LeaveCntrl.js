@@ -22,7 +22,7 @@
     //Get Applied Leave Requests For Validations
     $scope.LeaveRequestData = function (entity) {
         $scope.ToValidate();
-        var chk = false; var chktabldta = false;
+        var chk = false; var chktabldta = false; var chkohsl = false;
         $("#HalfFlag").removeAttr("disabled");      //enable Checkbox for Half Day Leave Apply
         if ((typeof (entity) === "undefined") || (typeof (entity.LeaveTypeCode) === "undefined") || (typeof (entity.FromDt) === "undefined") || (typeof (entity.Remarks) === "undefined")) { alert("Please Fill All Required Details Step by Step..."); return false; }
         var LeaveTypeCode = entity.LeaveTypeCode; var HalfDayFlag = false; var Totaldays = 0;
@@ -31,59 +31,30 @@
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }
         if ($('#HalfFlag').prop("checked") === true) { HalfDayFlag = true; } else { HalfDayFlag = false; }
         Totaldays = $('#TotalDays').val(); if (HalfDayFlag === true) { Totaldays = '0.5'; } else { if (Totaldays === null || Totaldays === '' || Totaldays === 0) { Totaldays = diff; } }
-        if (LeaveTypeCode === "PL" && Totaldays < 3) {
-            document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = "";
-            document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false;
-            alert("PL cannot be less than 3 days"); return;
-        };
+        if (LeaveTypeCode === "PL" && Totaldays < 3) { document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false; alert("PL cannot be less than 3 days"); return; };
         ///Get Grid Data
         var d = new Date(); var year = d.getFullYear().toString(); var month = d.getMonth() + 1; var yearmonth = year + (month.toString());
-        var jsonObj = {};
-        var TableData = storeTblValues()
-        TableData = JSON.stringify(TableData);
+        var jsonObj = {}; var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         //Get Data From the Leae Application Form & store into Array
         function storeTblValues() {
             var count = 0; c = c + 1; count++;
             $('.tempRow').remove();
-            var row = $("<tr>" +
-                "<td><input type='hidden' name='AliasLastNames' value='" + c + "'>" + c + "</td>" +
-                "<td><input type='hidden' name='AliasFirstNames' value='" + LeaveTypeCode + "'>" + LeaveTypeCode + "</td>" +
-                "<td><input type='hidden' name='AliasFirstNames' value='" + FromDate + "'>" + FromDate + "</td>" +
-                "<td><input type='hidden' name='AliasMiddleNames' value='" + ToDate + "'>" + ToDate + "</td>" +
-                "<td><input type='hidden' name='AliasLastNames' value='" + Totaldays + "'>" + Totaldays + "</td>" +
-                "<td><input type='hidden' name='AliasLastNames' value=" + new Boolean(HalfDayFlag) + ">" + HalfDayFlag + "</td>" +
-                "<td><input type='hidden' name='AliasLastNames' value='" + Remarks + "'>" + Remarks + "</td>" +
-                "</tr>");
-            $("#aliasTable").append(row);
-            var TableData = new Array();
-            $('#aliasTable tr').each(function (row, tr) {
-                TableData[row] = {
-                    "yearMonth": yearmonth, "leaveAppId": 0, "compCode": $('#myCompCode').val(), "wrkGrp": $('#myWrkGrp').val(), "leaveAppItem": c,
-                    "leaveTypeCode": $(tr).find('td:eq(1)').text(), "fromDt": $(tr).find('td:eq(2)').text(), "toDt": $(tr).find('td:eq(3)').text(),
-                    "totalDays": $(tr).find('td:eq(4)').text(), "halfdayflag": $(tr).find('td:eq(5)').text(), "remarks": $(tr).find('td:eq(6)').text()
-                }
-            }); TableData.shift();
-            var ltyp = '';
+            var row = $("<tr>" + "<td><input type='hidden' name='AliasLastNames' value='" + c + "'>" + c + "</td>" + "<td><input type='hidden' name='AliasFirstNames' value='" + LeaveTypeCode + "'>" + LeaveTypeCode + "</td>" + "<td><input type='hidden' name='AliasFirstNames' value='" + FromDate + "'>" + FromDate + "</td>" + "<td><input type='hidden' name='AliasMiddleNames' value='" + ToDate + "'>" + ToDate + "</td>" + "<td><input type='hidden' name='AliasLastNames' value='" + Totaldays + "'>" + Totaldays + "</td>" + "<td><input type='hidden' name='AliasLastNames' value=" + new Boolean(HalfDayFlag) + ">" + HalfDayFlag + "</td>" + "<td><input type='hidden' name='AliasLastNames' value='" + Remarks + "'>" + Remarks + "</td>" + "</tr>"); $("#aliasTable").append(row);
+            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "yearMonth": yearmonth, "leaveAppId": 0, "compCode": $('#myCompCode').val(), "wrkGrp": $('#myWrkGrp').val(), "leaveAppItem": c, "leaveTypeCode": $(tr).find('td:eq(1)').text(), "fromDt": $(tr).find('td:eq(2)').text(), "toDt": $(tr).find('td:eq(3)').text(), "totalDays": $(tr).find('td:eq(4)').text(), "halfdayflag": $(tr).find('td:eq(5)').text(), "remarks": $(tr).find('td:eq(6)').text() } }); TableData.shift();
             if (TableData.length > 1) {
-                ltyp = TableData[0]["leaveTypeCode"]; lhlf = TableData[0]["halfdayflag"];
-                if (ltyp === LeaveTypeCode && lhlf === false) {
-                    var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); c = c - 1; chktabldta = true;
-                    return;
-                }
-            }
-            jsonObj.yearMonth = yearmonth; jsonObj.leaveAppId = 0; jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.compCode = $('#myCompCode').val();
-            jsonObj.wrkGrp = $('#myWrkGrp').val(); jsonObj.unitCode = $('#myUnitCode').val(); jsonObj.deptCode = $('#myDeptCode').val();
-            jsonObj.statCode = $('#myStatCode').val(); jsonObj.catCode = $('#myCatCode').val(); jsonObj.releaseGroupCode = $('#releaseGroupCode').val();
-            jsonObj.releaseStrategy = ""; jsonObj.releaseStatusCode = ""; jsonObj.addDt = d; jsonObj.addUser = $('#myEmpUnqId').val(); jsonObj.updDt = d;
-            jsonObj.updUser = null; jsonObj.remarks = null; jsonObj.leaveApplicationDetails = TableData;
+                var prevohsl = ''; var curohsl = ''; prevohsl = TableData[c - 2]["leaveTypeCode"]; curohsl = TableData[c - 1]["leaveTypeCode"];
+                var loc = $('#myLoc').val();
+                if (loc === 'BEL' && ((curohsl === "OH" && prevohsl === "SL") || (curohsl === "SL" && prevohsl === "OH"))) {
+                    var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); c = c - 1; chkohsl = true;
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>OH & SL can not be clubbed as per HR Policy..</strong></div>"; $('#MessageBox').show(); return;
+                };
+            }; var ltyp = '';
+            if (TableData.length > 1) { ltyp = TableData[0]["leaveTypeCode"]; lhlf = TableData[0]["halfdayflag"]; if (ltyp === LeaveTypeCode && lhlf === false) { var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); c = c - 1; chktabldta = true; return; } };
+            jsonObj.yearMonth = yearmonth; jsonObj.leaveAppId = 0; jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.compCode = $('#myCompCode').val(); jsonObj.wrkGrp = $('#myWrkGrp').val(); jsonObj.unitCode = $('#myUnitCode').val(); jsonObj.deptCode = $('#myDeptCode').val(); jsonObj.statCode = $('#myStatCode').val(); jsonObj.catCode = $('#myCatCode').val(); jsonObj.releaseGroupCode = $('#releaseGroupCode').val(); jsonObj.releaseStrategy = ""; jsonObj.releaseStatusCode = ""; jsonObj.addDt = d; jsonObj.addUser = $('#myEmpUnqId').val(); jsonObj.updDt = d; jsonObj.updUser = null; jsonObj.remarks = null; jsonObj.leaveApplicationDetails = TableData;
             return jsonObj;
         }
-        if (chktabldta === true) {
-            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + LeaveTypeCode + " is already exist please cannnot select same leave type</strong></div>"; $('#MessageBox').show();
-            document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = "";
-            document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false;
-            return;
-        }
+        if (chkohsl === true) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>OH & SL can not be clubbed as per HR Policy..</strong></div>"; $('#MessageBox').show(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false; return; };
+        if (chktabldta === true) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + LeaveTypeCode + " is already exist please cannnot select same leave type</strong></div>"; $('#MessageBox').show(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false; return; };
         //POST Data to Validate
         jQuery.support.cors = true;
         var xhr1 = new XMLHttpRequest(); xhr1.open('POST', $scope._Conpath + 'LeaveValidate/IsValid', true); xhr1.setRequestHeader("Content-type", "application/json");
@@ -108,14 +79,12 @@
                 $("#aliasTable").append(row);
                 document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = "";
                 document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true);
-            }
-            else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
-                if (chk === false) { var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); chk = true; c = c - 1; }
-                var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(',');
-                var er = ""; for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; }
+            } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
+                if (chk === false) { var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); chk = true; c = c - 1; };
+                var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = "";
+                for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er + "</strong></div>"; $('#MessageBox').show();
-                document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = "";
-                document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true);
+                document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true);
             }
         }
         xhr1.send(TableData);

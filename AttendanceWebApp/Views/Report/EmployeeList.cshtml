@@ -12,7 +12,9 @@
             @* Under Releasing Employees List*@
             <div class="col-sm-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>List of Employees Under Your Release</strong></div>
+                    <div class="panel-heading">
+                        <strong>List of Employees Under Your Release</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetReleaseStrategy()">
                             <div class="table-responsive">
@@ -25,33 +27,50 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empName')">
-                                                Name<span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('deptName')">
-                                                Department<span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
-                                                                ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Department
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('statName')">
-                                                Station<span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
-                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Station
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('catName')">
-                                                Category<span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Category
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('desgName')">
-                                                Designation<span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
-                                                                 ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Designation
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                         </tr>
                                         <tr>
-                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.deptName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.statName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.catName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.desgName" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.deptName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.statName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.catName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.desgName" style="margin:0;padding:1px;" />
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>

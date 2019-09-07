@@ -23,15 +23,10 @@
 @* Check User ID & Password is Same *@
 <script type="text/javascript">
     $(window).on('load', function () {
-        $('#testModal').modal('show');
-
         var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
         var sPass = "@Session["Pass"].ToString()";
         var sWrkgrp = "@Session["WrkGrp"]";
-
-        if (sEmpUnqId === sPass && sWrkgrp === "COMP") {
-            $('#myModal').modal('show');
-        }
+        if (sEmpUnqId === sPass && sWrkgrp === "COMP") { $('#myModal').modal('show'); };
     });
 </script>
 
@@ -43,7 +38,9 @@
                 <div class="col-sm-8">
                     @*Leave Application List  *@
                     <div class="panel panel-info">
-                        <div class="panel-heading"><strong> Leave Application List </strong></div>
+                        <div class="panel-heading">
+                            <strong> Leave Application List </strong>
+                        </div>
                         <div class="panel-body" style="overflow:auto;">
                             <div ng-init="GetLeaveRequestLists()">
                                 <div class="table-responsive">
@@ -117,8 +114,10 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <strong>Note For Leave Group : LA - Leave Application </strong><br />
-                            <strong>Note For Release Status :  N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong><br />
+                            <strong>Note For Leave Group : LA - Leave Application </strong>
+                            <br />
+                            <strong>Note For Release Status :  N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                            <br />
                             <strong>Note For Background Color :  <text style="background-color:#F8EFBA;color:black;">Yellow Background Color is Your Cancelled Leave </text></strong>
                         </div>
                     </div>
@@ -126,7 +125,9 @@
                 <div class="col-sm-4">
                     @* Leave Balance Grid  *@
                     <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Leave Balance</strong></div>
+                        <div class="panel-heading">
+                            <strong>Leave Balance</strong>
+                        </div>
                         <div class="panel-body">
                             <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                                 <div class="table-responsive">
@@ -156,7 +157,9 @@
                     </div>
                     @* Posted Leave Requests Grid  *@
                     <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Posted Leave Application List From HR</strong></div>
+                        <div class="panel-heading">
+                            <strong>Posted Leave Application List From HR</strong>
+                        </div>
                         <div class="panel-body" style="overflow:auto;">
                             <div ng-init="GetPostedLeave()">
                                 <div class="table-responsive">
@@ -200,11 +203,17 @@
                 <div class="col-sm-6">
                     <table class="table table-responsive">
                         <tr>
-                            <td><label>New Passsword</label></td>
-                            <td><input class="form-control" type="Password" id="ePass" name="newPassword" ng-model="New.Pass" required autofocus></td>
+                            <td>
+                                <label>New Passsword</label>
+                            </td>
+                            <td>
+                                <input class="form-control" type="Password" id="ePass" name="newPassword" ng-model="New.Pass" required autofocus>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="changePassword(New)">Ok</button></td>
+                            <td colspan="2">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="changePassword(New)">Ok</button>
+                            </td>
                         </tr>
                     </table>
                 </div>

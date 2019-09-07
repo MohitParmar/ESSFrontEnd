@@ -62,7 +62,9 @@
                                     <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                                         <table id="myTable" class="table table-responsive table-condensed">
                                             <tr>
-                                                <td><label>From Date :</label></td>
+                                                <td>
+                                                    <label>From Date :</label>
+                                                </td>
                                                 <td style="text-align:center;" colspan="3">
                                                     <div class="right-inner-addon">
                                                         <i class="icon-calendar"></i>
@@ -72,7 +74,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>To Date :</label></td>
+                                                <td>
+                                                    <label>To Date :</label>
+                                                </td>
                                                 <td style="text-align:center;" colspan="3">
                                                     <div class="right-inner-addon">
                                                         <i class="icon-calendar"></i>
@@ -82,13 +86,17 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Reason : </label></td>
+                                                <td>
+                                                    <label>Reason : </label>
+                                                </td>
                                                 <td colspan="3">
                                                     <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Total Days :</label></td>
+                                                <td>
+                                                    <label>Total Days :</label>
+                                                </td>
                                                 <td>
                                                     <input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required>
                                                 </td>
@@ -141,7 +149,9 @@
             @* Leave Application List *@
             <div class="col-sm-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Leave Application List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Application List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetShortLeaveLists()">
                             <div class="table-responsive">
@@ -199,14 +209,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer"><strong>Note For Leave Group : LA - Leave Application</strong><br /></div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <br />
+                    </div>
                 </div>
             </div>
             @* Right Pane Start *@
             <div class="col-sm-4">
                 @* Leave Balance List *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Balance</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
@@ -236,7 +251,9 @@
                 </div>
                 @* Holiday List Of Current User *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Holiday List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                             <div class="table-responsive">

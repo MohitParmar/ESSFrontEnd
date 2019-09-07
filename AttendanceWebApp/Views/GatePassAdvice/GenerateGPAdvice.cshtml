@@ -50,14 +50,18 @@
                 <div class="col-sm-12">
                     @* Create New Gate Pass Advice *@
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>GATE PASS ADVICE</strong></div>
+                        <div class="panel-heading">
+                            <strong>GATE PASS ADVICE</strong>
+                        </div>
                         <div class="panel-body">
                             <form role="form" name="GPAdviceForm" novalidate>
                                 <div ng-init="GetEmpInfo()" class="table-responsive" style="        background-color: floralwhite">
-                                    <table class="table ng-table-responsive" style="        margin-bottom: 3px;">
+                                    <table class="table ng-table-responsive" style="margin-bottom: 3px;">
                                         <tbody ng-repeat="emp in empdata">
                                             <tr>
-                                                <td><label>TO</label></td>
+                                                <td>
+                                                    <label>TO</label>
+                                                </td>
                                                 <td style="        float: right;">
                                                     <label>
                                                         FROM : &nbsp;
@@ -66,7 +70,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td rowspan="2"><label>STORES</label></td>
+                                                <td rowspan="2">
+                                                    <label>STORES</label>
+                                                </td>
                                                 <td style="        float: right;">
                                                     <label>
                                                         DEPARTMENT : &nbsp;
@@ -75,7 +81,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="        float: right;">
+                                                <td style="float: right;">
                                                     <label>
                                                         DATE : &nbsp;
                                                         <script language="javascript">n = new Date(); y = n.getFullYear(); m = n.getMonth() + 1; d = n.getDate(); document.write(d + "/" + m + "/" + y);</script>
@@ -88,56 +94,133 @@
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-responsive table-condensed">
                                         <tr>
-                                            <td style="text-align: center;"><label>TYPE OF GATE PASS</label></td>
-                                            <td style="text-align: center;"><label>REASONS</label></td>
-                                            <td style="text-align: center;"><label>WORK ORDER NO</label></td>
-                                            <td style="text-align: center;"><label>VENDER CODE</label></td>
-                                            <td style="text-align: center;"><label>VENDER NAME</label></td>
+                                            <td style="text-align: center;">
+                                                <label>TYPE OF GATE PASS</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>REASONS</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>WORK ORDER NO</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>VENDER CODE</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>VENDER NAME</label>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td><select id="GpAdviceType" class="form-control" ng-model="N.GpAdviceType"><option value="R" title="RGP" selected>RGP</option><option value="N" title="NRGP">NRGP</option></select></td>
-                                            <td><input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="N.Purpose"></td>
-                                            <td><input class="form-control" type="text" id="txtWONO" name="WONO" ng-model="N.WorkOrderNo" required></td>
-                                            <td><input class="form-control" type="text" id="txtVenderCode" name="VenderCode" ng-model="N.VenderCode" required></td>
-                                            <td><input class="form-control" type="text" id="txtVenderName" name="VenderName" ng-model="N.VenderName" required></td>
+                                            <td>
+                                                <select id="GpAdviceType" class="form-control" ng-model="N.GpAdviceType"><option value="R" title="RGP" selected>RGP</option><option value="N" title="NRGP">NRGP</option></select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="N.Purpose">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtWONO" name="WONO" ng-model="N.WorkOrderNo" required>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtVenderCode" name="VenderCode" ng-model="N.VenderCode" ng-change="GetMasterData('v')" required>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtVenderName" name="VenderName" ng-model="N.VenderName">
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="        text-align: center;"><label>VENDER ADDRESS</label></td>
-                                            <td colspan="2"><input class="form-control" type="text" id="txtVenderAdd1" name="VenderAdd1" ng-model="N.VenderAddress1" required></td>
-                                            <td><input class="form-control" type="text" id="txtVenderAdd2" name="VenderAdd2" ng-model="N.VenderAddress2" required></td>
-                                            <td><input class="form-control" type="text" id="txtVenderAdd3" name="VenderAdd3" ng-model="N.VenderAddress3" required></td>
+                                            <td style="text-align: center;">
+                                                <label>VENDER ADDRESS</label>
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="form-control" type="text" id="txtVenderAdd1" name="VenderAdd1" ng-model="N.VenderAddress1" readonly>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtVenderAdd2" name="VenderAdd2" ng-model="N.VenderAddress2" readonly>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtVenderAdd3" name="VenderAdd3" ng-model="N.VenderAddress3" readonly>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: center;"><label>APPROX. DATE OF RETURN</label></td>
-                                            <td style="text-align: center;"><label>Mode Of Transportation</label></td>
-                                            <td style="text-align: center;"><label>Transporter Name</label></td>
+                                            <td style="text-align: center;">
+                                                <label>APPROX. DATE OF RETURN</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>Mode Of Transportation</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>Transporter Name</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>Requisitioner</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>Transportation Aspects</label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <div class="right-inner-addon">
                                                     <i class="icon-calendar"></i>
-                                                    <input class="form-control" type="text" id="ApproxDt" ng-model="N.ApproxDt" data-date-format="yyyy/MM/dd" datepicker>
+                                                    <input class="form-control" type="text" id="ApproxDt" ng-model="N.ApproxDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                                 </div>
                                             </td>
-                                            <td><input class="form-control" type="text" id="txtModeOfTransport" name="ModeOfTransport" ng-model="N.ModeOfTransport" required></td>
-                                            <td><input class="form-control" type="text" id="txtTransporterName" name="TransporterName" ng-model="N.TransporterName" required></td>
+                                            <td>
+                                                <select id="ModeOfTransport" class="form-control" ng-model="N.ModeOfTransport">
+                                                    <option value="BYHAND" title="By Hand" selected>By Hand / Self</option>
+                                                    <option value="BYCOURIER" title="By Courier">By Courier</option>
+                                                    <option value="BYROAD" title="By Road">By Road</option>
+                                                    <option value="BYRAIL" title="By Rail">By Rail</option>
+                                                    <option value="BYAIR" title="By Air">By Air</option>
+                                                    <option value="BYSEA title="By Sea">By Sea</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtTransporterName" name="TransporterName" ng-model="N.TransporterName">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtRequisitioner" name="Requisitioner" ng-model="N.Requisitioner" required>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtPoTerms" name="PoTerms" ng-model="N.PoTerms" required>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: center;"><label>MATERIAL CODE</label></td>
-                                            <td style="text-align: center;"><label>MATERIAL DESC.</label></td>
-                                            <td style="text-align: center;"><label>QUANTITY</label></td>
-                                            <td style="text-align: center;"><label>APPROX. VALUE</label></td>
-                                            <td style="text-align: center;"><label>HSN CODE</label></td>
+                                            <td style="text-align: center;">
+                                                <label>MATERIAL CODE</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>MATERIAL DESC.</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>QUANTITY</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>APPROX. VALUE</label>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label>HSN CODE</label>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td><input class="form-control" type="text" id="txtMaterialCode" name="MaterialCode" ng-model="New.MaterialCode" required></td>
-                                            <td><input class="form-control" type="text" id="txtMaterialDesc" name="MaterialDesc" ng-model="New.MaterialDesc" required></td>
-                                            <td><input class="form-control" type="text" id="txtMaterialQty" name="MaterialQty" ng-model="New.MaterialQty" required></td>
-                                            <td><input class="form-control" type="text" id="txtApproxValue" name="ApproxValue" ng-model="New.ApproxValue" required></td>
-                                            <td><input class="form-control" type="text" id="txtHsnCode" name="HsnCode" ng-model="New.HsnCode" required></td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtMaterialCode" name="MaterialCode" ng-model="New.MaterialCode" ng-change="GetMasterData('m')">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtMaterialDesc" name="MaterialDesc" ng-model="New.MaterialDesc">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtMaterialQty" name="MaterialQty" ng-model="New.MaterialQty" required>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtApproxValue" name="ApproxValue" ng-model="New.ApproxValue" required>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" id="txtHsnCode" name="HsnCode" ng-model="New.HsnCode" required readonly>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th colspan="5" style="        text-align: right;">
+                                            <th colspan="5" style="text-align: right;">
                                                 <label>STEP - 1 : Add To List</label>
                                                 <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddMaterial(New,false)">
                                                     <i class="icon-plus-sign"></i>
@@ -158,12 +241,12 @@
                                 <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="        text-align: center;">Sr.No.</th>
-                                            <th style="        text-align: center;">Material Code</th>
-                                            <th style="        text-align: center;">Material Description</th>
-                                            <th style="        text-align: center;">Quantity</th>
-                                            <th style="        text-align: center;">Approx value</th>
-                                            <th style="        text-align: center;">HSN Code</th>
+                                            <th style="text-align: center;">Sr.No.</th>
+                                            <th style="text-align: center;">Material Code</th>
+                                            <th style="text-align: center;">Material Description</th>
+                                            <th style="text-align: center;">Quantity</th>
+                                            <th style="text-align: center;">Approx value</th>
+                                            <th style="text-align: center;">HSN Code</th>
                                         </tr>
                                     </thead>
                                     <tbody>

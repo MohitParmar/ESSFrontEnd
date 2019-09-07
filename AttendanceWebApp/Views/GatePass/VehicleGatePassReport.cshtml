@@ -101,24 +101,29 @@
                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;" ng-click="sort('LogDate')">
-                                    Log Date<span class="glyphicon sort-icon" ng-show="sortKey=='LogDate'"
-                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    Log Date
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='LogDate'"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;" ng-click="sort('VehicleNo')">
-                                    Vehicle No<span class="glyphicon sort-icon" ng-show="sortKey=='VehicleNo'"
-                                                    ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    Vehicle No
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='VehicleNo'"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;" ng-click="sort('DriverName')">
-                                    Driver Name<span class="glyphicon sort-icon" ng-show="sortKey=='DriverName'"
-                                                     ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    Driver Name
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='DriverName'"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;" ng-click="sort('Outtime')">
-                                    Out Time<span class="glyphicon sort-icon" ng-show="sortKey=='Outtime'"
-                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    Out Time
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='Outtime'"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;" ng-click="sort('InTime')">
-                                    In Time<span class="glyphicon sort-icon" ng-show="sortKey=='InTime'"
-                                                 ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    In Time
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='InTime'"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                 </th>
                                 <th style="text-align:center;">Start KM</th>
                                 <th style="text-align:center;">End KM</th>
@@ -128,10 +133,16 @@
                                 <th style="text-align:center;">Place To Visit</th>
                             </tr>
                             <tr>
-                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.LogID" /></td>
+                                <td>
+                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.LogID" />
+                                </td>
                                 <td></td>
-                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VehicleNo" /></td>
-                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DriverName" /></td>
+                                <td>
+                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VehicleNo" />
+                                </td>
+                                <td>
+                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DriverName" />
+                                </td>
                                 <td colspan="8"></td>
                             </tr>
                         </thead>

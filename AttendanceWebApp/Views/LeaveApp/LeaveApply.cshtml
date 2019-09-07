@@ -53,12 +53,16 @@
             <div class="col-sm-8">
                 @* Create New Leave Application *@
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Leave Application</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Application</strong>
+                    </div>
                     <div class="panel-body">
                         <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                             <table id="myTable" class="table table-responsive table-condensed">
                                 <tr>
-                                    <td><label>From Date :</label></td>
+                                    <td>
+                                        <label>From Date :</label>
+                                    </td>
                                     <td style="text-align:center;" colspan="4">
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
@@ -69,7 +73,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label>To Date :</label></td>
+                                    <td>
+                                        <label>To Date :</label>
+                                    </td>
                                     <td style="text-align:center;" colspan="4">
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
@@ -79,7 +85,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label>Leave Type :</label></td>
+                                    <td>
+                                        <label>Leave Type :</label>
+                                    </td>
                                     <td style="text-align:center;" colspan="4">
                                         <div ng-app="myApp" ng-controller="SelectLTypeCntrl" ng-init="GetLTypeList()">
                                             <select class="form-control" id="LeaveType" ng-model="New.LeaveTypeCode"
@@ -90,16 +98,26 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label>Leave Reason : </label></td>
+                                    <td>
+                                        <label>Leave Reason : </label>
+                                    </td>
                                     <td colspan="4">
                                         <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label>Half Day :</label></td>
-                                    <td style="width:61px;"><input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" ng-change="ToValidate()" style="margin-top:0px;"></td>
-                                    <td style="text-align:right;"><label>Total Days :</label></td>
-                                    <td><input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required></td>
+                                    <td>
+                                        <label>Half Day :</label>
+                                    </td>
+                                    <td style="width:61px;">
+                                        <input type="checkbox" id="HalfFlag" class="form-control" ng-model="New.HalfFlag" ng-change="ToValidate()" style="margin-top:0px;">
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <label>Total Days :</label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="text" id="TotalDays" name="TotalDays" ng-model="New.TotalDays" disabled="disabled" required>
+                                    </td>
                                     <td style="text-align:right;">
                                         <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="LeaveRequestData(New)">
                                             Add to List
@@ -112,7 +130,9 @@
                 </div>
                 @* Leave Request List *@
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Leave Request List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Request List</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
@@ -150,7 +170,9 @@
             <div class="col-sm-4">
                 @* Leave Balance List *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Leave Balance</strong></div>
+                    <div class="panel-heading">
+                        <strong>Leave Balance</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
@@ -180,7 +202,9 @@
                 </div>
                 @* Optional Holiday List *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Optional Holiday List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Optional Holiday List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfOptionalholiday()">
                             <div class="table-responsive">
@@ -204,7 +228,9 @@
                 </div>
                 @* Holiday List *@
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Holiday List</strong></div>
+                    <div class="panel-heading">
+                        <strong>Holiday List</strong>
+                    </div>
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                             <div class="table-responsive">

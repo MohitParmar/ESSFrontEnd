@@ -18,53 +18,87 @@
             @* Add / Update Present Address in ESS Database *@
             <div class="col-sm-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Add / Update Present Address</strong></div>
+                    <div class="panel-heading">
+                        <strong>Add / Update Present Address</strong>
+                    </div>
                     <div class="panel-body">
                         <form role="form" name="AddressForm" novalidate>
                             <div ng-init="GetPresentAddress()"></div>
                             <table id="myTable" class="table table-responsive table-condensed">
                                 <tbody>
                                     <tr>
-                                        <td><label>Address 1</label></td>
-                                        <td colspan="3"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd1" name="add1" required></td>
+                                        <td>
+                                            <label>Address 1</label>
+                                        </td>
+                                        <td colspan="3">
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd1" name="add1" required>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><label>Address 2</label></td>
-                                        <td colspan="3"><input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd2" name="add2" required></td>
+                                        <td>
+                                            <label>Address 2</label>
+                                        </td>
+                                        <td colspan="3">
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd2" name="add2" required>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><label>Village</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtvlg" name="vlg" required></td>
-                                        <td><label>Taluka</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txttlk" name="tlk" required></td>
+                                        <td>
+                                            <label>Village</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtvlg" name="vlg" required>
+                                        </td>
+                                        <td>
+                                            <label>Taluka</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txttlk" name="tlk" required>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><label>District</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH"></td>
-                                        <td><label>State</label></td>
-                                        <td><input class="form-control" style="text-transform: uppercase;" type="text" id="txtstate" name="State" value="GUJARAT"></td>
+                                        <td>
+                                            <label>District</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH">
+                                        </td>
+                                        <td>
+                                            <label>State</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtstate" name="State" value="GUJARAT">
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><label>PinCode</label></td>
+                                        <td>
+                                            <label>PinCode</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" style="text-transform: uppercase;" type="text" id="pincode" name="pincode"
                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                    onchange="validatePin()" required>
                                         </td>
-                                        <td><label>Personal E-mail Id</label></td>
+                                        <td>
+                                            <label>Personal E-mail Id</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" style="text-transform: uppercase;" type="email" id="txtemailid" name="emailid"
                                                    onchange="validateEmail()" placeholder="ex: abc@xyz.com">
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><label>Mobile No.</label></td>
+                                        <td>
+                                            <label>Mobile No.</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtphoneno" name="phoneno"
                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                    required>
                                         </td>
-                                        <td><label>Alternate Mobile No.</label></td>
+                                        <td>
+                                            <label>Alternate Mobile No.</label>
+                                        </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtresno" name="resno"
                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
@@ -90,21 +124,50 @@
             @* Permanent Address Details *@
             <div class="col-sm-4">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><strong>Permanent Address Details</strong></div>
+                    <div class="panel-heading">
+                        <strong>Permanent Address Details</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div ng-init="GetUserPerasonalInfo()">
                                 <table class="table table-bordered table-condensed table-responsive table-striped">
                                     <tbody ng-repeat="p in Uperdata">
-                                        <tr><td>Address1</td><td>{{p.perAdd1}}</td></tr>
-                                        <tr><td>Address2</td><td>{{p.perAdd2}}</td></tr>
-                                        <tr><td>Address3</td><td>{{p.perAdd3}}</td></tr>
-                                        <tr><td>Address4</td><td>{{p.perAdd4}}</td></tr>
-                                        <tr><td>City</td><td>{{p.perCity}}</td></tr>
-                                        <tr><td>District</td><td>{{p.perDistrict}}</td></tr>
-                                        <tr><td>State</td><td>{{p.perState}}</td></tr>
-                                        <tr><td>Pincode</td><td>{{p.perPin}}</td></tr>
-                                        <tr><td>Mobile No</td><td>{{p.perPhone}}</td></tr>
+                                        <tr>
+                                            <td>Address1</td>
+                                            <td>{{p.perAdd1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address2</td>
+                                            <td>{{p.perAdd2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address3</td>
+                                            <td>{{p.perAdd3}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address4</td>
+                                            <td>{{p.perAdd4}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>City</td>
+                                            <td>{{p.perCity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>District</td>
+                                            <td>{{p.perDistrict}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>State</td>
+                                            <td>{{p.perState}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pincode</td>
+                                            <td>{{p.perPin}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile No</td>
+                                            <td>{{p.perPhone}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -91,5 +91,43 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        public ActionResult MasterUpload()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "14" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult PostedGPAdviceReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "14" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }

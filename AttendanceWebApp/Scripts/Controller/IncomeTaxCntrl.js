@@ -237,16 +237,10 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional
         var rnttotal = $('#renttotal').val() || 0; if (rnttotal > 100000) { var rntpan = $('#rentalpan').val() || ''; var rntname = $('#landlord').val() || ''; if (rntname === '' || rntpan === '') { alert("Landlord Name & PAN Number is Required Please fill Details."); return false; }; };
         var loan = 0;
-
         if (act === "true") { loan = $('#a_amountofinterest').val() || 0; } else { loan = $('#p_amountofinterest').val() || 0; };
         if (loan > 200000) { if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); }; };
-        if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) {
-            alert("Please Select Your Housing Loan Bank before enter housing loan interest");
-            return false;
-        };
-        var jsonObj = {};
-        var TableData = storeTblValues();
-        TableData = JSON.stringify(TableData);
+        if (loan !== "0" && ($scope.bankName === "" || $scope.bankName === "undefined")) { alert("Please Select Your Housing Loan Bank before enter housing loan interest"); return false; };
+        var jsonObj = {}; var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         function storeTblValues() {
             jsonObj.yearMonth = $('#hidyearMonth').val(); jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.actualFlag = $('#hidactualFlag').val();
             jsonObj.totalRentPaid = $('#renttotal').val() || 0; jsonObj.rentHouseAddress = $('#presentAddress').val() || 0; jsonObj.landLordName = $('#landlord').val() || '';
@@ -266,9 +260,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 jsonObj.totalPpfAmt = $('#tot_a_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_a_fd').val() || 0;
                 jsonObj.totalInsurancePremium = $('#tot_a_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_a_nsc').val() || 0;
                 jsonObj.totalMutualFund = $('#tot_a_mfund').val() || 0; jsonObj.totalUlip = $('#tot_a_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_a_ssAmt').val() || 0;
-
                 jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0;
-
                 jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0;
                 jsonObj.tuitionFeeChild2 = $('#a_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#a_pensionscheme').val() || 0;
                 jsonObj.others1Amount = $('#a_others1').val() || 0; jsonObj.others2Amount = $('#a_others2').val() || 0;
@@ -344,17 +336,13 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
             return jsonObj;
         };
-
         var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true); tax.setRequestHeader('Content-type', 'application/json');
         tax.onreadystatechange = function () {
             if (tax.readyState === 4 && tax.status === 200) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Your Tax Declaration Details Saved Successfully.</strong></div>"; $('#MessageBox').show();
-                alert("Your Tax Declaration Details Saved Successfully.");
-                $scope.ResetView();
-            }
-            else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
-
-                var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; };
+                alert("Your Tax Declaration Details Saved Successfully."); $scope.ResetView();
+            } else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
+                var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + er + "</strong></div>"; $('#MessageBox').show();
             };
         }; tax.send(TableData);
@@ -483,7 +471,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 alert("Your Tax Declaration Details Saved Successfully.");
                 $scope.ResetView();
             } else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
-                var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length ; i++) { er = er + fields[i] + "<br/>"; };
+                var str = tax.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + er + "</strong></div>"; $('#MessageBox').show();
             };
         }; tax.send(TableData);

@@ -31,10 +31,18 @@
                                     <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;"><label>Release Code</label></th>
-                                                <th style="text-align:center;"><label>Releaser Code</label></th>
-                                                <th style="text-align:center;"><label>Releaser Name</label></th>
-                                                <th style="text-align:center;"><label>Add</label></th>
+                                                <th style="text-align:center;">
+                                                    <label>Release Code</label>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <label>Releaser Code</label>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <label>Releaser Name</label>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <label>Add</label>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,7 +65,9 @@
             @* Create / Update Release Strategies *@
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Create / Update Release Strategy</strong></div>
+                    <div class="panel-heading">
+                        <strong>Create / Update Release Strategy</strong>
+                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table-condensed">
@@ -74,11 +84,17 @@
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr ng-repeat="d in empdata">
-                                                    <th><b>Employee Code : </b></th>
+                                                    <th>
+                                                        <b>Employee Code : </b>
+                                                    </th>
                                                     <td>{{d.empUnqId}}</td>
-                                                    <th><b>Employee Name : </b></th>
+                                                    <th>
+                                                        <b>Employee Name : </b>
+                                                    </th>
                                                     <td>{{d.empName}}</td>
-                                                    <th><b>Father Name : </b></th>
+                                                    <th>
+                                                        <b>Father Name : </b>
+                                                    </th>
                                                     <td>{{d.fatherName}}</td>
                                                 </tr>
                                             </tbody>

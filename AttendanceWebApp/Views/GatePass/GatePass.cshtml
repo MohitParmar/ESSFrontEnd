@@ -49,13 +49,15 @@
                         <table class="table table-responsive">
                             <tr>
                                 <td ng-repeat="rls in rlsdata.gpReleaseStrategyLevels" ng-show="rls.isGpNightReleaser == false" style="text-align:center;">
-                                    <b> Releaser : </b><br />
+                                    <b> Releaser : </b>
+                                    <br />
                                     <b>{{rls.empName}}</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td ng-repeat="rls in rlsdata.gpReleaseStrategyLevels" ng-show="rls.isGpNightReleaser == true" style="text-align:center;">
-                                    <b> Night Releaser : </b><br />
+                                    <b> Night Releaser : </b>
+                                    <br />
                                     <b>{{rls.empName}}</b>
                                 </td>
                             </tr>
@@ -65,13 +67,17 @@
                 <div class="col-sm-8">
                     @* Create New Gate Pass *@
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>Regular Employee Out Gate Pass</strong></div>
+                        <div class="panel-heading">
+                            <strong>Regular Employee Out Gate Pass</strong>
+                        </div>
                         <div class="panel-body" style="padding-bottom:5px;">
                             <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                                 <div ng-init="GetEmpInfo()">
                                     <table id="myTable" class="table table-responsive table-condensed" style="margin-bottom:5px;">
                                         <tr>
-                                            <td><label>Employee Code</label></td>
+                                            <td>
+                                                <label>Employee Code</label>
+                                            </td>
                                             <td>
                                                 <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" disabled="disabled"
                                                        onchange="validateCode()" required>
@@ -81,13 +87,17 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label>Station</label></td>
+                                            <td>
+                                                <label>Station</label>
+                                            </td>
                                             <td colspan="3">
                                                 <input class="form-control" type="text" id="txtStat" name="Stat" disabled="disabled">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label>Mode Of Gate Pass</label></td>
+                                            <td>
+                                                <label>Mode Of Gate Pass</label>
+                                            </td>
                                             <td>
                                                 <select id="Mode" class="form-control" ng-model="New.Mode" ng-click="GetEmpInfo()">
                                                     <option value="D" title="Duty Off" selected>Duty Off / Half day / Early Going</option>
@@ -95,13 +105,17 @@
                                                     <option value="P" title="Personal">Personal</option>
                                                 </select>
                                             </td>
-                                            <td><label>Place Of Visit</label></td>
+                                            <td>
+                                                <label>Place Of Visit</label>
+                                            </td>
                                             <td>
                                                 <input class="form-control" type="text" id="txtPlace" name="Place" ng-model="New.PlaceofVisit" ng-change="GetEmpInfo()" required>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label>Purpose of Gate Pass</label></td>
+                                            <td>
+                                                <label>Purpose of Gate Pass</label>
+                                            </td>
                                             <td colspan="3">
                                                 <input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="New.Reason" required>
                                             </td>
@@ -170,7 +184,9 @@
                 <div class="col-sm-4">
                     @* Leave Balance List *@
                     <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Leave Balance</strong></div>
+                        <div class="panel-heading">
+                            <strong>Leave Balance</strong>
+                        </div>
                         <div class="panel-body">
                             <div ng-controller="MasterCntrloller" ng-init="GetLeave()">
                                 <div class="table-responsive">
@@ -200,7 +216,9 @@
                     </div>
                     @* Holiday List Of Current User *@
                     <div class="panel panel-info">
-                        <div class="panel-heading"><strong>Holiday List</strong></div>
+                        <div class="panel-heading">
+                            <strong>Holiday List</strong>
+                        </div>
                         <div class="panel-body">
                             <div ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                                 <div class="table-responsive">

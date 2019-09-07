@@ -15,7 +15,7 @@
                 @* Popup Model For Approve/Reject Leave Application  *@
                 <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <div class="modal-content" style="width:650px;">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
                                 <h4 class="modal-title" id="myModalLabel">Material Details </h4>
@@ -29,7 +29,7 @@
                                                     <th style="text-align:center;">Sr No.</th>
                                                     <th style="text-align:center;">Material Code</th>
                                                     <th style="text-align:center;">Material Description</th>
-                                                    <th style="text-align:center;">Material Quantity</th>
+                                                    <th style="text-align:center;">Quantity</th>
                                                     <th style="text-align:center;">Approx Value</th>
                                                     <th style="text-align:center;">HSN Code</th>
                                                 </tr>
@@ -63,29 +63,65 @@
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;">DATE</th>
+                                                <th style="text-align: center;" ng-click="sort('gpAdviceDate')">
+                                                    Advice DATE
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align: center;" ng-click="sort('gpAdviceNo')">
+                                                    Advice No
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceNo'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:center;">FROM</th>
-                                                <th style="text-align:center;">MODE</th>
+                                                <th style="text-align: center;" ng-click="sort('gpAdviceType')">
+                                                    MODE
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceType'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:center;">PURPOSE</th>
                                                 <th style="text-align:center;">WONO</th>
                                                 <th style="text-align:center;">VENDER NAME</th>
-                                                <th style="text-align:center;">APPROX RETURN DATE</th>
-                                                <th style="text-align:center;">STATUS</th>
+                                                <th style="text-align:center;">RETURN DATE</th>
+                                                <th style="text-align:center;">REQUISITIONER</th>
+                                                <th style="text-align:center;">PO TERMS</th>
                                                 <th style="text-align:center;">Remarks</th>
                                                 <th style="text-align:center;">ACTION</th>
+                                                <th style="text-align:center;">STATUS</th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gpAdviceNo" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td colspan="2"></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.workOrderNo" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.vendorName" />
+                                                </td>
+                                                <td colspan="6"></td>
                                             </tr>
                                         </thead>
-                                        <tbody dir-paginate="d in gparlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                        <tbody dir-paginate="d in gparlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1" current-page="currentPage">
                                             <tr>
                                                 <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yy'}}</td>
-                                                <td>{{d.empName}}</td>
+                                                <td style="text-align:center;">{{d.gpAdviceNo}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceType}}</td>
-                                                <td>{{d.purpose}}</td>
-                                                <td style="text-align:center;">{{d.workOrderNo}}</td>
-                                                <td>{{d.vendorName}}</td>
+                                                <td style="text-align:left;">{{d.purpose}}</td>
+                                                <td style="text-align:left;">{{d.workOrderNo}}</td>
+                                                <td style="text-align:left;">{{d.vendorName}}</td>
                                                 <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yy'}}</td>
-                                                <td style="text-align:center;">{{d.releaseStatusCode}}</td>
-                                                <td><input class="form-control" type="text" id="Remarks" placeholder="Remarks" style="width:85px;" ng-model="N.Remarks"></td>
+                                                <td style="text-align:left;">{{d.requisitioner}}</td>
+                                                <td style="text-align:left;">{{d.poTerms}}</td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="Remarks" placeholder="Remarks" style="width:85px;" ng-model="N.Remarks">
+                                                </td>
                                                 <td style="text-align:center;padding:3px;">
                                                     <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="ReleaseGPAdvice(N,{{d.gpAdviceNo}},'F')">
                                                         <i class="icon-ok-sign"></i>
@@ -97,6 +133,7 @@
                                                         <i class="icon-info-sign"></i>
                                                     </button>
                                                 </td>
+                                                <td style="text-align:center;">{{d.releaseStatusCode}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

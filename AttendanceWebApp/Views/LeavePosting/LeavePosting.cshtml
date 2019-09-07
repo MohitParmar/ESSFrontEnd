@@ -92,7 +92,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Performance Report <label id="eid"></label></h4>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Performance Report
+                                <label id="eid"></label>
+                            </h4>
                             <table class="table">
                                 <tr>
                                     <th dir-paginate="bal in lbaldata|itemsPerPage:10">{{bal.leaveTypeCode}} - {{bal.opening-bal.availed-bal.encashed}}</th>
@@ -103,13 +106,17 @@
                             <div class="body_panel" style="height:500px;overflow:scroll;">
                                 <table class="table table-condensed">
                                     <tr>
-                                        <td><label>Select From Date : </label></td>
+                                        <td>
+                                            <label>Select From Date : </label>
+                                        </td>
                                         <td>
                                             <div class="right-inner-addon">
                                                 <i class="icon-calendar"></i>
                                                 <input class="form-control" type="text" id="FDt" ng-model="dta.fdt" data-date-format="yyyy/MM/dd" datepicker>
                                             </div>
-                                        <td><label>Select To Date : </label></td>
+                                        <td>
+                                            <label>Select To Date : </label>
+                                        </td>
                                         <td>
                                             <div class="right-inner-addon">
                                                 <i class="icon-calendar"></i>
@@ -156,9 +163,13 @@
                                                 <td style="text-align:center;">{{a.consWrkHrs}}</td>
                                                 <td style="text-align:center;">{{a.consOverTime}}</td>
                                                 <td style="text-align:center;">{{a.status}}</td>
-                                                <td style="text-align:center;"><input type="checkbox" ng-checked="{{a.halfDay}}" disabled="disabled" /></td>
+                                                <td style="text-align:center;">
+                                                    <input type="checkbox" ng-checked="{{a.halfDay}}" disabled="disabled" />
+                                                </td>
                                                 <td style="text-align:center;">{{a.leaveType}}</td>
-                                                <td style="text-align:center;"><input type="checkbox" ng-checked="{{a.leaveHalf}}" disabled="disabled" /></td>
+                                                <td style="text-align:center;">
+                                                    <input type="checkbox" ng-checked="{{a.leaveHalf}}" disabled="disabled" />
+                                                </td>
                                                 <td style="text-align:center;">{{a.earlycome}}</td>
                                                 <td style="text-align:center;">{{a.earlyGoing}}</td>
                                                 <td style="text-align:center;">{{a.lateCome}}</td>
@@ -190,13 +201,17 @@
                         <div class="table-responsive">
                             <table class="table table-condensed">
                                 <tr>
-                                    <td><label>Select From Date : </label></td>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
                                     <td>
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
                                             <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                         </div>
-                                    <td><label>Select To Date : </label></td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
                                     <td>
                                         <div class="right-inner-addon">
                                             <i class="icon-calendar"></i>
@@ -257,11 +272,17 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" />
+                                            </td>
                                             <td colspan="3"></td>
-                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" />
+                                            </td>
                                             <td></td>
-                                            <td><input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" />
+                                            </td>
                                             <td colspan="4"></td>
                                         </tr>
                                     </thead>
@@ -337,7 +358,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Leave Group : LA - Leave Application</strong><br />
+                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <br />
                     </div>
                 </div>
             </div>

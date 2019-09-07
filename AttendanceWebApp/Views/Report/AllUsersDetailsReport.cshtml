@@ -14,7 +14,8 @@
             <div class="col-sm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <strong>All Employee Details</strong><div style="float:right;">
+                        <strong>All Employee Details</strong>
+                        <div style="float:right;">
                             <a style="float: right;" href="#" ng-click="exportAllData()">
                                 <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
                             </a>
@@ -29,9 +30,15 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th colspan="10" style="text-align:center;"><h4>JOB Profile Details</h4></th>
-                                            <th colspan="10" style="text-align:center;"><h4>Permanent Address</h4></th>
-                                            <th colspan="12" style="text-align:center;"><h4>Present Address</h4></th>
+                                            <th colspan="10" style="text-align:center;">
+                                                <h4>JOB Profile Details</h4>
+                                            </th>
+                                            <th colspan="10" style="text-align:center;">
+                                                <h4>Permanent Address</h4>
+                                            </th>
+                                            <th colspan="12" style="text-align:center;">
+                                                <h4>Present Address</h4>
+                                            </th>
                                         </tr>
                                         <tr>
                                             @* Profile Details *@
@@ -42,30 +49,36 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empName')">
-                                                Name<span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center">Father Name</th>
                                             <th style="text-align:center">Email Id</th>
                                             <th style="text-align:center;" ng-click="sort('unitName')">
-                                                Unit<span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Unit
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('deptName')">
-                                                Dept<span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Dept
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('statName')">
-                                                Stat<span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Stat
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('catName')">
-                                                Cat<span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
-                                                         ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Cat
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('desgName')">
-                                                Desg<span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Desg
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             @* Permanent Address Details *@
                                             <th style="text-align:center">Add1</th>
@@ -73,16 +86,19 @@
                                             <th style="text-align:center">Add3</th>
                                             <th style="text-align:center">Add4</th>
                                             <th style="text-align:center;" ng-click="sort('perCity')">
-                                                City<span class="glyphicon sort-icon" ng-show="sortKey=='perCity'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                City
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='perCity'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center" ng-click="sort('perDistrict')">
-                                                District<span class="glyphicon sort-icon" ng-show="sortKey=='perDistrict'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                District
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='perDistrict'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center" ng-click="sort('perState')">
-                                                State<span class="glyphicon sort-icon" ng-show="sortKey=='perState'"
-                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                State
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='perState'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center">Pin Code</th>
                                             <th style="text-align:center">Mobile No.</th>
@@ -91,24 +107,29 @@
                                             <th style="text-align:center">Add1</th>
                                             <th style="text-align:center">Add2</th>
                                             <th style="text-align:center;" ng-click="sort('preAdd3')">
-                                                Village<span class="glyphicon sort-icon" ng-show="sortKey=='preAdd3'"
-                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Village
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='preAdd3'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('preAdd4')">
-                                                Taluka<span class="glyphicon sort-icon" ng-show="sortKey=='preAdd4'"
-                                                            ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                Taluka
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='preAdd4'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('preCity')">
-                                                City<span class="glyphicon sort-icon" ng-show="sortKey=='preCity'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                City
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='preCity'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center" ng-click="sort('preDistrict')">
-                                                District<span class="glyphicon sort-icon" ng-show="sortKey=='preDistrict'"
-                                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                District
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='preDistrict'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center" ng-click="sort('preState')">
-                                                State<span class="glyphicon sort-icon" ng-show="sortKey=='preState'"
-                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                State
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='preState'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center">Pin Code</th>
                                             <th style="text-align:center">Mobile No.</th>
@@ -118,28 +139,62 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.empName" style="margin:0;padding:1px;" />
+                                            </td>
                                             <td></td>
-                                            <td><input class="form-control" type="text" ng-model="search.email" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.unitName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.deptName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.statName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.catName" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.desgName" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.email" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.unitName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.deptName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.statName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.catName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.desgName" style="margin:0;padding:1px;" />
+                                            </td>
                                             <td colspan="4"></td>
-                                            <td><input class="form-control" type="text" ng-model="search.perCity" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.perDistrict" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.perState" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.perCity" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.perDistrict" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.perState" style="margin:0;padding:1px;" />
+                                            </td>
                                             <td colspan="3"></td>
                                             <td colspan="2"></td>
-                                            <td><input class="form-control" type="text" ng-model="search.preAdd3" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.preAdd4" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.preCity" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.preDistrict" style="margin:0;padding:1px;" /></td>
-                                            <td><input class="form-control" type="text" ng-model="search.preState" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.preAdd3" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.preAdd4" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.preCity" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.preDistrict" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.preState" style="margin:0;padding:1px;" />
+                                            </td>
                                             <td colspan="4"></td>
-                                            <td><input class="form-control" type="text" ng-model="search.companyAcc" style="margin:0;padding:1px;" /></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.companyAcc" style="margin:0;padding:1px;" />
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>
