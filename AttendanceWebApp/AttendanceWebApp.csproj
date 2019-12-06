@@ -270,6 +270,7 @@
     <Compile Include="Controllers\LeavePostingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Global.asax.cs">
@@ -460,6 +461,7 @@
     <Content Include="Scripts\Controller\GPAdviceCntrl.js" />
     <Content Include="Scripts\Controller\HomeCntrl.js" />
     <Content Include="Scripts\Controller\IncomeTaxCntrl.js" />
+    <Content Include="Scripts\Controller\LeaveaCOCntrlJFL.js" />
     <Content Include="Scripts\Controller\LeaveaCOCntrl.js" />
     <Content Include="Scripts\Controller\LeaveCntrl.js" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
@@ -497,6 +499,7 @@
     <Content Include="Scripts\Controller\LoginCntrl.js" />
     <Content Include="Scripts\Controller\ManageLeaveCntrl.js" />
     <Content Include="Scripts\Controller\MasterCntrl.js" />
+    <Content Include="Scripts\Controller\ODCntrl.js" />
     <Content Include="Scripts\Controller\OpenMonthCntrl.js" />
     <Content Include="Scripts\Controller\PendingLeaveReport.js" />
     <Content Include="Scripts\Controller\PostedByHRReportCntrl.js" />
@@ -550,6 +553,7 @@
     <Content Include="UserManuals\images\LeaveaApplication\1%282%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\BEL.png" />
     <Content Include="UserManuals\images\LeaveaApplication\IPU.png" />
+    <Content Include="UserManuals\images\LeaveaApplication\JFL.png" />
     <Content Include="UserManuals\images\LeaveaApplication\KOSI.png" />
     <Content Include="UserManuals\images\LeaveaApplication\NKP.png" />
     <Content Include="UserManuals\images\LeaveCancellation\2 %281%29.png" />
@@ -681,6 +685,8 @@
     <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
     <Content Include="Views\GatePassAdvice\MasterUpload.cshtml" />
     <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
+    <Content Include="Views\LeaveApp\COffApplyJFL.cshtml" />
+    <Content Include="Views\OD\ODApply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,7 +26,6 @@
     <script src="~/Scripts/Module/ng-tags-input.js"></script>
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
     <script src="~/Scripts/Controller/default.js"></script>
-
     @* Stylesheet *@
     <style>
         .Requed {
@@ -67,22 +66,24 @@
             background-size: cover;
         }
     </style>
-    @* Submenu Script *@
     <script>
+        @* Submenu Script *@
         $(document).ready(function () { $('.dropdown-submenu a.test').on("click", function (e) { $(this).next('ul').toggle(); e.stopPropagation(); e.preventDefault(); }); });
-    </script>
-    @* Function For Sync All Master Data Of Employees *@
-    <script>
-        function AutoSync(data) { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };
-    </script>
-    @* COFF Application Authoriization *@
-    <script>
-        function COFF() { var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; }; }
-    </script>
-    @* Get IP Address *@
-    <script type="text/javascript">
-        $(document).ready(function () { var foo = "@Session["Loc"]"; if (foo === "IPU") { $('#footext').text("JINDAL SAW LTD. (IPU)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "NKP") { $('#footext').text("JINDAL SAW LTD. (NKP)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "KJSAW") { $('#footext').text("JSAW -"); $('#headtext').text("Employee Self Service Portal - JSAW"); }; if (foo === "KJQTL") { $('#footext').text("JQTL -"); $('#headtext').text("Employee Self Service Portal - JQTL"); }; if (foo === "BEL") { $('#footext').text("JINDAL SAW LTD. (BALLARY)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; });
+        @* Set Layout Header & Footer Text *@
+        $(document).ready(function () { var foo = "@Session["Loc"]"; if (foo === "IPU") { $('#footext').text("JINDAL SAW LTD. (IPU)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "NKP") { $('#footext').text("JINDAL SAW LTD. (NKP)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); }; if (foo === "BEL") { $('#footext').text("JINDAL SAW LTD. (BALLARY)"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd."); };if (foo === "JFL") { $('#footext').text("JINDAL FITTINGS LTD. (JFL)"); $('#headtext').text("Employee Self Service Portal - Jindal Fittings Ltd."); }; if (foo === "KJSAW") { $('#footext').text("JSAW -"); $('#headtext').text("Employee Self Service Portal - JSAW"); }; if (foo === "KJQTL") { $('#footext').text("JQTL -"); $('#headtext').text("Employee Self Service Portal - JQTL"); }; });
+        @* Get IP Address *@
         $(document).ready(function ubsrt() { window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { }; pc.createDataChannel(""); pc.createOffer(pc.setLocalDescription.bind(pc), noop); pc.onicecandidate = function (ice) { if (!ice || !ice.candidate || !ice.candidate.candidate) { return; }; var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1]; $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop; }; });
+    </script>
+    <script>
+        function AutoSync(data) { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };@* Function For Sync All Master Data Of Employees *@
+        function COFF() {
+            var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; var loc = "@Session["LOC"]";
+            if (loc === "IPU") {
+                if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };
+            } else if (loc === "BEL") {
+                if ((_grade < 009 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };
+            };
+        };@* COFF Application Authoriization *@
     </script>
 </head>
 <body>
@@ -99,9 +100,11 @@
     <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
     <input type="hidden" value="@Session["Loc"]" id="myLoc" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
+    <input type="hidden" value="@Session["IP"]" id="myIPAddress" />
+
     @*<input type="hidden" value="@Session["IsHod"]" id="myIsHod" /><input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" /><input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" /><input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />*@
     @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
-    <input type="hidden" value="" id="myIPAddress" />
+
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner" id="navmain">
             <div class="container">
@@ -163,7 +166,7 @@
                         <a href="/Home/Index"><i class="icon-dashboard"></i><span>Dashboard</span></a>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuMaster">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnureleasestreategymaster">
                                 <a href="/Master/CreateReleaseStreategy">Release Streategy Master</a>
@@ -174,7 +177,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuLeave">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Leave</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Leave</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuLeaveRules">
                                 <a href="/LeaveApp/LeaveRules">Leave Rules</a>
@@ -185,6 +188,9 @@
                             <li hidden="hidden" id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
+                            @*<li id="mnuCOffApplicationJFL">
+                                <a href="/LeaveApp/COffApplyJFL" >COFF Application JFL</a>
+                            </li>*@
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -200,7 +206,7 @@
                                 <a href="/ReleaseLeave/LeaveRelease">Leave Release</a>
                             </li>
                             <li hidden="hidden" class="dropdown-submenu" id="mnuLeavePosting">
-                                <a href="#" data-toggle="dropdown"><span>Leave Posting <b class="icon-caret-right"></b></span></a>
+                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Posting <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li hidden="hidden" id="mnuFullLeavePosting">
                                         <a href="/LeavePosting/LeavePosting?flg=N">Full Leave Posting</a>
@@ -216,7 +222,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuGatePass">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuCreateGatePass">
                                 <a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a>
@@ -239,7 +245,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuGPAdvice">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bookmark-empty"></i><span>GP Advice</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bookmark-empty"></i><span>GP Advice</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuGPAdviceGenerate">
                                 <a href="/GatePassAdvice/GenerateGPAdvice">New GP Advice</a>
@@ -265,7 +271,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuReport">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuReleaserEmpReport">
                                 <a href="/Report/EmployeeList">Employee List</a>
@@ -309,7 +315,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuUitility">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span><b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuAutoSync">
                                 <a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a>
@@ -323,6 +329,9 @@
                             <li hidden="hidden" id="mnuManageLeave">
                                 <a href="~/Master/ManageLeaveMaster">Manage Leave</a>
                             </li>
+                            @*<li id="mnuODLeave">
+                                    <a href="~/OD/ODApply">Out Door Duty Application</a>
+                                </li>*@
                         </ul>
                     </li>
                 </ul>
@@ -331,7 +340,7 @@
     </div>
     <div class="main">
         <div class="main-inner">
-            <div class="container HTMLCONTAIN">
+            <div class="container">
                 <div class="row">
                     @RenderBody()
                 </div>
@@ -342,7 +351,7 @@
         <div class="navbar-inner">
             <div class="container">
                 <div class="brand" style="text-align:center;color:white">
-                    <span><label id="footext"></label> (<label id="ipAdd"></label>)</span>
+                    <span><label id="footext"></label> (<label>@Session["IP"]</label>)</span>
                 </div>
             </div>
         </div>

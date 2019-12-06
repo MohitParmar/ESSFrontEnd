@@ -1,6 +1,5 @@
 ﻿using AttendanceWebApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -39,6 +38,12 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        public ActionResult COffApplyJFL()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null
+                ? View()
+                : (ActionResult)RedirectToAction("Index", "Login");
+        }
         public ActionResult LeaveRules()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)

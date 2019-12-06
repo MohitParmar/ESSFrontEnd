@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace AttendanceWebApp
+﻿namespace AttendanceWebApp
 {
     public static class AuthConfig
     {

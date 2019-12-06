@@ -39,17 +39,24 @@
                 <div class="table-responsive">
                     @* JOB Profile Details *@
                     <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <strong>Job Profile</strong>
-                        </div>
                         <div class="panel-body">
-                            <div ng-init="GetUserInfo()">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in Udata|itemsPerPage:5">
+                            <div ng-init="GetUserInfo()" class="table-responsive">
+                                <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in Udata|itemsPerPage:5">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="4" class="info fc-header-center" >
+                                                @* color:#31708f;background-color:#d9edf7;border-color:#bce8f1; *@
+                                                <h4>
+                                                    <b>Employee Code / SAPID : {{d.empUnqId}}</b>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                             <th colspan="4" style="text-align:center;">
                                                 <h4>
-                                                    <b>Employee Code : {{d.empUnqId}}</b>
+                                                    <strong>Job Profile</strong>
                                                 </h4>
                                             </th>
                                         </tr>
@@ -113,27 +120,21 @@
                                             </td>
                                             <td>{{d.email}}</td>
                                         </tr>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </div>
-                    @* Personal Information *@
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <strong>Personal Information</strong>
-                        </div>
-                        <div class="panel-body">
-                            <div ng-init="GetUserPerasonalInfo()">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="pd in Uperdata|itemsPerPage:5">
+                            <div ng-init="GetUserPerasonalInfo()" class="table-responsive">
+                                <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="pd in Uperdata|itemsPerPage:5">
+                                    <thead>
                                         <tr>
-                                            <th colspan="4" style="text-align:center;">
+                                            <th colspan="4" class="fc-header-center">
                                                 <h4>
-                                                    <b>SAP ID : {{pd.sapId}}</b>
+                                                    <strong>Personal Information</strong>
                                                 </h4>
                                             </th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                             <td style="width:16.6%">
                                                 <label>Joining Date</label>
@@ -339,15 +340,21 @@
                                                         <td style="width:16.6%">
                                                             <label>ID Proof 1</label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.idPrf1}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.idPrf1}}
+                                                        </td>
                                                         <td style="width:16.6%">
                                                             <label>ID Proof No 1 </label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.idPrf1No}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.idPrf1No}}
+                                                        </td>
                                                         <td style="width:16.6%">
                                                             <label>ID Proof 1 Exp. ON</label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.idPrf1ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.idPrf1ExpOn | date:'dd/MM/yyyy'}}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -361,7 +368,9 @@
                                                         <td>
                                                             <label>ID Proof 2 Exp. ON</label>
                                                         </td>
-                                                        <td>{{pd.idPrf2ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                        <td>
+                                                            {{pd.idPrf2ExpOn | date:'dd/MM/yyyy'}}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -375,7 +384,9 @@
                                                         <td>
                                                             <label>ID Proof 3 Exp. ON</label>
                                                         </td>
-                                                        <td>{{pd.idPrf3ExpOn | date:'dd/MM/yyyy'}}</td>
+                                                        <td>
+                                                            {{pd.idPrf3ExpOn | date:'dd/MM/yyyy'}}
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -395,21 +406,27 @@
                                                         <td style="width:16.6%">
                                                             <label>Bank Account No</label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.bankAcNo}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.bankAcNo}}
+                                                        </td>
                                                         <td style="width:16.6%">
                                                             <label>Bank IFSC Code</label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.bankIfsc}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.bankIfsc}}
+                                                        </td>
                                                         <td style="width:16.6%">
                                                             <label>Bank Name</label>
                                                         </td>
-                                                        <td style="width:16.6%">{{pd.bankName}}</td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.bankName}}
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

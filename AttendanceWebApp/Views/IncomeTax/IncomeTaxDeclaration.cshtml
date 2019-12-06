@@ -1411,14 +1411,21 @@
                                                 <input type="text" class="form-control" id="a_equityscheme" placeholder="0" ng-model="New.a_equityscheme" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        @*<tr>
-                                                <td style="text-align:center;">2</td>
-                                                <td><p>Contribution to Certain Pension Funds</p></td>
-                                                <td><input type="text" class="form-control" id="p_pensionFunds" placeholder="0" ng-model="New.p_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_pensionFunds" placeholder="0" ng-model="New.a_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>*@
+                                        @*  *@
                                         <tr>
-                                            <td rowspan="4" style="text-align:center;">2</td>
+                                            <td style="text-align:center;">2</td>
+                                            <td>
+                                                <p>Contribution to Certain Pension Funds</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_pensionFunds" placeholder="0" ng-model="New.p_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_pensionFunds" placeholder="0" ng-model="New.a_pensionFunds" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="7" style="text-align:center;">2</td>
                                             <td>
                                                 <p>Medical insurance premium paid other than cash U/S 80D (premium for Senior Citizens(above 60 years) Rs. 50,000/- else Rs. 30,000/-) including Rs. 5000/- for preventive health check up</p>
                                             </td>
@@ -1431,8 +1438,8 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                @*<p>:- for self, spouse & dependent children Medical insurance premium (Non-Senior Citizen)</p>*@
-                                                <p>:- for self, spouse & dependent children</p>
+                                                <p>:- for self, spouse & dependent children Medical insurance premium (Non-Senior Citizen)</p>
+                                                @*<p>:- for self, spouse & dependent children</p>*@
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="p_mediclaimpremiumforfamily" placeholder="0" ng-model="New.p_mediclaimpremiumforfamily" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
@@ -1441,15 +1448,22 @@
                                                 <input type="text" class="form-control" id="a_mediclaimpremiumforfamily" placeholder="0" ng-model="New.a_mediclaimpremiumforfamily" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        @*<tr>
-                                                <td><p>:- Medical insurance premium (Senior Citizen)</p></td>
-                                                <td><input type="text" class="form-control" id="p_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.p_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.a_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>*@
+                                        @*  *@
                                         <tr>
                                             <td>
-                                                @*<p>:- For parents : Medical insurance premium(Payment on behalf of parents non-senior citizen)</p>*@
-                                                <p>:- For parents</p>
+                                                <p>:- Medical insurance premium (Senior Citizen)</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.p_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_mediclaimpremiumforfamilySC" placeholder="0" ng-model="New.a_mediclaimpremiumforfamilySC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>:- For parents : Medical insurance premium(Payment on behalf of parents non-senior citizen)</p>
+                                                @*<p>:- For parents</p>*@
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="p_mediclaimpremiumforparents" placeholder="0" ng-model="New.p_mediclaimpremiumforparents" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
@@ -1458,16 +1472,22 @@
                                                 <input type="text" class="form-control" id="a_mediclaimpremiumforparents" placeholder="0" ng-model="New.a_mediclaimpremiumforparents" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        @*<tr>
-                                                <td><p>:- For parents : Medical insurance premium(Payment on behalf of parents senior citizen)</p></td>
-                                                <td><input type="text" class="form-control" id="p_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.p_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.a_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>*@
                                         <tr>
                                             <td>
-                                                <p>:- Payment for Preventive Health Checkup</p>
+                                                <p>:- For parents : Medical insurance premium(Payment on behalf of parents senior citizen)</p>
                                             </td>
-                                            @*<p>:- Payment for Preventive Health Check up Self</p>*@
+                                            <td>
+                                                <input type="text" class="form-control" id="p_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.p_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_mediclaimpremiumforparentsSC" placeholder="0" ng-model="New.a_mediclaimpremiumforparentsSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @*<p>:- Payment for Preventive Health Checkup</p>*@
+                                                <p>:- Payment for Preventive Health Check up Self</p>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control" id="p_mediclaimpremiumforhealth" placeholder="0" ng-model="New.p_mediclaimpremiumforhealth" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
@@ -1475,35 +1495,74 @@
                                                 <input type="text" class="form-control" id="a_mediclaimpremiumforhealth" placeholder="0" ng-model="New.a_mediclaimpremiumforhealth" ng-change="calmediclaim()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        @*<tr>
-                                                <td><p>:- Payment for Preventive Health Check up Parents</p></td>
-                                                <td><input type="text" class="form-control" id="p_mphealthparents" placeholder="0" ng-model="New.p_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_mphealthparents" placeholder="0" ng-model="New.a_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p></p></td>
-                                                <td><p>Medical Expenditure for very senior Citizen (Self)</p></td>
-                                                <td><input type="text" class="form-control" id="p_medicalExpSelf" placeholder="0" ng-model="New.p_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_medicalExpSelf" placeholder="0" ng-model="New.a_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p></p></td>
-                                                <td><p>Medical Expenditure for very senior Citizen (Parents)</p></td>
-                                                <td><input type="text" class="form-control" id="p_medicalExpParents" placeholder="0" ng-model="New.p_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_medicalExpParents" placeholder="0" ng-model="New.a_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p></p></td>
-                                                <td><p>Medical Treatment for non-senior citizen</p></td>
-                                                <td><input type="text" class="form-control" id="p_medicalTreatment" placeholder="0" ng-model="New.p_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_medicalTreatment" placeholder="0" ng-model="New.a_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p></p></td>
-                                                <td><p>Medical Treartment for Senior Citizen</p></td>
-                                                <td><input type="text" class="form-control" id="p_medicalTreatmentSC" placeholder="0" ng-model="New.p_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_medicalTreatmentSC" placeholder="0" ng-model="New.a_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>*@
+                                        @*  *@
+                                        <tr>
+                                            <td>
+                                                <p>:- Payment for Preventive Health Check up Parents</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_mphealthparents" placeholder="0" ng-model="New.p_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_mphealthparents" placeholder="0" ng-model="New.a_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p></p>
+                                            </td>
+                                            <td>
+                                                <p>Medical Expenditure for very senior Citizen (Self)</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_medicalExpSelf" placeholder="0" ng-model="New.p_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_medicalExpSelf" placeholder="0" ng-model="New.a_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p></p>
+                                            </td>
+                                            <td>
+                                                <p>Medical Expenditure for very senior Citizen (Parents)</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_medicalExpParents" placeholder="0" ng-model="New.p_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_medicalExpParents" placeholder="0" ng-model="New.a_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p></p>
+                                            </td>
+                                            <td>
+                                                <p>Medical Treatment for non-senior citizen</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_medicalTreatment" placeholder="0" ng-model="New.p_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_medicalTreatment" placeholder="0" ng-model="New.a_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p></p>
+                                            </td>
+                                            <td>
+                                                <p>Medical Treartment for Senior Citizen</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_medicalTreatmentSC" placeholder="0" ng-model="New.p_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_medicalTreatmentSC" placeholder="0" ng-model="New.a_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td style="text-align:center;">
                                                 <p>3</p>
@@ -1546,18 +1605,36 @@
                                                 <input type="text" class="form-control" id="a_severedisablity" placeholder="0" ng-model="New.a_severedisablity" ng-change="CheckSevereDisability()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
-                                        @*<tr>
-                                                <td style="text-align:center;"><p>7</p></td>
-                                                <td><p>80U - Deduction for Self Disability</p></td>
-                                                <td><input type="text" class="form-control" id="p_selfdisablity" placeholder="0" ng-model="New.p_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_selfdisablity" placeholder="0" ng-model="New.a_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;"><p>8</p></td>
-                                                <td><p>80U - Deduction for Self Severe Disability</p></td>
-                                                <td><input type="text" class="form-control" id="p_selfseveredisablity" placeholder="0" ng-model="New.p_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                                <td><input type="text" class="form-control" id="a_selfseveredisablity" placeholder="0" ng-model="New.a_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-                                            </tr>*@
+                                        @*  *@
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>7</p>
+                                            </td>
+                                            <td>
+                                                <p>80U - Deduction for Self Disability</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_selfdisablity" placeholder="0" ng-model="New.p_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_selfdisablity" placeholder="0" ng-model="New.a_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        @*  *@
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>8</p>
+                                            </td>
+                                            <td>
+                                                <p>80U - Deduction for Self Severe Disability</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_selfseveredisablity" placeholder="0" ng-model="New.p_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_selfseveredisablity" placeholder="0" ng-model="New.a_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td style="text-align:center;">
                                                 <p>6</p>

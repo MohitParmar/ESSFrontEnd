@@ -291,7 +291,7 @@
                                             @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
                                             @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                            <td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==24"
+                                            <td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==25"
                                                 data-title="'location'">
                                                 {{l}}
                                             </td>

@@ -107,6 +107,9 @@
                                             <th style="text-align:center;width:48px;">
                                                 <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
                                             </th>
+                                            <th style="text-align:center;width:48px;">
+                                                <a href="" ng-click="predicate = 'addDt'; reverse=!reverse">App Date</a>
+                                            </th>
                                             <th style="text-align:center;width:64px;">
                                                 <a href="" ng-click="predicate = 'empUnqId'; reverse=!reverse">Emp.Code</a>
                                             </th>
@@ -135,6 +138,7 @@
                                     <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
                                         <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                             <td style="text-align:center;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            <td style="text-align:center;" id="addDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
                                             <td style="text-align:center;" id="empName" ng-repeat="e in d.employee track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
                                             <td style="text-align:center;" id="desgName" ng-repeat="desg in d.employee track by $index" ng-if="$index==9" data-title="'desgName'">{{desg}}</td>

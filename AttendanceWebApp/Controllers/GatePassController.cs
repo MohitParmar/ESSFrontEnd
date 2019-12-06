@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace AttendanceWebApp.Controllers
 {
@@ -23,8 +20,9 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
-                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
+                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "6" ||
+                    Session["UserRole"].ToString() == "7" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11" ||
+                    Session["UserRole"].ToString() == "12")
                 {
                     return View();
                 }

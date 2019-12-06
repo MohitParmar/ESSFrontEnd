@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AttendanceWebApp.Models;
+using System;
 using System.Web.Mvc;
-using AttendanceWebApp.Models;
 
 namespace AttendanceWebApp.Controllers
 {
@@ -45,11 +43,29 @@ namespace AttendanceWebApp.Controllers
                 Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["Loc"] = Convert.ToString(requestData.Location);
-                if (requestData.WrkGrp != "COMP" && requestData.RoleId != "2") { Session["UserRole"] = Convert.ToString(10); } 
-                else { Session["UserRole"] = Convert.ToString(requestData.RoleId); }
+                if (requestData.WrkGrp != "COMP" && requestData.RoleId != "2" && requestData.RoleId != "3")
+                {
+                    Session["UserRole"] = Convert.ToString(10);
+                }
+                else
+                {
+                    Session["UserRole"] = Convert.ToString(requestData.RoleId);
+                }
+                string IPAddress = GetIp();
                 return null;
             }
             catch { return null; }
+        }
+
+        public string GetIp()
+        {
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(ip))
+            {
+                //ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                Session["IP"] = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            return null;
         }
 
         public ActionResult UserLogin()
@@ -72,6 +88,7 @@ namespace AttendanceWebApp.Controllers
             Session["CatCode"] = null;
             Session["UserRole"] = null;
             Session["Loc"] = null;
+            Session["IP"] = null;
             return RedirectToAction("Index", "Login");
         }
     }

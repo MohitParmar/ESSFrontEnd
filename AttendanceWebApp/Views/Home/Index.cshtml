@@ -21,15 +21,14 @@
 </style>
 
 @* Check User ID & Password is Same *@
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(window).on('load', function () {
         var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
         var sPass = "@Session["Pass"].ToString()";
         var sWrkgrp = "@Session["WrkGrp"]";
         if (sEmpUnqId === sPass && sWrkgrp === "COMP") { $('#myModal').modal('show'); };
     });
-</script>
-
+</script>*@
 <div ng-app="myApp">
     <div ng-controller="HomeCntrloller">
         <div class="container">
@@ -51,6 +50,9 @@
                                                     App.Date
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;padding:3px;">
+                                                    Pending Here
                                                 </th>
                                                 <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('releaseStatusCode')">
                                                     Status
@@ -77,6 +79,15 @@
                                         <tbody dir-paginate="ld in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
                                             <tr ng-style="ld.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;padding:3px;" data-title="'addDt'">{{ld.addDt| date:'dd/MM/yy'}}</td>
+                                                <td >
+                                                    <table>
+                                                        <tr ng-repeat="a in ld.applReleaseStatus">
+                                                            <td ng-if="a.releaseStatusCode === 'I' || a.releaseStatusCode === 'R'" style="width:85px;font-size:x-small;">
+                                                                {{a.releaseStrategyLevel}} - {{a.releaserName}} - {{a.releaseDate | date:'dd/MM/yy'}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                                 <td style="text-align:center;padding:3px;" ng-style="
                                                     ld.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     ld.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||

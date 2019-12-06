@@ -7,6 +7,7 @@
         var chk = "@Session["UserRole"]"; var loc = "@Session["Loc"]";
         if (loc === "IPU") { $('#link').text("“http://172.16.12.44:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/IPU.png"); }
         else if (loc === "NKP") { $('#link').text("“http://172.16.10.9:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/NKP.png"); }
+        else if (loc === "JFL") { $('#link').text("“http://172.17.216.59:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/JFL.png"); }
         else if (loc === "KJQTL" || loc === "KJSAW") { $('#link').text("“http://172.16.16.77:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/KOSI.png"); }
         else if (loc === "BEL") { $('#link').text("“http://172.16.15.18:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/BEL.png"); };
         if (chk === "1" || chk === "4" || chk === "7" || chk === "9") { $('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide(); }

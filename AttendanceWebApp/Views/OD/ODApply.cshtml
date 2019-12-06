@@ -4,6 +4,7 @@
 }
 
 <script src="~/Scripts/Controller/ODCntrl.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 
 <style type="text/css">
@@ -34,7 +35,7 @@
 
 <div ng-app="myApp" ng-controller="ODController">
     <div class="container">
-        <input type="hidden" value="OD" id="releaseGroupCode" />
+        <input type="hidden" value="LA" id="releaseGroupCode" />
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
             @* Release Strategy *@
@@ -54,36 +55,61 @@
             @* Create Leave Application *@
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>OUTDOOR DUTY SLIP</strong><br /> (OFFICIAL / PERSONAL) </div>
+                    <div class="panel-heading"><strong>OUTDOOR DUTY SLIP</strong></div>
                     <div class="panel-body">
                         <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
-                            <div class="table-responsive">
-                                <table id="myTable" class="table table-responsive table-condensed">
+                            <div ng-init="GetEmpInfo()" class="table-responsive">
+                                <table id="myTable" class="table table-responsive table-condensed table-striped" dir-paginate="d in empdata|itemsPerPage:5">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="2" style="text-align:center;">
+                                                OUTDOOR DUTY SLIP
+                                                <select id="Mode" class="form-control" ng-model="New.Mode">
+                                                    <option value="O" title="Official" selected>Official</option>
+                                                    <option value="P" title="Personal">Personal</option>
+                                                </select>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
                                     <tr>
-                                        <td><p>Name : </p></td>
-                                        <td><p>{{d.empName}}</p></td>
-                                        <td><p>Employee ID : </p></td>
-                                        <td><p>{{d.empUnqId}} / {{d.sapId}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Designation : </p></td>
-                                        <td><p>{{d.desgName}}</p></td>
-                                        <td style="text-align:center;"><label>Place Of Visit</label></td>
+                                        <td>
+                                            <strong style="text-transform:uppercase">Employee Name</strong>
+                                        </td>
                                         <td colspan="3">
-                                            <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.." required>
+                                            {{d.empName}} {{d.fatherName}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><label>From Date</label></td>
-                                        <td style="text-align:center;">
+                                        <td>
+                                            <strong style="text-transform:uppercase">Designation</strong>
+                                        </td>
+                                        <td>
+                                            {{d.desgName}}
+                                        </td>
+                                        <td>
+                                            <strong style="text-transform:uppercase">SAPID</strong>
+                                        </td>
+                                        <td>
+                                            {{d.empUnqId}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="text-transform:uppercase">From Date</strong>
+                                        </td>
+                                        <td>
                                             <div class="right-inner-addon">
                                                 <i class="icon-calendar"></i>
                                                 <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
                                                        placeholder="From Date" datepicker required>
                                             </div>
                                         </td>
-                                        <td style="text-align:center;"><label>To Date</label></td>
-                                        <td style="text-align:center;">
+                                        <td>
+                                            <strong style="text-transform:uppercase">To Date</strong>
+                                        </td>
+                                        <td>
                                             <div class="right-inner-addon">
                                                 <i class="icon-calendar"></i>
                                                 <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
@@ -92,20 +118,29 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:center;"><label>CONTACT ADDRESS / TELEPHONE NO. <br /> (IF ANY): </label></td>
+                                        <td>
+                                            <strong style="text-transform:uppercase">Place Of Visit</strong>
+                                        </td>
                                         <td colspan="3">
-                                            <textarea class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
-                                                      required></textarea>
+                                            <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
+                                                   style="text-transform:uppercase" required>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="text-align:right;" colspan="4">
-                                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                                        <td>
+                                            <strong style="text-transform:uppercase">Contact Address / Telephone No. (If Any)</strong>
+                                        </td>
+                                        <td colspan="3">
+                                            <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
+                                                   style="text-transform:uppercase" required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align:right;">
+                                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="text-transform:uppercase" />
                                             <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
                                                     ng-click='createOD(New)'>
-                                                Create OD Application
+                                                Generate OD Application
                                             </button>
                                         </td>
                                     </tr>

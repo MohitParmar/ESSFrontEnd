@@ -3,7 +3,12 @@
     $scope.alluserlist = [];
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
-    $scope.SetLTListValue = function (value) { $scope.ToValidate(); if (value === "OH") { $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false); } $scope.LeaveType = value; };
+    $scope.SetLTListValue = function (value) {
+        $scope.ToValidate(); if (value === "OH") {
+            var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; $('#ToDt').val(FromDate);
+            $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false);
+        } $scope.LeaveType = value;
+    };
     $scope.ResetView = function () { window.location.reload(true); };   //Reload Page
     //Get Release Strategy
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };
