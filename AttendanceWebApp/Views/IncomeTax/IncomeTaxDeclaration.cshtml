@@ -2,10 +2,8 @@
     ViewBag.Title = "IncomeTaxDeclaration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/IncomeTaxCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
-
 <script type="text/javascript">
     @*var s = "row" + element.closest('tr').rowIndex + " -column" + element.closest('td').cellIndex*@
     function RemovePPF(element) { var tables = document.getElementById('aliasTable4'); var rowCounts = tables.rows.length; tables.deleteRow(element.closest('tr').rowIndex); };
@@ -16,7 +14,6 @@
     function RemoveULIP(element) { var tables = document.getElementById('aliasTable6'); var rowCounts = tables.rows.length; tables.deleteRow(element.closest('tr').rowIndex); };
     function RemoveSS(element) { var tables = document.getElementById('aliasTable7'); var rowCounts = tables.rows.length; tables.deleteRow(element.closest('tr').rowIndex); };
 </script>
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -102,7 +99,6 @@
         transition: max-height 0.2s ease-out;
     }
 </style>
-
 <div ng-app="myApp" ng-controller="IncomeTaxController">
     <div class="container">
         <input type="hidden" value="" id="hidyearMonth" />

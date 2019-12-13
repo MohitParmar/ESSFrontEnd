@@ -2,10 +2,8 @@
     ViewBag.Title = "UniForm Master";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/UniformCntrl.js"></script>
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -35,11 +33,9 @@
             pointer-events: none;
         }
 </style>
-
 <script>
     window.onload = function () { var d = new Date(); var Currentyear = (d.getFullYear()); $('#txtYear').val(Currentyear); };
 </script>
-
 <div ng-app="myApp" ng-controller="UniformController">
     <div class="container">
         <div id="MessageBox" class="table-responsive"></div>

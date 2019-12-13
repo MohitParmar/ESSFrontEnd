@@ -2,11 +2,9 @@
     ViewBag.Title = "New Gate Pass (Others)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
-
 <style type="text/css">
     .TextBoxStyle {
         height: 25px;
@@ -32,27 +30,20 @@
             pointer-events: none;
         }
 </style>
-
 <script>
     function validateCode() {
-        var pin = document.getElementById('txtEmpCode').value;
-        var loc = $('#myLoc').val();
+        var pin = document.getElementById('txtEmpCode').value; var loc = $('#myLoc').val();
         if (loc === "JFL") {
             if (pin.length > 7 || pin.length < 7) {
-                alert("Please Enter Employee Code in 7 Digit");
-                document.getElementById('txtEmpCode').value = "";
-                document.getElementById("txtEmpCode").focus();
+                alert("Please Enter Employee Code in 7 Digit"); document.getElementById('txtEmpCode').value = ""; document.getElementById("txtEmpCode").focus();
             };
         } else {
             if (pin.length > 8 || pin.length < 8) {
-                alert("Please Enter Employee Code in 8 Digit");
-                document.getElementById('txtEmpCode').value = "";
-                document.getElementById("txtEmpCode").focus();
+                alert("Please Enter Employee Code in 8 Digit"); document.getElementById('txtEmpCode').value = ""; document.getElementById("txtEmpCode").focus();
             };
         };
     }
 </script>
-
 <div ng-app="myApp">
     <div ng-controller="GatePassCntroller">
         <div class="container">

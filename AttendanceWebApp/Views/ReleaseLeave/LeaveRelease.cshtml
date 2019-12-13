@@ -2,10 +2,8 @@
     ViewBag.Title = "Leave Release";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/LeaveReleaseCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
-
 <div ng-app="myApp" ng-controller="LeaveReleaseCntrloller">
     <div class="container">
         <input type="hidden" value="LA" id="releaseGroupCode" />
@@ -104,9 +102,9 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;width:48px;">
-                                                <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
-                                            </th>
+                                            @*<th style="text-align:center;width:48px;">
+                                                    <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
+                                                </th>*@
                                             <th style="text-align:center;width:48px;">
                                                 <a href="" ng-click="predicate = 'addDt'; reverse=!reverse">App Date</a>
                                             </th>
@@ -128,6 +126,7 @@
                                                     </tr>
                                                 </table>
                                             </th>
+                                            <th style="text-align:center;width:54px;">HL Date (if CO)</th>
                                             <th style="text-align:center;">Remarks</th>
                                             <th style="text-align:center;width: 191px;">Action</th>
                                             <th style="text-align:center;width:46px;">
@@ -137,12 +136,12 @@
                                     </thead>
                                     <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
                                         <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
-                                            <td style="text-align:center;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            @*<td style="text-align:center;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>*@
                                             <td style="text-align:center;" id="addDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
                                             <td style="text-align:center;" id="empName" ng-repeat="e in d.employee track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
                                             <td style="text-align:center;" id="desgName" ng-repeat="desg in d.employee track by $index" ng-if="$index==9" data-title="'desgName'">{{desg}}</td>
-                                            <td style="padding:2px;">
+                                            <td style="padding:2px;font-size: x-small;">
                                                 <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                         <td style="padding:2px;text-align:center;width:91px;">{{lrd.remarks}}</td>
@@ -159,6 +158,13 @@
                                                         <td colspan="7">
                                                             <strong><text style="color:#f44336;">Please Note : This is Cancelled Leave.</text></strong>
                                                         </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="text-align:center;padding:2px;">
+                                                <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                    <tr ng-repeat="m in d.leaveApplicationDetails">
+                                                        <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -207,9 +213,9 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;width:8%;">
-                                                <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
-                                            </th>
+                                            @*<th style="text-align:center;width:8%;">
+                                                    <a href="" ng-click="predicate = 'releaseGroupCode'; reverse=!reverse">Leave Group</a>
+                                                </th>*@
                                             <th style="text-align:center;width:9%;">
                                                 <a href="" ng-click="predicate = 'empUnqId'; reverse=!reverse">Employee Code</a>
                                             </th>
@@ -227,7 +233,7 @@
                                         <tr dir-paginate=" d in reqdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_2"
                                             ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}"
                                             ng-show="d.releaseStatusCode =='F'">
-                                            <td style="text-align:center;padding-top:10px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
+                                            @*<td style="text-align:center;padding-top:10px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>*@
                                             <td style="text-align:center;padding-top:10px;">{{d.empUnqId}}</td>
                                             <td style="text-align:center;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">
                                                 {{e}}

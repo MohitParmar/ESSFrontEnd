@@ -1,15 +1,11 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Master Upload";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
-
 <script src="~/Content/FileUploadXLSXLib/jszip.js"></script>
 <script src="~/Content/FileUploadXLSXLib/xlsx.full.min.js"></script>
-
 <div ng-app="myApp">
     <div ng-controller="GPAdviceController">
         <div class="container">
@@ -28,7 +24,6 @@
                                     <span class="input-group-btn">
                                         <button type="button" id="upload" value="Upload" class="btn btn-primary" ng-click="Upload()"><i class="icon-upload"></i>&nbsp;Upload</button>
                                     </span>
-                                    @*<div id="dvExcel"></div>*@
                                 </div>
                             </form>
                         </div>

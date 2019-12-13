@@ -2,10 +2,8 @@
     ViewBag.Title = "LeaveApplicationView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -18,7 +16,6 @@
         padding-bottom: 5%;
     }
 </style>
-
 <div ng-app="myApp" ng-controller="ManageLeaveMasterController">
     <div class="container" id="mainContainer">
         <div class="row">
@@ -27,7 +24,7 @@
                 <table class="table table-responsive">
                     <tr>
                         <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                            <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            <b> Releaser  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
                         </td>
                     </tr>
                 </table>
@@ -98,6 +95,7 @@
                                         <th style="text-align:center;">To Date</th>
                                         <th style="text-align:center;">Days</th>
                                         <th style="text-align:center;">Half Day</th>
+                                        <th style="text-align:center;">HL Date (if CO)</th>
                                         <th style="text-align:center;">Post.Date</th>
                                         <th style="text-align:center;">Is Posted</th>
                                         <th style="text-align:center;">Posted By </th>
@@ -125,6 +123,7 @@
                                         <td style="text-align:center;">
                                             <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
                                         </td>
+                                        <td style="text-align:center;">{{d.coDate1 | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">
                                             <label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
                                         </td>
@@ -195,8 +194,8 @@
                                 <tbody>
                                     <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
                                         <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
-                                        <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;" data-title="'LeaveDeducted'">{{pld.leaveDed}}</td>
                                         <td style="text-align:center;" data-title="'halfDayFlag'">
                                             <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />

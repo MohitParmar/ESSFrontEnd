@@ -2,16 +2,13 @@
     ViewBag.Title = "Leave Posting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/LeavePostingCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
 @*<script src="~/Content/ng-grid-2.0.14.debug.js"></script>*@
-
 @*<script>function checkAll(ele) {var checkboxes = document.getElementsByTagName('input');
     if (ele.checked) {for (var i = 0; i < checkboxes.length; i++) {if (checkboxes[i].type == 'checkbox') {checkboxes[i].checked = true;}}}
     else {for (var i = 0; i < checkboxes.length; i++) {console.log(i)if (checkboxes[i].type == 'checkbox') {checkboxes[i].checked = false;}}}}</script>*@
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -71,7 +68,6 @@
             opacity: 1;
         }
 </style>
-
 <script>
     window.onload = function () {
         var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -82,7 +78,6 @@
         $('#FromDt').val(firstDay); $('#ToDt').val(lastDay);
     }
 </script>
-
 <div ng-app="myApp" ng-controller="LeavePostingController">
     <div class="container" id="mainContainer">
         <div class="row">
@@ -234,7 +229,7 @@
                                         <tr>
                                             @*<th><input id="chk" type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>*@
                                             <th>Sr No.</th>
-                                            <th style="text-align:center;padding:3px;width:44px;">Location</th>
+                                            @*<th style="text-align:center;padding:3px;width:44px;">Location</th>*@
                                             <th style="text-align:center;padding:3px;width:40px;" ng-click="sort('leaveAppId')">
                                                 App.ID
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
@@ -267,15 +262,16 @@
                                                     </tr>
                                                 </table>
                                             </th>
+                                            <th style="text-align:center;padding:3px;width:54px;">HL Date (if CO)</th>
                                             <th style="text-align:center;padding:3px;">Remarks</th>
                                             <th style="text-align:center;padding:3px;width:122px;">Action</th>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td>
-                                                <input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" />
-                                            </td>
-                                            <td colspan="3"></td>
+                                            @*<td></td>
+                                                <td>
+                                                    <input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" />
+                                                </td>*@
+                                            <td colspan="4"></td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" />
                                             </td>
@@ -283,7 +279,7 @@
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" />
                                             </td>
-                                            <td colspan="4"></td>
+                                            <td colspan="5"></td>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage" pagination-id="pg2">
@@ -291,10 +287,10 @@
                                             @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
                                             @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                            <td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==25"
-                                                data-title="'location'">
-                                                {{l}}
-                                            </td>
+                                            @*<td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==25"
+                                                    data-title="'location'">
+                                                    {{l}}
+                                                </td>*@
                                             <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
                                             <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">
@@ -331,6 +327,13 @@
                                                                 <option value="P" title="Partial">Partial</option>
                                                             </select>
                                                         </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="text-align:center;padding:2px;">
+                                                <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                    <tr ng-repeat="m in d.leaveApplicationDetails">
+                                                        <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
                                                     </tr>
                                                 </table>
                                             </td>

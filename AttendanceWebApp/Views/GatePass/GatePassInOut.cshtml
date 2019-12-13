@@ -1,13 +1,11 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 @{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
 <head>
     <title>GATE PASS IN/OUT</title>
-    @*<meta http-equiv="refresh" content="30">*@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
@@ -21,10 +19,8 @@
     <script src="~/Scripts/Angular/angular-resource.js"></script>
     <link href="~/Content/jquery-ui.css" rel="stylesheet" />
     <script src="~/Scripts/Jquery/jquery-ui.js"></script>
-
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
     <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
-
     <style>
         .Requed {
             color: red;
@@ -43,7 +39,6 @@
             display: none;
         }
     </style>
-
     <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
     <script src="~/Scripts/Module/ng-table.src.js"></script>
     <script src="~/Scripts/Module/ng-tags-input.js"></script>
@@ -51,7 +46,6 @@
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
     <script src="~/Content/DirPAgination/dirPagination.js"></script>
     <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
-
     <style type="text/css">
         .ng-table-pager {
             display: none;
@@ -124,7 +118,6 @@
                                 <label id="outinmsg" style="text-align:center;font-size:larger;"></label>
                             </h3>
                         </div>
-                        @*<div ng-init="AllGatePassInfo('GPIO')">*@
                         <div class="table-responsive" id="divOUT">
                             <div ng-init="NewGPInfo()">
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
@@ -169,9 +162,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @* pagination-id="pg1" *@
                                         <tr dir-paginate="d in outdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
-                                            @* ng-show="d.statusName == 'New' && d.releaseStatusCode == 'F'" *@
                                             <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
                                             <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;font-size:large;">{{d.empName}}</td>
@@ -182,7 +173,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                @*<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>*@
                             </div>
                         </div>
                         @* Gate IN DIV *@
@@ -235,9 +225,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @* pagination-id="pg2" *@
                                         <tr dir-paginate="i in indata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
-                                            @* ng-show="i.statusName == 'Out' && i.typeofGatePass != 'Duty Off'" *@
                                             <td style="text-align:center;font-size:large;">{{i.gatePassNo}}</td>
                                             <td style="text-align:center;font-size:large;">{{i.empUnqId}}</td>
                                             <td style="text-align:left;font-size:large;">{{i.empName}}</td>
@@ -248,9 +236,7 @@
                                             </td>
                                         </tr>
                                     </tbody>
-
                                 </table>
-                                @*<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg2"></dir-pagination-controls>*@
                             </div>
                         </div>
                     </div>

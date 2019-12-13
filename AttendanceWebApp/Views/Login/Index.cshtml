@@ -1,9 +1,7 @@
 ﻿@model AttendanceWebApp.Models.Employees
-
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +26,6 @@
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
     <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
     <script src="~/Scripts/Controller/LoginCntrl.js"></script>
-
     <style>
         .imgs {
             display: inline-block;
@@ -58,7 +55,6 @@
             background-size: cover;
         }
     </style>
-
     <script>
         $(function () { $('input').keydown(function (e) { if (e.keyCode == 13) { $("#btnOK").focus().click(); return false; } }); });
     </script>
@@ -97,13 +93,6 @@
             </div>
         </div>
     </div>
-    @*<div class="navbar navbar-fixed-bottom" style="height:30px;">
-            <div class="navbar-inner">
-                <div class="container">
-                    <div style="text-align:center;color:white"><span><b>JINDAL SAW LTD. (IPU)</b></span></div>
-                </div>
-            </div>
-        </div>*@
     <script src="~/Content/js/jquery-1.7.2.min.js"></script>
     <script src="~/Content/js/signin.js"></script>
 </body>

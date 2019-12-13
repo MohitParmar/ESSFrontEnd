@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +15,8 @@
     <script src="~/Scripts/Angular/angular-resource.js"></script>
     <script src="~/Scripts/Jquery/jquery-ui.min.js"></script>
     <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
-
     <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
     <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
-
     <style>
         .Requed {
             color: red;
@@ -38,16 +35,13 @@
             display: none;
         }
     </style>
-
     <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
     <script src="~/Scripts/Module/ng-table.src.js"></script>
     <script src="~/Scripts/Module/ng-tags-input.js"></script>
-    @*<script src="~/Scripts/Module/app.js"></script>*@
     <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
     <script src="~/Content/DirPAgination/dirPagination.js"></script>
     <script src="~/Scripts/Controller/MasterCntrl.js"></script>
     <script src="~/Scripts/Controller/ManageLeaveCntrl.js"></script>
-
     <style type="text/css">
         .TextBoxStyle {
             height: 25px;
@@ -187,7 +181,7 @@
                             <table class="table table-responsive">
                                 <tr>
                                     <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                                        <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                        <b> Releaser  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
                                     </td>
                                 </tr>
                             </table>
@@ -254,6 +248,7 @@
                                         <th style="text-align:center;">To Date</th>
                                         <th style="text-align:center;">Days</th>
                                         <th style="text-align:center;">Half Day</th>
+                                        <th style="text-align:center;">HL Date (if CO)</th>
                                         <th style="text-align:center;">Camcel</th>
                                         <th style="text-align:center;">Parent</th>
                                         <th style="text-align:center;">Can.Post</th>
@@ -288,6 +283,7 @@
                                         <td style="text-align:center;">
                                             <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
                                         </td>
+                                        <td style="text-align:center;">{{d.coDate1 | date:'dd/MM/yy'}}</td>
                                         <td style="text-align:center;">
                                             <input type="checkbox" ng-checked="{{d.cancelled}}" disabled="disabled">
                                         </td>

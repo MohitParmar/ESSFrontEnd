@@ -2,9 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-@*@{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}*@
-
 <head>
     <title>@ViewBag.Title</title>
     <meta charset="utf-8">
@@ -78,7 +75,7 @@
         function AutoSync(data) { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };@* Function For Sync All Master Data Of Employees *@
         function COFF() {
             var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; var loc = "@Session["LOC"]";
-            if (loc === "IPU") {
+            if (loc === "IPU" || loc === "NKP" || loc === "KJSAW") {
                 if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };
             } else if (loc === "BEL") {
                 if ((_grade < 009 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };
@@ -101,10 +98,8 @@
     <input type="hidden" value="@Session["Loc"]" id="myLoc" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
     <input type="hidden" value="@Session["IP"]" id="myIPAddress" />
-
     @*<input type="hidden" value="@Session["IsHod"]" id="myIsHod" /><input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" /><input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" /><input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />*@
     @*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
-
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner" id="navmain">
             <div class="container">
@@ -188,9 +183,12 @@
                             <li hidden="hidden" id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
-                            @*<li id="mnuCOffApplicationJFL">
-                                <a href="/LeaveApp/COffApplyJFL" >COFF Application JFL</a>
-                            </li>*@
+                            <li id="mnuCOffApplicationJFL">
+                                <a href="/LeaveApp/COffApplyJFL">COFF Application JFL</a>
+                            </li>
+                            <li id="mnuODLeave">
+                                <a href="~/OD/ODApply">Out Door Duty Application</a>
+                            </li>
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -329,9 +327,7 @@
                             <li hidden="hidden" id="mnuManageLeave">
                                 <a href="~/Master/ManageLeaveMaster">Manage Leave</a>
                             </li>
-                            @*<li id="mnuODLeave">
-                                    <a href="~/OD/ODApply">Out Door Duty Application</a>
-                                </li>*@
+
                         </ul>
                     </li>
                 </ul>

@@ -2,11 +2,9 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -19,16 +17,15 @@
         padding-bottom: 5%;
     }
 </style>
-
 @* Check User ID & Password is Same *@
-@*<script type="text/javascript">
-    $(window).on('load', function () {
-        var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
-        var sPass = "@Session["Pass"].ToString()";
-        var sWrkgrp = "@Session["WrkGrp"]";
-        if (sEmpUnqId === sPass && sWrkgrp === "COMP") { $('#myModal').modal('show'); };
-    });
-</script>*@
+<script type="text/javascript">
+        $(window).on('load', function () {
+            var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
+            var sPass = "@Session["Pass"].ToString()";
+            var sWrkgrp = "@Session["WrkGrp"]";
+            if (sEmpUnqId === sPass && sWrkgrp === "COMP") { $('#myModal').modal('show'); };
+        });
+</script>
 <div ng-app="myApp">
     <div ng-controller="HomeCntrloller">
         <div class="container">
@@ -70,16 +67,18 @@
                                                             <th style="text-align:center;padding:3px;width:54px;">To Date</th>
                                                             <th style="text-align:center;padding:3px;width:37px;">Days</th>
                                                             <th style="text-align:center;padding:3px;width:63px;">Half Day</th>
+
                                                         </tr>
                                                     </table>
                                                 </th>
+                                                <th style="text-align:center;padding:3px;width:54px;">HL Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody dir-paginate="ld in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
                                             <tr ng-style="ld.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;padding:3px;" data-title="'addDt'">{{ld.addDt| date:'dd/MM/yy'}}</td>
-                                                <td >
+                                                <td>
                                                     <table>
                                                         <tr ng-repeat="a in ld.applReleaseStatus">
                                                             <td ng-if="a.releaseStatusCode === 'I' || a.releaseStatusCode === 'R'" style="width:85px;font-size:x-small;">
@@ -111,6 +110,13 @@
                                                         </tr>
                                                     </table>
                                                 </td>
+                                                <td style="text-align:center;padding:2px;">
+                                                    <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                        <tr ng-repeat="m in ld.leaveApplicationDetails">
+                                                            <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                                 <td>
                                                     <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger" ng-show="ld.releaseStatusCode == 'N' && (ld.cancelled == false && ld.parentId == 0)"
                                                             ng-click="CancelLeave({{ld.yearMonth}},{{ld.leaveAppId}})">
@@ -125,8 +131,7 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <strong>Note For Leave Group : LA - Leave Application </strong>
-                            <br />
+                            @*<strong>Note For Leave Group : LA - Leave Application </strong><br />*@
                             <strong>Note For Release Status :  N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
                             <br />
                             <strong>Note For Background Color :  <text style="background-color:#F8EFBA;color:black;">Yellow Background Color is Your Cancelled Leave </text></strong>
@@ -187,8 +192,8 @@
                                         <tbody>
                                             <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
                                                 <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
-                                                <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
-                                                <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yy'}}</td>
                                                 <td style="text-align:center;" data-title="'LeaveDeducted'">{{pld.leaveDed}}</td>
                                                 <td style="text-align:center;" data-title="'halfDayFlag'">
                                                     <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />

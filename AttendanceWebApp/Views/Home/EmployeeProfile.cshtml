@@ -2,10 +2,8 @@
     ViewBag.Title = "User Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
-
 <style type="text/css">
     .TextBoxStyle {
         height: 25px;
@@ -31,7 +29,6 @@
             pointer-events: none;
         }
 </style>
-
 <div ng-app="myApp" ng-controller="HomeCntrloller">
     <div class="container">
         <div class="row">
@@ -45,7 +42,6 @@
                                     <thead>
                                         <tr>
                                             <td colspan="4" class="info fc-header-center" >
-                                                @* color:#31708f;background-color:#d9edf7;border-color:#bce8f1; *@
                                                 <h4>
                                                     <b>Employee Code / SAPID : {{d.empUnqId}}</b>
                                                 </h4>

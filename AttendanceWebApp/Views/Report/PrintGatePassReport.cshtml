@@ -2,11 +2,9 @@
     ViewBag.Title = "Gate Pass List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
-
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -36,11 +34,9 @@
             pointer-events: none;
         }
 </style>
-
 <script>
     window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(lastDay); }
 </script>
-
 <div ng-app="myApp" ng-controller="GatePassCntroller">
     <div class="container">
         <div class="row">

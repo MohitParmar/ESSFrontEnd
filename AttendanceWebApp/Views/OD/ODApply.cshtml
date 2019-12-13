@@ -2,11 +2,9 @@
     ViewBag.Title = "Outdoor Duty Application";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/ODCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
-
 <style type="text/css">
     .TextBoxStyle {
         height: 25px;
@@ -32,7 +30,6 @@
             pointer-events: none;
         }
 </style>
-
 <div ng-app="myApp" ng-controller="ODController">
     <div class="container">
         <input type="hidden" value="LA" id="releaseGroupCode" />
@@ -55,95 +52,86 @@
             @* Create Leave Application *@
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>OUTDOOR DUTY SLIP</strong></div>
+                    <div class="panel-heading">
+                        <strong>OUTDOOR DUTY SLIP - OFFICIAL</strong>
+                    </div>
                     <div class="panel-body">
                         <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                             <div ng-init="GetEmpInfo()" class="table-responsive">
                                 <table id="myTable" class="table table-responsive table-condensed table-striped" dir-paginate="d in empdata|itemsPerPage:5">
-                                    <thead>
+                                    <tbody>
                                         <tr>
-                                            <th></th>
-                                            <th colspan="2" style="text-align:center;">
-                                                OUTDOOR DUTY SLIP
-                                                <select id="Mode" class="form-control" ng-model="New.Mode">
-                                                    <option value="O" title="Official" selected>Official</option>
-                                                    <option value="P" title="Personal">Personal</option>
-                                                </select>
-                                            </th>
-                                            <th></th>
+                                            <td>
+                                                <strong style="text-transform:uppercase">Employee Name</strong>
+                                            </td>
+                                            <td colspan="3">
+                                                {{d.empName}} {{d.fatherName}}
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tr>
-                                        <td>
-                                            <strong style="text-transform:uppercase">Employee Name</strong>
-                                        </td>
-                                        <td colspan="3">
-                                            {{d.empName}} {{d.fatherName}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong style="text-transform:uppercase">Designation</strong>
-                                        </td>
-                                        <td>
-                                            {{d.desgName}}
-                                        </td>
-                                        <td>
-                                            <strong style="text-transform:uppercase">SAPID</strong>
-                                        </td>
-                                        <td>
-                                            {{d.empUnqId}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong style="text-transform:uppercase">From Date</strong>
-                                        </td>
-                                        <td>
-                                            <div class="right-inner-addon">
-                                                <i class="icon-calendar"></i>
-                                                <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
-                                                       placeholder="From Date" datepicker required>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <strong style="text-transform:uppercase">To Date</strong>
-                                        </td>
-                                        <td>
-                                            <div class="right-inner-addon">
-                                                <i class="icon-calendar"></i>
-                                                <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
-                                                       placeholder="To Date" datepicker required>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong style="text-transform:uppercase">Place Of Visit</strong>
-                                        </td>
-                                        <td colspan="3">
-                                            <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
-                                                   style="text-transform:uppercase" required>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong style="text-transform:uppercase">Contact Address / Telephone No. (If Any)</strong>
-                                        </td>
-                                        <td colspan="3">
-                                            <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
-                                                   style="text-transform:uppercase" required />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" style="text-align:right;">
-                                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="text-transform:uppercase" />
-                                            <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
-                                                    ng-click='createOD(New)'>
-                                                Generate OD Application
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <strong style="text-transform:uppercase">Designation</strong>
+                                            </td>
+                                            <td>
+                                                {{d.desgName}}
+                                            </td>
+                                            <td>
+                                                <strong style="text-transform:uppercase">SAPID</strong>
+                                            </td>
+                                            <td>
+                                                {{d.empUnqId}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong style="text-transform:uppercase">From Date</strong>
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="icon-calendar"></i>
+                                                    <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                           placeholder="From Date" datepicker required>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <strong style="text-transform:uppercase">To Date</strong>
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="icon-calendar"></i>
+                                                    <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
+                                                           placeholder="To Date" datepicker required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong style="text-transform:uppercase">Place Of Visit</strong>
+                                            </td>
+                                            <td colspan="3">
+                                                <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
+                                                       style="text-transform:uppercase" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong style="text-transform:uppercase">Contact Address / Telephone No. (If Any)</strong>
+                                            </td>
+                                            <td colspan="3">
+                                                <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
+                                                       style="text-transform:uppercase" required />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="text-align:right;">
+                                                <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="text-transform:uppercase" />
+                                                <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                                        ng-click='createOD(New)'>
+                                                    Generate OD Application
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </form>

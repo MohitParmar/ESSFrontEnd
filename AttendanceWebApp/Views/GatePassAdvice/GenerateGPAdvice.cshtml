@@ -2,7 +2,6 @@
     ViewBag.Title = "Generate Gate Pass Advice";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GPAdviceCntrl.js"></script>
 <style type="text/css">
@@ -38,7 +37,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div ng-init="GetRelesaseStrategy()">
-                        <table class="table table-responsive" style="        text-align: center;">
+                        <table class="table table-responsive" style="text-align: center;">
                             <tr>
                                 <td ng-repeat="rls in rlsdata.gaReleaseStrategyLevels" style="        text-align: center;">
                                     <b> Releasear  {{rls.gaReleaseStrategyLevel}}  :  {{rls.empName}} </b>
@@ -272,10 +271,8 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="footer-terms" style="        text-align: Left;
-        margin: 5px;
-        padding: 5px;">
-                            <strong><text style="        color: #f44336;">Note: Gate Pass Advice to be Generate only when "Generate Gate Pass Advice" button is pressed.</text></strong>
+                        <div class="footer-terms" style="text-align: Left;margin: 5px;padding: 5px;">
+                            <strong><text style="color: #f44336;">Note: Gate Pass Advice to be Generate only when "Generate Gate Pass Advice" button is pressed.</text></strong>
                         </div>
                     </div>
                 </div>

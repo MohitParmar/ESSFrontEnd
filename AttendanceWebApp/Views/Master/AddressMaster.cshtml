@@ -2,15 +2,12 @@
     ViewBag.Title = "Update Present Address";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
-
 <script>
     function validateEmail() { var email = document.getElementById('txtemailid').value; var filter = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/; if (filter.test(email)) { } else { alert("In Valid Email ID"); document.getElementById('txtemailid').value = ""; document.getElementById("txtemailid").focus(); } }
     function validatePin() { var pin = document.getElementById('pincode').value; if (pin.length > 6 || pin.length < 6) { alert("Please Enter Pincode in 6 Digit"); document.getElementById('pincode').value = ""; document.getElementById("pincode").focus(); }; }
 </script>
-
 <div ng-app="myApp" ng-controller="HomeCntrloller">
     <div class="container">
         <div id="MessageBox" class="table-responsive"></div>
