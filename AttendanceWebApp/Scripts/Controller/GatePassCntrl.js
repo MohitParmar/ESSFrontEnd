@@ -4,7 +4,7 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
     $scope.gpno; $scope.gpdate; $scope.GPInfo; $scope.GPWRkGRP; var d = new Date(); var rlsarr = []; $('#txtEmpCode').val($('#myEmpUnqId').val());
     $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
-    $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); rlsarr = jsonvar1; $scope.rlsdata = jsonvar1; $scope.$digest(); }; }; rel.send(); };
+    $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { debugger; var jsonvar1 = JSON.parse(rel.responseText); rlsarr = jsonvar1; $scope.rlsdata = jsonvar1; $scope.$digest(); }; }; rel.send(); };
     $scope.GetEmpInfo = function () {
         var LoginUserWG = $('#myWrkGrp').val(); var PageWG = $('#empWrkGrp').val(); var e_Code = $('#txtEmpCode').val(); if (e_Code === '') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Employee Code First.. </strong>" + "</div>"; $('#MessageBox').show(); return false; }; var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + e_Code, true); emp.setRequestHeader('Accept', 'application/json');
         emp.onreadystatechange = function () {
@@ -42,9 +42,17 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     };  //Generate List of Employees Gate Pass
     $scope.GetGPLists = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var gplst = new XMLHttpRequest(); gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true); gplst.setRequestHeader('Accept', 'application/json'); gplst.onreadystatechange = function () { if (gplst.readyState === 4) { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(gplst.responseText); rlsarr = json; $scope.relalldata = json; $scope.relalldata = $filter('orderBy')($scope.relalldata, '-id'); $scope.curPage1 = 0; $scope.pageSize1 = 10; $scope.$digest(); }; }; gplst.send(); };     //Get Pending Gate Pass List
     $scope.UpdateGPStatus = function (releaseStatusCode, rlsgpid) {
-        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
+        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) {
+            var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) {
+                detailarr = rlsarr[r]["applReleaseStatus"]; break;
+            };
+        };
         //Get ReleaseCode of Releaser
-        var dataarr = []; for (i = 0; i < detailarr.length; i++) { var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
+        var dataarr = []; for (i = 0; i < detailarr.length; i++) {
+            var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) {
+                dataarr = detailarr[i]; break;
+            };
+        };
         var jsonObj = {}; jsonObj.YearMonth = detailarr[0].yearMonth; jsonObj.ReleaseGroupCode = detailarr[0].releaseGroupCode; jsonObj.ApplicationId = rlsgpid; jsonObj.ReleaseStrategy = detailarr[0].releaseStrategy; jsonObj.ReleaseStrategyLevel = detailarr[0].releaseStrategyLevel; jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = detailarr[0].releaseStatusCode; jsonObj.ReleaseDate = strDate; jsonObj.ReleaseAuth = dataarr.releaseAuth; jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = ""; jsonObj.LeaveApplications_YearMonth = null; jsonObj.LeaveApplications_LeaveAppId = null; jsonObj = JSON.stringify(jsonObj);
         var xhr2 = new XMLHttpRequest(); xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateGpStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode + '&releaseGroupCode=GP', true);
         xhr2.setRequestHeader("Content-type", "application/json"); xhr2.onreadystatechange = function () {

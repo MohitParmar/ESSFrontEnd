@@ -3,11 +3,12 @@
     $scope.alluserlist = [];
     $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    //var d = new Date(); var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    //var chkTo = document.getElementById('ToDt'); var ToDate = chkTo.value;            //if (today < ToDate) {};
     $scope.SetLTListValue = function (value) {
-        $scope.ToValidate(); if (value === "OH") {
-            var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; $('#ToDt').val(FromDate);
-            $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false);
-        } $scope.LeaveType = value;
+        $scope.ToValidate(); if (value === "SL") { $('#ConformModel').modal('show'); };
+        if (value === "OH") { var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; $('#ToDt').val(FromDate); $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false); };
+        $scope.LeaveType = value;
     };
     $scope.ResetView = function () { window.location.reload(true); };   //Reload Page
     //Get Release Strategy

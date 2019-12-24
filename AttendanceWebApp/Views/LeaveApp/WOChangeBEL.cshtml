@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Weekly Off Change";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+<script src="~/Scripts/Controller/WOCntrl.js"></script>
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp">
+    <div ng-controller="WeeklyOffCntroller">
+        <div class="container">
+            <input type="hidden" value="LA" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div ng-init="GetRelesaseStratey()">
+                        <table class="table table-responsive" style="text-align:center;">
+                            <tr>
+                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                    <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Weekly Off Change</strong>
+                        </div>
+                        <div class="panel-body" style="padding-bottom:5px;">
+                            <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                                <div ng-init="GetEmpInfo()">
+                                    <table id="myTable" class="table table-responsive table-condensed" style="margin-bottom:5px;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label>Employee Code</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" readonly>
+                                                </td>
+                                                <td colspan="2">
+                                                    <input class="form-control" type="text" id="txtEmpName" name="EmpName" readonly />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Designation</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtDesg" name="Desg" readonly>
+                                                </td>
+                                                <td>
+                                                    <label>Department</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtStat" name="Stat" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Present Weekly Off Date</label>
+                                                </td>
+                                                <td>
+                                                    <div class="right-inner-addon">
+                                                        <i class="icon-calendar"></i>
+                                                        <input class="form-control" type="text" id="PresentWODt" ng-model="New.PresentWODt" data-date-format="yyyy/MM/dd"
+                                                               placeholder="Select Present WO Date" datepicker required>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <label>
+                                                        Change Weekly Off Date
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <div class="right-inner-addon">
+                                                        <i class="icon-calendar"></i>
+                                                        <input class="form-control" type="text" id="ChangeWODt" ng-model="New.ChangeWODt" data-date-format="yyyy/MM/dd"
+                                                               placeholder="Select Change WO Date" datepicker required>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Reason: </label>
+                                                </td>
+                                                <td colspan="2">
+                                                    <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Reason.." ng-model="New.Remarks" required>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <button class="btn btn-primary" id="btnOK" name="Add to List" ng-click="AddToList">Add to List</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Sr No</th>
+                                                <th style="text-align:center;">Type</th>
+                                                <th style="text-align:center;">Present WO Date</th>
+                                                <th style="text-align:center;">Change WO Date</th>
+                                                <th style="text-align:center;">Reason</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="tempRow">
+                                                <td colspan="5">No information entered.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-footer" style="text-align:right;">
+                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                            <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                    ng-click="createLeave($('#aliasTable').val())">
+                                Save
+                            </button>
+                        </div>
+                        <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                            <strong><text style="color:#f44336;">Note: Weekly Off Change application will be saved and forwarded for approval only when "Save" button is pressed.</text></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

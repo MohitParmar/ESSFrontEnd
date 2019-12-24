@@ -42,7 +42,7 @@
                         <table class="table table-condensed table-" style="text-align:center;">
                             <tr>
                                 <td ng-repeat="rls in rlsdata.releaseStrategyLevels">
-                                    <b> Approver {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                    <b> Releaser {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
                                 </td>
                             </tr>
                         </table>
@@ -53,16 +53,16 @@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>OUTDOOR DUTY SLIP - OFFICIAL</strong>
+                        <strong>Outdoor Duty Slip - Official</strong>
                     </div>
                     <div class="panel-body">
                         <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                             <div ng-init="GetEmpInfo()" class="table-responsive">
-                                <table id="myTable" class="table table-responsive table-condensed table-striped" dir-paginate="d in empdata|itemsPerPage:5">
-                                    <tbody>
+                                <table id="myTable" class="table table-responsive table-condensed table-striped table-bordered">
+                                    <tbody dir-paginate="d in empdata|itemsPerPage:5">
                                         <tr>
                                             <td>
-                                                <strong style="text-transform:uppercase">Employee Name</strong>
+                                                <label>Employee Name</label>
                                             </td>
                                             <td colspan="3">
                                                 {{d.empName}} {{d.fatherName}}
@@ -70,13 +70,13 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <strong style="text-transform:uppercase">Designation</strong>
+                                                <label>Designation</label>
                                             </td>
                                             <td>
                                                 {{d.desgName}}
                                             </td>
                                             <td>
-                                                <strong style="text-transform:uppercase">SAPID</strong>
+                                                <label>SAPID</label>
                                             </td>
                                             <td>
                                                 {{d.empUnqId}}
@@ -84,29 +84,36 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <strong style="text-transform:uppercase">From Date</strong>
+                                                <label>From Date</label>
                                             </td>
                                             <td>
-                                                <div class="right-inner-addon">
-                                                    <i class="icon-calendar"></i>
-                                                    <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                @*<input type="date" class="form-control" ng-model="New.FromDt" required />*@
+                                                <div class="input-group form">
+                                                    <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt"
                                                            placeholder="From Date" datepicker required>
+                                                    <span class="input-group-btn">
+                                                        <input type="time" class="form-control" ng-model="New.time" required />
+                                                    </span>
                                                 </div>
+                                                @*</div>*@
                                             </td>
                                             <td>
-                                                <strong style="text-transform:uppercase">To Date</strong>
+                                                <label>To Date</label>
                                             </td>
                                             <td>
-                                                <div class="right-inner-addon">
-                                                    <i class="icon-calendar"></i>
+                                                <div class="input-group form">
+                                                    @*<i class="icon-calendar"></i>*@
                                                     <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
                                                            placeholder="To Date" datepicker required>
+                                                    <span class="input-group-btn">
+                                                        <input type="time" class="form-control" ng-model="New.time" required />
+                                                    </span>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <strong style="text-transform:uppercase">Place Of Visit</strong>
+                                                <label>Place Of Visit</label>
                                             </td>
                                             <td colspan="3">
                                                 <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
@@ -115,7 +122,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <strong style="text-transform:uppercase">Contact Address / Telephone No. (If Any)</strong>
+                                                <label>Contact Address / Telephone No. (If Any)</label>
                                             </td>
                                             <td colspan="3">
                                                 <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."

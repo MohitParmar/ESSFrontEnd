@@ -309,6 +309,7 @@
   <ItemGroup>
     <Content Include="Content\FileUploadXLSXLib\jszip.js" />
     <Content Include="Content\FileUploadXLSXLib\xlsx.full.min.js" />
+    <Content Include="Content\standalone.css" />
     <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
@@ -507,6 +508,7 @@
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
     <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
+    <Content Include="Scripts\Controller\WOCntrl.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -687,6 +689,7 @@
     <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
     <Content Include="Views\LeaveApp\COffApplyJFL.cshtml" />
     <Content Include="Views\OD\ODApply.cshtml" />
+    <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

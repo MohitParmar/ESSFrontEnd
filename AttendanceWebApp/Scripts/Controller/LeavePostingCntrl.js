@@ -7,20 +7,63 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
     $scope.CostLeave = function (data, value, value1, value2) {
         var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         function storeTblValues() {
-            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(1)').text(), "IsPosted": $(tr).find("select").val() } }); var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length; i++) {
+            var TableData = new Array();
+            $('#aliasTable tr').each(function (row, tr) {
+                TableData[row] = {
+                    "LeaveAppId": $(tr).find('td:eq(0)').text(),
+                    "LeaveAppItem": $(tr).find('td:eq(1)').text(),
+                    "IsPosted": $(tr).find("select").val()
+                }
+            }); var tbl = new Array(); tbl[0] = "test"; var count = 0;
+            for (var i = 0; i < TableData.length; i++) {
                 var appid = TableData[i]["LeaveAppId"]; if (appid == value) {
-                    if (value2 === "R") { if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Remarks First For Rejection</strong>" + "</div>"; $('#MessageBox').show(); return; }; };//If Reject Leave & Remarks not enter
-                    if (value2 === "R") { tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": value2, "Remarks": data.Remarks, "UserId": $('#myEmpUnqId').val() }; count++; };//R For Full Leave Rejection
-                    if (value2 === "P") { tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": TableData[i]["IsPosted"], "UserId": $('#myEmpUnqId').val() }; count++; };//P For Full Leave Posting
+                    if (value2 === "R") {
+                        if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) {
+                            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" +
+                                "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                                "<strong>Please Enter Remarks First For Rejection</strong>" + "</div>";
+                            $('#MessageBox').show(); return;
+                        };
+                    };//If Reject Leave & Remarks not enter
+                    if (value2 === "R") {
+                        tbl[count] = {
+                            "YearMonth": value1,
+                            "LeaveAppId": value,
+                            "LeaveAppItem": TableData[i]["LeaveAppItem"],
+                            "IsPosted": value2,
+                            "Remarks": data.Remarks,
+                            "UserId": $('#myEmpUnqId').val()
+                        }; count++;
+                    };//R For Full Leave Rejection
+                    if (value2 === "P") {
+                        tbl[count] = {
+                            "YearMonth": value1,
+                            "LeaveAppId": value,
+                            "LeaveAppItem": TableData[i]["LeaveAppItem"],
+                            "IsPosted": TableData[i]["IsPosted"],
+                            "UserId": $('#myEmpUnqId').val()
+                        }; count++;
+                    };//P For Full Leave Posting
                 };
             }; return tbl;
         };
         var xhr1 = new XMLHttpRequest(); xhr1.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
-                if (value2 === "R") { var rlsmail = new XMLHttpRequest(); rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=LA&id=' + value, true); rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send(); }; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Leave Posted / Rejected Sucesfully.. </strong>" + "</div>"; $('#MessageBox').show(); TableData = "";
-                 var index = $scope.lappdata.findIndex(function (item, i) { return item.leaveAppId === value }); $scope.lappdata.splice(index, 1); $scope.$digest();
-            } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) { var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; }; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>" + er + "</strong>" + "</div>"; $('#MessageBox').show(); };
+                if (value2 === "R") {
+                    var rlsmail = new XMLHttpRequest(); rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=LA&id=' + value, true);
+                    rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
+                }; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Leave Posted / Rejected Sucesfully.. </strong>" + "</div>";
+                $('#MessageBox').show(); TableData = "";
+                var index = $scope.lappdata.findIndex(function (item, i) { return item.leaveAppId === value }); $scope.lappdata.splice(index, 1); $scope.$digest();
+            } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
+                var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = "";
+                for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>" + er + "</strong>" + "</div>";
+                $('#MessageBox').show();
+            };
             /*$scope.GetPostingLeaveApplicationLists();*/
         }; xhr1.send(TableData);
     };

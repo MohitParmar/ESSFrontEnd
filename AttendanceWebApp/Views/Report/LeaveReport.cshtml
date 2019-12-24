@@ -45,6 +45,11 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <strong>Leave Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('Leave_Report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -81,16 +86,6 @@
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
-                                            <th style="text-align:center;" ng-click="sort('releaseGroupCode')">
-                                                Leave Group
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseGroupCode'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
-                                            <th style="text-align:center;" ng-click="sort('leaveAppId')">
-                                                App.Id
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
                                             <th style="text-align:center;" ng-click="sort('addDt')">
                                                 App.Date
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
@@ -107,23 +102,17 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Employee Name</th>
-                                            <th style="text-align:center;width:11%;">Leave Reason</th>
-                                            <th style="text-align:center;width:5%;">Sr No.</th>
-                                            <th style="text-align:center;width:3%;">Type</th>
-                                            <th style="text-align:center;width:7%;">from Date</th>
-                                            <th style="text-align:center;width:6%;">To Date</th>
-                                            <th style="text-align:center;width:3%;">Days</th>
-                                            <th style="text-align:center;width:6%;">Half Day</th>
+                                            <th style="text-align:center;">Station</th>
+                                            <th style="text-align:center;">Sr No.</th>
+                                            <th style="text-align:center;">Leave Reason</th>
+                                            <th style="text-align:center;">Type</th>
+                                            <th style="text-align:center;">from Date</th>
+                                            <th style="text-align:center;">To Date</th>
+                                            <th style="text-align:center;">Days</th>
+                                            <th style="text-align:center;">Half Day</th>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td>
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseGroupCode" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveAppId" />
-                                            </td>
-                                            <td></td>
+                                            <td colspan="2"></td>
                                             <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" />
                                             </td>
@@ -131,7 +120,10 @@
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
                                             </td>
                                             <td>
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" />
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
                                             </td>
                                             <td colspan="7"></td>
                                         </tr>
@@ -140,32 +132,23 @@
                                         <tr dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                             ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                            <td style="text-align:center;padding-top:10px;" id="releaseGroupCode">{{d.releaseGroupCode}}</td>
-                                            <td style="text-align:center;padding-top:10px;">{{d.leaveAppId}}</td>
-                                            <td style="text-align:center;padding-top:10px;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
-                                            <td style="text-align:center;padding-top:10px;" ng-style="
+                                            <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;" ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||
                                                     d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
                                                 {{d.releaseStatusCode}}
                                             </td>
-                                            <td style="text-align:center;padding-top:10px;">{{d.empUnqId}}</td>
-                                            <td style="text-align:center;padding-top:10px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
-                                            <td colspan="7">
-                                                <table class="table table-hover table-condensed table-hover">
-                                                    <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="text-align:center;width:115px;" data-title="'remarks'">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
-                                                        <td style="text-align:center;width:54px;" data-title="'leaveAppItem'">{{lrd.leaveAppItem}}</td>
-                                                        <td style="text-align:center;width:38px;" data-title="'leaveTypeCode'">{{lrd.leaveTypeCode}}</td>
-                                                        <td style="text-align:center;width:77px;" data-title="'fromDt'">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
-                                                        <td style="text-align:center;width:67px;" data-title="'toDt'">{{lrd.toDt | date:'dd/MM/yy'}}</td>
-                                                        <td style="text-align:center;width:38px;" data-title="'totalDays'">{{lrd.totalDays}}</td>
-                                                        <td style="text-align:center;width:60px;" data-title="'halfDayFlag'">
-                                                            <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td>{{d.empName}}</td>
+                                            <td>{{d.statName}}</td>
+                                            <td style="text-align:center;">{{d.leaveAppItem}}</td>
+                                            <td>{{d.remarks}}</td>
+                                            <td style="text-align:center;">{{d.leaveTypeCode}}</td>
+                                            <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.totalDays}}</td>
+                                            <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled></td>
                                         </tr>
                                     </tbody>
                                 </table>

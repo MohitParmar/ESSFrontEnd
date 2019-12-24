@@ -60,18 +60,17 @@
                                                 <th style="padding:0px;">
                                                     <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
                                                         <tr>
-                                                            <th style="text-align:center;padding:3px;width:91px;">Leave Reason</th>
+                                                            <th style="text-align:left;padding:3px;width:91px;">Leave Reason</th>
                                                             <th style="text-align:center;padding:3px;width:45px;">Sr no.</th>
                                                             <th style="text-align:center;padding:3px;width:36px;">Type</th>
                                                             <th style="text-align:center;padding:3px;width:71px;">From Date</th>
                                                             <th style="text-align:center;padding:3px;width:54px;">To Date</th>
                                                             <th style="text-align:center;padding:3px;width:37px;">Days</th>
                                                             <th style="text-align:center;padding:3px;width:63px;">Half Day</th>
-
                                                         </tr>
                                                     </table>
                                                 </th>
-                                                <th style="text-align:center;padding:3px;width:54px;">HL Date</th>
+                                                <th style="text-align:center;padding:3px;width:54px;">HL Date(CO)</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -113,7 +112,8 @@
                                                 <td style="text-align:center;padding:2px;">
                                                     <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
                                                         <tr ng-repeat="m in ld.leaveApplicationDetails">
-                                                            <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                            <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                            <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E'">{{m.coDate2| date:'dd/MM/yy'}}</td>
                                                         </tr>
                                                     </table>
                                                 </td>

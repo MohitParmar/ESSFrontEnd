@@ -8,12 +8,10 @@ namespace AttendanceWebApp.Controllers
     public class LeaveAppController : Controller
     {
         private ApplicationDbContext _context;
-
         public LeaveAppController()
         {
             _context = new ApplicationDbContext();
         }
-
         public ActionResult LeaveApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -25,7 +23,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult COffApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -37,7 +34,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult COffApplyJFL()
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null
@@ -55,7 +51,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult LeaveCancellation()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -67,8 +62,18 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult FullLeaveCancel()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        public ActionResult WOChangeBEL()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {

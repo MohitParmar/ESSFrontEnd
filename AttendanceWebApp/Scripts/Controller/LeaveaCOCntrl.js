@@ -92,17 +92,19 @@
         var xhr1 = new XMLHttpRequest(); xhr1.open('POST', $scope._Conpath + 'LeaveValidate/IsValid', true); xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
+                debugger;
                 var json = JSON.parse(xhr1.responseText); $scope.Vdata = json; var newarr = []; newarr[0] = $scope.Vdata; var dtlarr = [];
                 dtlarr = newarr[0]["leaveApplicationDetails"]; var dtlarrleg = dtlarr.length; var table = document.getElementById('aliasTable');
-                var rowCount = table.rows.length; table.deleteRow(rowCount - 1); dtlarrleg = dtlarrleg - 1; var fdate = new Date(dtlarr[dtlarrleg]["fromDt"]);
-                var tdate = new Date(dtlarr[dtlarrleg]["toDt"]); fdate = fdate.getFullYear() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getDate();
-                tdate = tdate.getFullYear() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getDate();
+                var rowCount = table.rows.length; table.deleteRow(rowCount - 1); dtlarrleg = dtlarrleg - 1;
+                var fdate = new Date(dtlarr[dtlarrleg]["fromDt"]); fdate = fdate.getFullYear() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getDate();
+                var coDate1 = new Date(dtlarr[dtlarrleg]["coDate1"]); coDate1 = coDate1.getFullYear() + "/" + (coDate1.getMonth() + 1) + "/" + coDate1.getDate();
+                var tdate = new Date(dtlarr[dtlarrleg]["toDt"]); tdate = tdate.getFullYear() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getDate();
                 var row = $("<tr>" +
                     "<td style='text-align:center;'><input type='hidden' name='AliasFirstNames' value='" + dtlarr[dtlarrleg]["leaveAppItem"] + "'>" +
                     dtlarr[dtlarrleg]["leaveAppItem"] + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='AliasFirstNames' value='" + dtlarr[dtlarrleg]["leaveTypeCode"] + "'>" +
                     dtlarr[dtlarrleg]["leaveTypeCode"] + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='AliasMiddleNames' value='" + fdate + "'>" + fdate + "</td>" +
+                    "<td style='text-align:center;'><input type='hidden' name='AliasMiddleNames' value='" + coDate1 + "'>" + coDate1  + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='AliasLastNames' value='" + tdate + "'>" + tdate + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='AliasLastNames' value='" + dtlarr[dtlarrleg]["totalDays"] + "'>" +
                     dtlarr[dtlarrleg]["totalDays"] + "</td>" +
@@ -113,6 +115,7 @@
                 document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = "";
                 document.getElementById("txtLeaveTypeCode").value = "CO"; document.getElementById("BtnSave").disabled = true;
             } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
+                debugger;
                 if (chk === false) {
                     var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); chk = true; c = c - 1;
                 } var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = "";
