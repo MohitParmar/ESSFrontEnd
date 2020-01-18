@@ -23,7 +23,13 @@
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; };
     };
     //Current Year Leave Date Validate
-    $scope.YearValidate = function () { var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear(); var d = new Date(); var tyear = d.getFullYear(); if (tyear < fyear) { alert("Please Enter Valid Date of Current Month/Year.. "); document.getElementById("FromDt").value = ""; return false; } else { $('#ToDt').val(FromDate); $scope.ToValidate(); }; };
+    $scope.YearValidate = function () {
+        var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear();
+        var d = new Date(); var tyear = d.getFullYear(); if (tyear < fyear || fyear < tyear) {
+            alert("Please Enter Valid Date of Current Month/Year.. ");
+            document.getElementById("FromDt").value = ""; return false;
+        } else { $('#ToDt').val(FromDate); $scope.ToValidate(); };
+    };
     var c = 0;
     //Get Applied Leave Requests For Validations
     $scope.LeaveRequestData = function (entity) {

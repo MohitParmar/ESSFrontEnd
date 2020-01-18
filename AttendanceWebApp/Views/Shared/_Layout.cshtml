@@ -72,7 +72,9 @@
         $(document).ready(function ubsrt() { window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { }; pc.createDataChannel(""); pc.createOffer(pc.setLocalDescription.bind(pc), noop); pc.onicecandidate = function (ice) { if (!ice || !ice.candidate || !ice.candidate.candidate) { return; }; var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1]; $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop; }; });
     </script>
     <script>
-        function AutoSync(data) { var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send(); };@* Function For Sync All Master Data Of Employees *@
+        function AutoSync(data) {
+            var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send();
+        };@* Function For Sync All Master Data Of Employees *@
         function COFF() {
             var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; var loc = "@Session["LOC"]";
             if (loc === "IPU" || loc === "NKP" || loc === "KJSAW") {
@@ -123,6 +125,9 @@
                             <ul class="dropdown-menu">
                                 <li hidden="hidden" id="mnuEmployeeProfile">
                                     <a href="/Home/EmployeeProfile">Profile</a>
+                                </li>
+                                <li id="mnuEmployeeProfile">
+                                    <a href="~/Master/SalarySlip">Payslip</a>
                                 </li>
                                 <li hidden="hidden" id="mnuPerformanceReport">
                                     <a href="/Report/PerformanceReport">Performance Report</a>
@@ -183,10 +188,10 @@
                             <li hidden="hidden" id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
-                            <li id="mnuCOffApplicationJFL">
+                            <li hidden="hidden" id="mnuCOffApplicationJFL">
                                 <a href="/LeaveApp/COffApplyJFL">COFF Application JFL</a>
                             </li>
-                            <li id="mnuWOChangeBEL">
+                            <li hidden="hidden" id="mnuWOChangeBEL">
                                 <a href="~/LeaveApp/WOChangeBEL">Weekly Off Change</a>
                             </li>
                             <li id="mnuODLeave">

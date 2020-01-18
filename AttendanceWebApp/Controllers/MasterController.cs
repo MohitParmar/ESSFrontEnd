@@ -24,7 +24,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult UserManual()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -36,7 +35,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult UniFormMaster()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -48,7 +46,6 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
         public ActionResult AddressMaster()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -73,6 +70,17 @@ namespace AttendanceWebApp.Controllers
                 {
                     return RedirectToAction("AuthorizationError", "CustomError");
                 }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        public ActionResult SalarySlip()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
             }
             else
             {

@@ -5,6 +5,7 @@
 <script src="~/Scripts/Controller/ODCntrl.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
+
 <style type="text/css">
     .TextBoxStyle {
         height: 25px;
@@ -30,12 +31,19 @@
             pointer-events: none;
         }
 </style>
+<script>
+    $(function () {
+        $('#datetimepicker5').datetimepicker({
+            use24hours: true,
+            format: 'HH:mm'
+        });
+    });
+</script>
 <div ng-app="myApp" ng-controller="ODController">
     <div class="container">
         <input type="hidden" value="LA" id="releaseGroupCode" />
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
-            @* Release Strategy *@
             <div class="col-sm-12">
                 <div ng-init="GetRelesaseStratey()">
                     <div class="table-responsive">
@@ -62,24 +70,22 @@
                                     <tbody dir-paginate="d in empdata|itemsPerPage:5">
                                         <tr>
                                             <td>
+                                                <label>SAPID</label>
+                                            </td>
+                                            <td>
+                                                {{d.empUnqId}}
+                                            </td>
+                                            <td>
                                                 <label>Employee Name</label>
                                             </td>
-                                            <td colspan="3">
-                                                {{d.empName}} {{d.fatherName}}
+                                            <td>
+                                                {{d.empName}}
                                             </td>
-                                        </tr>
-                                        <tr>
                                             <td>
                                                 <label>Designation</label>
                                             </td>
                                             <td>
                                                 {{d.desgName}}
-                                            </td>
-                                            <td>
-                                                <label>SAPID</label>
-                                            </td>
-                                            <td>
-                                                {{d.empUnqId}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -87,53 +93,54 @@
                                                 <label>From Date</label>
                                             </td>
                                             <td>
-                                                @*<input type="date" class="form-control" ng-model="New.FromDt" required />*@
                                                 <div class="input-group form">
                                                     <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt"
                                                            placeholder="From Date" datepicker required>
                                                     <span class="input-group-btn">
-                                                        <input type="time" class="form-control" ng-model="New.time" required />
+                                                        <input type="time" class="form-control" id="FromTm" ng-model="New.FromTm" required />
                                                     </span>
                                                 </div>
-                                                @*</div>*@
                                             </td>
                                             <td>
                                                 <label>To Date</label>
                                             </td>
                                             <td>
                                                 <div class="input-group form">
-                                                    @*<i class="icon-calendar"></i>*@
                                                     <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
                                                            placeholder="To Date" datepicker required>
                                                     <span class="input-group-btn">
-                                                        <input type="time" class="form-control" ng-model="New.time" required />
+                                                        <input type="time" class="form-control" id="ToTm" ng-model="New.ToTm" required />
                                                     </span>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="checkbox" id="chkhlfday" ng-model="New.HalfDay" title="Half Day" readonly>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="TotalDays" ng-model="New.TotalDays" title="Total Days" placeholder="Total Days" readonly />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <label>Place Of Visit</label>
                                             </td>
-                                            <td colspan="3">
+                                            <td colspan="2">
                                                 <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
                                                        style="text-transform:uppercase" required>
                                             </td>
-                                        </tr>
-                                        <tr>
                                             <td>
                                                 <label>Contact Address / Telephone No. (If Any)</label>
                                             </td>
-                                            <td colspan="3">
+                                            <td colspan="2">
                                                 <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
                                                        style="text-transform:uppercase" required />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4" style="text-align:right;">
+                                            <td colspan="6" style="text-align:right;">
                                                 <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="text-transform:uppercase" />
                                                 <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
-                                                        ng-click='createOD(New)'>
+                                                        ng-click='CreateOD(New)'>
                                                     Generate OD Application
                                                 </button>
                                             </td>

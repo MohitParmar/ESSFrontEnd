@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Salary Slip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/HomeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<div ng-app="myApp" ng-controller="HomeCntrloller">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Salary Slip Details</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetSalarySlip()" class="table-responsive">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr>
+                                    <td dir-paginate="s in slpdata|itemsPerPage:10" style="text-align:center;">
+                                        <button id="btnOK" class="btn btn-block btn-success" ng-click="GetSalarySlipDetails({{s.yearMonth}})">
+                                            {{s.monthName}}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

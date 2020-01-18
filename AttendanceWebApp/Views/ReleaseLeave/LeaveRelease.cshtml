@@ -118,7 +118,7 @@
                                                     </tr>
                                                 </table>
                                             </th>
-                                            <th style="text-align:center;width:54px;">HL Date (if CO)</th>
+                                            <th style="text-align:center;width:54px;">HL Date (CO)</th>
                                             <th style="text-align:center;">Remarks</th>
                                             <th style="text-align:center;width: 191px;">Action</th>
                                             <th style="text-align:center;width:46px;">Status</th>
@@ -133,7 +133,7 @@
                                             <td style="padding:2px;font-size: x-small;">
                                                 <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="padding:2px;text-align:center;width:91px;">{{lrd.remarks}}</td>
+                                                        <td style="padding:2px;text-align:center;width:91px;">{{(ld.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                         <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                         <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
@@ -211,7 +211,7 @@
                                             <th style="text-align:center;width:7%;">To Date</th>
                                             <th style="text-align:center;width:3%;">Days</th>
                                             <th style="text-align:center;width:6%;">Half Day</th>
-                                            <th style="text-align:center;width:8%;">HL Date (if CO)</th>
+                                            <th style="text-align:center;width:8%;">HL Date (CO)</th>
                                         </tr>
                                     </thead>
                                     <tbody>

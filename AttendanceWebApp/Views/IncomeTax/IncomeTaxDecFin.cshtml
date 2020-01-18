@@ -295,7 +295,8 @@
                             <div id="menu1" class="tab-pane">
                                 <h3>
                                     DETAILS OF INVESTMENTS & RENT PAID FOR THE FINANCIAL YEAR
-                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                    <label id="lblyearmonth1"></label>
+                                    @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
                                 </h3>
                                 <table class="table table-bordered table-condensed table-hover table-striped table-responsive" dir-paginate="d in UserInfo|itemsPerPage:5">
                                     <tbody>
@@ -310,7 +311,7 @@
                                                 <p>Employee ID : </p>
                                             </td>
                                             <td>
-                                                <p>{{d.empUnqId}} / {{d.sapId}}</p>
+                                                <p>{{d.empUnqId}}</p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -373,8 +374,9 @@
                                             <td colspan="4">
                                                 <p>
                                                     I undertake to make the following investments qualifying under the provisions of  The Income Tax Act, 1961 during the financial year
-                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script> and submit the investment proof thereof along with Rent Receipts (if applicable) by February 7,
-                                                    <script>document.write(new Date().getFullYear() + 1)</script>
+                                                    <script>document.write((new Date().getFullYear() - 1) + "-" + (new Date().getFullYear()).toString().substr(-2));</script>
+                                                    and submit the investment proof thereof along with Rent Receipts (if applicable) by February 7,
+                                                    <script>document.write(new Date().getFullYear())</script>
                                                 </p>
                                             </td>
                                         </tr>
@@ -602,7 +604,8 @@
                                 <h3>
                                     If joined after
                                     <script>document.write("01.04." + new Date().getFullYear().toString().substr(-2));</script>, attach Form 16 of certificate of taxable salary for F.Y.
-                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
+                                    <label id="lblyearmonth3"></label>
+                                    @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
                                 </h3>
                                 <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
                                     <tbody>
@@ -1509,6 +1512,35 @@
                                                 <input type="text" class="form-control" id="a_NPS" placeholder="0" ng-model="New.a_NPS" ng-change="CheckNPSLimit()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
+                                        @* New Column requirement from bellary *@
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>7</p>
+                                            </td>
+                                            <td>
+                                                <p>80DD - Disabled Dependent (Rehabilitation of Handicapped Dependent Relative)</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_disdependent" placeholder="0" ng-model="New.p_disdependent" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_disdependent" placeholder="0" ng-model="New.a_disdependent" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>8</p>
+                                            </td>
+                                            <td>
+                                                <p>80DDB - Medical Expenditure (Medical Expenditure on Self or Dependent Relative)</p>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="p_medicalexpenditure" placeholder="0" ng-model="New.p_medicalexpenditure" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="a_medicalexpenditure" placeholder="0" ng-model="New.a_medicalexpenditure" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <div style="float:left;">
@@ -1690,17 +1722,32 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align:center;">
+                                            <td style="text-align:center;" rowspan="2">
                                                 <p>10</p>
                                             </td>
                                             <td>
                                                 <p>
                                                     Rental Income for FY
-                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script> (If house is given on rent)
+                                                    <label id="lblyearmonth4"></label>
+                                                    @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
                                                 </p>
                                             </td>
                                             <td colspan="2">
                                                 <input type="text" class="form-control" id="rentalincome" placeholder="0" ng-model="New.p_rentalincome" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                            </td>
+                                        </tr>
+                                        @* New Column requirement from bellary *@
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    Municipal Tax for FY
+                                                    <label id="lblyearmonth5"></label>
+                                                    @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
+                                                </p>
+                                            </td>
+                                            <td colspan="2">
+                                                <input type="text" class="form-control" id="muntax" placeholder="0" ng-model="New.p_muntax"
+                                                       style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -1716,7 +1763,8 @@
                                             <td>
                                                 <p>
                                                     Amount of Interest for the F.Y.
-                                                    <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>
+                                                    <label id="lblyearmonth6"></label>
+                                                    @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>*@
                                                 </p>
                                             </td>
                                             <td>

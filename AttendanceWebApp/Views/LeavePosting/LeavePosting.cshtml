@@ -228,13 +228,13 @@
                                     <thead>
                                         <tr>
                                             @*<th><input id="chk" type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>*@
-                                            <th>Sr No.</th>
-                                            @*<th style="text-align:center;padding:3px;width:44px;">Location</th>*@
-                                            <th style="text-align:center;padding:3px;width:40px;" ng-click="sort('leaveAppId')">
-                                                App.ID
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
+                                            <th style="text-align:center;padding:3px;width:30px;">Sr No.</th>
+                                            @*<th style="text-align:center;padding:3px;width:44px;">Location</th>
+                                                <th style="text-align:center;padding:3px;width:40px;" ng-click="sort('leaveAppId')">
+                                                    App.ID
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='leaveAppId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>*@
                                             <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('addDt')">
                                                 App.Date
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
@@ -248,11 +248,12 @@
                                             </th>
                                             <th style="text-align:center;padding:3px;width:120px;">Name</th>
                                             <th style="text-align:center;padding:3px;width:68px;">Station</th>
-                                            <th style="text-align:center;padding:3px;width:63px;">Category</th>
+                                            <th style="text-align:center;padding:3px;width:40px;">Catg.</th>
                                             <th style="padding:0px;width:334px;">
                                                 <table class="table table-bordered" style="margin-bottom:0;padding:0px;">
                                                     <tr>
-                                                        <th style="text-align:center;padding:3px;width:42px;">Sr.No.</th>
+                                                        <th style="text-align:center;padding:3px;width:42px;">Sr No.</th>
+                                                        <th style="text-align:center;padding:3px;width:63px;">Leave Reason</th>
                                                         <th style="text-align:center;padding:3px;width:34px;">Type</th>
                                                         <th style="text-align:center;padding:3px;width:66px;">From Date</th>
                                                         <th style="text-align:center;padding:3px;width:54px;">To Date</th>
@@ -262,16 +263,16 @@
                                                     </tr>
                                                 </table>
                                             </th>
-                                            <th style="text-align:center;padding:3px;width:54px;">HL Date (if CO)</th>
-                                            <th style="text-align:center;padding:3px;">Remarks</th>
-                                            <th style="text-align:center;padding:3px;width:122px;">Action</th>
+                                            <th style="text-align:center;padding:3px;width:54px;">HL Date (CO)</th>
+                                            <th style="text-align:center;padding:3px;width:65px;">Remarks</th>
+                                            <th style="text-align:center;padding:3px;width:163px;">Action</th>
                                         </tr>
                                         <tr>
                                             @*<td></td>
                                                 <td>
                                                     <input class="form-control" type="text" ng-model="search.employee" style="margin:0;padding:1px;width:50px;" />
                                                 </td>*@
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;width:50px;" />
                                             </td>
@@ -279,19 +280,23 @@
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" />
                                             </td>
-                                            <td colspan="5"></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.categories" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td colspan="2"></td>
+                                            <td colspan="2"></td>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage" pagination-id="pg2">
                                         <tr>
                                             @* ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}" *@
                                             @*<td><table><tr ng-repeat="ld in d.leaveApplicationDetails"><td><input type="checkbox" name="chkbox[]" value="{{d.leaveAppId}},{{ld.leaveAppItem}}" /></td></tr></table></td>*@
-                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;padding:3px;width:30px;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             @*<td style="text-align:center;padding:3px;" id="location" ng-repeat="l in d.employee  track by $index" ng-if="$index==25"
-                                                    data-title="'location'">
-                                                    {{l}}
-                                                </td>*@
-                                            <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>
+                                                        data-title="'location'">
+                                                        {{l}}
+                                                    </td>
+                                                <td style="text-align:center;padding:3px;" id="leaveAppId">{{d.leaveAppId}}</td>*@
                                             <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
                                             <td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">
                                                 {{lr.releaseDate | date:'dd/MM/yy'}}
@@ -314,6 +319,7 @@
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                         <td ng-hide="true">{{lrd.leaveAppId}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:42px;">{{lrd.leaveAppItem}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:63px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:34px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:66px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
@@ -323,11 +329,11 @@
                                                         </td>
                                                         <td style="padding-left:2px;padding-right:2px;width:64px;">
                                                             <select id="cmbPartial" style="width:57px;" class="drp" required>
-                                                                <option value="F" title="Fully">Fully</option>
-                                                                <option value="P" title="Partial">Partial</option>
-                                                                <option value="O" title="Force Fully">ForceFully</option>
+                                                                <option value="F" title="Fully" ng-show="lrd.isPosted === 'N' || lrd.isPosted === 'P'">Fully</option>
+                                                                <option value="P" title="Partial" ng-show="lrd.isPosted === 'N'">Partial</option>
                                                             </select>
                                                         </td>
+                                                        <td ng-hide="true">{{lrd.isPosted}}</td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -343,15 +349,19 @@
                                                        ng-model="New.Remarks" style="width:65px;" />
                                             </td>
                                             <td style="padding:3px;">
-                                                <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'P')">
+                                                <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'P')" title="Post">
                                                     <i class="icon-ok"></i>
                                                 </button>
-                                                <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'R')"
+                                                <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'R')" title="Reject"
                                                         ng-show="d.cancelled==false">
                                                     <i class="icon-remove"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.empUnqId}})">
+                                                <button type="button" class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.empUnqId}})" title="Info">
                                                     <i class="icon-info"></i>
+                                                </button>
+                                                <button class="btn btn-danger" id="btnForceFully" value="Post" title="ForceFully"
+                                                        ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'O')">
+                                                    <i class="icon-random"></i>
                                                 </button>
                                             </td>
                                         </tr>

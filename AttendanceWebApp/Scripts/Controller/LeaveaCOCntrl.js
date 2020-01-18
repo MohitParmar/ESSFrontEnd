@@ -92,7 +92,6 @@
         var xhr1 = new XMLHttpRequest(); xhr1.open('POST', $scope._Conpath + 'LeaveValidate/IsValid', true); xhr1.setRequestHeader("Content-type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
-                debugger;
                 var json = JSON.parse(xhr1.responseText); $scope.Vdata = json; var newarr = []; newarr[0] = $scope.Vdata; var dtlarr = [];
                 dtlarr = newarr[0]["leaveApplicationDetails"]; var dtlarrleg = dtlarr.length; var table = document.getElementById('aliasTable');
                 var rowCount = table.rows.length; table.deleteRow(rowCount - 1); dtlarrleg = dtlarrleg - 1;
@@ -115,7 +114,6 @@
                 document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = "";
                 document.getElementById("txtLeaveTypeCode").value = "CO"; document.getElementById("BtnSave").disabled = true;
             } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
-                debugger;
                 if (chk === false) {
                     var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); chk = true; c = c - 1;
                 } var str = xhr1.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = "";
