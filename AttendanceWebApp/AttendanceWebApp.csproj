@@ -691,6 +691,7 @@
     <Content Include="Views\OD\ODApply.cshtml" />
     <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
     <Content Include="Views\Master\SalarySlip.cshtml" />
+    <Content Include="Views\Master\SalarySlipUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

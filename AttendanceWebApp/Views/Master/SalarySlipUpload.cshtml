@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Salary Slip Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/HomeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<div ng-app="myApp" ng-controller="HomeCntrloller">
+    <div class="container">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Payslip Upload</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form enctype="multipart/form-data" id="formUpload">
+                                <div ng-init="GetSalarySlip()">
+                                    <select class="form-control" id="yearMonth" ng-model="N.yearMonth" ng-options="s.yearMonth as s.monthName for s in slpdata" style="width:322px;" required>
+                                        <option value="" selected>--- Select Year Month ---</option>
+                                    </select>
+                                </div><br />
+                                <div class="input-group form">
+                                    <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" id="buttonUpload" ng-click="FolderUpload(N.yearMonth)">
+                                            <i class="icon-upload"></i>&nbsp;Upload Payslips
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note : Select Year Month for Create Folder of the selected Month and Select Required PDF Files for Upload in this Foleder.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
