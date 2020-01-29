@@ -99,6 +99,9 @@
         transition: max-height 0.2s ease-out;
     }
 </style>
+<script>
+    function printData() { var divToPrint = document.getElementById("printTable"); newWin = window.open(""); newWin.document.write(divToPrint.outerHTML); newWin.print(); };
+</script>
 <div ng-app="myApp" ng-controller="IncomeTaxController">
     <div class="container">
         <input type="hidden" value="" id="hidyearMonth" />
@@ -151,8 +154,14 @@
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
                                 <h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>
-                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed" id="printTable"
+                                       border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif">
                                     <thead>
+                                        <tr>
+                                            <th colspan="2" style="text-align:center;">
+                                                <h1>Income Tax Declaration</h1>
+                                            </th>
+                                        </tr>
                                         <tr>
                                             <th style="text-align:center;">
                                                 <p>
@@ -161,12 +170,17 @@
                                             </th>
                                             <th style="text-align:center;">
                                                 <p>
-                                                    <b>Provisional Amount</b>
+                                                    <b>Actual Amount</b>
                                                 </p>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="t in taxdata|itemsPerPage:5">
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 <label>Rent Paid</label>
@@ -176,10 +190,84 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:8%;text-align:center;">April</th>
+                                                            <th style="width:8%;text-align:center;">May</th>
+                                                            <th style="width:8%;text-align:center;">June</th>
+                                                            <th style="width:8%;text-align:center;">July</th>
+                                                            <th style="width:8%;text-align:center;">August</th>
+                                                            <th style="width:9%;text-align:center;">September</th>
+                                                            <th style="width:9%;text-align:center;">October</th>
+                                                            <th style="width:9%;text-align:center;">November</th>
+                                                            <th style="width:9%;text-align:center;">December</th>
+                                                            <th style="width:8%;text-align:center;">January</th>
+                                                            <th style="width:8%;text-align:center;">February</th>
+                                                            <th style="width:8%;text-align:center;">March</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="rnt in t.rentDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{rnt.april}}</td>
+                                                            <td style="text-align:center;">{{rnt.may}}</td>
+                                                            <td style="text-align:center;">{{rnt.june}}</td>
+                                                            <td style="text-align:center;">{{rnt.july}}</td>
+                                                            <td style="text-align:center;">{{rnt.august}}</td>
+                                                            <td style="text-align:center;">{{rnt.september}}</td>
+                                                            <td style="text-align:center;">{{rnt.october}}</td>
+                                                            <td style="text-align:center;">{{rnt.november}}</td>
+                                                            <td style="text-align:center;">{{rnt.december}}</td>
+                                                            <td style="text-align:center;">{{rnt.january}}</td>
+                                                            <td style="text-align:center;">{{rnt.february}}</td>
+                                                            <td style="text-align:center;">{{rnt.march}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>Landlord Name</label>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                {{t.landLordName}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>Landlord PAN</label>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                {{t.landLordPan}}
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>Public Provident Fund</label>
                                             </td>
                                             <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:214px;text-align:center;">PPF Account No.</th>
+                                                            <th style="width:214px;text-align:center;">PPF Deposit Date</th>
+                                                            <th style="width:275px;text-align:center;">PPF Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="ppf in t.ppfDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ppf.ppfAcNo}}</td>
+                                                            <td style="text-align:center;">{{ppf.ppfDepositeDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{ppf.ppfAmt| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -188,16 +276,86 @@
                                             <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:214px;text-align:center;">Bank Account No</th>
+                                                            <th style="width:214px;text-align:center;">Deposit Date</th>
+                                                            <th style="width:275px;text-align:center;">Deposit Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="dps in t.bankDeposits">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{dps.bankAccountNo}}</td>
+                                                            <td style="text-align:center;">{{dps.depositDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{dps.depositAmount| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>Insurance Premium</label>
                                             </td>
                                             <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:center;">Policy No</th>
+                                                            <th style="text-align:center;">Policy Date</th>
+                                                            <th style="text-align:center;">Sum Insured</th>
+                                                            <th style="text-align:center;">Annual Premium Amount</th>
+                                                            <th style="text-align:center;">Paid Date</th>
+                                                            <th style="text-align:center;">Due Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="ins in t.insuranceDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ins.policyNo}}</td>
+                                                            <td style="text-align:center;">{{ins.policyDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{ins.sumInsured| number : 2}}</td>
+                                                            <td style="text-align:right;">{{ins.annualPremiumAmount| number : 2}}</td>
+                                                            <td style="text-align:center;">{{ins.premiumPaidDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:center;">{{ins.premiumDueDate| date:'dd/MM/yyyy'}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>NSC</label>
                                             </td>
-                                            <td style="text-align:right;">{{t.totalNscAmount| number : 2}}</td>
+                                            <td style="text-align:right;">
+                                                {{t.totalNscAmount| number : 2}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:27%;text-align:center;">Nsc Number</th>
+                                                            <th style="width:21%;text-align:center;">Nsc Purchase Date</th>
+                                                            <th style="width:27%;text-align:center;">Nsc Amount</th>
+                                                            <th style="width:25%;text-align:center;">Nsc Interest Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="nsc in t.nscDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{nsc.nscNumber}}</td>
+                                                            <td style="text-align:center;">{{nsc.nscPurchaseDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{nsc.nscAmount| number : 2}}</td>
+                                                            <td style="text-align:right;">{{nsc.nscInterestAmount| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -206,16 +364,76 @@
                                             <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:214px;text-align:center;">MutualFund Name</th>
+                                                            <th style="width:214px;text-align:center;">MutualFund Date</th>
+                                                            <th style="width:275px;text-align:center;">MutualFund Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="mfd in t.mutualFundDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{mfd.mutualFundName}}</td>
+                                                            <td style="text-align:center;">{{mfd.mutualFundDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{mfd.mutualFundAmount| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>ULIP</label>
                                             </td>
                                             <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:214px;text-align:center;">Ulip No</th>
+                                                            <th style="width:214px;text-align:center;">Ulip Date</th>
+                                                            <th style="width:275px;text-align:center;">Ulip Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="ulp in t.ulipDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ulp.ulipNo}}</td>
+                                                            <td style="text-align:center;">{{ulp.ulipDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{ulp.ulipAmount| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>Sukanya Samridhi</label>
                                             </td>
                                             <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-bordered table-responsive" border="1" style="border-collapse:collapse;width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:214px;text-align:center;">Sukanya Name</th>
+                                                            <th style="width:214px;text-align:center;">Sukanya Date</th>
+                                                            <th style="width:275px;text-align:center;">Sukanya Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="ss in t.sukanyaDetails">
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ss.sukanyaName}}</td>
+                                                            <td style="text-align:center;">{{ss.sukanyaDate| date:'dd/MM/yyyy'}}</td>
+                                                            <td style="text-align:right;">{{ss.sukanyaAmount| number : 2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -230,10 +448,34 @@
                                             <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
                                         </tr>
                                         <tr>
+                                            <th style="text-align:center;">
+                                                <label>Child Name</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Tution Fees</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{t.child1Name}}</td>
+                                            <td style="text-align:right;">{{t.tuitionFeeChild1| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{t.child2Name}}</td>
+                                            <td style="text-align:right;">{{t.tuitionFeeChild2| number : 2}}</td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>Other Investment</label>
                                             </td>
                                             <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{t.others1Desc}}</td>
+                                            <td style="text-align:right;">{{t.others1Amount| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{t.others2Desc}}</td>
+                                            <td style="text-align:right;">{{t.others2Amount| number : 2}}</td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -278,6 +520,34 @@
                                                 <label>Housing Loan Interest</label>
                                             </td>
                                             <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <p>
+                                                    I Certify that the payments listed above has been made by me out of my income chargeable to income tax during the financial year 2019-20.
+                                                    I undertake that I will be depositing those premiums / investment / rent payments
+                                                    that are due for payment after the cut off dates laid out for proof submission and
+                                                    obtain the receipts as per the due dates by 31st March 2020.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <p>
+                                                    I therefore request you to consider the same for the tax computation purpose for the financial year 2019-20.
+                                                    I will be held responsible for any consequences of not remitting these payments and any liabilities arise out of this.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label>Signature:</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label>Date:</label>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1461,11 +1731,11 @@
                                             </td>
                                         </tr>
                                         @*<tr><td><p>:- Payment for Preventive Health Check up Parents</p></td><td><input type="text" class="form-control" id="p_mphealthparents" placeholder="0" ng-model="New.p_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_mphealthparents" placeholder="0" ng-model="New.a_mphealthparents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
-        <tr><td><p></p></td><td><p>Medical Expenditure for very senior Citizen (Self)</p></td><td><input type="text" class="form-control" id="p_medicalExpSelf" placeholder="0" ng-model="New.p_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalExpSelf" placeholder="0" ng-model="New.a_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
-        <tr><td><p></p></td><td><p>Medical Expenditure for very senior Citizen (Parents)</p></td><td><input type="text" class="form-control" id="p_medicalExpParents" placeholder="0" ng-model="New.p_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalExpParents" placeholder="0" ng-model="New.a_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
-        <tr><td><p></p></td><td><p>Medical Treatment for non-senior citizen</p></td><td><input type="text" class="form-control" id="p_medicalTreatment" placeholder="0" ng-model="New.p_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalTreatment" placeholder="0" ng-model="New.a_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
-        <tr><td><p></p></td><td><p>Medical Treartment for Senior Citizen</p></td><td><input type="text" class="form-control" id="p_medicalTreatmentSC" placeholder="0" ng-model="New.p_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
-            <td><input type="text" class="form-control" id="a_medicalTreatmentSC" placeholder="0" ng-model="New.a_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>*@
+                                            <tr><td><p></p></td><td><p>Medical Expenditure for very senior Citizen (Self)</p></td><td><input type="text" class="form-control" id="p_medicalExpSelf" placeholder="0" ng-model="New.p_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalExpSelf" placeholder="0" ng-model="New.a_medicalExpSelf" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
+                                            <tr><td><p></p></td><td><p>Medical Expenditure for very senior Citizen (Parents)</p></td><td><input type="text" class="form-control" id="p_medicalExpParents" placeholder="0" ng-model="New.p_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalExpParents" placeholder="0" ng-model="New.a_medicalExpParents" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
+                                            <tr><td><p></p></td><td><p>Medical Treatment for non-senior citizen</p></td><td><input type="text" class="form-control" id="p_medicalTreatment" placeholder="0" ng-model="New.p_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_medicalTreatment" placeholder="0" ng-model="New.a_medicalTreatment" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
+                                            <tr><td><p></p></td><td><p>Medical Treartment for Senior Citizen</p></td><td><input type="text" class="form-control" id="p_medicalTreatmentSC" placeholder="0" ng-model="New.p_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                <td><input type="text" class="form-control" id="a_medicalTreatmentSC" placeholder="0" ng-model="New.a_medicalTreatmentSC" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>*@
                                         <tr>
                                             <td style="text-align:center;">
                                                 <p>3</p>
@@ -1509,7 +1779,7 @@
                                             </td>
                                         </tr>
                                         @*<tr><td style="text-align:center;"><p>7</p></td><td><p>80U - Deduction for Self Disability</p></td><td><input type="text" class="form-control" id="p_selfdisablity" placeholder="0" ng-model="New.p_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_selfdisablity" placeholder="0" ng-model="New.a_selfdisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>
-        <tr><td style="text-align:center;"><p>8</p></td><td><p>80U - Deduction for Self Severe Disability</p></td><td><input type="text" class="form-control" id="p_selfseveredisablity" placeholder="0" ng-model="New.p_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_selfseveredisablity" placeholder="0" ng-model="New.a_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>*@
+                                            <tr><td style="text-align:center;"><p>8</p></td><td><p>80U - Deduction for Self Severe Disability</p></td><td><input type="text" class="form-control" id="p_selfseveredisablity" placeholder="0" ng-model="New.p_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td><td><input type="text" class="form-control" id="a_selfseveredisablity" placeholder="0" ng-model="New.a_selfseveredisablity" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td></tr>*@
                                         <tr>
                                             <td style="text-align:center;">
                                                 <p>6</p>
@@ -1890,6 +2160,7 @@
                         <br />
                         <div style="float:right;">
                             <button type="submit" id="btnsave" class="btn btn-success" ng-click="AddDetails()"><i class="icon-save"></i> Submit</button>
+                            <button type="submit" id="btnPrint" class="btn" onclick="printData()"><i class="icon-print"></i> Print Preview</button>
                         </div>
                     </div>
                 </div>

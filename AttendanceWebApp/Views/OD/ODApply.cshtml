@@ -95,7 +95,7 @@
                                             <td>
                                                 <div class="input-group form">
                                                     <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt"
-                                                           placeholder="From Date" datepicker required>
+                                                           ng-change="YearValidate()" placeholder="From Date" datepicker required>
                                                     <span class="input-group-btn">
                                                         <input type="time" class="form-control" id="FromTm" ng-model="New.FromTm" required />
                                                     </span>
@@ -106,7 +106,8 @@
                                             </td>
                                             <td>
                                                 <div class="input-group form">
-                                                    <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
+                                                    <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                           ng-change="ToValidate()"
                                                            placeholder="To Date" datepicker required>
                                                     <span class="input-group-btn">
                                                         <input type="time" class="form-control" id="ToTm" ng-model="New.ToTm" required />
@@ -114,7 +115,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="checkbox" id="chkhlfday" ng-model="New.HalfDay" title="Half Day" readonly>
+                                                <input class="form-control" type="checkbox" id="HalfFlag" ng-model="New.HalfFlag" title="Half Day" readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="TotalDays" ng-model="New.TotalDays" title="Total Days" placeholder="Total Days" readonly />
