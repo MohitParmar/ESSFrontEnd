@@ -16,6 +16,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //Income Declaration Report as per SAP Upload Format.
         public ActionResult ITDeclarationReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -34,6 +35,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         //Update / Delete User Income Tax Declaration Details
         public ActionResult IncomeTaxDecFin()
         {
@@ -47,6 +49,19 @@ namespace AttendanceWebApp.Controllers
                 {
                     return RedirectToAction("AuthorizationError", "CustomError");
                 }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        //Tax Comparison Report
+        public ActionResult TaxComparisonReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
             }
             else
             {

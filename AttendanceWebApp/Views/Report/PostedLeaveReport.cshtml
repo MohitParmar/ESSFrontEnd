@@ -112,13 +112,12 @@
                                         <thead>
                                             <tr>
                                                 <th>Sr No.</th>
-                                                <th style="text-align:center;">Location</th>
-                                                <th style="text-align:center;width: 60px;">App.Id</th>
-                                                <th style="text-align:center;padding:3px;width:56px;">App.Date</th>
-                                                <th style="text-align:center;padding:3px;width:56px;">Rel.Date</th>
-                                                <th style="text-align:center;padding:3px;width:56px;">Post.Date</th>
+                                                <th style="text-align:center;width: 60px;">App. Id</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">App. Date</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Date</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Post. Date</th>
                                                 <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
-                                                    Emp.Code
+                                                    Employee Code
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
@@ -127,7 +126,7 @@
                                                 <th style="text-align:center;">Leave Reason</th>
                                                 <th style="text-align:center;">Sr No.</th>
                                                 <th style="text-align:center;">Type</th>
-                                                <th style="text-align:center;">from Date</th>
+                                                <th style="text-align:center;">From Date</th>
                                                 <th style="text-align:center;">To Date</th>
                                                 <th style="text-align:center;">Days</th>
                                                 <th style="text-align:center;">Half Day</th>
@@ -137,9 +136,6 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.location" />
-                                                </td>
                                                 <td colspan="4"></td>
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
@@ -157,21 +153,20 @@
                                             <tr dir-paginate="d in pdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td style="text-align:center;">{{d.location}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppId}}</td>
-                                                <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yy'}}</td>
-                                                <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="updDt">
-                                                    <label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
+                                                    <label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label>
                                                 </td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td style="text-align:center;">{{d.empName}}</td>
-                                                <td style="text-align:center;">{{d.statName}}</td>
-                                                <td style="text-align:center;">{{d.remarks}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:left;">{{d.statName}}</td>
+                                                <td style="text-align:left;">{{d.remarks}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppItem}}</td>
                                                 <td style="text-align:center;">{{d.leaveTypeCode}}</td>
-                                                <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
-                                                <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.toDt | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;">{{d.totalDays}}</td>
                                                 <td style="text-align:center;">
                                                     <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">

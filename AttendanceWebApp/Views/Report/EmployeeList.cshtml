@@ -24,7 +24,7 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empName')">
-                                                Name
+                                                Employee Name
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
@@ -73,11 +73,11 @@
                                     <tbody>
                                         <tr dir-paginate="d in rlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
                                             <td style="text-align:center;">{{d.empUnqId}}</td>
-                                            <td style="text-align:Left;">{{d.empName}}</td>
+                                            <td style="text-align:left;">{{d.empName}}</td>
                                             <td style="text-align:center;">{{d.deptName}}</td>
-                                            <td style="text-align:Left;">{{d.statName}}</td>
+                                            <td style="text-align:left;">{{d.statName}}</td>
                                             <td style="text-align:center;">{{d.catName}}</td>
-                                            <td style="text-align:Left;">{{d.desgName}}</td>
+                                            <td style="text-align:left;">{{d.desgName}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -153,404 +153,437 @@
                             @*<div ng-init="GetTaxDeclaration()" hidden="hidden"></div>*@
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
-                                <h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>
-                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed" id="printTable"
-                                       border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2" style="text-align:center;">
-                                                <h1>Income Tax Declaration</h1>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">
-                                                <p>
-                                                    <b>Description</b>
-                                                </p>
-                                            </th>
-                                            <th style="text-align:center;">
-                                                <p>
-                                                    <b>Actual Amount</b>
-                                                </p>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody dir-paginate="t in taxdata|itemsPerPage:5">
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Rent Paid</label>
-                                            </td>
-                                            <td style="text-align:right;background-color:yellow;">
-                                                <b>{{t.totalRentPaid| number : 2}}</b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:8%;text-align:center;">April</th>
-                                                            <th style="width:8%;text-align:center;">May</th>
-                                                            <th style="width:8%;text-align:center;">June</th>
-                                                            <th style="width:8%;text-align:center;">July</th>
-                                                            <th style="width:8%;text-align:center;">August</th>
-                                                            <th style="width:9%;text-align:center;">September</th>
-                                                            <th style="width:9%;text-align:center;">October</th>
-                                                            <th style="width:9%;text-align:center;">November</th>
-                                                            <th style="width:9%;text-align:center;">December</th>
-                                                            <th style="width:8%;text-align:center;">January</th>
-                                                            <th style="width:8%;text-align:center;">February</th>
-                                                            <th style="width:8%;text-align:center;">March</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="rnt in t.rentDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{rnt.april}}</td>
-                                                            <td style="text-align:center;">{{rnt.may}}</td>
-                                                            <td style="text-align:center;">{{rnt.june}}</td>
-                                                            <td style="text-align:center;">{{rnt.july}}</td>
-                                                            <td style="text-align:center;">{{rnt.august}}</td>
-                                                            <td style="text-align:center;">{{rnt.september}}</td>
-                                                            <td style="text-align:center;">{{rnt.october}}</td>
-                                                            <td style="text-align:center;">{{rnt.november}}</td>
-                                                            <td style="text-align:center;">{{rnt.december}}</td>
-                                                            <td style="text-align:center;">{{rnt.january}}</td>
-                                                            <td style="text-align:center;">{{rnt.february}}</td>
-                                                            <td style="text-align:center;">{{rnt.march}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Landlord Name</label>
-                                            </td>
-                                            <td style="text-align:left;">
-                                                {{t.landLordName}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Landlord PAN</label>
-                                            </td>
-                                            <td style="text-align:left;">
-                                                {{t.landLordPan}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Public Provident Fund</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:214px;text-align:center;">PPF Account No.</th>
-                                                            <th style="width:214px;text-align:center;">PPF Deposit Date</th>
-                                                            <th style="width:275px;text-align:center;">PPF Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="ppf in t.ppfDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{ppf.ppfAcNo}}</td>
-                                                            <td style="text-align:center;">{{ppf.ppfDepositeDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{ppf.ppfAmt| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Bank Deposit</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:214px;text-align:center;">Bank Account No</th>
-                                                            <th style="width:214px;text-align:center;">Deposit Date</th>
-                                                            <th style="width:275px;text-align:center;">Deposit Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="dps in t.bankDeposits">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{dps.bankAccountNo}}</td>
-                                                            <td style="text-align:center;">{{dps.depositDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{dps.depositAmount| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Insurance Premium</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="text-align:center;">Policy No</th>
-                                                            <th style="text-align:center;">Policy Date</th>
-                                                            <th style="text-align:center;">Sum Insured</th>
-                                                            <th style="text-align:center;">Annual Premium Amount</th>
-                                                            <th style="text-align:center;">Paid Date</th>
-                                                            <th style="text-align:center;">Due Date</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="ins in t.insuranceDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{ins.policyNo}}</td>
-                                                            <td style="text-align:center;">{{ins.policyDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{ins.sumInsured| number : 2}}</td>
-                                                            <td style="text-align:right;">{{ins.annualPremiumAmount| number : 2}}</td>
-                                                            <td style="text-align:center;">{{ins.premiumPaidDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:center;">{{ins.premiumDueDate| date:'dd/MM/yyyy'}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>NSC</label>
-                                            </td>
-                                            <td style="text-align:right;">
-                                                {{t.totalNscAmount| number : 2}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:27%;text-align:center;">Nsc Number</th>
-                                                            <th style="width:21%;text-align:center;">Nsc Purchase Date</th>
-                                                            <th style="width:27%;text-align:center;">Nsc Amount</th>
-                                                            <th style="width:25%;text-align:center;">Nsc Interest Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="nsc in t.nscDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{nsc.nscNumber}}</td>
-                                                            <td style="text-align:center;">{{nsc.nscPurchaseDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{nsc.nscAmount| number : 2}}</td>
-                                                            <td style="text-align:right;">{{nsc.nscInterestAmount| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Mutual Fund</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:214px;text-align:center;">MutualFund Name</th>
-                                                            <th style="width:214px;text-align:center;">MutualFund Date</th>
-                                                            <th style="width:275px;text-align:center;">MutualFund Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="mfd in t.mutualFundDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{mfd.mutualFundName}}</td>
-                                                            <td style="text-align:center;">{{mfd.mutualFundDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{mfd.mutualFundAmount| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>ULIP</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:214px;text-align:center;">Ulip No</th>
-                                                            <th style="width:214px;text-align:center;">Ulip Date</th>
-                                                            <th style="width:275px;text-align:center;">Ulip Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="ulp in t.ulipDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{ulp.ulipNo}}</td>
-                                                            <td style="text-align:center;">{{ulp.ulipDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{ulp.ulipAmount| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Sukanya Samridhi</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <table class="table table-bordered table-responsive" border="1" style="border-collapse:collapse;width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:214px;text-align:center;">Sukanya Name</th>
-                                                            <th style="width:214px;text-align:center;">Sukanya Date</th>
-                                                            <th style="width:275px;text-align:center;">Sukanya Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody ng-repeat="ss in t.sukanyaDetails">
-                                                        <tr>
-                                                            <td style="text-align:center;">{{ss.sukanyaName}}</td>
-                                                            <td style="text-align:center;">{{ss.sukanyaDate| date:'dd/MM/yyyy'}}</td>
-                                                            <td style="text-align:right;">{{ss.sukanyaAmount| number : 2}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Housing Loan Principal Amount</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Tution Fees</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">
-                                                <label>Child Name</label>
-                                            </th>
-                                            <th style="text-align:center;">
-                                                <label>Tution Fees</label>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>{{t.child1Name}}</td>
-                                            <td style="text-align:right;">{{t.tuitionFeeChild1| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{t.child2Name}}</td>
-                                            <td style="text-align:right;">{{t.tuitionFeeChild2| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Other Investment</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{t.others1Desc}}</td>
-                                            <td style="text-align:right;">{{t.others1Amount| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{t.others2Desc}}</td>
-                                            <td style="text-align:right;">{{t.others2Amount| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Total Investment u/s 80C</label>
-                                            </td>
-                                            <td style="text-align:right;background-color:yellow;">
-                                                <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Mediclaim u/s 80D</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Educational Loan Interest u/s 80E</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Physical Disability u/s 80U</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Severe Disability u/s 80U</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>NPS</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Housing Loan Interest</label>
-                                            </td>
-                                            <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p>
-                                                    I Certify that the payments listed above has been made by me out of my income chargeable to income tax during the financial year 2019-20.
-                                                    I undertake that I will be depositing those premiums / investment / rent payments
-                                                    that are due for payment after the cut off dates laid out for proof submission and
-                                                    obtain the receipts as per the due dates by 31st March 2020.
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p>
-                                                    I therefore request you to consider the same for the tax computation purpose for the financial year 2019-20.
-                                                    I will be held responsible for any consequences of not remitting these payments and any liabilities arise out of this.
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <label>Signature:</label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <label>Date:</label>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div dir-paginate="t in taxdata|itemsPerPage:5">
+                                    @*<h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>*@
+                                    <table class="table table-responsive table-bordered table-striped table-hover table-condensed" id="printTable"
+                                           border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif"
+                                           ng-iF="t.actualFlag">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" style="text-align:center;">
+                                                    <h1>Actual Income Tax Declaration</h1>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="text-align:center;">
+                                                    <p>
+                                                        <b>Description</b>
+                                                    </p>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <p>
+                                                        <b>Actual Amount</b>
+                                                    </p>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    <strong>Mobile No. : <label id="lblMono"></label></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Rent Paid</b>
+                                                </td>
+                                                <td style="text-align:right;background-color:yellow;">
+                                                    <b>{{t.totalRentPaid| number : 2}}</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:8%;text-align:center;">April</th>
+                                                                <th style="width:8%;text-align:center;">May</th>
+                                                                <th style="width:8%;text-align:center;">June</th>
+                                                                <th style="width:8%;text-align:center;">July</th>
+                                                                <th style="width:8%;text-align:center;">August</th>
+                                                                <th style="width:9%;text-align:center;">September</th>
+                                                                <th style="width:9%;text-align:center;">October</th>
+                                                                <th style="width:9%;text-align:center;">November</th>
+                                                                <th style="width:9%;text-align:center;">December</th>
+                                                                <th style="width:8%;text-align:center;">January</th>
+                                                                <th style="width:8%;text-align:center;">February</th>
+                                                                <th style="width:8%;text-align:center;">March</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="rnt in t.rentDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{rnt.april}}</td>
+                                                                <td style="text-align:center;">{{rnt.may}}</td>
+                                                                <td style="text-align:center;">{{rnt.june}}</td>
+                                                                <td style="text-align:center;">{{rnt.july}}</td>
+                                                                <td style="text-align:center;">{{rnt.august}}</td>
+                                                                <td style="text-align:center;">{{rnt.september}}</td>
+                                                                <td style="text-align:center;">{{rnt.october}}</td>
+                                                                <td style="text-align:center;">{{rnt.november}}</td>
+                                                                <td style="text-align:center;">{{rnt.december}}</td>
+                                                                <td style="text-align:center;">{{rnt.january}}</td>
+                                                                <td style="text-align:center;">{{rnt.february}}</td>
+                                                                <td style="text-align:center;">{{rnt.march}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Landlord Name</label>
+                                                </td>
+                                                <td style="text-align:left;">
+                                                    {{t.landLordName}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Landlord PAN</label>
+                                                </td>
+                                                <td style="text-align:left;">
+                                                    {{t.landLordPan}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Public Provident Fund</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:214px;text-align:center;">PPF Account No.</th>
+                                                                <th style="width:214px;text-align:center;">PPF Deposit Date</th>
+                                                                <th style="width:275px;text-align:center;">PPF Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="ppf in t.ppfDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{ppf.ppfAcNo}}</td>
+                                                                <td style="text-align:center;">{{ppf.ppfDepositeDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{ppf.ppfAmt| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Tax Saver Bank Deposit (FD)</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:214px;text-align:center;">Bank Account No</th>
+                                                                <th style="width:214px;text-align:center;">Deposit Date</th>
+                                                                <th style="width:275px;text-align:center;">Deposit Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="dps in t.bankDeposits">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{dps.bankAccountNo}}</td>
+                                                                <td style="text-align:center;">{{dps.depositDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{dps.depositAmount| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Insurance Premium</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align:center;">Policy No</th>
+                                                                <th style="text-align:center;">Policy Date</th>
+                                                                <th style="text-align:center;">Sum Insured</th>
+                                                                <th style="text-align:center;">Annual Premium Amount</th>
+                                                                <th style="text-align:center;">Paid Date</th>
+                                                                <th style="text-align:center;">Due Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="ins in t.insuranceDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{ins.policyNo}}</td>
+                                                                <td style="text-align:center;">{{ins.policyDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{ins.sumInsured| number : 2}}</td>
+                                                                <td style="text-align:right;">{{ins.annualPremiumAmount| number : 2}}</td>
+                                                                <td style="text-align:center;">{{ins.premiumPaidDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:center;">{{ins.premiumDueDate| date:'dd/MM/yyyy'}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>NSC</b>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    {{t.totalNscAmount| number : 2}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:27%;text-align:center;">Nsc Number</th>
+                                                                <th style="width:21%;text-align:center;">Nsc Purchase Date</th>
+                                                                <th style="width:27%;text-align:center;">Nsc Amount</th>
+                                                                <th style="width:25%;text-align:center;">Nsc Interest Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="nsc in t.nscDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{nsc.nscNumber}}</td>
+                                                                <td style="text-align:center;">{{nsc.nscPurchaseDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{nsc.nscAmount| number : 2}}</td>
+                                                                <td style="text-align:right;">{{nsc.nscInterestAmount| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Mutual Fund</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:214px;text-align:center;">MutualFund Name</th>
+                                                                <th style="width:214px;text-align:center;">MutualFund Date</th>
+                                                                <th style="width:275px;text-align:center;">MutualFund Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="mfd in t.mutualFundDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{mfd.mutualFundName}}</td>
+                                                                <td style="text-align:center;">{{mfd.mutualFundDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{mfd.mutualFundAmount| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>ULIP</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:214px;text-align:center;">Ulip No</th>
+                                                                <th style="width:214px;text-align:center;">Ulip Date</th>
+                                                                <th style="width:275px;text-align:center;">Ulip Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="ulp in t.ulipDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{ulp.ulipNo}}</td>
+                                                                <td style="text-align:center;">{{ulp.ulipDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{ulp.ulipAmount| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Sukanya Samridhi</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-bordered table-responsive" border="1" style="border-collapse:collapse;width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:214px;text-align:center;">Sukanya Account No.</th>
+                                                                <th style="width:214px;text-align:center;">Sukanya Date</th>
+                                                                <th style="width:275px;text-align:center;">Sukanya Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="ss in t.sukanyaDetails">
+                                                            <tr>
+                                                                <td style="text-align:center;">{{ss.sukanyaName}}</td>
+                                                                <td style="text-align:center;">{{ss.sukanyaDate| date:'dd/MM/yyyy'}}</td>
+                                                                <td style="text-align:right;">{{ss.sukanyaAmount| number : 2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Housing Loan Principal Amount</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Tution Fees</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;">
+                                                    <label>Child Name</label>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <label>Tution Fees</label>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{t.child1Name}}</td>
+                                                <td style="text-align:right;">{{t.tuitionFeeChild1| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{t.child2Name}}</td>
+                                                <td style="text-align:right;">{{t.tuitionFeeChild2| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><br /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Other Investment</b>
+                                                </td>
+                                                <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{t.others1Desc}}</td>
+                                                <td style="text-align:right;">{{t.others1Amount| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{t.others2Desc}}</td>
+                                                <td style="text-align:right;">{{t.others2Amount| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Total Investment u/s 80C</b>
+                                                </td>
+                                                <td style="text-align:right;background-color:yellow;">
+                                                    <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Mediclaim u/s 80D</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Educational Loan Interest u/s 80E</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Physical Disability u/s 80U</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Severe Disability u/s 80U</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>NPS</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Housing Loan Interest</label>
+                                                </td>
+                                                <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p>
+                                                        I certify that the payments listed above has been made by me out of my income chargeable to income tax during the financial year 2019-20.
+                                                        I undertake that I will be depositing those premiums / investment / rent payments
+                                                        that are due for payment after the cut off dates laid out for proof submission and
+                                                        obtain the receipts as per the due dates by 31st March 2020.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p>
+                                                        I therefore request you to consider the same for the tax computation purpose for the financial year 2019-20.
+                                                        I will be held responsible for any consequences of not remitting these payments and any liabilities arise out of this.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <label>Signature:</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <label>Date:</label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 @*<h3>Instructions</h3>
                                     <p>
                                         I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
@@ -644,7 +677,7 @@
                                                 <p>
                                                     I undertake to make the following investments qualifying under the provisions of  The Income Tax Act, 1961 during the financial year
                                                     <script>document.write((new Date().getFullYear() - 1) + "-" + (new Date().getFullYear()).toString().substr(-2));</script>
-                                                    and submit the investment proof thereof along with Rent Receipts (if applicable) by February 7,
+                                                    and submit the investment proof thereof along with Rent Receipts (if applicable) by February 18,
                                                     <script>document.write(new Date().getFullYear())</script>
                                                 </p>
                                             </td>
@@ -683,54 +716,18 @@
                                                     <thead>
                                                         <tr>
                                                             <th></th>
-                                                            <th style="text-align:center;">
-                                                                April -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                May -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                June -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                July -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                August -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                September -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                October -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                November -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                December -
-                                                                <script>document.write(new Date().getFullYear());</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                January -
-                                                                <script>document.write((new Date().getFullYear() + 1));</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                Feburay -
-                                                                <script>document.write((new Date().getFullYear() + 1));</script>
-                                                            </th>
-                                                            <th style="text-align:center;">
-                                                                Mar -
-                                                                <script>document.write((new Date().getFullYear() + 1));</script>
-                                                            </th>
+                                                            <th style="text-align:center;">April</th>
+                                                            <th style="text-align:center;">May</th>
+                                                            <th style="text-align:center;">June</th>
+                                                            <th style="text-align:center;">July</th>
+                                                            <th style="text-align:center;">August</th>
+                                                            <th style="text-align:center;">September</th>
+                                                            <th style="text-align:center;">October</th>
+                                                            <th style="text-align:center;">November</th>
+                                                            <th style="text-align:center;">December</th>
+                                                            <th style="text-align:center;">January</th>
+                                                            <th style="text-align:center;">Feburay</th>
+                                                            <th style="text-align:center;">Mar</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -857,6 +854,15 @@
                                             </td>
                                             <td colspan="2">
                                                 <input type="text" class="form-control" id="rentalpan" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>5</p>
+                                            </td>
+                                            <td colspan="2">
+                                                <p>If rent paid amount is greater than Rs.3000/- but less than or equal to Rs.4000/- per month = Rent Receipt required.</p>
+                                                <p>If rent paid amount is greater than Rs.4000/- per month = Rent Agreement and Rent Receipt required.</p><br>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -1468,7 +1474,7 @@
                                                                         <table class="table table-hover table-bordered table-condensed ">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th style="text-align:center;">Account Name</th>
+                                                                                    <th style="text-align:center;">Account No</th>
                                                                                     <th style="text-align:center;">Date</th>
                                                                                     <th style="text-align:center;">Pro. Amount</th>
                                                                                     <th style="text-align:center;">Act. Amount</th>
@@ -1501,7 +1507,7 @@
                                                                         <table id="aliasTable7" class="data-table table table-hover table-bordered table-condensed table-striped">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th style="text-align:center;">Account Name</th>
+                                                                                    <th style="text-align:center;">Account No</th>
                                                                                     <th style="text-align:center;">Date</th>
                                                                                     <th style="text-align:center;">Pro.Amount</th>
                                                                                     <th style="text-align:center;">Act.Amount</th>

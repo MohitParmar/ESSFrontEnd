@@ -77,11 +77,11 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="d in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_1">
-                                            <td style="text-align:center;">{{d.AttdDate| date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.AttdDate| date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;">{{d.ScheDuleShift}}</td>
                                             <td style="text-align:center;">{{d.ConsShift}}</td>
-                                            <td style="text-align:center;">{{d.ConsIn| date:'dd/MM/yy HH:mm:ss'}}</td>
-                                            <td style="text-align:center;">{{d.ConsOut| date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsIn| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsOut| date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                             <td style="text-align:center;">{{d.ConsWrkHrs}}</td>
                                             <td style="text-align:center;">{{d.ConsOverTime}}</td>
                                             <td style="text-align:center;">{{d.Status}}</td>
@@ -122,7 +122,7 @@
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="p in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_2">
-                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                             <td style="text-align:center;">{{p.ioFlag}}</td>
                                             <td style="text-align:center;">{{p.machineIp}}</td>
                                             <td style="text-align:center;">{{p.machineDesc}}</td>

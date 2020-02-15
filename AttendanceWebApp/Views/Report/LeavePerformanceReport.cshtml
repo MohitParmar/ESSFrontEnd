@@ -85,7 +85,7 @@
                             </table>
                             <table class="table table-bordered table-striped table-hover table-condensed">
                                 <tr>
-                                    <th ng-repeat="h in headers track by $index">{{h}}</th>
+                                    <th style="text-align:center;" ng-repeat="h in headers track by $index">{{h}}</th>
                                 </tr>
                                 <tr dir-paginate="s in dta |orderBy:sortKey:reverse|filter:search|itemsPerPage:25">
                                     <td ng-repeat="r in s track by $index">{{r}}</td>

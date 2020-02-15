@@ -689,6 +689,7 @@
     <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
     <Content Include="Views\Master\SalarySlip.cshtml" />
     <Content Include="Views\Master\SalarySlipUpload.cshtml" />
+    <Content Include="Views\IncomeTax\TaxComparisonReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

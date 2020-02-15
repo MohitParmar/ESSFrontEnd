@@ -151,11 +151,11 @@
                                 ng-style="d.InTime==='' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                 d.InTime!=='' && {'background-color':'#dff0d8','color':'#468847'}">
                                 <td style="text-align:center;">{{d.LogID}}</td>
-                                <td style="text-align:center;">{{d.LogDate | date:'dd/MM/yy'}}</td>
+                                <td style="text-align:center;">{{d.LogDate | date:'dd/MM/yyyy'}}</td>
                                 <td style="text-align:left;">{{d.VehicleNo}}</td>
                                 <td style="text-align:left;">{{d.DriverName}}</td>
-                                <td style="text-align:center;width:105px;">{{d.Outtime | date:'dd/MM/yy hh:mm'}}</td>
-                                <td style="text-align:center;width:105px;">{{d.InTime | date:'dd/MM/yy hh:mm'}}</td>
+                                <td style="text-align:center;width:105px;">{{d.Outtime | date:'dd/MM/yyyy HH:mm'}}</td>
+                                <td style="text-align:center;width:105px;">{{d.InTime | date:'dd/MM/yyyy HH:mm'}}</td>
                                 <td style="text-align:center;">{{d.StartKM}}</td>
                                 <td style="text-align:center;">{{d.EndKM}}</td>
                                 <td style="text-align:center;">{{d.TotalKM}}</td>

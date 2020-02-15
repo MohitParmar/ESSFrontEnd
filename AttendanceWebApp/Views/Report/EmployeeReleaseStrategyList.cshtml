@@ -27,14 +27,14 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="tblrls">
                                     <thead>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th>Sr. No.</th>
                                             <th style="text-align:center;" ng-click="sort('Employee_Code')">
                                                 Employee Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='Employee_Code'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('NAME')">
-                                                Name
+                                                Employee Name
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='NAME'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
@@ -50,7 +50,7 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('EMAIL')">
-                                                Email
+                                                Email ID
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='EMAIL'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
@@ -121,22 +121,22 @@
                                         <tr dir-paginate="d in rlsdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;">{{d.Employee_Code}}</td>
-                                            <td style="text-align:Left;">{{d.NAME}}</td>
+                                            <td style="text-align:left;">{{d.NAME}}</td>
                                             <td style="text-align:center;">{{d.WORK_GROUP}}</td>
-                                            <td style="text-align:Left;">{{d.DEPARTMENT}}</td>
-                                            <td style="text-align:Left;">{{d.STATION}}</td>
-                                            <td style="text-align:Left;">{{d.EMAIL}}</td>
+                                            <td style="text-align:left;">{{d.DEPARTMENT}}</td>
+                                            <td style="text-align:left;">{{d.STATION}}</td>
+                                            <td style="text-align:left;">{{d.EMAIL}}</td>
                                             <td style="text-align:center;">{{d.RELEASE_GROUP}}</td>
                                             <td style="text-align:center;">{{d.RELEASE_STRATEGY}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_1_CODE}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_1_ID}}</td>
-                                            <td style="text-align:Left;">{{d.RELEASER_1_NAME}}</td>
+                                            <td style="text-align:left;">{{d.RELEASER_1_NAME}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_2_CODE}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_2_ID}}</td>
-                                            <td style="text-align:Left;">{{d.RELEASER_2_NAME}}</td>
+                                            <td style="text-align:left;">{{d.RELEASER_2_NAME}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_3_CODE}}</td>
                                             <td style="text-align:center;">{{d.RELEASER_3_ID}}</td>
-                                            <td style="text-align:Left;">{{d.RELEASER_3_NAME}}</td>
+                                            <td style="text-align:left;">{{d.RELEASER_3_NAME}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -58,11 +58,6 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <strong>Posted By HR User Report</strong>
-                        @*<div style="float:right;">
-                                <a style="float: right;" href="#" ng-click="exportAllData()">
-                                    <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
-                                </a>
-                            </div>*@
                     </div>
                     <div class="panel-body">
                         <table class="table table-responsive table-condensed">
@@ -100,17 +95,16 @@
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>Sr No.</th>
-                                                @*<th style="text-align:center;">Location</th>*@
+                                                <th>Sr. No.</th>
                                                 <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
-                                                    Emp.Code
+                                                    Employee Code
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align:center;">Employee Name</th>
                                                 <th style="text-align:center;">Station</th>
                                                 <th style="text-align:center;width: 149px;">Leave Reason</th>
-                                                <th style="text-align:center;width: 46px;">Sr No.</th>
+                                                <th style="text-align:center;width: 46px;">Sr. No.</th>
                                                 <th style="text-align:center;width: 38px;">Type</th>
                                                 <th style="text-align:center;width: 70px;">From Date</th>
                                                 <th style="text-align:center;width: 64px;">To Date</th>
@@ -127,9 +121,6 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                @*<td>
-                                                        <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" />
-                                                    </td>*@
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
                                                 </td>
@@ -148,17 +139,14 @@
                                             <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                @*<td id="location" style="text-align:center;" ng-repeat="l in d.employee  track by $index" ng-if="$index==25" data-title="'location'">{{l}}</td>*@
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
-                                                <td id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">
-                                                    {{s}}
-                                                </td>
+                                                <td style="text-align:left;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
+                                                <td style="text-align:left;" id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">{{s}}</td>
                                                 <td colspan="10">
                                                     <table id="aliasTable" class="table table-bordered table-hover">
                                                         <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="text-align:left;width: 140px;">{{lrd.remarks}}</td>
+                                                            <td style="text-align:left;width: 140px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                             <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
                                                             <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
                                                             <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
@@ -173,7 +161,7 @@
                                                                 lrd.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
                                                                 {{lrd.isPosted}}
                                                             </td>
-                                                            <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yy hh:mm:ss'}}</td>
+                                                            <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
                                                             <td style="text-align:center;width:77px;">{{lrd.postUser}}</td>
                                                         </tr>
                                                     </table>

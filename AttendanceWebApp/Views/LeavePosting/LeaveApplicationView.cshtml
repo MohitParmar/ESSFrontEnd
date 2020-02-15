@@ -80,8 +80,8 @@
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="aliasTable">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;" ng-click="sort('addDt')">App.Date</th>
-                                        <th style="text-align:center;" ng-click="sort('releaseDate')">Rel.Date</th>
+                                        <th style="text-align:center;" ng-click="sort('addDt')">App. Date</th>
+                                        <th style="text-align:center;" ng-click="sort('releaseDate')">Rel. Date</th>
                                         <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
                                             Status
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
@@ -91,12 +91,12 @@
                                         <th style="text-align:center;">Reason</th>
                                         <th style="text-align:center;">Leave Item</th>
                                         <th style="text-align:center;">Type</th>
-                                        <th style="text-align:center;">from Date</th>
+                                        <th style="text-align:center;">From Date</th>
                                         <th style="text-align:center;">To Date</th>
                                         <th style="text-align:center;">Days</th>
                                         <th style="text-align:center;">Half Day</th>
                                         <th style="text-align:center;">HL Date (CO)</th>
-                                        <th style="text-align:center;">Post.Date</th>
+                                        <th style="text-align:center;">Post. Date</th>
                                         <th style="text-align:center;">Is Posted</th>
                                         <th style="text-align:center;">Posted By </th>
                                     </tr>
@@ -104,8 +104,8 @@
                                 <tbody>
                                     <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1"
                                         ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
-                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yy'}}</td>
-                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="
                                                 d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
@@ -117,15 +117,15 @@
                                         <td style="text-align:left;">{{d.remarks}}</td>
                                         <td style="text-align:center;">{{d.leaveAppItem}}</td>
                                         <td style="text-align:center;">{{d.leaveTypeCode}}</td>
-                                        <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
-                                        <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.toDt | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;">{{d.totalDays}}</td>
                                         <td style="text-align:center;">
                                             <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
                                         </td>
-                                        <td style="text-align:center;">{{d.coDate1 | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;">{{d.coDate1 | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;">
-                                            <label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yy'}}</label>
+                                            <label ng-show="d.isPosted === 'F' || d.isPosted === 'R' || d.releaseStatusCode==='R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label>
                                         </td>
                                         <td style="text-align:center;"
                                             ng-style="
@@ -194,8 +194,8 @@
                                 <tbody>
                                     <tr dir-paginate="pld in pladata|itemsPerPage:5" pagination-id="pg_2">
                                         <td style="text-align:center;" data-title="'leaveTypeCode'">{{pld.leaveTypeCode}}</td>
-                                        <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yy'}}</td>
-                                        <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;" data-title="'fromDt'">{{pld.fromDt| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;" data-title="'toDt'">{{pld.toDt| date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;" data-title="'LeaveDeducted'">{{pld.leaveDed}}</td>
                                         <td style="text-align:center;" data-title="'halfDayFlag'">
                                             <input type="checkbox" ng-checked="{{pld.halfDayFlag}}" disabled="disabled" />

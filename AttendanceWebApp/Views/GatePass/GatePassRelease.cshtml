@@ -55,7 +55,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">GP Date</th>
-                                                <th style="text-align:center;">Emp.Code</th>
+                                                <th style="text-align:center;">Employee Code</th>
                                                 <th style="text-align:center;" ng-click="sort('empName')">
                                                     Employee Name
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
@@ -88,8 +88,8 @@
                                         <tbody>
                                             <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
                                                 ng-show="d.gatePassStatus === 'N'">
-                                                <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
-                                                <td style="text-align:left;">{{d.empUnqId}}</td>
+                                                <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
                                                 <td style="text-align:left;">{{d.statName}}</td>
                                                 <td style="text-align:left;">{{d.reason}}</td>

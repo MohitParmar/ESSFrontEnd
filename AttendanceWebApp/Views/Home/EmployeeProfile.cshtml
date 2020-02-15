@@ -41,7 +41,7 @@
                                 <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in Udata|itemsPerPage:5">
                                     <thead>
                                         <tr>
-                                            <td colspan="4" class="info fc-header-center" >
+                                            <td colspan="4" class="info fc-header-center">
                                                 <h4>
                                                     <b>Employee Code / SAPID : {{d.empUnqId}}</b>
                                                 </h4>
@@ -137,19 +137,9 @@
                                             </td>
                                             <td style="width:30%">{{pd.joinDt | date:'dd/MM/yyyy'}}</td>
                                             <td style="width:16.6%">
-                                                <label>Adhar No.</label>
-                                            </td>
-                                            <td style="width:30%">{{pd.aadharNo}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <label>Birth Date</label>
                                             </td>
-                                            <td>{{pd.birthDate | date:'dd/MM/yyyy'}}</td>
-                                            <td>
-                                                <label>Birth Place</label>
-                                            </td>
-                                            <td>{{pd.birthPlace}}</td>
+                                            <td style="width:30%">{{pd.birthDate | date:'dd/MM/yyyy'}}</td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -160,16 +150,6 @@
                                                 <label>Blood Group </label>
                                             </td>
                                             <td>{{pd.bloodGroup}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Religion</label>
-                                            </td>
-                                            <td>{{pd.religion}}</td>
-                                            <td>
-                                                <label>Category</label>
-                                            </td>
-                                            <td>{{pd.category}}</td>
                                         </tr>
                                         @* Address Details *@
                                         <tr>
@@ -334,93 +314,61 @@
                                                 <table class="table table-hover table-bordered table-condensed table-striped">
                                                     <tr>
                                                         <td style="width:16.6%">
-                                                            <label>ID Proof 1</label>
+                                                            <label>{{pd.idPrf3}}</label>
                                                         </td>
                                                         <td style="width:16.6%">
-                                                            {{pd.idPrf1}}
+                                                            {{pd.idPrf3No}}
                                                         </td>
                                                         <td style="width:16.6%">
-                                                            <label>ID Proof No 1 </label>
+                                                            <label>{{pd.idPrf2}}</label>
+                                                        </td>
+                                                        <td style="width:16.6%">
+                                                            {{pd.idPrf2No}}
+                                                        </td>
+                                                        <td style="width:16.6%">
+                                                            <label>{{pd.idPrf1}}</label>
                                                         </td>
                                                         <td style="width:16.6%">
                                                             {{pd.idPrf1No}}
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            <label>ID Proof 1 Exp. ON</label>
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            {{pd.idPrf1ExpOn | date:'dd/MM/yyyy'}}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label>ID Proof 2</label>
-                                                        </td>
-                                                        <td>{{pd.idPrf2}}</td>
-                                                        <td>
-                                                            <label>ID Proof No 2</label>
-                                                        </td>
-                                                        <td>{{pd.idPrf2No}}</td>
-                                                        <td>
-                                                            <label>ID Proof 2 Exp. ON</label>
-                                                        </td>
-                                                        <td>
-                                                            {{pd.idPrf2ExpOn | date:'dd/MM/yyyy'}}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label>ID Proof 3</label>
-                                                        </td>
-                                                        <td>{{pd.idPrf3}}</td>
-                                                        <td>
-                                                            <label>ID Proof No 3</label>
-                                                        </td>
-                                                        <td>{{pd.idPrf3No}}</td>
-                                                        <td>
-                                                            <label>ID Proof 3 Exp. ON</label>
-                                                        </td>
-                                                        <td>
-                                                            {{pd.idPrf3ExpOn | date:'dd/MM/yyyy'}}
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                         @* Bank Details *@
-                                        <tr>
-                                            <th colspan="4" style="text-align:center;">
-                                                <h4>
-                                                    <b>Bank Details</b>
-                                                </h4>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <table class="table table-hover table-bordered table-condensed table-striped">
-                                                    <tr>
-                                                        <td style="width:16.6%">
-                                                            <label>Bank Account No</label>
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            {{pd.bankAcNo}}
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            <label>Bank IFSC Code</label>
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            {{pd.bankIfsc}}
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            <label>Bank Name</label>
-                                                        </td>
-                                                        <td style="width:16.6%">
-                                                            {{pd.bankName}}
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
+                                        @*<tr>
+                                                <th colspan="4" style="text-align:center;">
+                                                    <h4>
+                                                        <b>Bank Details</b>
+                                                    </h4>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <table class="table table-hover table-bordered table-condensed table-striped">
+                                                        <tr>
+                                                            <td style="width:16.6%">
+                                                                <label>Bank Account No</label>
+                                                            </td>
+                                                            <td style="width:16.6%">
+                                                                {{pd.bankAcNo}}
+                                                            </td>
+                                                            <td style="width:16.6%">
+                                                                <label>Bank IFSC Code</label>
+                                                            </td>
+                                                            <td style="width:16.6%">
+                                                                {{pd.bankIfsc}}
+                                                            </td>
+                                                            <td style="width:16.6%">
+                                                                <label>Bank Name</label>
+                                                            </td>
+                                                            <td style="width:16.6%">
+                                                                {{pd.bankName}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>*@
                                     </tbody>
                                 </table>
                             </div>

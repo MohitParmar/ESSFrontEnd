@@ -89,14 +89,14 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th>Sr. No.</th>
                                             <th style="text-align:center;" ng-click="sort('gatePassDate')">
                                                 GP Date
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassDate'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">
-                                                Emp.Code
+                                                Employee Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
@@ -162,8 +162,8 @@
                                             ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                       d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} "
                                             ng-show="d.statusName != 'New'">
-                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;width:185px;">{{d.empName}}</td>
                                             <td style="text-align:left;">{{d.wrkGrp}}</td>
@@ -179,8 +179,8 @@
                                             <td style="text-align:center;">{{d.statusName}}</td>
                                             <td style="text-align:center;">{{d.addUser}}</td>
                                             <td style="text-align:center;">{{d.gpRemarks}}</td>
-                                            <td style="text-align:center;">{{d.attdGpOutTime | date:'dd/MM/yy HH:mm:ss'}}</td>
-                                            <td style="text-align:center;">{{d.attdGpInTime | date:'dd/MM/yy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.attdGpOutTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.attdGpInTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

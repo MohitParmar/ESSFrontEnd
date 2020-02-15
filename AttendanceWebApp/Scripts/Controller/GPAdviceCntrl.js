@@ -27,10 +27,10 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
                 count++; $('.tempRow').remove();
                 var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='GpAdviceItem' value='" + rowCounts + "'>" + rowCounts + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='MaterialCode' value='" + entity.MaterialCode + "'>" + entity.MaterialCode + "</td>" +
-                    "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + entity.MaterialDesc + "'>" + entity.MaterialDesc + "</td>" +
+                    "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + $('#txtMaterialDesc').val() + "'>" + $('#txtMaterialDesc').val() + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='MaterialQty' value='" + entity.MaterialQty + "'>" + entity.MaterialQty + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='ApproxValue' value='" + entity.ApproxValue + "'>" + entity.ApproxValue + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + entity.HsnCode + "'>" + entity.HsnCode + "</td>" + "</tr>");
+                    "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + $('#txtHsnCode').val() + "'>" + $('#txtHsnCode').val() + "</td>" + "</tr>");
                 $("#editTable").append(row); break;
             };
         };
@@ -142,7 +142,7 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
         if (gpAdviceStatus === "R") { if (postdata === "Self Cancelled") { jsonobj.remarks = ''; jsonobj.sapGpNumber = 0; } else if ((typeof (postdata) === "undefined") || (typeof (postdata.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks For Rejection</strong></div>"; $('#MessageBox').show(); return false; } else { jsonobj.remarks = postdata.Remarks }; };
         var TableData = JSON.stringify(jsonobj); pst.open('POST', $scope._Conpath + 'GPAdvice/PostGpAdvice?flag=true', true);
         pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () {
-            if (pst.readyState === 4 && pst.status === 200) {  document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice Post Successfully... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice not Posted... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); };
+            if (pst.readyState === 4 && pst.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice Post Successfully... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice not Posted... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); };
         }; pst.send(TableData);
     };
     //Read Upload File Data

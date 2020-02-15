@@ -92,13 +92,13 @@
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="d in pUdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
-                                        <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yy'}}</td>
+                                        <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;width:60px;">{{d.gatePassNo}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yy hh:mm'}}</td>
-                                        <td style="text-align:center;">{{d.reason}}</td>
+                                        <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                        <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                        <td style="text-align:left;">{{d.reason}}</td>
                                         <td style="text-align:center;width:60px;">{{d.modeName}}</td>
-                                        <td style="text-align:center;">{{d.placeOfVisit}}</td>
+                                        <td style="text-align:left;">{{d.placeOfVisit}}</td>
                                         <td style="text-align:center;">{{d.statusName}}</td>
                                         <td style="text-align:center;width:60px;"
                                             ng-style="

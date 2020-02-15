@@ -85,9 +85,9 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th style="text-align:center;">Sr. No.</th>
                                             <th style="text-align:center;" ng-click="sort('addDt')">
-                                                App.Date
+                                                App. Date
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
@@ -97,13 +97,13 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">
-                                                Emp.Code
+                                                Employee Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Employee Name</th>
                                             <th style="text-align:center;">Station</th>
-                                            <th style="text-align:center;">Sr No.</th>
+                                            <th style="text-align:center;">Sr. No.</th>
                                             <th style="text-align:center;">Leave Reason</th>
                                             <th style="text-align:center;">Type</th>
                                             <th style="text-align:center;">from Date</th>
@@ -140,13 +140,13 @@
                                                 {{d.releaseStatusCode}}
                                             </td>
                                             <td style="text-align:center;">{{d.empUnqId}}</td>
-                                            <td>{{d.empName}}</td>
-                                            <td>{{d.statName}}</td>
+                                            <td style="text-align:left;">{{d.empName}}</td>
+                                            <td style="text-align:left;">{{d.statName}}</td>
                                             <td style="text-align:center;">{{d.leaveAppItem}}</td>
-                                            <td>{{d.remarks}}</td>
+                                            <td style="text-align:left;">{{d.remarks}}</td>
                                             <td style="text-align:center;">{{d.leaveTypeCode}}</td>
-                                            <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yy'}}</td>
-                                            <td style="text-align:center;">{{d.toDt | date:'dd/MM/yy'}}</td>
+                                            <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.toDt | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;">{{d.totalDays}}</td>
                                             <td style="text-align:center;"><input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled></td>
                                         </tr>
