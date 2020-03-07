@@ -35,34 +35,87 @@
         <div class="row">
             @* Popup Model For View Material Details of Selected GP Advice *@
             <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog" style="margin-left: 131px;margin-right: 131px;width: 1104px;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Material Details </h4>
+                            <h4 class="modal-title" id="myModalLabel">Gate Pass Advice Details</h4>
                         </div>
                         <div class="content" style="padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
+                                @* Update New Gate Pass Advice *@
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed" id="aliasTable">
+                                    <table class="table table-condensed table-bordered">
+                                        <tbody ng-repeat="h in pdata">
+                                            <tr>
+                                                <th colspan="5">
+                                                    <h4>Gate Pass Advice FOR {{h.gpAdviceType}} (R-RGP,N-NRGP)</h4>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>TO</td>
+                                                <td>FROM</td>
+                                                <td colspan="3">{{h.empUnqId}} ~ {{h.empName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2">STORES</td>
+                                                <td>DEPARTMENT : {{h.statName}}</td>
+                                                <td>REQUISITIONER : </td>
+                                                <td>{{h.requisitioner}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>DATE : {{h.addDt| date:'dd/MM/yy'}}</td>
+                                                <td>APPROX. DATE OF RETURN : </td>
+                                                <td>{{h.approxDateOfReturn | date:'dd/MM/yy'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>REASONS</td>
+                                                <td colspan="3">{{h.purpose}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>WORK ORDER NO</td>
+                                                <td>{{h.workOrderNo}}</td>
+                                                <td>PO TERMS</td>
+                                                <td>{{h.poTerms}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>VENDER CODE & NAME</td>
+                                                <td>{{h.vendorCode}} &nbsp; {{lr.vendorName}}</td>
+                                                <td>VENDER ADDRESS</td>
+                                                <td>{{h.vendorAddress1}},{{lr.vendorAddress2}},{{lr.vendorAddress3}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mode Of Transport.</td>
+                                                <td>{{h.modeOfTransport}}</td>
+                                                <td>Transporter Name</td>
+                                                <td>{{h.transporterName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="text-align: center;">Sr No.</th>
+                                                <th colspan="6">
+                                                    <h4>Material Description</h4>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center;">Sr.No.</th>
                                                 <th style="text-align: center;">Material Code</th>
                                                 <th style="text-align: center;">Material Description</th>
                                                 <th style="text-align: center;">Quantity</th>
-                                                <th style="text-align: center;">Approx Value</th>
+                                                <th style="text-align: center;">Approx value</th>
                                                 <th style="text-align: center;">HSN Code</th>
                                             </tr>
                                         </thead>
-                                        <tbody ng-repeat="l in pdata">
-                                            <tr ng-repeat="ld in l.gpAdviceDetails">
-                                                <td style="text-align: center;">{{ld.gpAdviceItem}}</td>
-                                                <td style="text-align: center;">{{ld.materialCode}}</td>
-                                                <td style="text-align: left;">{{ld.materialDesc}}</td>
-                                                <td style="text-align: center;">{{ld.materialQty}}</td>
-                                                <td style="text-align: right;">{{ld.approxValue}}</td>
-                                                <td style="text-align: center;">{{ld.hsnCode}}</td>
+                                        <tbody ng-repeat="hd in pdata">
+                                            <tr ng-repeat="md in hd.gpAdviceDetails">
+                                                <td style="text-align: center;">{{md.gpAdviceItem}}</td>
+                                                <td style="text-align: center;">{{md.materialCode}}</td>
+                                                <td style="text-align: left;">{{md.materialDesc}}</td>
+                                                <td style="text-align: center;">{{md.materialQty}}</td>
+                                                <td style="text-align: right;">{{md.approxValue}}</td>
+                                                <td style="text-align: center;">{{md.hsnCode}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -82,7 +135,7 @@
                         </div>
                         <div class="content" style="padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
-                                @* Update New Gate Pass Advice *@
+                                @* Update Gate Pass Advice *@
                                 <div class="table-responsive">
                                     <form role="form" name="GPAdviceForm" novalidate>
                                         <table id="myTable" class="table table-condensed table-bordered">
@@ -253,42 +306,41 @@
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped" id="tbl_print">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center;">Sr No.</th>
                                         <th style="text-align: center;" ng-click="sort('gpAdviceDate')">
-                                            Advice DATE
+                                            GP Advice Date
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align: center;" ng-click="sort('gpAdviceNo')">
-                                            Advice No
+                                            GP Advice No
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceNo'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align: center;" ng-click="sort('releaseStatusCode')">
-                                            Release Status
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
-                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                        </th>
                                         <th style="text-align: center;" ng-click="sort('gpAdviceType')">
-                                            MODE
+                                            MODE of Advice
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceType'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align: center;">PURPOSE</th>
-                                        <th style="text-align: center;">WONO</th>
+                                        <th style="text-align: center;">Work Order No</th>
                                         <th style="text-align: center;">VENDER NAME</th>
                                         <th style="text-align: center;">RETURN DATE</th>
                                         <th style="text-align: center;">Requisitioner</th>
                                         <th style="text-align: center;">PoTerms</th>
                                         <th style="text-align: center;">Sap GP No</th>
-                                        <th style="text-align: center;">ACTION</th>
+                                        <th style="text-align: center;" ng-click="sort('releaseStatusCode')">
+                                            Release Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;width:130px;">ACTION</th>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"></td>
+                                        <td></td>
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gpAdviceNo" />
                                         </td>
-                                        <td colspan="3"></td>
+                                        <td colspan="2"></td>
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.workOrderNo" />
                                         </td>
@@ -299,20 +351,13 @@
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.sapGpNumber" />
                                         </td>
-                                        <td></td>
+                                        <td colspan="2"></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="d in gpalist|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
-                                        <td style="text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="text-align: center;">{{d.gpAdviceDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align: center;">{{d.gpAdviceNo}}</td>
-                                        <td style="text-align: center;" ng-style="
-                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
-                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
-                                                    d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
-                                            {{d.releaseStatusCode}}
-                                        </td>
                                         <td style="text-align: center;">{{d.gpAdviceType}}</td>
                                         <td>{{d.purpose}}</td>
                                         <td style="text-align: left;">{{d.workOrderNo}}</td>
@@ -321,6 +366,12 @@
                                         <td style="text-align: left;">{{d.requisitioner}}</td>
                                         <td style="text-align: left;">{{d.poTerms}}</td>
                                         <td style="text-align: center;">{{d.sapGpNumber}}</td>
+                                        <td style="text-align: center;" ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'} ">
+                                            {{d.releaseStatusCode}}
+                                        </td>
                                         <td style="text-align: center;padding: 3px;">
                                             <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}},false)">
                                                 <i class="icon-info-sign"></i>
@@ -339,12 +390,12 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Mode : R - RGP, N - NRGP </strong>
+                        <strong>Note For Gate Pass Advice Mode : R - RGP, N - NRGP </strong>
                         <br />
                         <strong>Note For Release Status :  N - Not released,<text style="color: #ff9800;"> P - Partially released</text>,<text style="color: #4CAF50;"> F - Fully released</text>,<text style="color: #f44336;"> R - Release rejected</text></strong>
                         <br />
-                        <strong>Note For Posting Status :  N - Not Posted,<text style="color: #4CAF50;"> F - Fully Posted</text>,<text style="color: #f44336;"> R - Posting Rejected</text></strong>
-                        <br />
+                        @*<strong>Note For Posting Status :  N - Not Posted,<text style="color: #4CAF50;"> F - Fully Posted</text>,<text style="color: #f44336;"> R - Posting Rejected</text></strong>
+                            <br />*@
                     </div>
                 </div>
             </div>

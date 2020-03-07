@@ -8,37 +8,15 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
     //Add New Material
     $scope.AddMaterial = function (entity, editflag) {
         var MaterialDesc = $('#txtMaterialDesc').val();
-        if ((typeof (entity) === "undefined") || (typeof (entity.MaterialCode) === "undefined") || (typeof (entity.MaterialQty) === "undefined") ||
-            (typeof (entity.ApproxValue) === "undefined")) { alert("Please Fill All Required Details Step by Step..."); return false; };
-        if (editflag === false) {
-            var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; for (var i = 0; i < rowCounts; i++) {
-                count++; $('.tempRow').remove();
-                var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='GpAdviceItem' value='" + count + "'>" + count + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='MaterialCode' value='" + entity.MaterialCode + "'>" + entity.MaterialCode + "</td>" +
-                    "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + $('#txtMaterialDesc').val() + "'>" + $('#txtMaterialDesc').val() + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='MaterialQty' value='" + entity.MaterialQty + "'>" + entity.MaterialQty + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='ApproxValue' value='" + entity.ApproxValue + "'>" + entity.ApproxValue + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + $('#txtHsnCode').val() + "'>" + $('#txtHsnCode').val() + "</td>" +
-                    "</tr>"); $("#aliasTable").append(row); break;
-            };
-        };
-        if (editflag === true) {
-            var tables = document.getElementById('editTable'); var rowCounts = tables.rows.length; for (var i = 0; i <= rowCounts; i++) {
-                count++; $('.tempRow').remove();
-                var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='GpAdviceItem' value='" + rowCounts + "'>" + rowCounts + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='MaterialCode' value='" + entity.MaterialCode + "'>" + entity.MaterialCode + "</td>" +
-                    "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + $('#txtMaterialDesc').val() + "'>" + $('#txtMaterialDesc').val() + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='MaterialQty' value='" + entity.MaterialQty + "'>" + entity.MaterialQty + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='ApproxValue' value='" + entity.ApproxValue + "'>" + entity.ApproxValue + "</td>" +
-                    "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + $('#txtHsnCode').val() + "'>" + $('#txtHsnCode').val() + "</td>" + "</tr>");
-                $("#editTable").append(row); break;
-            };
-        };
+        if ((typeof (entity) === "undefined") || (typeof (entity.MaterialCode) === "undefined") || (typeof (entity.MaterialQty) === "undefined") || (typeof (entity.ApproxValue) === "undefined")) { alert("Please Fill All Required Details Step by Step..."); return false; };
+        if (editflag === false) { var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; for (var i = 0; i < rowCounts; i++) { count++; $('.tempRow').remove(); var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='GpAdviceItem' value='" + count + "'>" + count + "</td>" + "<td style='text-align:center;'><input type='hidden' name='MaterialCode' value='" + entity.MaterialCode + "'>" + entity.MaterialCode + "</td>" + "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + $('#txtMaterialDesc').val() + "'>" + $('#txtMaterialDesc').val() + "</td>" + "<td style='text-align:center;'><input type='hidden' name='MaterialQty' value='" + entity.MaterialQty + "'>" + entity.MaterialQty + "</td>" + "<td style='text-align:right;'><input type='hidden' name='ApproxValue' value='" + entity.ApproxValue + "'>" + entity.ApproxValue + "</td>" + "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + $('#txtHsnCode').val() + "'>" + $('#txtHsnCode').val() + "</td>" + "</tr>"); $("#aliasTable").append(row); break; }; };
+        if (editflag === true) { var tables = document.getElementById('editTable'); var rowCounts = tables.rows.length; for (var i = 0; i <= rowCounts; i++) { count++; $('.tempRow').remove(); var row = $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='GpAdviceItem' value='" + rowCounts + "'>" + rowCounts + "</td>" + "<td style='text-align:center;'><input type='hidden' name='MaterialCode' value='" + entity.MaterialCode + "'>" + entity.MaterialCode + "</td>" + "<td style='text-align:left;'><input type='hidden' name='MaterialDesc' value='" + $('#txtMaterialDesc').val() + "'>" + $('#txtMaterialDesc').val() + "</td>" + "<td style='text-align:center;'><input type='hidden' name='MaterialQty' value='" + entity.MaterialQty + "'>" + entity.MaterialQty + "</td>" + "<td style='text-align:right;'><input type='hidden' name='ApproxValue' value='" + entity.ApproxValue + "'>" + entity.ApproxValue + "</td>" + "<td style='text-align:center;'><input type='hidden' name='HsnCode' value='" + $('#txtHsnCode').val() + "'>" + $('#txtHsnCode').val() + "</td>" + "</tr>"); $("#editTable").append(row); break; }; };
         document.getElementById("txtMaterialCode").value = ""; document.getElementById("txtMaterialDesc").value = ""; document.getElementById("txtMaterialQty").value = ""; document.getElementById("txtApproxValue").value = ""; document.getElementById("txtHsnCode").value = "";
     };
     //Generate / Update  Gate Pass Advice 
     $scope.GenerateGPAdvice = function (data, editflag) {
         //$('#txtVenderName').val(); $('#txtVenderAdd1').val();
+        debugger;
         var d2 = new Date(); var year = d2.getFullYear().toString(); var month = d2.getMonth() + 1; var yearmonth = year + (month.toString());
         var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate(), d2.getHours(), d2.getMinutes(), d2.getSeconds());
         var now = (today.getFullYear()) + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -56,6 +34,7 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
                 jsonObj.unitCode = $scope.empdata[0]['unitCode']; jsonObj.deptCode = $scope.empdata[0]['deptCode']; jsonObj.statCode = $scope.empdata[0]['statCode'];
                 jsonObj.addDt = now; jsonObj.addUser = $('#myEmpUnqId').val();
             }; if (editflag === true) {
+                debugger;
                 $('#editTable tr').each(function (row, tr) { TableData[row] = { "yearMonth": yearmonth, "gpAdviceNo": $('#gpAdviceNo').val(), "gpAdviceItem": $(tr).find('td:eq(0)').text(), "materialCode": $(tr).find('td:eq(1)').text(), "materialDesc": $(tr).find('td:eq(2)').text(), "materialQty": $(tr).find('td:eq(3)').text(), "approxValue": $(tr).find('td:eq(4)').text(), "hsnCode": $(tr).find('td:eq(5)').text() } });
                 jsonObj.gpAdviceNo = $('#gpAdviceNo').val(); jsonObj.gpAdviceDate = $scope.pdata[0]['gpAdviceDate'];; jsonObj.gpAdviceType = $('#GpAdviceType').val();
                 jsonObj.purpose = $('#txtPurpose').val(); jsonObj.workOrderNo = $('#txtWONO').val(); jsonObj.vendorCode = $('#txtVenderCode').val();
@@ -82,28 +61,11 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
             } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Gate Pass Advice not Saved..</strong></div>"; $('#MessageBox').show(); };
         }; xhr.send(TableData);
     };
-    //Get GP Advice List generated by user
-    $scope.GetGPAListInfo = function () { var xhr3 = new XMLHttpRequest(); xhr3.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdvice?empUnqId=' + $('#myEmpUnqId').val(), true); xhr3.setRequestHeader('Accept', 'application/json'); xhr3.onreadystatechange = function () { if (xhr3.readyState === 4) { var json = JSON.parse(xhr3.responseText); $scope.gpalist = json; $scope.gpalist = $filter('orderBy')($scope.gpalist, '-gpAdviceNo'); $scope.$digest(); } }; xhr3.send(); };
-    //Get Pending GP Advice List for Release
-    $scope.GetGPALists = function () { var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GA', true); xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () { if (xhr1.readyState === 4) { var json = JSON.parse(xhr1.responseText); rlsarr = json; $scope.gparlsdata = json; $scope.gparlsdata = $filter('orderBy')($scope.gparlsdata, '-gpAdviceNo'); $scope.$digest(); } }; xhr1.send(); };
-    //Popup the Model
-    $scope.PopulateData = function (gpAdviceNo, yearMonth) { $scope.GetGPAdviceDetails(yearMonth, gpAdviceNo, false); $('#ConformModel').modal('show'); };
-    //Popup the Model
-    $scope.PopulateEdit = function (gpAdviceNo, yearMonth) { $scope.GetGPAdviceDetails(yearMonth, gpAdviceNo, true); $('#EditModel').modal('show'); };
-    //Get GPAdviceDetails
-    $scope.GetGPAdviceDetails = function (yearMonth, gpAdviceNo, editflag) {
-        var pdata = new XMLHttpRequest();
-        pdata.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdvice?yearMonth=' + yearMonth + '&gpAdviceNo=' + gpAdviceNo, true);
-        pdata.setRequestHeader('Accept', 'application/json'); pdata.onreadystatechange = function () {
-            if (pdata.readyState === 4) {
-                var jsonvar1 = JSON.parse(pdata.responseText); $scope.pdata = jsonvar1; $scope.pdata = $filter('orderBy')($scope.pdata, '-gpAdviceNo'); $scope.$digest();
-                if (editflag === true) {
-                    $('#GpAdviceType').val($scope.pdata[0].gpAdviceType); $('#ModeOfTransport').val($scope.pdata[0].modeOfTransport);
-                    if ($scope.pdata[0].gpAdviceType = 'RGP') { $('#ApproxDt').val($scope.pdata[0].approxDateOfReturn.replace("T00:00:00", "")); };
-                };
-            };
-        }; pdata.send();
-    };
+    $scope.GetGPAListInfo = function () { var xhr3 = new XMLHttpRequest(); xhr3.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdvice?empUnqId=' + $('#myEmpUnqId').val(), true); xhr3.setRequestHeader('Accept', 'application/json'); xhr3.onreadystatechange = function () { if (xhr3.readyState === 4) { var json = JSON.parse(xhr3.responseText); $scope.gpalist = json; $scope.gpalist = $filter('orderBy')($scope.gpalist, '-gpAdviceNo'); $scope.$digest(); } }; xhr3.send(); };//Get GP Advice List generated by user
+    $scope.GetGPALists = function () { var xhr1 = new XMLHttpRequest(); xhr1.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GA', true); xhr1.setRequestHeader('Accept', 'application/json'); xhr1.onreadystatechange = function () { if (xhr1.readyState === 4) { var json = JSON.parse(xhr1.responseText); rlsarr = json; $scope.gparlsdata = json; $scope.gparlsdata = $filter('orderBy')($scope.gparlsdata, '-gpAdviceNo'); $scope.$digest(); } }; xhr1.send(); };//Get Pending GP Advice List for Release
+    $scope.PopulateData = function (gpAdviceNo, yearMonth) { $scope.GetGPAdviceDetails(yearMonth, gpAdviceNo, false); $('#ConformModel').modal('show'); };//Popup the Model
+    $scope.PopulateEdit = function (gpAdviceNo, yearMonth) { $scope.GetGPAdviceDetails(yearMonth, gpAdviceNo, true); $('#EditModel').modal('show'); };//Popup the Model
+    $scope.GetGPAdviceDetails = function (yearMonth, gpAdviceNo, editflag) { var pdata = new XMLHttpRequest(); pdata.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdvice?yearMonth=' + yearMonth + '&gpAdviceNo=' + gpAdviceNo, true); pdata.setRequestHeader('Accept', 'application/json'); pdata.onreadystatechange = function () { if (pdata.readyState === 4) { var jsonvar1 = JSON.parse(pdata.responseText); $scope.pdata = jsonvar1; $scope.pdata = $filter('orderBy')($scope.pdata, '-gpAdviceNo'); $scope.$digest(); if (editflag === true) { $('#GpAdviceType').val($scope.pdata[0].gpAdviceType); $('#ModeOfTransport').val($scope.pdata[0].modeOfTransport); if ($scope.pdata[0].gpAdviceType = 'RGP') { $('#ApproxDt').val($scope.pdata[0].approxDateOfReturn.replace("T00:00:00", "")); }; }; }; }; pdata.send(); };//Get GPAdviceDetails
     //Release GP Advice
     $scope.ReleaseGPAdvice = function (cnt, gpAdviceNo, releaseStatusCode) {
         var rmks = ''; if (releaseStatusCode === "R") { if ((typeof (cnt) === "undefined") || (typeof (cnt.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false; } else { rmks = cnt.Remarks; } } else { if ((typeof (cnt) === "undefined")) { rmks = ""; } else { rmks = cnt.Remarks; }; }; var d = new Date(); var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
@@ -119,21 +81,9 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
     //Get Pending Gatepass Advice List For Post
     $scope.GetGPAPost = function (postdata, posted) {
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var FromDate, ToDate;
-        if ((typeof (postdata) === "undefined") || (typeof (postdata.FromDt) === "undefined") || (typeof (postdata.ToDt) === "undefined")) {
-            var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-            FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate(); ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate());
-        } else {
-            FromDate = postdata.FromDt; ToDate = postdata.ToDt;
-        }; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) {
-            document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false;
-        }; var xhr4 = new XMLHttpRequest();
-        xhr4.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdviceForPosting?fromDt=' + FromDate + '&toDt=' + ToDate + '&posted=' + posted, true);
-        xhr4.setRequestHeader('Accept', 'application/json'); xhr4.onreadystatechange = function () {
-            if (xhr4.readyState === 4) {
-                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(xhr4.responseText); $scope.gpapostlist = json;
-                $scope.gpapostlist = $filter('orderBy')($scope.gpapostlist, '-gpAdviceNo'); $scope.$digest();
-            };
-        }; xhr4.send();
+        if ((typeof (postdata) === "undefined") || (typeof (postdata.FromDt) === "undefined") || (typeof (postdata.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate(); ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate()); } else { FromDate = postdata.FromDt; ToDate = postdata.ToDt; };
+        var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; };
+        var xhr4 = new XMLHttpRequest(); xhr4.open('GET', $scope._Conpath + 'GpAdvice/GetGpAdviceForPosting?fromDt=' + FromDate + '&toDt=' + ToDate + '&posted=' + posted, true); xhr4.setRequestHeader('Accept', 'application/json'); xhr4.onreadystatechange = function () { if (xhr4.readyState === 4) { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(xhr4.responseText); $scope.gpapostlist = json; $scope.gpapostlist = $filter('orderBy')($scope.gpapostlist, '-gpAdviceNo'); $scope.$digest(); }; }; xhr4.send();
     };
     //Post Gate Pass Advice
     $scope.PostGpAdvice = function (postdata, gpAdviceNo, yearMonth, gpAdviceStatus) {
@@ -141,9 +91,7 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
         if ((typeof (postdata) === "undefined") || (typeof (postdata.Remarks) === "undefined") || (typeof (postdata.SAPGPNumber) === "undefined")) { jsonobj.remarks = ''; jsonobj.sapGpNumber = 0; } else { jsonobj.remarks = postdata.Remarks; jsonobj.sapGpNumber = postdata.SAPGPNumber; };
         if (gpAdviceStatus === "R") { if (postdata === "Self Cancelled") { jsonobj.remarks = ''; jsonobj.sapGpNumber = 0; } else if ((typeof (postdata) === "undefined") || (typeof (postdata.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks For Rejection</strong></div>"; $('#MessageBox').show(); return false; } else { jsonobj.remarks = postdata.Remarks }; };
         var TableData = JSON.stringify(jsonobj); pst.open('POST', $scope._Conpath + 'GPAdvice/PostGpAdvice?flag=true', true);
-        pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () {
-            if (pst.readyState === 4 && pst.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice Post Successfully... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice not Posted... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); };
-        }; pst.send(TableData);
+        pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice Post Successfully... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> Gate Pass Advice not Posted... </strong></div>"; $('#MessageBox').show(); $scope.GetGPAPost('', 'true'); }; }; pst.send(TableData);
     };
     //Read Upload File Data
     $scope.Upload = function () {
@@ -166,17 +114,15 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
         var firstSheet = workbook.SheetNames[0];                //Fetch the name of First Sheet.
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]); var TableData = new Array(); Tabledata = JSON.stringify(excelRows); //Read all rows from First Sheet into an JSON array.
         var firstcol = ''; if (excelRows.length > 0) { var columnsIn = excelRows[0]; for (var key in columnsIn) { firstcol = key; break; }; }; // here is your column name you are looking for
-        var upd = new XMLHttpRequest(); if (firstcol === 'MaterialCode') { upd.open('POST', $scope._Conpath + 'MasterUpload/UploadFile?empUnqId=' + $('#myEmpUnqId').val() + "&flag=m", true); } else if (firstcol === 'VendorCode') { upd.open('POST', $scope._Conpath + 'MasterUpload/UploadFile?empUnqId=' + $('#myEmpUnqId').val() + "&flag=v", true); };
-        upd.setRequestHeader("Content-type", "application/json"); upd.onreadystatechange = function () { if (upd.readyState === 4 && upd.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Sucessfully Uploaded..." + upd.responseText + "</strong></div>"; $('#MessageBox').show(); } else { var str = upd.responseText.replace("{", '').replace("}", '').replace("'", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; }; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Not Uploaded Please Check the File..." + er + "</strong></div>"; $('#MessageBox').show(); }; }; upd.send(Tabledata);
+        var upd = new XMLHttpRequest(); if (firstcol === 'MaterialCode') { upd.open('POST', $scope._Conpath + 'MasterUpload/UploadFile?empUnqId=' + $('#myEmpUnqId').val() + "&flag=m", true); } else if (firstcol === 'VendorCode') { upd.open('POST', $scope._Conpath + 'MasterUpload/UploadFile?empUnqId=' + $('#myEmpUnqId').val() + "&flag=v", true); }; upd.setRequestHeader("Content-type", "application/json"); upd.onreadystatechange = function () { if (upd.readyState === 4 && upd.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Sucessfully Uploaded..." + upd.responseText + "</strong></div>"; $('#MessageBox').show(); } else { var str = upd.responseText.replace("{", '').replace("}", '').replace("'", '').toString(); var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; }; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Not Uploaded Please Check the File..." + er + "</strong></div>"; $('#MessageBox').show(); }; }; upd.send(Tabledata);
         //Create a HTML Table element.
         /*var table = document.createElement("table"); table.border = "1"; var row = table.insertRow(-1);  //Add the header row.
         var headerCell = document.createElement("TH"); headerCell.innerHTML = "MaterialCode"; row.appendChild(headerCell);  //Add the header cells.
         headerCell = document.createElement("TH"); headerCell.innerHTML = "MaterialDescription"; row.appendChild(headerCell); for (var i = 0; i < excelRows.length; i++) { var row = table.insertRow(-1); var cell = row.insertCell(-1); cell.innerHTML = excelRows[i].MaterialCode; cell = row.insertCell(-1); cell.innerHTML = excelRows[i].MaterialDescription; };//Add the data rows from Excel file.
         var dvExcel = document.getElementById("dvExcel"); dvExcel.innerHTML = ""; dvExcel.appendChild(table);*/
     };
-    //Get Master Data
+    //Get Material / Vender Master Details
     $scope.GetMasterData = function (Code) { var mst = new XMLHttpRequest(); if (Code === 'm') { mst.open('GET', $scope._Conpath + 'MasterUpload/GetObject?flag=m&objectCode=' + $('#txtMaterialCode').val(), true); }; if (Code === 'v') { mst.open('GET', $scope._Conpath + 'MasterUpload/GetObject?flag=v&objectCode=' + $('#txtVenderCode').val(), true); }; mst.setRequestHeader('Accept', 'application/json'); mst.onreadystatechange = function () { if (mst.readyState === 4) { var jsonvar1 = JSON.parse(mst.responseText); $scope.mdata = jsonvar1; $scope.$digest(); if (Code === 'm') { $('#txtMaterialDesc').val($scope.mdata.materialDesc); $('#txtHsnCode').val($scope.mdata.hsnCode); }; if (Code === 'v') { $('#txtTransporterName').val($scope.mdata.vendorCode); $('#txtVenderName').val($scope.mdata.vendorName); $('#txtVenderAdd1').val($scope.mdata.vendorAddress1); $('#txtVenderAdd2').val($scope.mdata.vendorAddress2); $('#txtVenderAdd3').val($scope.mdata.vendorAddress3); }; }; }; mst.send(); };
-    //Sort Grid Data
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; }; $scope.exportAllData = function () { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = "Gate_Pass_Report_" + d; $scope.JSONToCSVConvertor($scope.GPAdviceInfo, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); }; $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData; var CSV = ''; CSV += ReportTitle + '\r\n\n'; if (ShowLabel) { var row = ""; for (var index in arrData[0]) { row += index + ','; }; row = row.slice(0, -1); CSV += row + '\r\n'; }; for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) { row += '"' + arrData[i][index] + '",'; } row.slice(0, row.length - 1); CSV += row + '\r\n'; }; if (CSV === '') { alert("Invalid data"); return; }; var fileName = "MyReport_"; fileName += ReportTitle.replace(/ /g, "_"); var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link); };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }; var options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } } });

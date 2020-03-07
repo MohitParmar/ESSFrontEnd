@@ -142,7 +142,7 @@
                 <div class="col-sm-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <strong>Pending Gate Pass Advice List</strong>
+                            <strong>Posting Gate Pass Advice List</strong>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -184,32 +184,32 @@
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;">Sr No.</th>
+                                                <th style="text-align:center;">Sr. No.</th>
                                                 <th style="text-align: center;" ng-click="sort('gpAdviceDate')">
-                                                    Advice DATE
+                                                    GP Advice Date
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceDate'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align: center;" ng-click="sort('gpAdviceNo')">
-                                                    Advice No
+                                                    GP Advice No
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceNo'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
-                                                <th style="text-align:center;">FROM</th>
+                                                <th style="text-align:center;">Employee Name</th>
                                                 <th style="text-align: center;" ng-click="sort('gpAdviceType')">
-                                                    MODE
+                                                    MODE of Advice
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='gpAdviceType'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align:center;">PURPOSE</th>
-                                                <th style="text-align:center;">WONO</th>
+                                                <th style="text-align:center;">Work Order No</th>
                                                 <th style="text-align:center;">VENDER NAME</th>
                                                 <th style="text-align:center;">RETURN DATE</th>
                                                 <th style="text-align:center;">REQUISITIONER</th>
                                                 <th style="text-align:center;">PO TERMS</th>
                                                 <th style="text-align:center;">SAP GP No.</th>
                                                 <th style="text-align:center;">Remarks</th>
-                                                <th style="text-align:center;">ACTION</th>
+                                                <th style="text-align:center;width:130px;">ACTION</th>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
@@ -232,14 +232,14 @@
                                         <tbody dir-paginate="d in gpapostlist|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1" current-page="currentPage">
                                             <tr>
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;">{{d.gpAdviceDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceNo}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.gpAdviceType}}</td>
                                                 <td style="text-align:left;">{{d.purpose}}</td>
-                                                <td style="text-align:left;">{{d.workOrderNo}}</td>
+                                                <td style="text-align:center;">{{d.workOrderNo}}</td>
                                                 <td style="text-align:left;">{{d.vendorName}}</td>
-                                                <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yy'}}</td>
+                                                <td style="text-align:center;">{{d.approxDateOfReturn | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:left;">{{d.requisitioner}}</td>
                                                 <td style="text-align:left;">{{d.poTerms}}</td>
                                                 <td>
@@ -267,7 +267,7 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <strong>Note For Mode : R - RGP, N - NRGP </strong>
+                            <strong>Note For Gate Pass Advice Mode : R - RGP, N - NRGP </strong>
                             <br />
                         </div>
                     </div>

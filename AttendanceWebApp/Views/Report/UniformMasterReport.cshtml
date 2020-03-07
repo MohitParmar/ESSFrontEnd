@@ -5,6 +5,26 @@
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/UniformCntrl.js"></script>
 <script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
 <div ng-app="myApp" ng-controller="UniformController">
     <div class="container">
         <div class="row">
@@ -20,8 +40,21 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div ng-init="GetAllUserUniformDetails()">
+                        <div ng-inti="GetAllUserUniformDetails()">
                             <div class="table-responsive">
+                                @*<div class="input-group form">
+                                        <div class="right-inner-addon">
+                                            <i class="icon-calendar"></i>
+                                            <input class="form-control" type="text" id="yearMonth" ng-model="New.yearMonth" data-date-format="yyyy/MM/dd"
+                                                   placeholder="Select Year of Date"
+                                                   datepicker>
+                                        </div>
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="btnSearch" class="btn btn-success" value="Search" name="Search" ng-click="GetAllUserUniformDetails(New)">
+                                                <i class="icon-search"></i>Search
+                                            </button>
+                                        </span>
+                                    </div>*@
                                 <table data-show-filter="true" class="table table-bordered table-condensed table-responsive">
                                     <thead>
                                         <tr>

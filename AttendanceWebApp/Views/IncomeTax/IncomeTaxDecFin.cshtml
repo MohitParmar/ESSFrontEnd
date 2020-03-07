@@ -177,8 +177,8 @@
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
+                                                <td ng-repeat="d in UserInfo">
+                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / {{d.empName}}</strong>
                                                 </td>
                                                 <td style="text-align:right;">
                                                     <strong>Mobile No. : <label id="lblMono"></label></strong>

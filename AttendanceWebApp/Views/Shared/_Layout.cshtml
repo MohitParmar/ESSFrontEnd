@@ -160,7 +160,7 @@
     </div>
     <div class="subnavbar" id="mnubar" hidden="hidden">
         <div class="subnavbar-inner">
-            <div class="container">
+            <div class="container"> @* style="margin-left:15px;margin-right:15px;" *@
                 <ul class="mainnav">
                     <li hidden="hidden" class="active" id="mnuDashboard">
                         <a href="/Home/Index"><i class="icon-dashboard"></i><span>Dashboard</span></a>
@@ -189,14 +189,14 @@
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
                             @*<li hidden="hidden" id="mnuCOffApplicationJFL">
-                                <a href="/LeaveApp/COffApplyJFL">COFF Application JFL</a>
-                            </li>
-                            <li hidden="hidden" id="mnuWOChangeBEL">
-                                <a href="~/LeaveApp/WOChangeBEL">Weekly Off Change</a>
-                            </li>
-                            <li id="mnuODLeave">
-                                <a href="~/OD/ODApply">Out Door Duty Application</a>
-                            </li>*@
+                                    <a href="/LeaveApp/COffApplyJFL">COFF Application JFL</a>
+                                </li>
+                                <li hidden="hidden" id="mnuWOChangeBEL">
+                                    <a href="~/LeaveApp/WOChangeBEL">Weekly Off Change</a>
+                                </li>
+                                <li id="mnuODLeave">
+                                    <a href="~/OD/ODApply">Out Door Duty Application</a>
+                                </li>*@
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -349,7 +349,7 @@
     </div>
     <div class="main">
         <div class="main-inner">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     @RenderBody()
                 </div>

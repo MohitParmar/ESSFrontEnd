@@ -51,7 +51,7 @@
     }
 </script>
 <div ng-app="myApp" ng-controller="LeaveReportCntrloller">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div id="MessageBox" class="table-responsive"></div>
@@ -114,7 +114,7 @@
                                                 <th>Sr No.</th>
                                                 <th style="text-align:center;width: 60px;">App. Id</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">App. Date</th>
-                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Date</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Details</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">Post. Date</th>
                                                 <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
                                                     Employee Code
@@ -155,7 +155,7 @@
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppId}}</td>
                                                 <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
-                                                <td style="text-align:center;padding:3px;" id="releaseDate">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;padding:3px;" id="releaseDate">{{d.finalReleaser}} - {{d.releaseDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="updDt">
                                                     <label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label>
                                                 </td>

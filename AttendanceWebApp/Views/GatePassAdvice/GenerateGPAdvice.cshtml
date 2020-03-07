@@ -64,7 +64,7 @@
                                                 <td style="        float: right;">
                                                     <label>
                                                         FROM : &nbsp;
-                                                        {{emp.empUnqId}} / {{emp.sapId}} ~ {{emp.empName}} {{emp.fatherName}}
+                                                        {{emp.empUnqId}} ~ {{emp.empName}}
                                                     </label>
                                                 </td>
                                             </tr>
@@ -80,6 +80,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>
+                                                    <label>{{emp}}</label>
+                                                </td>
                                                 <td style="float: right;">
                                                     <label>
                                                         DATE : &nbsp;
@@ -260,7 +263,7 @@
                             <table class="table">
                                 <tr>
                                     <th style="        text-align: left;">
-                                        STEP - 2 : Generate Gate Pass
+                                        STEP - 2 : Generate Gate Pass Advice
                                     </th>
                                     <td style="        text-align: right;">
                                         <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />

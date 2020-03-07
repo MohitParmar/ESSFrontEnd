@@ -37,26 +37,17 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     };  //Generate List of Employees Gate Pass
     $scope.GetGPLists = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var gplst = new XMLHttpRequest(); gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true); gplst.setRequestHeader('Accept', 'application/json'); gplst.onreadystatechange = function () { if (gplst.readyState === 4) { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(gplst.responseText); rlsarr = json; $scope.relalldata = json; $scope.relalldata = $filter('orderBy')($scope.relalldata, '-id'); $scope.curPage1 = 0; $scope.pageSize1 = 10; $scope.$digest(); }; }; gplst.send(); };     //Get Pending Gate Pass List
     $scope.UpdateGPStatus = function (releaseStatusCode, rlsgpid) {
-        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) {
-            var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) {
-                detailarr = rlsarr[r]["applReleaseStatus"]; break;
-            };
-        };
+        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
         //Get ReleaseCode of Releaser
-        var dataarr = []; for (i = 0; i < detailarr.length; i++) {
-            var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) {
-                dataarr = detailarr[i]; break;
-            };
-        };
+        var dataarr = []; for (i = 0; i < detailarr.length; i++) { var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
         var jsonObj = {}; jsonObj.YearMonth = detailarr[0].yearMonth; jsonObj.ReleaseGroupCode = detailarr[0].releaseGroupCode; jsonObj.ApplicationId = rlsgpid; jsonObj.ReleaseStrategy = detailarr[0].releaseStrategy; jsonObj.ReleaseStrategyLevel = detailarr[0].releaseStrategyLevel; jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = detailarr[0].releaseStatusCode; jsonObj.ReleaseDate = strDate; jsonObj.ReleaseAuth = dataarr.releaseAuth; jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = ""; jsonObj.LeaveApplications_YearMonth = null; jsonObj.LeaveApplications_LeaveAppId = null; jsonObj = JSON.stringify(jsonObj);
         var xhr2 = new XMLHttpRequest(); xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateGpStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode + '&releaseGroupCode=GP', true);
         xhr2.setRequestHeader("Content-type", "application/json"); xhr2.onreadystatechange = function () {
-            if (xhr2.readyState === 4) {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
                 if (releaseStatusCode === 'F') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Approved Sucesfully.. </strong></div>"; };
                 if (releaseStatusCode === 'R') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Gate Pass Rejected Sucesfully.. </strong></div>"; };
                 $('#MessageBox').show(); $scope.GetGPLists();
-            }
-            else {
+            } else {
                 if (releaseStatusCode === 'F') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Gate Pass Not Approved .. </strong></div>"; };
                 if (releaseStatusCode === 'R') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Gate Pass Not Rejected .. </strong></div>"; };
                 $('#MessageBox').show(); $scope.GetGPLists();
