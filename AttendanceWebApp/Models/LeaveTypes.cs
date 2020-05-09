@@ -29,6 +29,7 @@ namespace AttendanceWebApp.Models
 
         //ADDING STATIC MEMBERS TO ELIMINATE MAGIC STRINGS
         public static readonly string CasualLeave = "CL";
+
         public static readonly string SickLeave = "SL";
         public static readonly string PaidLeave = "EL";
         public static readonly string OptionalLeave = "OH";

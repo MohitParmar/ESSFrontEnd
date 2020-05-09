@@ -35,11 +35,11 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         else if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = firstDay.getFullYear() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate() + ' 00:00:00'; ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getDate() + ' 23:59:59'; }
         else { FromDate = data.FromDt; document.getElementById("hidfromdt").value = data.FromDt; ToDate = data.ToDt; document.getElementById("hidtodt").value = data.ToDt; };
         var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; };
-        var flg = true; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeavePosting/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate + '&flag=' + flg, true); xhr.setRequestHeader('Accept', 'application/json');
+        var WOflg = false; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeavePosting/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate + '&flag=' + WOflg, true); xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); $scope.InfoPL = xhr.responseText; var json = JSON.parse(xhr.responseText); var temparr = new Array();
-                var tmpflg = url.searchParams.get("flg");   //var url_string = window.location.href; var url = new URL(url_string); 
+                var tmpflg = url.searchParams.get("flg");   //var url_string = window.location.href; var url = new URL(url_string);
                 var count = 0; for (var key in json) {
                     if (json.hasOwnProperty(key)) {
                         for (var key2 in json[key].leaveApplicationDetails) {

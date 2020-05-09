@@ -2,9 +2,9 @@
     ViewBag.Title = "Outdoor Duty Application";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/Controller/ODCntrl.js"></script>
-<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ODCntrl.js"></script>
 
 <style type="text/css">
     .TextBoxStyle {
@@ -31,17 +31,9 @@
             pointer-events: none;
         }
 </style>
-<script>
-    $(function () {
-        $('#datetimepicker5').datetimepicker({
-            use24hours: true,
-            format: 'HH:mm'
-        });
-    });
-</script>
 <div ng-app="myApp" ng-controller="ODController">
-    <div class="container">
-        <input type="hidden" value="LA" id="releaseGroupCode" />
+    <div class="container-fluid">
+        <input type="hidden" value="OD" id="releaseGroupCode" />
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
             <div class="col-sm-12">

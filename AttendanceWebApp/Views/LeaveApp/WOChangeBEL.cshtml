@@ -32,7 +32,7 @@
 </style>
 <div ng-app="myApp">
     <div ng-controller="WeeklyOffCntroller">
-        <div class="container">
+        <div class="container-fluid">
             <input type="hidden" value="LA" id="releaseGroupCode" />
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
@@ -53,33 +53,35 @@
                         <div class="panel-body" style="padding-bottom:5px;">
                             <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
                                 <div ng-init="GetEmpInfo()">
-                                    <table id="myTable" class="table table-responsive table-condensed" style="margin-bottom:5px;">
-                                        <tbody>
+                                    <table id="myTable" class="table table-responsive table-condensed">
+                                        <thead>
                                             <tr>
-                                                <td>
+                                                <th>
                                                     <label>Employee Code</label>
-                                                </td>
+                                                </th>
                                                 <td>
-                                                    <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" readonly>
+                                                    <input class="form-control" type="text" id="txtEmpCode" name="EmpCode" ng-model="New.EmpUnqId" disabled>
                                                 </td>
                                                 <td colspan="2">
-                                                    <input class="form-control" type="text" id="txtEmpName" name="EmpName" readonly />
+                                                    <input class="form-control" type="text" id="txtEmpName" name="EmpName" disabled />
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
+                                                <th>
                                                     <label>Designation</label>
-                                                </td>
+                                                </th>
                                                 <td>
-                                                    <input class="form-control" type="text" id="txtDesg" name="Desg" readonly>
+                                                    <input class="form-control" type="text" id="txtDesg" name="Desg" disabled>
                                                 </td>
-                                                <td>
+                                                <th>
                                                     <label>Department</label>
-                                                </td>
+                                                </th>
                                                 <td>
-                                                    <input class="form-control" type="text" id="txtStat" name="Stat" readonly>
+                                                    <input class="form-control" type="text" id="txtStat" name="Stat" disabled>
                                                 </td>
                                             </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr>
                                                 <td>
                                                     <label>Present Weekly Off Date</label>
@@ -88,7 +90,7 @@
                                                     <div class="right-inner-addon">
                                                         <i class="icon-calendar"></i>
                                                         <input class="form-control" type="text" id="PresentWODt" ng-model="New.PresentWODt" data-date-format="yyyy/MM/dd"
-                                                               placeholder="Select Present WO Date" datepicker required>
+                                                               ng-change="YearValidate()" placeholder="Select Present WO Date" datepicker required>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -100,6 +102,7 @@
                                                     <div class="right-inner-addon">
                                                         <i class="icon-calendar"></i>
                                                         <input class="form-control" type="text" id="ChangeWODt" ng-model="New.ChangeWODt" data-date-format="yyyy/MM/dd"
+                                                               ng-change="ToValidate()" onclick="ToValidate()"
                                                                placeholder="Select Change WO Date" datepicker required>
                                                     </div>
                                                 </td>
@@ -108,42 +111,27 @@
                                                 <td>
                                                     <label>Reason: </label>
                                                 </td>
-                                                <td colspan="2">
-                                                    <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Reason.." ng-model="New.Remarks" required>
-                                                </td>
-                                                <td style="text-align: right;">
-                                                    <button class="btn btn-primary" id="btnOK" name="Add to List" ng-click="AddToList">Add to List</button>
+                                                <td colspan="3">
+                                                    <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Weekly Off Change" ng-model="New.Remarks" required />
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table>
-                                    <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
-                                        <thead>
+                                        <tfoot>
                                             <tr>
-                                                <th style="text-align:center;">Sr No</th>
-                                                <th style="text-align:center;">Type</th>
-                                                <th style="text-align:center;">Present WO Date</th>
-                                                <th style="text-align:center;">Change WO Date</th>
-                                                <th style="text-align:center;">Reason</th>
+                                                <td style="text-align: center;" colspan="4">
+                                                    <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                                                    <button id="BtnCreate" type="button" class="btn btn-primary btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                                            ng-click="CreateWO(New)">
+                                                        Save
+                                                    </button>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="tempRow">
-                                                <td colspan="5">No information entered.</td>
-                                            </tr>
-                                        </tbody>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </form>
                         </div>
-                        <div class="panel-footer" style="text-align:right;">
-                            <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
-                            <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
-                                    ng-click="createLeave($('#aliasTable').val())">
-                                Save
-                            </button>
-                        </div>
-                        <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                        <div class="panel-footer">
                             <strong><text style="color:#f44336;">Note: Weekly Off Change application will be saved and forwarded for approval only when "Save" button is pressed.</text></strong>
                         </div>
                     </div>

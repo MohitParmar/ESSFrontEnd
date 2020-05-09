@@ -270,6 +270,7 @@
     <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\UtilsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -310,6 +311,9 @@
     <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
+    <Content Include="ESS_Images\ESS Icon\android-chrome-192x192.png" />
+    <Content Include="ESS_Images\ESS Icon\android-chrome-512x512.png" />
+    <Content Include="ESS_Images\ESS Icon\apple-touch-icon.png" />
     <Content Include="ESS_Images\GatePass.png" />
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
@@ -350,12 +354,7 @@
     <Content Include="Content\img\glyphicons-halflings-white.html" />
     <Content Include="Content\img\glyphicons-halflings.html" />
     <Content Include="Content\img\icons-sa7c41345d9.png" />
-    <Content Include="Content\img\message_avatar1.png" />
-    <Content Include="Content\img\message_avatar2.png" />
-    <Content Include="Content\img\signin\check.png" />
-    <Content Include="Content\img\signin\fb_btn.png" />
     <Content Include="Content\img\signin\password.png" />
-    <Content Include="Content\img\signin\twitter_btn.png" />
     <Content Include="Content\img\signin\user.png" />
     <Content Include="Content\Jquery 3.2.1\JQuery Slim Version 3.2.1\jquery-3.2.1.slim.js" />
     <Content Include="Content\Jquery 3.2.1\JQuery Slim Version 3.2.1\jquery-3.2.1.slim.min.js" />
@@ -435,7 +434,6 @@
     <Content Include="ESS_Images\ErrorImages\55RWL.png" />
     <Content Include="ESS_Images\ess-logo-login.ico" />
     <Content Include="ESS_Images\excel.ico" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ESS_Images\JINDALLOGO.jpg" />
@@ -486,6 +484,8 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ESS_Images\ESS Icon\site.webmanifest" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\ESS.pubxml" />
     <Content Include="Scripts\Angular\angular.min.js.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -505,6 +505,7 @@
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
     <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
+    <Content Include="Scripts\Controller\VehicleRequisition.js" />
     <Content Include="Scripts\Controller\WOCntrl.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -541,6 +542,8 @@
     <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX5.jpg" />
     <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX6.jpg" />
     <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX7.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX8.jpg" />
+    <Content Include="UserManuals\images\IncomeTaxDeclaration\ITAX9.jpg" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %2810%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %283%29.png" />
     <Content Include="UserManuals\images\LeaveaApplication\1 %284%29.png" />
@@ -616,23 +619,8 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -690,6 +678,8 @@
     <Content Include="Views\Master\SalarySlip.cshtml" />
     <Content Include="Views\Master\SalarySlipUpload.cshtml" />
     <Content Include="Views\IncomeTax\TaxComparisonReport.cshtml" />
+    <Content Include="Views\Master\UserProfileView.cshtml" />
+    <Content Include="Views\Utils\VehicleRequisition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

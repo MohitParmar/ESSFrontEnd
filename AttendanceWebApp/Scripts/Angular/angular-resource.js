@@ -25,7 +25,7 @@
      * the need to interact with the low level {@link ng.$http $http} service.
      *
      * # Installation
-     * To use $resource make sure you have included the `angular-resource.js` that comes in Angular 
+     * To use $resource make sure you have included the `angular-resource.js` that comes in Angular
      * package. You can also find this file on Google CDN, bower as well as at
      * {@link http://code.angularjs.org/ code.angularjs.org}.
      *
@@ -36,7 +36,7 @@
      * and you are ready to get started!
      *
      * @param {string} url A parameterized URL template with parameters prefixed by `:` as in
-     *   `/user/:username`. If you are using a URL with a port number (e.g. 
+     *   `/user/:username`. If you are using a URL with a port number (e.g.
      *   `http://example.com:8080/api`), you'll need to escape the colon character before the port
      *   number, like this: `$resource('http://example.com\\:8080/api')`.
      *
@@ -117,12 +117,12 @@
           {userId:123, cardId:'@id'}, {
            charge: {method:'POST', params:{charge:true}}
           });
-    
+
          // We can retrieve a collection from the server
          var cards = CreditCard.query(function() {
            // GET: /user/123/card
            // server returns: [ {id:456, number:'1234', name:'Smith'} ];
-    
+
            var card = cards[0];
            // each item is an instance of CreditCard
            expect(card instanceof CreditCard).toEqual(true);
@@ -131,12 +131,12 @@
            card.$save();
            // POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}
            // server returns: {id:456, number:'1234', name: 'J. Smith'};
-    
+
            // our custom method is mapped as well.
            card.$charge({amount:9.99});
            // POST: /user/123/card/456?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
          });
-    
+
          // we can create an instance as well
          var newCard = new CreditCard({number:'0123'});
          newCard.name = "Mike Smith";
@@ -153,7 +153,7 @@
      * When the data is returned from the server then the object is an instance of the resource type and
      * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
      * operations (create, read, update, delete) on server-side data.
-    
+
        <pre>
          var User = $resource('/user/:userId', {userId:'@id'});
          var user = User.get({userId:123}, function() {
@@ -176,9 +176,9 @@
            });
          });
        </pre>
-    
+
      * # Buzz client
-    
+
        Let's look at what a buzz client created with the `$resource` service looks like:
         <doc:example>
           <doc:source jsfiddle="false">
@@ -191,7 +191,7 @@
                  {get:{method:'JSONP', params:{visibility:'@self'}}, replies: {method:'JSONP', params:{visibility:'@self', comments:'@comments'}}}
                );
              }
-    
+
              BuzzController.prototype = {
                fetch: function() {
                  this.activities = this.Activity.get({userId:this.userId});
@@ -202,7 +202,7 @@
              };
              BuzzController.$inject = ['$resource'];
            </script>
-    
+
            <div ng-controller="BuzzController">
              <input ng-model="userId"/>
              <button ng-click="fetch()">fetch</button>
@@ -226,232 +226,227 @@
         </doc:example>
      */
     angular.module('ngResource', ['ng']).
-      factory('$resource', ['$http', '$parse', function ($http, $parse) {
-          var DEFAULT_ACTIONS = {
-              'get': { method: 'GET' },
-              'save': { method: 'POST' },
-              'query': { method: 'GET', isArray: true },
-              'remove': { method: 'DELETE' },
-              'delete': { method: 'DELETE' }
-          };
-          var noop = angular.noop,
-              forEach = angular.forEach,
-              extend = angular.extend,
-              copy = angular.copy,
-              isFunction = angular.isFunction,
-              getter = function (obj, path) {
-                  return $parse(path)(obj);
-              };
+        factory('$resource', ['$http', '$parse', function ($http, $parse) {
+            var DEFAULT_ACTIONS = {
+                'get': { method: 'GET' },
+                'save': { method: 'POST' },
+                'query': { method: 'GET', isArray: true },
+                'remove': { method: 'DELETE' },
+                'delete': { method: 'DELETE' }
+            };
+            var noop = angular.noop,
+                forEach = angular.forEach,
+                extend = angular.extend,
+                copy = angular.copy,
+                isFunction = angular.isFunction,
+                getter = function (obj, path) {
+                    return $parse(path)(obj);
+                };
 
-          /**
-           * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
-           * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set (pchar) allowed in path
-           * segments:
-           *    segment       = *pchar
-           *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-           *    pct-encoded   = "%" HEXDIG HEXDIG
-           *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-           *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-           *                     / "*" / "+" / "," / ";" / "="
-           */
-          function encodeUriSegment(val) {
-              return encodeUriQuery(val, true).
-                replace(/%26/gi, '&').
-                replace(/%3D/gi, '=').
-                replace(/%2B/gi, '+');
-          }
+            /**
+             * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
+             * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set (pchar) allowed in path
+             * segments:
+             *    segment       = *pchar
+             *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+             *    pct-encoded   = "%" HEXDIG HEXDIG
+             *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+             *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+             *                     / "*" / "+" / "," / ";" / "="
+             */
+            function encodeUriSegment(val) {
+                return encodeUriQuery(val, true).
+                    replace(/%26/gi, '&').
+                    replace(/%3D/gi, '=').
+                    replace(/%2B/gi, '+');
+            }
 
+            /**
+             * This method is intended for encoding *key* or *value* parts of query component. We need a custom
+             * method becuase encodeURIComponent is too agressive and encodes stuff that doesn't have to be
+             * encoded per http://tools.ietf.org/html/rfc3986:
+             *    query       = *( pchar / "/" / "?" )
+             *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+             *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+             *    pct-encoded   = "%" HEXDIG HEXDIG
+             *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+             *                     / "*" / "+" / "," / ";" / "="
+             */
+            function encodeUriQuery(val, pctEncodeSpaces) {
+                return encodeURIComponent(val).
+                    replace(/%40/gi, '@').
+                    replace(/%3A/gi, ':').
+                    replace(/%24/g, '$').
+                    replace(/%2C/gi, ',').
+                    replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
+            }
 
-          /**
-           * This method is intended for encoding *key* or *value* parts of query component. We need a custom
-           * method becuase encodeURIComponent is too agressive and encodes stuff that doesn't have to be
-           * encoded per http://tools.ietf.org/html/rfc3986:
-           *    query       = *( pchar / "/" / "?" )
-           *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-           *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-           *    pct-encoded   = "%" HEXDIG HEXDIG
-           *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-           *                     / "*" / "+" / "," / ";" / "="
-           */
-          function encodeUriQuery(val, pctEncodeSpaces) {
-              return encodeURIComponent(val).
-                replace(/%40/gi, '@').
-                replace(/%3A/gi, ':').
-                replace(/%24/g, '$').
-                replace(/%2C/gi, ',').
-                replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
-          }
+            function Route(template, defaults) {
+                this.template = template = template + '#';
+                this.defaults = defaults || {};
+                var urlParams = this.urlParams = {};
+                forEach(template.split(/\W/), function (param) {
+                    if (param && (new RegExp("(^|[^\\\\]):" + param + "\\W").test(template))) {
+                        urlParams[param] = true;
+                    }
+                });
+                this.template = template.replace(/\\:/g, ':');
+            }
 
-          function Route(template, defaults) {
-              this.template = template = template + '#';
-              this.defaults = defaults || {};
-              var urlParams = this.urlParams = {};
-              forEach(template.split(/\W/), function (param) {
-                  if (param && (new RegExp("(^|[^\\\\]):" + param + "\\W").test(template))) {
-                      urlParams[param] = true;
-                  }
-              });
-              this.template = template.replace(/\\:/g, ':');
-          }
+            Route.prototype = {
+                url: function (params) {
+                    var self = this,
+                        url = this.template,
+                        val,
+                        encodedVal;
 
-          Route.prototype = {
-              url: function (params) {
-                  var self = this,
-                      url = this.template,
-                      val,
-                      encodedVal;
+                    params = params || {};
+                    forEach(this.urlParams, function (_, urlParam) {
+                        val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
+                        if (angular.isDefined(val) && val !== null) {
+                            encodedVal = encodeUriSegment(val);
+                            url = url.replace(new RegExp(":" + urlParam + "(\\W)", "g"), encodedVal + "$1");
+                        } else {
+                            url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W)", "g"), function (match,
+                                leadingSlashes, tail) {
+                                if (tail.charAt(0) == '/') {
+                                    return tail;
+                                } else {
+                                    return leadingSlashes + tail;
+                                }
+                            });
+                        }
+                    });
+                    url = url.replace(/\/?#$/, '');
+                    var query = [];
+                    forEach(params, function (value, key) {
+                        if (!self.urlParams[key]) {
+                            query.push(encodeUriQuery(key) + '=' + encodeUriQuery(value));
+                        }
+                    });
+                    query.sort();
+                    url = url.replace(/\/*$/, '');
+                    return url + (query.length ? '?' + query.join('&') : '');
+                }
+            };
 
-                  params = params || {};
-                  forEach(this.urlParams, function (_, urlParam) {
-                      val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
-                      if (angular.isDefined(val) && val !== null) {
-                          encodedVal = encodeUriSegment(val);
-                          url = url.replace(new RegExp(":" + urlParam + "(\\W)", "g"), encodedVal + "$1");
-                      } else {
-                          url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W)", "g"), function (match,
-                              leadingSlashes, tail) {
-                              if (tail.charAt(0) == '/') {
-                                  return tail;
-                              } else {
-                                  return leadingSlashes + tail;
-                              }
-                          });
-                      }
-                  });
-                  url = url.replace(/\/?#$/, '');
-                  var query = [];
-                  forEach(params, function (value, key) {
-                      if (!self.urlParams[key]) {
-                          query.push(encodeUriQuery(key) + '=' + encodeUriQuery(value));
-                      }
-                  });
-                  query.sort();
-                  url = url.replace(/\/*$/, '');
-                  return url + (query.length ? '?' + query.join('&') : '');
-              }
-          };
+            function ResourceFactory(url, paramDefaults, actions) {
+                var route = new Route(url);
 
+                actions = extend({}, DEFAULT_ACTIONS, actions);
 
-          function ResourceFactory(url, paramDefaults, actions) {
-              var route = new Route(url);
+                function extractParams(data, actionParams) {
+                    var ids = {};
+                    actionParams = extend({}, paramDefaults, actionParams);
+                    forEach(actionParams, function (value, key) {
+                        ids[key] = value.charAt && value.charAt(0) == '@' ? getter(data, value.substr(1)) : value;
+                    });
+                    return ids;
+                }
 
-              actions = extend({}, DEFAULT_ACTIONS, actions);
+                function Resource(value) {
+                    copy(value || {}, this);
+                }
 
-              function extractParams(data, actionParams) {
-                  var ids = {};
-                  actionParams = extend({}, paramDefaults, actionParams);
-                  forEach(actionParams, function (value, key) {
-                      ids[key] = value.charAt && value.charAt(0) == '@' ? getter(data, value.substr(1)) : value;
-                  });
-                  return ids;
-              }
+                forEach(actions, function (action, name) {
+                    action.method = angular.uppercase(action.method);
+                    var hasBody = action.method == 'POST' || action.method == 'PUT' || action.method == 'PATCH';
+                    Resource[name] = function (a1, a2, a3, a4) {
+                        var params = {};
+                        var data;
+                        var success = noop;
+                        var error = null;
+                        switch (arguments.length) {
+                            case 4:
+                                error = a4;
+                                success = a3;
+                            //fallthrough
+                            case 3:
+                            case 2:
+                                if (isFunction(a2)) {
+                                    if (isFunction(a1)) {
+                                        success = a1;
+                                        error = a2;
+                                        break;
+                                    }
 
-              function Resource(value) {
-                  copy(value || {}, this);
-              }
-
-              forEach(actions, function (action, name) {
-                  action.method = angular.uppercase(action.method);
-                  var hasBody = action.method == 'POST' || action.method == 'PUT' || action.method == 'PATCH';
-                  Resource[name] = function (a1, a2, a3, a4) {
-                      var params = {};
-                      var data;
-                      var success = noop;
-                      var error = null;
-                      switch (arguments.length) {
-                          case 4:
-                              error = a4;
-                              success = a3;
-                              //fallthrough
-                          case 3:
-                          case 2:
-                              if (isFunction(a2)) {
-                                  if (isFunction(a1)) {
-                                      success = a1;
-                                      error = a2;
-                                      break;
-                                  }
-
-                                  success = a2;
-                                  error = a3;
-                                  //fallthrough
-                              } else {
-                                  params = a1;
-                                  data = a2;
-                                  success = a3;
-                                  break;
-                              }
-                          case 1:
-                              if (isFunction(a1)) success = a1;
-                              else if (hasBody) data = a1;
-                              else params = a1;
-                              break;
-                          case 0: break;
-                          default:
-                              throw "Expected between 0-4 arguments [params, data, success, error], got " +
+                                    success = a2;
+                                    error = a3;
+                                    //fallthrough
+                                } else {
+                                    params = a1;
+                                    data = a2;
+                                    success = a3;
+                                    break;
+                                }
+                            case 1:
+                                if (isFunction(a1)) success = a1;
+                                else if (hasBody) data = a1;
+                                else params = a1;
+                                break;
+                            case 0: break;
+                            default:
+                                throw "Expected between 0-4 arguments [params, data, success, error], got " +
                                 arguments.length + " arguments.";
-                      }
+                        }
 
-                      var value = this instanceof Resource ? this : (action.isArray ? [] : new Resource(data));
-                      $http({
-                          method: action.method,
-                          url: route.url(extend({}, extractParams(data, action.params || {}), params)),
-                          data: data
-                      }).then(function (response) {
-                          var data = response.data;
+                        var value = this instanceof Resource ? this : (action.isArray ? [] : new Resource(data));
+                        $http({
+                            method: action.method,
+                            url: route.url(extend({}, extractParams(data, action.params || {}), params)),
+                            data: data
+                        }).then(function (response) {
+                            var data = response.data;
 
-                          if (data) {
-                              if (action.isArray) {
-                                  value.length = 0;
-                                  forEach(data, function (item) {
-                                      value.push(new Resource(item));
-                                  });
-                              } else {
-                                  copy(data, value);
-                              }
-                          }
-                          (success || noop)(value, response.headers);
-                      }, error);
+                            if (data) {
+                                if (action.isArray) {
+                                    value.length = 0;
+                                    forEach(data, function (item) {
+                                        value.push(new Resource(item));
+                                    });
+                                } else {
+                                    copy(data, value);
+                                }
+                            }
+                            (success || noop)(value, response.headers);
+                        }, error);
 
-                      return value;
-                  };
+                        return value;
+                    };
 
+                    Resource.prototype['$' + name] = function (a1, a2, a3) {
+                        var params = extractParams(this),
+                            success = noop,
+                            error;
 
-                  Resource.prototype['$' + name] = function (a1, a2, a3) {
-                      var params = extractParams(this),
-                          success = noop,
-                          error;
-
-                      switch (arguments.length) {
-                          case 3: params = a1; success = a2; error = a3; break;
-                          case 2:
-                          case 1:
-                              if (isFunction(a1)) {
-                                  success = a1;
-                                  error = a2;
-                              } else {
-                                  params = a1;
-                                  success = a2 || noop;
-                              }
-                          case 0: break;
-                          default:
-                              throw "Expected between 1-3 arguments [params, success, error], got " +
+                        switch (arguments.length) {
+                            case 3: params = a1; success = a2; error = a3; break;
+                            case 2:
+                            case 1:
+                                if (isFunction(a1)) {
+                                    success = a1;
+                                    error = a2;
+                                } else {
+                                    params = a1;
+                                    success = a2 || noop;
+                                }
+                            case 0: break;
+                            default:
+                                throw "Expected between 1-3 arguments [params, success, error], got " +
                                 arguments.length + " arguments.";
-                      }
-                      var data = hasBody ? this : undefined;
-                      Resource[name].call(this, params, data, success, error);
-                  };
-              });
+                        }
+                        var data = hasBody ? this : undefined;
+                        Resource[name].call(this, params, data, success, error);
+                    };
+                });
 
-              Resource.bind = function (additionalParamDefaults) {
-                  return ResourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
-              };
+                Resource.bind = function (additionalParamDefaults) {
+                    return ResourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
+                };
 
-              return Resource;
-          }
+                return Resource;
+            }
 
-          return ResourceFactory;
-      }]);
-
-
+            return ResourceFactory;
+        }]);
 })(window, window.angular);

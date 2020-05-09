@@ -19,7 +19,6 @@
  */
 var lowercase = function(string){return isString(string) ? string.toLowerCase() : string;};
 
-
 /**
  * @ngdoc function
  * @name angular.uppercase
@@ -30,7 +29,6 @@ var lowercase = function(string){return isString(string) ? string.toLowerCase() 
  * @returns {string} Uppercased string.
  */
 var uppercase = function(string){return isString(string) ? string.toUpperCase() : string;};
-
 
 var manualLowercase = function(s) {
   return isString(s)
@@ -43,7 +41,6 @@ var manualUppercase = function(s) {
       : s;
 };
 
-
 // String#toLowerCase and String#toUpperCase don't produce correct results in browsers with Turkish
 // locale, for this reason we need to detect this case and redefine lowercase/uppercase methods
 // with correct but slower alternatives.
@@ -51,7 +48,6 @@ if ('i' !== 'I'.toLowerCase()) {
   lowercase = manualLowercase;
   uppercase = manualUppercase;
 }
-
 
 var /** holds major version number for IE or NaN for real browsers */
     msie              = int((/msie (\d+)/.exec(lowercase(navigator.userAgent)) || [])[1]),
@@ -66,7 +62,6 @@ var /** holds major version number for IE or NaN for real browsers */
     angularModule,
     nodeName_,
     uid               = ['0', '0', '0'];
-
 
 /**
  * @private
@@ -88,7 +83,6 @@ function isArrayLike(obj) {
            typeof obj.callee === 'function';              // arguments (on IE8 looks like regular obj)
   }
 }
-
 
 /**
  * @ngdoc function
@@ -160,7 +154,6 @@ function forEachSorted(obj, iterator, context) {
   return keys;
 }
 
-
 /**
  * when using forEach the params are value, key, but it is often useful to have key, value.
  * @param {function(string, *)} iteratorFn
@@ -200,10 +193,9 @@ function nextUid() {
   return uid.join('');
 }
 
-
 /**
  * Set or clear the hashkey for an object.
- * @param obj object 
+ * @param obj object
  * @param h the hashkey (!truthy to delete the hashkey)
  */
 function setHashKey(obj, h) {
@@ -246,11 +238,9 @@ function int(str) {
   return parseInt(str, 10);
 }
 
-
 function inherit(parent, extra) {
   return extend(new (extend(function() {}, {prototype:parent}))(), extra);
 }
-
 
 /**
  * @ngdoc function
@@ -270,7 +260,6 @@ function inherit(parent, extra) {
 function noop() {}
 noop.$inject = [];
 
-
 /**
  * @ngdoc function
  * @name angular.identity
@@ -289,7 +278,6 @@ noop.$inject = [];
 function identity($) {return $;}
 identity.$inject = [];
 
-
 function valueFn(value) {return function() {return value;};}
 
 /**
@@ -305,7 +293,6 @@ function valueFn(value) {return function() {return value;};}
  */
 function isUndefined(value){return typeof value == 'undefined';}
 
-
 /**
  * @ngdoc function
  * @name angular.isDefined
@@ -318,7 +305,6 @@ function isUndefined(value){return typeof value == 'undefined';}
  * @returns {boolean} True if `value` is defined.
  */
 function isDefined(value){return typeof value != 'undefined';}
-
 
 /**
  * @ngdoc function
@@ -334,7 +320,6 @@ function isDefined(value){return typeof value != 'undefined';}
  */
 function isObject(value){return value != null && typeof value == 'object';}
 
-
 /**
  * @ngdoc function
  * @name angular.isString
@@ -348,7 +333,6 @@ function isObject(value){return value != null && typeof value == 'object';}
  */
 function isString(value){return typeof value == 'string';}
 
-
 /**
  * @ngdoc function
  * @name angular.isNumber
@@ -361,7 +345,6 @@ function isString(value){return typeof value == 'string';}
  * @returns {boolean} True if `value` is a `Number`.
  */
 function isNumber(value){return typeof value == 'number';}
-
 
 /**
  * @ngdoc function
@@ -378,7 +361,6 @@ function isDate(value){
   return toString.apply(value) == '[object Date]';
 }
 
-
 /**
  * @ngdoc function
  * @name angular.isArray
@@ -394,7 +376,6 @@ function isArray(value) {
   return toString.apply(value) == '[object Array]';
 }
 
-
 /**
  * @ngdoc function
  * @name angular.isFunction
@@ -408,7 +389,6 @@ function isArray(value) {
  */
 function isFunction(value){return typeof value == 'function';}
 
-
 /**
  * Checks if `obj` is a window object.
  *
@@ -420,21 +400,17 @@ function isWindow(obj) {
   return obj && obj.document && obj.location && obj.alert && obj.setInterval;
 }
 
-
 function isScope(obj) {
   return obj && obj.$evalAsync && obj.$watch;
 }
-
 
 function isFile(obj) {
   return toString.apply(obj) === '[object File]';
 }
 
-
 function isBoolean(value) {
   return typeof value == 'boolean';
 }
-
 
 function trim(value) {
   return isString(value) ? value.replace(/^\s*/, '').replace(/\s*$/, '') : value;
@@ -468,7 +444,6 @@ function makeMap(str){
   return obj;
 }
 
-
 if (msie < 9) {
   nodeName_ = function(element) {
     element = element.nodeName ? element : element[0];
@@ -481,7 +456,6 @@ if (msie < 9) {
   };
 }
 
-
 function map(obj, iterator, context) {
   var results = [];
   forEach(obj, function(value, index, list) {
@@ -489,7 +463,6 @@ function map(obj, iterator, context) {
   });
   return results;
 }
-
 
 /**
  * @description
@@ -516,7 +489,6 @@ function size(obj, ownPropsOnly) {
 
   return size;
 }
-
 
 function includes(array, obj) {
   return indexOf(array, obj) != -1;
@@ -621,7 +593,6 @@ function shallowCopy(src, dst) {
   return dst;
 }
 
-
 /**
  * @ngdoc function
  * @name angular.equals
@@ -683,7 +654,6 @@ function equals(o1, o2) {
   return false;
 }
 
-
 function concat(array1, array2, index) {
   return array1.concat(slice.call(array2, index));
 }
@@ -691,7 +661,6 @@ function concat(array1, array2, index) {
 function sliceArgs(args, startIndex) {
   return slice.call(args, startIndex || 0);
 }
-
 
 /**
  * @ngdoc function
@@ -728,7 +697,6 @@ function bind(self, fn) {
   }
 }
 
-
 function toJsonReplacer(key, value) {
   var val = value;
 
@@ -744,7 +712,6 @@ function toJsonReplacer(key, value) {
 
   return val;
 }
-
 
 /**
  * @ngdoc function
@@ -762,7 +729,6 @@ function toJson(obj, pretty) {
   return JSON.stringify(obj, toJsonReplacer, pretty ? '  ' : null);
 }
 
-
 /**
  * @ngdoc function
  * @name angular.fromJson
@@ -779,7 +745,6 @@ function fromJson(json) {
       ? JSON.parse(json)
       : json;
 }
-
 
 function toBoolean(value) {
   if (value && value.length !== 0) {
@@ -812,9 +777,7 @@ function startingTag(element) {
   } catch(e) {
     return lowercase(elemHtml);
   }
-
 }
-
 
 /////////////////////////////////////////////////
 
@@ -842,7 +805,6 @@ function toKeyValue(obj) {
   return parts.length ? parts.join('&') : '';
 }
 
-
 /**
  * We need our custom method because encodeURIComponent is too agressive and doesn't follow
  * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set (pchar) allowed in path
@@ -860,7 +822,6 @@ function encodeUriSegment(val) {
              replace(/%3D/gi, '=').
              replace(/%2B/gi, '+');
 }
-
 
 /**
  * This method is intended for encoding *key* or *value* parts of query component. We need a custom
@@ -881,7 +842,6 @@ function encodeUriQuery(val, pctEncodeSpaces) {
              replace(/%2C/gi, ',').
              replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
 }
-
 
 /**
  * @ngdoc directive
@@ -1060,7 +1020,6 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
  */
 
 function setupModuleLoader(window) {
-
   function ensure(obj, name, factory) {
     return obj[name] || (obj[name] = factory());
   }
@@ -1156,7 +1115,6 @@ function setupModuleLoader(window) {
            * @description
            */
           name: name,
-
 
           /**
            * @ngdoc method
@@ -1296,7 +1254,6 @@ function setupModuleLoader(window) {
       });
     };
   });
-
 }
 
 /**
@@ -1319,7 +1276,6 @@ var version = {
   dot: 7,
   codeName: 'monochromatic-rainbow'
 };
-
 
 function publishExternalAPI(angular){
   extend(angular, {
@@ -1516,7 +1472,6 @@ var jqCache = JQLite.cache = {},
       : function(element, type, fn) {element.detachEvent('on' + type, fn); });
 
 function jqNextId() { return ++jqId; }
-
 
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
 var MOZ_HACK_REGEXP = /^moz([A-Z])/;
@@ -1926,7 +1881,6 @@ forEach({
     // in a way that survives minification.
     if (((fn.length == 2 && (fn !== JQLiteHasClass && fn !== JQLiteController)) ? arg1 : arg2) === undefined) {
       if (isObject(arg1)) {
-
         // we are a write, but the object properties are the key/values
         for(i=0; i < this.length; i++) {
           if (fn === JQLiteData) {
@@ -2051,24 +2005,22 @@ forEach({
                 }
               }
               return false;
-            };	
+            };
 
           events[type] = [];
-		
+
 		  // Refer to jQuery's implementation of mouseenter & mouseleave
           // Read about mouseenter and mouseleave:
           // http://www.quirksmode.org/js/events_mouse.html#link8
-          var eventmap = { mouseleave : "mouseout", mouseenter : "mouseover"}          
+          var eventmap = { mouseleave : "mouseout", mouseenter : "mouseover"}
           bindFn(element, eventmap[type], function(event) {
             var ret, target = this, related = event.relatedTarget;
             // For mousenter/leave call the handler if related is outside the target.
             // NB: No relatedTarget if the mouse left/entered the browser window
             if ( !related || (related !== target && !contains(target, related)) ){
               handle(event, type);
-            }	
-
+            }
           });
-
         } else {
           addEventListenerFn(element, type, handle);
           events[type] = [];
@@ -2351,7 +2303,6 @@ HashQueueMap.prototype = {
  * </pre>
  */
 
-
 /**
  * @ngdoc overview
  * @name AUTO
@@ -2566,9 +2517,6 @@ function annotate(fn) {
  * @returns {Array.<string>} The names of the services which the function requires.
  */
 
-
-
-
 /**
  * @ngdoc object
  * @name AUTO.$provide
@@ -2650,7 +2598,6 @@ function annotate(fn) {
  * @returns {Object} registered provider instance
  */
 
-
 /**
  * @ngdoc method
  * @name AUTO.$provide#service
@@ -2664,7 +2611,6 @@ function annotate(fn) {
  * @returns {Object} registered provider instance
  */
 
-
 /**
  * @ngdoc method
  * @name AUTO.$provide#value
@@ -2677,7 +2623,6 @@ function annotate(fn) {
  * @param {*} value The value.
  * @returns {Object} registered provider instance
  */
-
 
 /**
  * @ngdoc method
@@ -2693,7 +2638,6 @@ function annotate(fn) {
  * @param {*} value The constant value.
  * @returns {Object} registered instance
  */
-
 
 /**
  * @ngdoc method
@@ -2713,7 +2657,6 @@ function annotate(fn) {
  *    * `$delegate` - The original service instance, which can be monkey patched, configured,
  *      decorated or delegated to.
  */
-
 
 function createInjector(modulesToLoad) {
   var INSTANTIATING = {},
@@ -2739,7 +2682,6 @@ function createInjector(modulesToLoad) {
             var provider = providerInjector.get(servicename + providerSuffix);
             return instanceInjector.invoke(provider.$get, provider);
           }));
-
 
   forEach(loadModules(modulesToLoad), function(fn) { instanceInjector.invoke(fn || noop); });
 
@@ -2845,7 +2787,6 @@ function createInjector(modulesToLoad) {
   ////////////////////////////////////
 
   function createInternalInjector(cache, factory) {
-
     function getService(serviceName) {
       if (typeof serviceName !== 'string') {
         throw Error('Service name expected');
@@ -2884,7 +2825,6 @@ function createInjector(modulesToLoad) {
         // this means that we must be an array.
         fn = fn[length];
       }
-
 
       // Performance optimization: http://jsperf.com/apply-vs-call-vs-invoke
       switch (self ? -1 : args.length) {
@@ -2941,7 +2881,6 @@ function createInjector(modulesToLoad) {
  * This can be disabled by calling `$anchorScrollProvider.disableAutoScrolling()`.
  */
 function $AnchorScrollProvider() {
-
   var autoScrollingEnabled = true;
 
   this.disableAutoScrolling = function() {
@@ -3303,7 +3242,6 @@ function Browser(window, document, $log, $sniffer) {
     }
   };
 
-
   /**
    * @name ng.$browser#defer
    * @methodOf ng.$browser
@@ -3330,7 +3268,6 @@ function Browser(window, document, $log, $sniffer) {
     return timeoutId;
   };
 
-
   /**
    * @name ng.$browser#defer.cancel
    * @methodOf ng.$browser.defer
@@ -3350,7 +3287,6 @@ function Browser(window, document, $log, $sniffer) {
     }
     return false;
   };
-
 }
 
 function $BrowserProvider(){
@@ -3384,7 +3320,6 @@ function $BrowserProvider(){
  *
  */
 function $CacheFactoryProvider() {
-
   this.$get = function() {
     var caches = {};
 
@@ -3402,7 +3337,6 @@ function $CacheFactoryProvider() {
           staleEnd = null;
 
       return caches[cacheId] = {
-
         put: function(key, value) {
           var lruEntry = lruHash[key] || (lruHash[key] = {key: key});
 
@@ -3417,7 +3351,6 @@ function $CacheFactoryProvider() {
           }
         },
 
-
         get: function(key) {
           var lruEntry = lruHash[key];
 
@@ -3427,7 +3360,6 @@ function $CacheFactoryProvider() {
 
           return data[key];
         },
-
 
         remove: function(key) {
           var lruEntry = lruHash[key];
@@ -3443,14 +3375,12 @@ function $CacheFactoryProvider() {
           size--;
         },
 
-
         removeAll: function() {
           data = {};
           size = 0;
           lruHash = {};
           freshEnd = staleEnd = null;
         },
-
 
         destroy: function() {
           data = null;
@@ -3459,12 +3389,10 @@ function $CacheFactoryProvider() {
           delete caches[cacheId];
         },
 
-
         info: function() {
           return extend({}, stats, {size: size});
         }
       };
-
 
       /**
        * makes the `entry` the freshEnd of the LRU linked list
@@ -3484,7 +3412,6 @@ function $CacheFactoryProvider() {
         }
       }
 
-
       /**
        * bidirectionally links two entries of the LRU linked list
        */
@@ -3496,7 +3423,6 @@ function $CacheFactoryProvider() {
       }
     }
 
-
     cacheFactory.info = function() {
       var info = {};
       forEach(caches, function(cache, cacheId) {
@@ -3505,11 +3431,9 @@ function $CacheFactoryProvider() {
       return info;
     };
 
-
     cacheFactory.get = function(cacheId) {
       return caches[cacheId];
     };
-
 
     return cacheFactory;
   };
@@ -3548,9 +3472,7 @@ function $TemplateCacheProvider() {
  * - "compositeLinkFn" - function that aggregates all linking fns for a compilation root (nodeList)
  */
 
-
 var NON_ASSIGNABLE_MODEL_EXPRESSION = 'Non-assignable model expression: ';
-
 
 /**
  * @ngdoc function
@@ -3672,7 +3594,6 @@ var NON_ASSIGNABLE_MODEL_EXPRESSION = 'Non-assignable model expression: ';
  * {@link guide/compiler Angular HTML Compiler} section of the Developer Guide.
  */
 
-
 /**
  * @ngdoc service
  * @name ng.$compileProvider
@@ -3688,7 +3609,6 @@ function $CompileProvider($provide) {
       CLASS_DIRECTIVE_REGEXP = /(([\d\w\-_]+)(?:\:([^;]+))?;?)/,
       MULTI_ROOT_TEMPLATE_ERROR = 'Template must have exactly one root element. was: ',
       urlSanitizationWhitelist = /^\s*(https?|ftp|mailto|file):/;
-
 
   /**
    * @ngdoc function
@@ -3740,7 +3660,6 @@ function $CompileProvider($provide) {
     return this;
   };
 
-
   /**
    * @ngdoc function
    * @name ng.$compileProvider#urlSanitizationWhitelist
@@ -3770,13 +3689,11 @@ function $CompileProvider($provide) {
     return urlSanitizationWhitelist;
   };
 
-
   this.$get = [
             '$injector', '$interpolate', '$exceptionHandler', '$http', '$templateCache', '$parse',
             '$controller', '$rootScope', '$document',
     function($injector,   $interpolate,   $exceptionHandler,   $http,   $templateCache,   $parse,
              $controller,   $rootScope,   $document) {
-
     var Attributes = function(element, attr) {
       this.$$element = element;
       this.$attr = attr || {};
@@ -3784,7 +3701,6 @@ function $CompileProvider($provide) {
 
     Attributes.prototype = {
       $normalize: directiveNormalize,
-
 
       /**
        * Set a normalized attribute on the element in a way such that all directives
@@ -3817,7 +3733,6 @@ function $CompileProvider($provide) {
           }
         }
 
-
         // sanitize a[href] values
         if (nodeName_(this.$$element[0]) === 'A' && key === 'href') {
           urlSanitizationNode.setAttribute('href', value);
@@ -3828,7 +3743,6 @@ function $CompileProvider($provide) {
             this[key] = value = 'unsafe:' + normalizedVal;
           }
         }
-
 
         if (writeAttr !== false) {
           if (value === null || value === undefined) {
@@ -3847,7 +3761,6 @@ function $CompileProvider($provide) {
           }
         });
       },
-
 
       /**
        * Observe an interpolated attribute.
@@ -3881,7 +3794,6 @@ function $CompileProvider($provide) {
             : function denormalizeTemplate(template) {
               return template.replace(/\{\{/g, startSymbol).replace(/}}/g, endSymbol);
             };
-
 
     return compile;
 
@@ -4021,7 +3933,6 @@ function $CompileProvider($provide) {
       }
     }
 
-
     /**
      * Looks for directives on the given node and adds them to the directive collection which is
      * sorted.
@@ -4097,7 +4008,6 @@ function $CompileProvider($provide) {
       directives.sort(byPriority);
       return directives;
     }
-
 
     /**
      * Once the directives have been collected, their compile functions are executed. This method
@@ -4240,7 +4150,6 @@ function $CompileProvider($provide) {
           nodeLinkFn.terminal = true;
           terminalPriority = Math.max(terminalPriority, directive.priority);
         }
-
       }
 
       nodeLinkFn.scope = newScopeDirective && newScopeDirective.scope;
@@ -4261,7 +4170,6 @@ function $CompileProvider($provide) {
           postLinkFns.push(post);
         }
       }
-
 
       function getControllers(require, $element) {
         var value, retrievalMethod = 'data', optional = false;
@@ -4286,7 +4194,6 @@ function $CompileProvider($provide) {
         }
         return value;
       }
-
 
       function nodeLinkFn(childLinkFn, scope, linkNode, $rootElement, boundTranscludeFn) {
         var attrs, $element, i, ii, linkFn, controller;
@@ -4313,7 +4220,6 @@ function $CompileProvider($provide) {
             scope.$$isolateBindings[scopeName] = mode + attrName;
 
             switch (mode) {
-
               case '@': {
                 attrs.$observe(attrName, function(value) {
                   scope[scopeName] = value;
@@ -4412,7 +4318,6 @@ function $CompileProvider($provide) {
       }
     }
 
-
     /**
      * looks up the directive and decorates it with exception handling and proper parameters. We
      * call this the boundDirective.
@@ -4444,7 +4349,6 @@ function $CompileProvider($provide) {
       }
       return match;
     }
-
 
     /**
      * When the element is replaced with HTML template then the new attributes
@@ -4482,7 +4386,6 @@ function $CompileProvider($provide) {
         }
       });
     }
-
 
     function compileTemplateUrl(directives, beforeTemplateNodeLinkFn, $compileNode, tAttrs,
         $rootElement, replace, childTranscludeFn) {
@@ -4525,7 +4428,6 @@ function $CompileProvider($provide) {
           afterTemplateNodeLinkFn = applyDirectivesToNode(directives, compileNode, tAttrs, childTranscludeFn);
           afterTemplateChildLinkFn = compileNodes($compileNode[0].childNodes, childTranscludeFn);
 
-
           while(linkQueue.length) {
             var controller = linkQueue.pop(),
                 linkRootElement = linkQueue.pop(),
@@ -4563,7 +4465,6 @@ function $CompileProvider($provide) {
       };
     }
 
-
     /**
      * Sorting function for bound directives.
      */
@@ -4571,14 +4472,12 @@ function $CompileProvider($provide) {
       return b.priority - a.priority;
     }
 
-
     function assertNoDuplicate(what, previousDirective, directive, element) {
       if (previousDirective) {
         throw Error('Multiple directives [' + previousDirective.name + ', ' +
           directive.name + '] asking for ' + what + ' on: ' +  startingTag(element));
       }
     }
-
 
     function addTextInterpolateDirective(directives, text) {
       var interpolateFn = $interpolate(text, true);
@@ -4598,13 +4497,11 @@ function $CompileProvider($provide) {
       }
     }
 
-
     function addAttrInterpolateDirective(node, directives, value, name) {
       var interpolateFn = $interpolate(value, true);
 
       // no interpolation found -> ignore
       if (!interpolateFn) return;
-
 
       directives.push({
         priority: 100,
@@ -4626,7 +4523,6 @@ function $CompileProvider($provide) {
         })
       });
     }
-
 
     /**
      * This is a special jqLite.replaceWith, which can replace items which
@@ -4698,7 +4594,6 @@ function directiveNormalize(name) {
  *          needed to do reverse lookup from normalized name back to actual name.
  */
 
-
 /**
  * @ngdoc function
  * @name ng.$compile.directive.Attributes#$set
@@ -4714,8 +4609,6 @@ function directiveNormalize(name) {
  *          property to the original name.
  * @param {string} value Value to set the attribute to.
  */
-
-
 
 /**
  * Closure compiler type information
@@ -4749,7 +4642,6 @@ function directiveLinkingFn(
 function $ControllerProvider() {
   var controllers = {};
 
-
   /**
    * @ngdoc function
    * @name ng.$controllerProvider#register
@@ -4766,9 +4658,7 @@ function $ControllerProvider() {
     }
   };
 
-
   this.$get = ['$injector', '$window', function($injector, $window) {
-
     /**
      * @ngdoc function
      * @name ng.$controller
@@ -4899,7 +4789,6 @@ function $InterpolateProvider() {
     }
   };
 
-
   this.$get = ['$parse', function($parse) {
     var startSymbolLength = startSymbol.length,
         endSymbolLength = endSymbol.length;
@@ -4991,7 +4880,6 @@ function $InterpolateProvider() {
       }
     }
 
-
     /**
      * @ngdoc method
      * @name ng.$interpolate#startSymbol
@@ -5007,7 +4895,6 @@ function $InterpolateProvider() {
     $interpolate.startSymbol = function() {
       return startSymbol;
     }
-
 
     /**
      * @ngdoc method
@@ -5034,7 +4921,6 @@ var URL_MATCH = /^([^:]+):\/\/(\w+:{0,1}\w*@)?(\{?[\w\.-]*\}?)(:([0-9]+))?(\/[^\
     HASH_MATCH = PATH_MATCH,
     DEFAULT_PORTS = {'http': 80, 'https': 443, 'ftp': 21};
 
-
 /**
  * Encode path using encodeUriSegment, ignoring forward slashes
  *
@@ -5055,7 +4941,6 @@ function encodePath(path) {
 function stripHash(url) {
   return url.split('#')[0];
 }
-
 
 function matchUrl(url, obj) {
   var match = URL_MATCH.exec(url);
@@ -5078,16 +4963,13 @@ function matchUrl(url, obj) {
   return match;
 }
 
-
 function composeProtocolHostPort(protocol, host, port) {
   return protocol + '://' + host + (port == DEFAULT_PORTS[protocol] ? '' : ':' + port);
 }
 
-
 function pathPrefixFromBase(basePath) {
   return basePath.substr(0, basePath.lastIndexOf('/'));
 }
-
 
 function convertToHtml5Url(url, basePath, hashPrefix) {
   var match = matchUrl(url);
@@ -5102,7 +4984,6 @@ function convertToHtml5Url(url, basePath, hashPrefix) {
            pathPrefixFromBase(basePath) + match.hash.substr(hashPrefix.length);
   }
 }
-
 
 function convertToHashbangUrl(url, basePath, hashPrefix) {
   var match = matchUrl(url);
@@ -5126,7 +5007,6 @@ function convertToHashbangUrl(url, basePath, hashPrefix) {
            '#' + hashPrefix + path + search + hash;
   }
 }
-
 
 /**
  * LocationUrl represents an url
@@ -5171,17 +5051,14 @@ function LocationUrl(url, pathPrefix, appBaseUrl) {
                     pathPrefix + this.$$url;
   };
 
-
   this.$$rewriteAppUrl = function(absoluteLinkUrl) {
     if(absoluteLinkUrl.indexOf(appBaseUrl) == 0) {
       return absoluteLinkUrl;
     }
   }
 
-
   this.$$parse(url);
 }
-
 
 /**
  * LocationHashbangUrl represents url
@@ -5201,7 +5078,6 @@ function LocationHashbangUrl(url, hashPrefix, appBaseUrl) {
    */
   this.$$parse = function(url) {
     var match = matchUrl(url, this);
-
 
     if (match.hash && match.hash.indexOf(hashPrefix) !== 0) {
       throw Error('Invalid url "' + url + '", missing hash prefix "' + hashPrefix + '" !');
@@ -5240,13 +5116,10 @@ function LocationHashbangUrl(url, hashPrefix, appBaseUrl) {
     }
   }
 
-
   this.$$parse(url);
 }
 
-
 LocationUrl.prototype = {
-
   /**
    * Has any change been replacing ?
    * @private
@@ -5432,7 +5305,6 @@ LocationHashbangUrl.prototype = inherit(LocationUrl.prototype);
 function LocationHashbangInHtml5Url(url, hashPrefix, appBaseUrl, baseExtra) {
   LocationHashbangUrl.apply(this, arguments);
 
-
   this.$$rewriteAppUrl = function(absoluteLinkUrl) {
     if (absoluteLinkUrl.indexOf(appBaseUrl) == 0) {
       return appBaseUrl + baseExtra + '#' + hashPrefix  + absoluteLinkUrl.substr(appBaseUrl.length);
@@ -5448,7 +5320,6 @@ function locationGetter(property) {
   };
 }
 
-
 function locationGetterSetter(property, preprocess) {
   return function(value) {
     if (isUndefined(value))
@@ -5460,7 +5331,6 @@ function locationGetterSetter(property, preprocess) {
     return this;
   };
 }
-
 
 /**
  * @ngdoc object
@@ -5596,7 +5466,6 @@ function $LocationProvider(){
         window.angular['ff-684208-preventDefault'] = true;
       }
     });
-
 
     // rewrite hashbang url <> html5 url
     if ($location.absUrl() != initUrl) {
@@ -5950,7 +5819,6 @@ function lex(text, csp){
       }
     }
 
-
     var token = {
       index:start,
       text:ident
@@ -6265,7 +6133,6 @@ function parser(text, json, $filter, csp){
       return primary();
     }
   }
-
 
   function primary() {
     var primary;
@@ -6753,25 +6620,25 @@ function $ParseProvider() {
  *   you can treat promises attached to a scope as if they were the resulting values.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
- * 
+ *
  *  # Testing
- * 
+ *
  *  <pre>
  *    it('should simulate promise', inject(function($q, $rootScope) {
  *      var deferred = $q.defer();
  *      var promise = deferred.promise;
  *      var resolvedValue;
- * 
+ *
  *      promise.then(function(value) { resolvedValue = value; });
  *      expect(resolvedValue).toBeUndefined();
- * 
+ *
  *      // Simulate resolving of promise
  *      deferred.resolve(123);
  *      // Note that the 'then' function does not get called synchronously.
  *      // This is because we want the promise API to always be async, whether or not
  *      // it got called synchronously or asynchronously.
  *      expect(resolvedValue).toBeUndefined();
- * 
+ *
  *      // Propagate promise resolution to 'then' functions using $apply().
  *      $rootScope.$apply();
  *      expect(resolvedValue).toEqual(123);
@@ -6779,14 +6646,12 @@ function $ParseProvider() {
  *  </pre>
  */
 function $QProvider() {
-
   this.$get = ['$rootScope', '$exceptionHandler', function($rootScope, $exceptionHandler) {
     return qFactory(function(callback) {
       $rootScope.$evalAsync(callback);
     }, $exceptionHandler);
   }];
 }
-
 
 /**
  * Constructs a promise manager.
@@ -6797,7 +6662,6 @@ function $QProvider() {
  * @returns {object} Promise manager.
  */
 function qFactory(nextTick, exceptionHandler) {
-
   /**
    * @ngdoc
    * @name ng.$q#defer
@@ -6812,7 +6676,6 @@ function qFactory(nextTick, exceptionHandler) {
         value, deferred;
 
     deferred = {
-
       resolve: function(val) {
         if (pending) {
           var callbacks = pending;
@@ -6831,11 +6694,9 @@ function qFactory(nextTick, exceptionHandler) {
         }
       },
 
-
       reject: function(reason) {
         deferred.resolve(reject(reason));
       },
-
 
       promise: {
         then: function(callback, errback) {
@@ -6873,7 +6734,6 @@ function qFactory(nextTick, exceptionHandler) {
     return deferred;
   };
 
-
   var ref = function(value) {
     if (value && value.then) return value;
     return {
@@ -6886,7 +6746,6 @@ function qFactory(nextTick, exceptionHandler) {
       }
     };
   };
-
 
   /**
    * @ngdoc
@@ -6934,7 +6793,6 @@ function qFactory(nextTick, exceptionHandler) {
       }
     };
   };
-
 
   /**
    * @ngdoc
@@ -6985,16 +6843,13 @@ function qFactory(nextTick, exceptionHandler) {
     return result.promise;
   };
 
-
   function defaultCallback(value) {
     return value;
   }
 
-
   function defaultErrback(reason) {
     return reject(reason);
   }
-
 
   /**
    * @ngdoc
@@ -7148,10 +7003,8 @@ function $RouteProvider(){
     return this;
   };
 
-
   this.$get = ['$rootScope', '$location', '$routeParams', '$q', '$injector', '$http', '$templateCache',
       function( $rootScope,   $location,   $routeParams,   $q,   $injector,   $http,   $templateCache) {
-
     /**
      * @ngdoc object
      * @name ng.$route
@@ -7470,7 +7323,6 @@ function $RouteProvider(){
       }
     }
 
-
     /**
      * @returns the current active route, by matching it against the URL
      */
@@ -7564,7 +7416,6 @@ function $RouteParamsProvider() {
  * are expensive to construct.
  */
 
-
 /**
  * @ngdoc object
  * @name ng.$rootScopeProvider
@@ -7587,7 +7438,6 @@ function $RouteParamsProvider() {
  * @param {number} limit The number of digest iterations.
  */
 
-
 /**
  * @ngdoc object
  * @name ng.$rootScope
@@ -7609,7 +7459,6 @@ function $RootScopeProvider(){
 
   this.$get = ['$injector', '$exceptionHandler', '$parse',
       function( $injector,   $exceptionHandler,   $parse) {
-
     /**
      * @ngdoc function
      * @name ng.$rootScope.Scope
@@ -7686,7 +7535,6 @@ function $RootScopeProvider(){
      * @returns {number} Unique scope ID (monotonically increasing alphanumeric sequence) useful for
      *   debugging.
      */
-
 
     Scope.prototype = {
       /**
@@ -7976,7 +7824,6 @@ function $RootScopeProvider(){
         clearPhase();
       },
 
-
       /**
        * @ngdoc event
        * @name ng.$rootScope.Scope#$destroy
@@ -8185,7 +8032,6 @@ function $RootScopeProvider(){
         };
       },
 
-
       /**
        * @ngdoc function
        * @name ng.$rootScope.Scope#$emit
@@ -8229,7 +8075,6 @@ function $RootScopeProvider(){
           namedListeners = scope.$$listeners[name] || empty;
           event.currentScope = scope;
           for (i=0, length=namedListeners.length; i<length; i++) {
-
             // if listeners were deregistered, defragment the array
             if (!namedListeners[i]) {
               namedListeners.splice(i, 1);
@@ -8250,7 +8095,6 @@ function $RootScopeProvider(){
 
         return event;
       },
-
 
       /**
        * @ngdoc function
@@ -8327,7 +8171,6 @@ function $RootScopeProvider(){
     var $rootScope = new Scope();
 
     return $rootScope;
-
 
     function beginPhase(phase) {
       if ($rootScope.$$phase) {
@@ -8468,7 +8311,6 @@ function parseHeaders(headers) {
   return parsed;
 }
 
-
 /**
  * Returns a function that provides access to parsed headers.
  *
@@ -8495,7 +8337,6 @@ function headersGetter(headers) {
   };
 }
 
-
 /**
  * Chain all given functions
  *
@@ -8517,11 +8358,9 @@ function transformData(data, headers, fns) {
   return data;
 }
 
-
 function isSuccess(status) {
   return 200 <= status && status < 300;
 }
-
 
 function $HttpProvider() {
   var JSON_START = /^\s*(\[|\{[^\{])/,
@@ -8560,7 +8399,6 @@ function $HttpProvider() {
 
   this.$get = ['$httpBackend', '$browser', '$cacheFactory', '$rootScope', '$q', '$injector',
       function($httpBackend, $browser, $cacheFactory, $rootScope, $q, $injector) {
-
     var defaultCache = $cacheFactory('$http'),
         responseInterceptors = [];
 
@@ -8571,7 +8409,6 @@ function $HttpProvider() {
               : $injector.invoke(interceptor)
       );
     });
-
 
     /**
      * @ngdoc function
@@ -8936,7 +8773,6 @@ function $HttpProvider() {
       // send request
       promise = sendReq(config, reqData, reqHeaders);
 
-
       // transform future response
       promise = promise.then(transformResponse, transformResponse);
 
@@ -9070,9 +8906,7 @@ function $HttpProvider() {
          */
     $http.defaults = $config;
 
-
     return $http;
-
 
     function createShortMethods(names) {
       forEach(arguments, function(name) {
@@ -9085,7 +8919,6 @@ function $HttpProvider() {
       });
     }
 
-
     function createShortMethodsWithData(name) {
       forEach(arguments, function(name) {
         $http[name] = function(url, data, config) {
@@ -9097,7 +8930,6 @@ function $HttpProvider() {
         };
       });
     }
-
 
     /**
      * Makes the request.
@@ -9114,7 +8946,6 @@ function $HttpProvider() {
 
       $http.pendingRequests.push(config);
       promise.then(removePendingReq, removePendingReq);
-
 
       if (config.cache && config.method == 'GET') {
         cache = isObject(config.cache) ? config.cache : defaultCache;
@@ -9149,7 +8980,6 @@ function $HttpProvider() {
 
       return promise;
 
-
       /**
        * Callback registered to $httpBackend():
        *  - caches the response if desired
@@ -9170,7 +9000,6 @@ function $HttpProvider() {
         $rootScope.$apply();
       }
 
-
       /**
        * Resolves the raw $http promise.
        */
@@ -9186,13 +9015,11 @@ function $HttpProvider() {
         });
       }
 
-
       function removePendingReq() {
         var idx = indexOf($http.pendingRequests, config);
         if (idx !== -1) $http.pendingRequests.splice(idx, 1);
       }
     }
-
 
     function buildUrl(url, params) {
           if (!params) return url;
@@ -9206,8 +9033,6 @@ function $HttpProvider() {
           });
           return url + ((url.indexOf('?') == -1) ? '?' : '&') + parts.join('&');
         }
-
-
   }];
 }
 
@@ -9217,7 +9042,6 @@ var XHR = window.XMLHttpRequest || function() {
   try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e3) {}
   throw new Error("This browser does not support XMLHttpRequest.");
 };
-
 
 /**
  * @ngdoc object
@@ -9318,7 +9142,6 @@ function createHttpBackend($browser, XHR, $browserDefer, callbacks, rawDocument,
         }, timeout);
       }
     }
-
 
     function completeRequest(callback, status, response, headersString) {
       // URL_MATCH is defined in src/service/location.js
@@ -9436,7 +9259,6 @@ function $TimeoutProvider() {
        function($rootScope,   $browser,   $q,   $exceptionHandler) {
     var deferreds = {};
 
-
      /**
       * @ngdoc function
       * @name ng.$timeout
@@ -9489,7 +9311,6 @@ function $TimeoutProvider() {
 
       return promise;
     }
-
 
      /**
       * @ngdoc function
@@ -9574,7 +9395,6 @@ function $TimeoutProvider() {
  * @param {String} name Name of the filter.
  * @param {function} fn The filter factory function which is injectable.
  */
-
 
 /**
  * @ngdoc function
@@ -9878,7 +9698,6 @@ function currencyFilter($locale) {
    </doc:example>
  */
 
-
 numberFilter.$inject = ['$locale'];
 function numberFilter($locale) {
   var formats = $locale.NUMBER_FORMATS;
@@ -9970,7 +9789,6 @@ function padNumber(num, digits, trim) {
     num = num.substr(num.length - digits);
   return neg + num;
 }
-
 
 function dateGetter(name, size, offset, trim) {
   offset = offset || 0;
@@ -10115,8 +9933,6 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
  */
 dateFilter.$inject = ['$locale'];
 function dateFilter($locale) {
-
-
   var R_ISO8601_STR = /^(\d{4})-?(\d\d)-?(\d\d)(?:T(\d\d)(?::?(\d\d)(?::?(\d\d)(?:\.(\d+))?)?)?(Z|([+-])(\d\d):?(\d\d))?)?$/;
   function jsonStringToDate(string){
     var match;
@@ -10134,7 +9950,6 @@ function dateFilter($locale) {
     }
     return string;
   }
-
 
   return function(date, format) {
     var text = '',
@@ -10180,7 +9995,6 @@ function dateFilter($locale) {
   };
 }
 
-
 /**
  * @ngdoc filter
  * @name ng.filter:json
@@ -10215,7 +10029,6 @@ function jsonFilter() {
   };
 }
 
-
 /**
  * @ngdoc filter
  * @name ng.filter:lowercase
@@ -10225,7 +10038,6 @@ function jsonFilter() {
  * @see angular.lowercase
  */
 var lowercaseFilter = valueFn(lowercase);
-
 
 /**
  * @ngdoc filter
@@ -10485,9 +10297,7 @@ function ngDirective(directive) {
 var htmlAnchorDirective = valueFn({
   restrict: 'E',
   compile: function(element, attr) {
-
     if (msie <= 8) {
-
       // turn <a href ng-click="..">link</a> into a stylable link in IE
       // but only if it doesn't have name attribute, in which case it's an anchor
       if (!attr.href && !attr.name) {
@@ -10655,7 +10465,6 @@ var htmlAnchorDirective = valueFn({
  * @param {expression} ngDisabled Angular expression that will be evaluated.
  */
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngChecked
@@ -10684,7 +10493,6 @@ var htmlAnchorDirective = valueFn({
  * @element INPUT
  * @param {expression} ngChecked Angular expression that will be evaluated.
  */
-
 
 /**
  * @ngdoc directive
@@ -10721,7 +10529,6 @@ var htmlAnchorDirective = valueFn({
  * @param {expression} ngMultiple Angular expression that will be evaluated.
  */
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngReadonly
@@ -10750,7 +10557,6 @@ var htmlAnchorDirective = valueFn({
  * @element INPUT
  * @param {string} expression Angular expression that will be evaluated.
  */
-
 
 /**
  * @ngdoc directive
@@ -10784,9 +10590,7 @@ var htmlAnchorDirective = valueFn({
  * @param {string} expression Angular expression that will be evaluated.
  */
 
-
 var ngAttributeAliasDirectives = {};
-
 
 // boolean attrs are evaluated
 forEach(BOOLEAN_ATTR, function(propName, attrName) {
@@ -10804,7 +10608,6 @@ forEach(BOOLEAN_ATTR, function(propName, attrName) {
     };
   };
 });
-
 
 // ng-src, ng-href are interpolated
 forEach(['src', 'href'], function(attrName) {
@@ -10922,7 +10725,6 @@ function FormController(element, attrs) {
           parentForm.$setValidity(validationToken, true, form);
         }
       }
-
     } else {
       if (!invalidCount) {
         toggleValidCss(isValid);
@@ -10948,9 +10750,7 @@ function FormController(element, attrs) {
     form.$pristine = false;
     parentForm.$setDirty();
   };
-
 }
-
 
 /**
  * @ngdoc directive
@@ -11122,7 +10922,6 @@ var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 var NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))\s*$/;
 
 var inputType = {
-
   /**
    * @ngdoc inputType
    * @name ng.directive:input.text
@@ -11190,7 +10989,6 @@ var inputType = {
       </doc:example>
    */
   'text': textInputType,
-
 
   /**
    * @ngdoc inputType
@@ -11262,7 +11060,6 @@ var inputType = {
    */
   'number': numberInputType,
 
-
   /**
    * @ngdoc inputType
    * @name ng.directive:input.url
@@ -11330,7 +11127,6 @@ var inputType = {
    */
   'url': urlInputType,
 
-
   /**
    * @ngdoc inputType
    * @name ng.directive:input.email
@@ -11396,7 +11192,6 @@ var inputType = {
    */
   'email': emailInputType,
 
-
   /**
    * @ngdoc inputType
    * @name ng.directive:input.radio
@@ -11436,7 +11231,6 @@ var inputType = {
       </doc:example>
    */
   'radio': radioInputType,
-
 
   /**
    * @ngdoc inputType
@@ -11490,14 +11284,11 @@ var inputType = {
   'reset': noop
 };
 
-
 function isEmpty(value) {
   return isUndefined(value) || value === '' || value === null || value !== value;
 }
 
-
 function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-
   var listener = function() {
     var value = trim(element.val());
 
@@ -11542,7 +11333,6 @@ function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
       element.bind('paste cut', deferListener);
     }
   }
-
 
   ctrl.$render = function() {
     element.val(isEmpty(ctrl.$viewValue) ? '' : ctrl.$viewValue);
@@ -11669,7 +11459,6 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   }
 
   ctrl.$formatters.push(function(value) {
-
     if (isEmpty(value) || isNumber(value)) {
       ctrl.$setValidity('number', true);
       return value;
@@ -11762,7 +11551,6 @@ function checkboxInputType(scope, element, attr, ctrl) {
   });
 }
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:textarea
@@ -11789,7 +11577,6 @@ function checkboxInputType(scope, element, attr, ctrl) {
  * @param {string=} ngChange Angular expression to be executed when input changes due to user
  *    interaction with the input element.
  */
-
 
 /**
  * @ngdoc directive
@@ -12035,7 +11822,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       invalidCount = 0, // used to easily determine if we are valid
       $error = this.$error = {}; // keep invalid keys here
 
-
   // Setup initial state of the control
   $element.addClass(PRISTINE_CLASS);
   toggleValidCss(true);
@@ -12088,7 +11874,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
     parentForm.$setValidity(validationErrorKey, isValid, this);
   };
-
 
   /**
    * @ngdoc function
@@ -12143,7 +11928,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
     // if scope model value and ngModel value are out of sync
     if (ctrl.$modelValue !== value) {
-
       var formatters = ctrl.$formatters,
           idx = formatters.length;
 
@@ -12159,7 +11943,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     }
   });
 }];
-
 
 /**
  * @ngdoc directive
@@ -12211,7 +11994,6 @@ var ngModelDirective = function() {
     }
   };
 };
-
 
 /**
  * @ngdoc directive
@@ -12270,7 +12052,6 @@ var ngChangeDirective = valueFn({
   }
 });
 
-
 var requiredDirective = function() {
   return {
     require: '?ngModel',
@@ -12297,7 +12078,6 @@ var requiredDirective = function() {
     }
   };
 };
-
 
 /**
  * @ngdoc directive
@@ -12374,7 +12154,6 @@ var ngListDirective = function() {
   };
 };
 
-
 var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
 
 var ngValueDirective = function() {
@@ -12450,7 +12229,6 @@ var ngBindDirective = ngDirective(function(scope, element, attr) {
   });
 });
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngBindTemplate
@@ -12509,7 +12287,6 @@ var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
   }
 }];
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngBindHtmlUnsafe
@@ -12546,7 +12323,6 @@ function classDirective(name, selector) {
       ngClassWatchAction(ngClass, ngClass);
     });
 
-
     if (name !== 'ngClass') {
       scope.$watch('$index', function($index, old$index) {
         var mod = $index & 1;
@@ -12560,7 +12336,6 @@ function classDirective(name, selector) {
       });
     }
 
-
     function ngClassWatchAction(newVal) {
       if (selector === true || scope.$index % 2 === selector) {
         if (oldVal && !equals(newVal,oldVal)) {
@@ -12571,14 +12346,12 @@ function classDirective(name, selector) {
       oldVal = copy(newVal);
     }
 
-
     function removeClass(classVal) {
       if (isObject(classVal) && !isArray(classVal)) {
         classVal = map(classVal, function(v, k) { if (v) return k });
       }
       element.removeClass(isArray(classVal) ? classVal.join(' ') : classVal);
     }
-
 
     function addClass(classVal) {
       if (isObject(classVal) && !isArray(classVal)) {
@@ -12905,20 +12678,20 @@ var ngControllerDirective = [function() {
  * @element html
  * @description
  * Enables [CSP (Content Security Policy)](https://developer.mozilla.org/en/Security/CSP) support.
- * 
+ *
  * This is necessary when developing things like Google Chrome Extensions.
- * 
+ *
  * CSP forbids apps to use `eval` or `Function(string)` generated functions (among other things).
  * For us to be compatible, we just need to implement the "getterFn" in $parse without violating
  * any of these restrictions.
- * 
+ *
  * AngularJS uses `Function(string)` generated functions as a speed optimization. By applying `ngCsp`
  * it is be possible to opt into the CSP compatible mode. When this mode is on AngularJS will
  * evaluate all expressions up to 30% slower than in non-CSP mode, but no security violations will
  * be raised.
- * 
+ *
  * In order to use this feature put `ngCsp` directive on the root element of the application.
- * 
+ *
  * @example
  * This example shows how to apply the `ngCsp` directive to the `html` tag.
    <pre>
@@ -13007,7 +12780,6 @@ forEach(
  * See {@link ng.directive:ngClick ngClick}
  */
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngMousedown
@@ -13022,7 +12794,6 @@ forEach(
  * @example
  * See {@link ng.directive:ngClick ngClick}
  */
-
 
 /**
  * @ngdoc directive
@@ -13054,7 +12825,6 @@ forEach(
  * See {@link ng.directive:ngClick ngClick}
  */
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngMouseenter
@@ -13069,7 +12839,6 @@ forEach(
  * @example
  * See {@link ng.directive:ngClick ngClick}
  */
-
 
 /**
  * @ngdoc directive
@@ -13086,7 +12855,6 @@ forEach(
  * See {@link ng.directive:ngClick ngClick}
  */
 
-
 /**
  * @ngdoc directive
  * @name ng.directive:ngMousemove
@@ -13101,7 +12869,6 @@ forEach(
  * @example
  * See {@link ng.directive:ngClick ngClick}
  */
-
 
 /**
  * @ngdoc directive
@@ -13228,7 +12995,6 @@ var ngSubmitDirective = ngDirective(function(scope, element, attrs) {
     </file>
   </example>
  */
-
 
 /**
  * @ngdoc event
@@ -13666,8 +13432,6 @@ var ngRepeatDirective = ngDirective({
             array,
             last;       // last object information {scope, element, index}
 
-
-
         if (!isArray(collection)) {
           // if object, extract keys, sort them and use to determine order of iteration over obj props
           array = [];
@@ -13790,7 +13554,6 @@ var ngShowDirective = ngDirective(function(scope, element, attr){
     element.css('display', toBoolean(value) ? '' : 'none');
   });
 });
-
 
 /**
  * @ngdoc directive
@@ -14144,7 +13907,6 @@ var ngTranscludeDirective = ngDirective({
     </example>
  */
 
-
 /**
  * @ngdoc event
  * @name ng.directive:ngView#$viewContentLoaded
@@ -14166,7 +13928,6 @@ var ngViewDirective = ['$http', '$templateCache', '$route', '$anchorScroll', '$c
 
       scope.$on('$routeChangeSuccess', update);
       update();
-
 
       function destroyLastScope() {
         if (lastScope) {
@@ -14358,7 +14119,6 @@ var scriptDirective = ['$templateCache', function($templateCache) {
           <select ng-model="color" ng-options="c.name group by c.shade for c in colors">
           </select><br/>
 
-
           Select <a href ng-click="color={name:'not in list'}">bogus</a>.<br>
           <hr/>
           Currently selected: {{ {selected_color:color}  }}
@@ -14395,16 +14155,13 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
           nullOption,
           unknownOption;
 
-
       self.databound = $attrs.ngModel;
-
 
       self.init = function(ngModelCtrl_, nullOption_, unknownOption_) {
         ngModelCtrl = ngModelCtrl_;
         nullOption = nullOption_;
         unknownOption = unknownOption_;
       }
-
 
       self.addOption = function(value) {
         optionsMap[value] = true;
@@ -14415,7 +14172,6 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
         }
       };
 
-
       self.removeOption = function(value) {
         if (this.hasOption(value)) {
           delete optionsMap[value];
@@ -14425,7 +14181,6 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
         }
       };
 
-
       self.renderUnknownOption = function(val) {
         var unknownVal = '? ' + hashKey(val) + ' ?';
         unknownOption.val(unknownVal);
@@ -14433,7 +14188,6 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
         $element.val(unknownVal);
         unknownOption.prop('selected', true); // needed for IE
       }
-
 
       self.hasOption = function(value) {
         return optionsMap.hasOwnProperty(value);
@@ -14490,10 +14244,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
       else if (multiple) Multiple(scope, element, ngModelCtrl);
       else Single(scope, element, ngModelCtrl, selectCtrl);
 
-
       ////////////////////////////
-
-
 
       function Single(scope, selectElement, ngModelCtrl, selectCtrl) {
         ngModelCtrl.$render = function() {
@@ -14842,6 +14593,5 @@ var styleDirective = valueFn({
   jqLite(document).ready(function() {
     angularInit(document, bootstrap);
   });
-
 })(window, document);
 angular.element(document).find('head').append('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\\:form{display:block;}</style>');

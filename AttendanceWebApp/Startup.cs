@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(AttendanceWebApp.Startup))]
+
 namespace AttendanceWebApp
 {
     public partial class Startup

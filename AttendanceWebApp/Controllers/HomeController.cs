@@ -53,7 +53,6 @@ namespace AttendanceWebApp.Controllers
                 {
                     return RedirectToAction("AuthorizationError", "CustomError");
                 }
-
             }
             else
             {

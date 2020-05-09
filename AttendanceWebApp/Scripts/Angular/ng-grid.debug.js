@@ -1,12 +1,12 @@
 ﻿/***********************************************
 * ng-grid JavaScript Library
-* Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md 
+* Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
 * Compiled At: 04/22/2014 16:27
 ***********************************************/
 (function (window, $) {
     'use strict';
-    // the # of rows we want to add to the top and bottom of the rendered grid rows 
+    // the # of rows we want to add to the top and bottom of the rendered grid rows
     var EXCESS_ROWS = 6;
     var SCROLL_THRESHOLD = 4;
     var ASC = "asc";
@@ -87,7 +87,6 @@
                 }
 
                 grid.$viewport.scrollLeft(scrollTo);
-
             }
             else if (charCode === 39 || charCode === 9 && !evt.shiftKey) {
                 if (focusedOnLastVisibleColumns) {
@@ -911,7 +910,6 @@
     var ngDomAccessProvider = function (grid) {
         this.previousColumn = null;
         this.grid = grid;
-
     };
 
     ngDomAccessProvider.prototype.changeUserSelect = function (elm, value) {
@@ -1192,7 +1190,7 @@
         self.assignGridEventHandlers = function () {
             //Chrome and firefox both need a tab index so the grid can recieve focus.
             //need to give the grid a tabindex if it doesn't already have one so
-            //we'll just give it a tab index of the corresponding gridcache index 
+            //we'll just give it a tab index of the corresponding gridcache index
             //that way we'll get the same result every time it is run.
             //configurable within the options.
             if (grid.config.tabIndex === -1) {
@@ -1283,7 +1281,6 @@
             } else {
                 return grid.data.length < 1;
             }
-
         };
         $scope.cantPageToLast = function () {
             if ($scope.totalServerItems > 0) {
@@ -1311,9 +1308,9 @@
             },
 
             /* Callback if you want to inspect something before selection,
-            return false if you want to cancel the selection. return true otherwise. 
-            If you need to wait for an async call to proceed with selection you can 
-            use rowItem.changeSelection(event) method after returning false initially. 
+            return false if you want to cancel the selection. return true otherwise.
+            If you need to wait for an async call to proceed with selection you can
+            use rowItem.changeSelection(event) method after returning false initially.
             Note: when shift+ Selecting multiple items in the grid this will only get called
             once and the rowItem will be an array of items that are queued to be selected. */
             beforeSelectionChange: function () {
@@ -1371,7 +1368,7 @@
             excludeProperties: [],
 
             /* filterOptions -
-            filterText: The text bound to the built-in search box. 
+            filterText: The text bound to the built-in search box.
             useExternalFilter: Bypass internal filtering if you want to roll your own filtering mechanism but want to use builtin search box.
             */
             filterOptions: {
@@ -1385,7 +1382,7 @@
             // the template for the column menu and filter, including the button.
             footerTemplate: undefined,
 
-            // Enables a trade off between refreshing the contents of the grid continuously while scrolling (behaviour when true) 
+            // Enables a trade off between refreshing the contents of the grid continuously while scrolling (behaviour when true)
             // and keeping the scroll bar button responsive at the expense of refreshing grid contents (behaviour when false)
             forceSyncScrolling: true,
 
@@ -1401,7 +1398,7 @@
             //Define a header row template for further customization. See github wiki for more details.
             headerRowTemplate: undefined,
 
-            /*Enables the use of jquery UI reaggable/droppable plugin. requires jqueryUI to work if enabled. 
+            /*Enables the use of jquery UI reaggable/droppable plugin. requires jqueryUI to work if enabled.
             Useful if you want drag + drop but your users insist on crappy browsers. */
             jqueryUIDraggable: false,
 
@@ -1411,7 +1408,7 @@
             //Prevent unselections when in single selection mode.
             keepLastSelected: true,
 
-            /*Maintains the column widths while resizing. 
+            /*Maintains the column widths while resizing.
             Defaults to true when using *'s or undefined widths. Can be ovverriden by setting to false.*/
             maintainColumnRatios: undefined,
 
@@ -1425,7 +1422,7 @@
             pagingOptions: {
                 // pageSizes: list of available page sizes.
                 pageSizes: [250, 500, 1000],
-                //pageSize: currently selected page size. 
+                //pageSize: currently selected page size.
                 pageSize: 250,
                 //currentPage: the uhm... current page.
                 currentPage: 1
@@ -1452,11 +1449,11 @@
             //Disable row selections by clicking on the row and only when the checkbox is clicked.
             selectWithCheckboxOnly: false,
 
-            /*Enables menu to choose which columns to display and group by. 
+            /*Enables menu to choose which columns to display and group by.
             If both showColumnMenu and showFilter are false the menu button will not display.*/
             showColumnMenu: false,
 
-            /*Enables display of the filterbox in the column menu. 
+            /*Enables display of the filterbox in the column menu.
             If both showColumnMenu and showFilter are false the menu button will not display.*/
             showFilter: false,
 
@@ -1469,7 +1466,7 @@
             //Row selection check boxes appear as the first column.
             showSelectionCheckbox: false,
 
-            /*Define a sortInfo object to specify a default sorting state. 
+            /*Define a sortInfo object to specify a default sorting state.
             You can also observe this variable to utilize server-side sorting (see useExternalSorting).
             Syntax is sortinfo: { fields: ['fieldName1',' fieldName2'], direction: 'ASC'/'asc' || 'desc'/'DESC'}*/
             sortInfo: { fields: [], columns: [], directions: [] },
@@ -1477,10 +1474,10 @@
             //Set the tab index of the Vieport.
             tabIndex: -1,
 
-            //totalServerItems: Total items are on the server. 
+            //totalServerItems: Total items are on the server.
             totalServerItems: 0,
 
-            /*Prevents the internal sorting from executing. 
+            /*Prevents the internal sorting from executing.
             The sortInfo object will be updated with the sorting information so you can handle sorting (see sortInfo)*/
             useExternalSorting: false,
 
@@ -1544,13 +1541,13 @@
                 $http.get(t, {
                     cache: $templateCache
                 })
-                .success(function (data) {
-                    $templateCache.put(uKey, data);
-                    p.resolve();
-                })
-                .error(function (err) {
-                    p.reject("Could not load template: " + t);
-                });
+                    .success(function (data) {
+                        $templateCache.put(uKey, data);
+                        p.resolve();
+                    })
+                    .error(function (err) {
+                        p.reject("Could not load template: " + t);
+                    });
             } else if (t) {
                 $templateCache.put(uKey, t);
                 p.resolve();
@@ -2267,7 +2264,7 @@
             return true;
         }
         var element = event.target || event;
-        //check and make sure its not the bubbling up of our checked 'click' event 
+        //check and make sure its not the bubbling up of our checked 'click' event
         if (element.type === "checkbox" && element.parentElement.className !== "ngSelectionCell ng-scope") {
             return true;
         }
@@ -2343,7 +2340,7 @@
         };
 
         self.buildAggregateRow = function (aggEntity, rowIndex) {
-            var agg = self.aggCache[aggEntity.aggIndex]; // first check to see if we've already built it 
+            var agg = self.aggCache[aggEntity.aggIndex]; // first check to see if we've already built it
             if (!agg) {
                 // build the row
                 agg = new ngAggregate(aggEntity, self, self.rowConfig.rowHeight, grid.config.groupsCollapsedByDefault);
@@ -2538,12 +2535,10 @@
                                 resizable: false,
                                 headerCellTemplate: '<div class="ngAggHeader"></div>',
                                 pinned: grid.config.pinSelectionCheckbox
-
                             },
                             enablePinning: grid.config.enablePinning,
                             isAggCol: true,
                             headerRowHeight: grid.config.headerRowHeight
-
                         }, $scope, grid, domUtilityService, $templateCache, $utils));
                     }
                 }
@@ -2671,7 +2666,6 @@
             }
             for (var i = 0; i < grid.filteredRows.length; i++) {
                 grid.filteredRows[i].rowIndex = i;
-
             }
             grid.rowFactory.filteredRowsChanged();
         };
@@ -2759,13 +2753,13 @@
         }
 
         $scope.$on('$destroy', $scope.$watch(
-           function () {
-               return grid.config.filterOptions.filterText;
-           },
-           function (a) {
-               $scope.filterText = a;
-           }
-       ));
+            function () {
+                return grid.config.filterOptions.filterText;
+            },
+            function (a) {
+                $scope.filterText = a;
+            }
+        ));
 
         $scope.$on('$destroy', $scope.$watch('filterText', function (a) {
             if (!self.extFilter) {
@@ -2888,7 +2882,7 @@
             return index;
         };
 
-        // just call this func and hand it the rowItem you want to select (or de-select)    
+        // just call this func and hand it the rowItem you want to select (or de-select)
         self.setSelection = function (rowItem, isSelected) {
             if (grid.config.enableRowSelection) {
                 if (!isSelected) {
@@ -3067,24 +3061,24 @@
         }]);
 
     ngGridDirectives.directive('ngCellText',
-      function () {
-          return function (scope, elm) {
-              function mouseover(evt) {
-                  evt.preventDefault();
-              }
-              elm.bind('mouseover', mouseover);
+        function () {
+            return function (scope, elm) {
+                function mouseover(evt) {
+                    evt.preventDefault();
+                }
+                elm.bind('mouseover', mouseover);
 
-              function mouseleave(evt) {
-                  evt.preventDefault();
-              }
-              elm.bind('mouseleave', mouseleave);
+                function mouseleave(evt) {
+                    evt.preventDefault();
+                }
+                elm.bind('mouseleave', mouseleave);
 
-              elm.on('$destroy', function () {
-                  elm.off('mouseover', mouseover);
-                  elm.off('mouseleave', mouseleave);
-              });
-          };
-      });
+                elm.on('$destroy', function () {
+                    elm.off('mouseover', mouseover);
+                    elm.off('mouseleave', mouseleave);
+                });
+            };
+        });
     ngGridDirectives.directive('ngCell', ['$compile', '$domUtilityService', function ($compile, domUtilityService) {
         var ngCell = {
             scope: false,
@@ -3140,7 +3134,6 @@
             restrict: 'A',
             compile: function (e, a, transclude) {
                 return function (scope, element, attr) {
-
                     var childElement;
                     var childScope;
 
@@ -3260,13 +3253,13 @@
                                     if (!angular.isDefined(newTotal)) {
                                         $scope.totalServerItems = 0;
                                     }
-                                        // Otherwise set the value to the new total
+                                    // Otherwise set the value to the new total
                                     else {
                                         $scope.totalServerItems = newTotal;
                                     }
                                 }));
                             }
-                                // If it's NOT a string, then just set totalServerItems to 0 since they should only be setting this if using a string
+                            // If it's NOT a string, then just set totalServerItems to 0 since they should only be setting this if using a string
                             else {
                                 $scope.totalServerItems = 0;
                             }
@@ -3369,7 +3362,7 @@
                             $scope.$on('$destroy', $scope.$on('ngGridEventDigestGridParent', function () {
                                 domUtilityService.digest($scope.$parent);
                             }));
-                            // set up the columns 
+                            // set up the columns
                             $scope.$evalAsync(function () {
                                 $scope.adjustScrollLeft(0);
                             });
@@ -3727,248 +3720,235 @@
         'use strict';
 
         $templateCache.put('aggregateTemplate.html',
-          "<div ng-click=\"row.toggleExpand()\" ng-style=\"rowStyle(row)\" class=\"ngAggregate\">\r" +
-          "\n" +
-          "    <span class=\"ngAggregateText\">{{row.label CUSTOM_FILTERS}} ({{row.totalChildren()}} {{AggItemsLabel}})</span>\r" +
-          "\n" +
-          "    <div class=\"{{row.aggClass()}}\"></div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n"
+            "<div ng-click=\"row.toggleExpand()\" ng-style=\"rowStyle(row)\" class=\"ngAggregate\">\r" +
+            "\n" +
+            "    <span class=\"ngAggregateText\">{{row.label CUSTOM_FILTERS}} ({{row.totalChildren()}} {{AggItemsLabel}})</span>\r" +
+            "\n" +
+            "    <div class=\"{{row.aggClass()}}\"></div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('cellEditTemplate.html',
-          "<div ng-cell-has-focus ng-dblclick=\"CELL_EDITABLE_CONDITION && editCell()\">\r" +
-          "\n" +
-          "\t<div ng-edit-cell-if=\"!(isFocused && CELL_EDITABLE_CONDITION)\">\t\r" +
-          "\n" +
-          "\t\tDISPLAY_CELL_TEMPLATE\r" +
-          "\n" +
-          "\t</div>\r" +
-          "\n" +
-          "\t<div ng-edit-cell-if=\"isFocused && CELL_EDITABLE_CONDITION\">\r" +
-          "\n" +
-          "\t\tEDITABLE_CELL_TEMPLATE\r" +
-          "\n" +
-          "\t</div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n"
+            "<div ng-cell-has-focus ng-dblclick=\"CELL_EDITABLE_CONDITION && editCell()\">\r" +
+            "\n" +
+            "\t<div ng-edit-cell-if=\"!(isFocused && CELL_EDITABLE_CONDITION)\">\t\r" +
+            "\n" +
+            "\t\tDISPLAY_CELL_TEMPLATE\r" +
+            "\n" +
+            "\t</div>\r" +
+            "\n" +
+            "\t<div ng-edit-cell-if=\"isFocused && CELL_EDITABLE_CONDITION\">\r" +
+            "\n" +
+            "\t\tEDITABLE_CELL_TEMPLATE\r" +
+            "\n" +
+            "\t</div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('cellTemplate.html',
-          "<div class=\"ngCellText\" ng-class=\"col.colIndex()\"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>"
+            "<div class=\"ngCellText\" ng-class=\"col.colIndex()\"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>"
         );
-
 
         $templateCache.put('checkboxCellTemplate.html',
-          "<div class=\"ngSelectionCell\"><input tabindex=\"-1\" class=\"ngSelectionCheckbox\" type=\"checkbox\" ng-checked=\"row.selected\" /></div>"
+            "<div class=\"ngSelectionCell\"><input tabindex=\"-1\" class=\"ngSelectionCheckbox\" type=\"checkbox\" ng-checked=\"row.selected\" /></div>"
         );
-
 
         $templateCache.put('checkboxHeaderTemplate.html',
-          "<input class=\"ngSelectionHeader\" type=\"checkbox\" ng-show=\"multiSelect\" ng-model=\"allSelected\" ng-change=\"toggleSelectAll(allSelected, true)\"/>"
+            "<input class=\"ngSelectionHeader\" type=\"checkbox\" ng-show=\"multiSelect\" ng-model=\"allSelected\" ng-change=\"toggleSelectAll(allSelected, true)\"/>"
         );
-
 
         $templateCache.put('editableCellTemplate.html',
-          "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" />"
+            "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" />"
         );
-
 
         $templateCache.put('footerTemplate.html',
-          "<div ng-show=\"showFooter\" class=\"ngFooterPanel\" ng-class=\"{'ui-widget-content': jqueryUITheme, 'ui-corner-bottom': jqueryUITheme}\" ng-style=\"footerStyle()\">\r" +
-          "\n" +
-          "    <div class=\"ngTotalSelectContainer\" >\r" +
-          "\n" +
-          "        <div class=\"ngFooterTotalItems\" ng-class=\"{'ngNoMultiSelect': !multiSelect}\" >\r" +
-          "\n" +
-          "            <span class=\"ngLabel\">{{i18n.ngTotalItemsLabel}} {{maxRows()}}</span><span ng-show=\"filterText.length > 0\" class=\"ngLabel\">({{i18n.ngShowingItemsLabel}} {{totalFilteredItemsLength()}})</span>\r" +
-          "\n" +
-          "        </div>\r" +
-          "\n" +
-          "        <div class=\"ngFooterSelectedItems\" ng-show=\"multiSelect\">\r" +
-          "\n" +
-          "            <span class=\"ngLabel\">{{i18n.ngSelectedItemsLabel}} {{selectedItems.length}}</span>\r" +
-          "\n" +
-          "        </div>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "    <div class=\"ngPagerContainer\" style=\"float: right; margin-top: 10px;\" ng-show=\"enablePaging\" ng-class=\"{'ngNoMultiSelect': !multiSelect}\">\r" +
-          "\n" +
-          "        <div style=\"float:left; margin-right: 10px;\" class=\"ngRowCountPicker\">\r" +
-          "\n" +
-          "            <span style=\"float: left; margin-top: 3px;\" class=\"ngLabel\">{{i18n.ngPageSizeLabel}}</span>\r" +
-          "\n" +
-          "            <select style=\"float: left;height: 27px; width: 100px\" ng-model=\"pagingOptions.pageSize\" >\r" +
-          "\n" +
-          "                <option ng-repeat=\"size in pagingOptions.pageSizes\">{{size}}</option>\r" +
-          "\n" +
-          "            </select>\r" +
-          "\n" +
-          "        </div>\r" +
-          "\n" +
-          "        <div style=\"float:left; margin-right: 10px; line-height:25px;\" class=\"ngPagerControl\" style=\"float: left; min-width: 135px;\">\r" +
-          "\n" +
-          "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageToFirst()\" ng-disabled=\"cantPageBackward()\" title=\"{{i18n.ngPagerFirstTitle}}\"><div class=\"ngPagerFirstTriangle\"><div class=\"ngPagerFirstBar\"></div></div></button>\r" +
-          "\n" +
-          "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageBackward()\" ng-disabled=\"cantPageBackward()\" title=\"{{i18n.ngPagerPrevTitle}}\"><div class=\"ngPagerFirstTriangle ngPagerPrevTriangle\"></div></button>\r" +
-          "\n" +
-          "            <input class=\"ngPagerCurrent\" min=\"1\" max=\"{{currentMaxPages}}\" type=\"number\" style=\"width:50px; height: 24px; margin-top: 1px; padding: 0 4px;\" ng-model=\"pagingOptions.currentPage\"/>\r" +
-          "\n" +
-          "            <span class=\"ngGridMaxPagesNumber\" ng-show=\"maxPages() > 0\">/ {{maxPages()}}</span>\r" +
-          "\n" +
-          "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageForward()\" ng-disabled=\"cantPageForward()\" title=\"{{i18n.ngPagerNextTitle}}\"><div class=\"ngPagerLastTriangle ngPagerNextTriangle\"></div></button>\r" +
-          "\n" +
-          "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageToLast()\" ng-disabled=\"cantPageToLast()\" title=\"{{i18n.ngPagerLastTitle}}\"><div class=\"ngPagerLastTriangle\"><div class=\"ngPagerLastBar\"></div></div></button>\r" +
-          "\n" +
-          "        </div>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n"
+            "<div ng-show=\"showFooter\" class=\"ngFooterPanel\" ng-class=\"{'ui-widget-content': jqueryUITheme, 'ui-corner-bottom': jqueryUITheme}\" ng-style=\"footerStyle()\">\r" +
+            "\n" +
+            "    <div class=\"ngTotalSelectContainer\" >\r" +
+            "\n" +
+            "        <div class=\"ngFooterTotalItems\" ng-class=\"{'ngNoMultiSelect': !multiSelect}\" >\r" +
+            "\n" +
+            "            <span class=\"ngLabel\">{{i18n.ngTotalItemsLabel}} {{maxRows()}}</span><span ng-show=\"filterText.length > 0\" class=\"ngLabel\">({{i18n.ngShowingItemsLabel}} {{totalFilteredItemsLength()}})</span>\r" +
+            "\n" +
+            "        </div>\r" +
+            "\n" +
+            "        <div class=\"ngFooterSelectedItems\" ng-show=\"multiSelect\">\r" +
+            "\n" +
+            "            <span class=\"ngLabel\">{{i18n.ngSelectedItemsLabel}} {{selectedItems.length}}</span>\r" +
+            "\n" +
+            "        </div>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "    <div class=\"ngPagerContainer\" style=\"float: right; margin-top: 10px;\" ng-show=\"enablePaging\" ng-class=\"{'ngNoMultiSelect': !multiSelect}\">\r" +
+            "\n" +
+            "        <div style=\"float:left; margin-right: 10px;\" class=\"ngRowCountPicker\">\r" +
+            "\n" +
+            "            <span style=\"float: left; margin-top: 3px;\" class=\"ngLabel\">{{i18n.ngPageSizeLabel}}</span>\r" +
+            "\n" +
+            "            <select style=\"float: left;height: 27px; width: 100px\" ng-model=\"pagingOptions.pageSize\" >\r" +
+            "\n" +
+            "                <option ng-repeat=\"size in pagingOptions.pageSizes\">{{size}}</option>\r" +
+            "\n" +
+            "            </select>\r" +
+            "\n" +
+            "        </div>\r" +
+            "\n" +
+            "        <div style=\"float:left; margin-right: 10px; line-height:25px;\" class=\"ngPagerControl\" style=\"float: left; min-width: 135px;\">\r" +
+            "\n" +
+            "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageToFirst()\" ng-disabled=\"cantPageBackward()\" title=\"{{i18n.ngPagerFirstTitle}}\"><div class=\"ngPagerFirstTriangle\"><div class=\"ngPagerFirstBar\"></div></div></button>\r" +
+            "\n" +
+            "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageBackward()\" ng-disabled=\"cantPageBackward()\" title=\"{{i18n.ngPagerPrevTitle}}\"><div class=\"ngPagerFirstTriangle ngPagerPrevTriangle\"></div></button>\r" +
+            "\n" +
+            "            <input class=\"ngPagerCurrent\" min=\"1\" max=\"{{currentMaxPages}}\" type=\"number\" style=\"width:50px; height: 24px; margin-top: 1px; padding: 0 4px;\" ng-model=\"pagingOptions.currentPage\"/>\r" +
+            "\n" +
+            "            <span class=\"ngGridMaxPagesNumber\" ng-show=\"maxPages() > 0\">/ {{maxPages()}}</span>\r" +
+            "\n" +
+            "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageForward()\" ng-disabled=\"cantPageForward()\" title=\"{{i18n.ngPagerNextTitle}}\"><div class=\"ngPagerLastTriangle ngPagerNextTriangle\"></div></button>\r" +
+            "\n" +
+            "            <button type=\"button\" class=\"ngPagerButton\" ng-click=\"pageToLast()\" ng-disabled=\"cantPageToLast()\" title=\"{{i18n.ngPagerLastTitle}}\"><div class=\"ngPagerLastTriangle\"><div class=\"ngPagerLastBar\"></div></div></button>\r" +
+            "\n" +
+            "        </div>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('gridTemplate.html',
-          "<div class=\"ngTopPanel\" ng-class=\"{'ui-widget-header':jqueryUITheme, 'ui-corner-top': jqueryUITheme}\" ng-style=\"topPanelStyle()\">\r" +
-          "\n" +
-          "    <div class=\"ngGroupPanel\" ng-show=\"showGroupPanel()\" ng-style=\"groupPanelStyle()\">\r" +
-          "\n" +
-          "        <div class=\"ngGroupPanelDescription\" ng-show=\"configGroups.length == 0\">{{i18n.ngGroupPanelDescription}}</div>\r" +
-          "\n" +
-          "        <ul ng-show=\"configGroups.length > 0\" class=\"ngGroupList\">\r" +
-          "\n" +
-          "            <li class=\"ngGroupItem\" ng-repeat=\"group in configGroups\">\r" +
-          "\n" +
-          "                <span class=\"ngGroupElement\">\r" +
-          "\n" +
-          "                    <span class=\"ngGroupName\">{{group.displayName}}\r" +
-          "\n" +
-          "                        <span ng-click=\"removeGroup($index)\" class=\"ngRemoveGroup\">x</span>\r" +
-          "\n" +
-          "                    </span>\r" +
-          "\n" +
-          "                    <span ng-hide=\"$last\" class=\"ngGroupArrow\"></span>\r" +
-          "\n" +
-          "                </span>\r" +
-          "\n" +
-          "            </li>\r" +
-          "\n" +
-          "        </ul>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "    <div class=\"ngHeaderContainer\" ng-style=\"headerStyle()\">\r" +
-          "\n" +
-          "        <div ng-header-row class=\"ngHeaderScroller\" ng-style=\"headerScrollerStyle()\"></div>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "    <div ng-grid-menu></div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n" +
-          "<div class=\"ngViewport\" unselectable=\"on\" ng-viewport ng-class=\"{'ui-widget-content': jqueryUITheme}\" ng-style=\"viewportStyle()\">\r" +
-          "\n" +
-          "    <div class=\"ngCanvas\" ng-style=\"canvasStyle()\">\r" +
-          "\n" +
-          "        <div ng-style=\"rowStyle(row)\" ng-repeat=\"row in renderedRows\" ng-click=\"row.toggleSelected($event)\" ng-class=\"row.alternatingRowClass()\" ng-row></div>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n" +
-          "<div ng-grid-footer></div>\r" +
-          "\n"
+            "<div class=\"ngTopPanel\" ng-class=\"{'ui-widget-header':jqueryUITheme, 'ui-corner-top': jqueryUITheme}\" ng-style=\"topPanelStyle()\">\r" +
+            "\n" +
+            "    <div class=\"ngGroupPanel\" ng-show=\"showGroupPanel()\" ng-style=\"groupPanelStyle()\">\r" +
+            "\n" +
+            "        <div class=\"ngGroupPanelDescription\" ng-show=\"configGroups.length == 0\">{{i18n.ngGroupPanelDescription}}</div>\r" +
+            "\n" +
+            "        <ul ng-show=\"configGroups.length > 0\" class=\"ngGroupList\">\r" +
+            "\n" +
+            "            <li class=\"ngGroupItem\" ng-repeat=\"group in configGroups\">\r" +
+            "\n" +
+            "                <span class=\"ngGroupElement\">\r" +
+            "\n" +
+            "                    <span class=\"ngGroupName\">{{group.displayName}}\r" +
+            "\n" +
+            "                        <span ng-click=\"removeGroup($index)\" class=\"ngRemoveGroup\">x</span>\r" +
+            "\n" +
+            "                    </span>\r" +
+            "\n" +
+            "                    <span ng-hide=\"$last\" class=\"ngGroupArrow\"></span>\r" +
+            "\n" +
+            "                </span>\r" +
+            "\n" +
+            "            </li>\r" +
+            "\n" +
+            "        </ul>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "    <div class=\"ngHeaderContainer\" ng-style=\"headerStyle()\">\r" +
+            "\n" +
+            "        <div ng-header-row class=\"ngHeaderScroller\" ng-style=\"headerScrollerStyle()\"></div>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "    <div ng-grid-menu></div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n" +
+            "<div class=\"ngViewport\" unselectable=\"on\" ng-viewport ng-class=\"{'ui-widget-content': jqueryUITheme}\" ng-style=\"viewportStyle()\">\r" +
+            "\n" +
+            "    <div class=\"ngCanvas\" ng-style=\"canvasStyle()\">\r" +
+            "\n" +
+            "        <div ng-style=\"rowStyle(row)\" ng-repeat=\"row in renderedRows\" ng-click=\"row.toggleSelected($event)\" ng-class=\"row.alternatingRowClass()\" ng-row></div>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n" +
+            "<div ng-grid-footer></div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('headerCellTemplate.html',
-          "<div class=\"ngHeaderSortColumn {{col.headerClass}}\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !col.noSortVisible() }\">\r" +
-          "\n" +
-          "    <div ng-click=\"col.sort($event)\" ng-class=\"'colt' + col.index\" class=\"ngHeaderText\">{{col.displayName}}</div>\r" +
-          "\n" +
-          "    <div class=\"ngSortButtonDown\" ng-click=\"col.sort($event)\" ng-show=\"col.showSortButtonDown()\"></div>\r" +
-          "\n" +
-          "    <div class=\"ngSortButtonUp\" ng-click=\"col.sort($event)\" ng-show=\"col.showSortButtonUp()\"></div>\r" +
-          "\n" +
-          "    <div class=\"ngSortPriority\">{{col.sortPriority}}</div>\r" +
-          "\n" +
-          "    <div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=\"togglePin(col)\" ng-show=\"col.pinnable\"></div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n" +
-          "<div ng-show=\"col.resizable\" class=\"ngHeaderGrip\" ng-click=\"col.gripClick($event)\" ng-mousedown=\"col.gripOnMouseDown($event)\"></div>\r" +
-          "\n"
+            "<div class=\"ngHeaderSortColumn {{col.headerClass}}\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !col.noSortVisible() }\">\r" +
+            "\n" +
+            "    <div ng-click=\"col.sort($event)\" ng-class=\"'colt' + col.index\" class=\"ngHeaderText\">{{col.displayName}}</div>\r" +
+            "\n" +
+            "    <div class=\"ngSortButtonDown\" ng-click=\"col.sort($event)\" ng-show=\"col.showSortButtonDown()\"></div>\r" +
+            "\n" +
+            "    <div class=\"ngSortButtonUp\" ng-click=\"col.sort($event)\" ng-show=\"col.showSortButtonUp()\"></div>\r" +
+            "\n" +
+            "    <div class=\"ngSortPriority\">{{col.sortPriority}}</div>\r" +
+            "\n" +
+            "    <div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=\"togglePin(col)\" ng-show=\"col.pinnable\"></div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n" +
+            "<div ng-show=\"col.resizable\" class=\"ngHeaderGrip\" ng-click=\"col.gripClick($event)\" ng-mousedown=\"col.gripOnMouseDown($event)\"></div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('headerRowTemplate.html',
-          "<div ng-style=\"{ height: col.headerRowHeight }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngHeaderCell\">\r" +
-          "\n" +
-          "\t<div class=\"ngVerticalBar\" ng-style=\"{height: col.headerRowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
-          "\n" +
-          "\t<div ng-header-cell></div>\r" +
-          "\n" +
-          "</div>"
+            "<div ng-style=\"{ height: col.headerRowHeight }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngHeaderCell\">\r" +
+            "\n" +
+            "\t<div class=\"ngVerticalBar\" ng-style=\"{height: col.headerRowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
+            "\n" +
+            "\t<div ng-header-cell></div>\r" +
+            "\n" +
+            "</div>"
         );
-
 
         $templateCache.put('menuTemplate.html',
-          "<div ng-show=\"showColumnMenu || showFilter\"  class=\"ngHeaderButton\" ng-click=\"toggleShowMenu()\">\r" +
-          "\n" +
-          "    <div class=\"ngHeaderButtonArrow\"></div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n" +
-          "<div ng-show=\"showMenu\" class=\"ngColMenu\">\r" +
-          "\n" +
-          "    <div ng-show=\"showFilter\">\r" +
-          "\n" +
-          "        <input placeholder=\"{{i18n.ngSearchPlaceHolder}}\" type=\"text\" ng-model=\"filterOptions.filterText\"/>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "    <div ng-show=\"showColumnMenu\">\r" +
-          "\n" +
-          "        <span class=\"ngMenuText\">{{i18n.ngMenuText}}</span>\r" +
-          "\n" +
-          "        <ul class=\"ngColList\">\r" +
-          "\n" +
-          "            <li class=\"ngColListItem\" ng-repeat=\"col in columns | ngColumns\">\r" +
-          "\n" +
-          "                <label><input ng-disabled=\"col.pinned\" type=\"checkbox\" class=\"ngColListCheckbox\" ng-model=\"col.visible\"/>{{col.displayName}}</label>\r" +
-          "\n" +
-          "\t\t\t\t<a title=\"Group By\" ng-class=\"col.groupedByClass()\" ng-show=\"col.groupable && col.visible\" ng-click=\"groupBy(col)\"></a>\r" +
-          "\n" +
-          "\t\t\t\t<span class=\"ngGroupingNumber\" ng-show=\"col.groupIndex > 0\">{{col.groupIndex}}</span>          \r" +
-          "\n" +
-          "            </li>\r" +
-          "\n" +
-          "        </ul>\r" +
-          "\n" +
-          "    </div>\r" +
-          "\n" +
-          "</div>\r" +
-          "\n"
+            "<div ng-show=\"showColumnMenu || showFilter\"  class=\"ngHeaderButton\" ng-click=\"toggleShowMenu()\">\r" +
+            "\n" +
+            "    <div class=\"ngHeaderButtonArrow\"></div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n" +
+            "<div ng-show=\"showMenu\" class=\"ngColMenu\">\r" +
+            "\n" +
+            "    <div ng-show=\"showFilter\">\r" +
+            "\n" +
+            "        <input placeholder=\"{{i18n.ngSearchPlaceHolder}}\" type=\"text\" ng-model=\"filterOptions.filterText\"/>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "    <div ng-show=\"showColumnMenu\">\r" +
+            "\n" +
+            "        <span class=\"ngMenuText\">{{i18n.ngMenuText}}</span>\r" +
+            "\n" +
+            "        <ul class=\"ngColList\">\r" +
+            "\n" +
+            "            <li class=\"ngColListItem\" ng-repeat=\"col in columns | ngColumns\">\r" +
+            "\n" +
+            "                <label><input ng-disabled=\"col.pinned\" type=\"checkbox\" class=\"ngColListCheckbox\" ng-model=\"col.visible\"/>{{col.displayName}}</label>\r" +
+            "\n" +
+            "\t\t\t\t<a title=\"Group By\" ng-class=\"col.groupedByClass()\" ng-show=\"col.groupable && col.visible\" ng-click=\"groupBy(col)\"></a>\r" +
+            "\n" +
+            "\t\t\t\t<span class=\"ngGroupingNumber\" ng-show=\"col.groupIndex > 0\">{{col.groupIndex}}</span>          \r" +
+            "\n" +
+            "            </li>\r" +
+            "\n" +
+            "        </ul>\r" +
+            "\n" +
+            "    </div>\r" +
+            "\n" +
+            "</div>\r" +
+            "\n"
         );
-
 
         $templateCache.put('rowTemplate.html',
-          "<div ng-style=\"{ 'cursor': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}}\">\r" +
-          "\n" +
-          "\t<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
-          "\n" +
-          "\t<div ng-cell></div>\r" +
-          "\n" +
-          "</div>"
+            "<div ng-style=\"{ 'cursor': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}}\">\r" +
+            "\n" +
+            "\t<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
+            "\n" +
+            "\t<div ng-cell></div>\r" +
+            "\n" +
+            "</div>"
         );
-
     }]);
-
 }(window, jQuery));

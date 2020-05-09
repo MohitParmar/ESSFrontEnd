@@ -28,10 +28,10 @@
 </script>
 <div ng-app="myApp">
     <div ng-controller="HomeCntrloller">
-        <div class="container">
+        <div class="container-fluid">
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-9">
                     @*Leave Application List  *@
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -64,13 +64,20 @@
                                                             <th style="text-align:center;padding:3px;width:45px;">Sr no.</th>
                                                             <th style="text-align:center;padding:3px;width:36px;">Type</th>
                                                             <th style="text-align:center;padding:3px;width:71px;">From Date</th>
-                                                            <th style="text-align:center;padding:3px;width:54px;">To Date</th>
+                                                            <th style="text-align:center;padding:3px;width:71px;">To Date</th>
                                                             <th style="text-align:center;padding:3px;width:37px;">Days</th>
                                                             <th style="text-align:center;padding:3px;width:63px;">Half Day</th>
                                                         </tr>
                                                     </table>
                                                 </th>
-                                                <th style="text-align:center;padding:3px;width:54px;">HL Date (CO)</th>
+                                                <th style="padding:0px;">
+                                                    <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
+                                                        <tr>
+                                                            <th style="text-align:center;padding:3px;width:25px;">CO Mode</th>
+                                                            <th style="text-align:center;padding:3px;width:54px;">HL Date (CO)</th>
+                                                        </tr>
+                                                    </table>
+                                                </th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -97,11 +104,11 @@
                                                     <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                         <tr ng-repeat="lrd in ld.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="padding:2px;padding-left:5px;text-align:left;width:91px;">{{(ld.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                            <td style="padding:2px;padding-left:5px;text-align:left;width:91px;">{{(ld.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                             <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                             <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
-                                                            <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
-                                                            <td style="padding:2px;text-align:center;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                            <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy HH:mm'}}</td>
+                                                            <td style="padding:2px;text-align:center;width:71px;">{{lrd.toDt | date:'dd/MM/yy HH:mm'}}</td>
                                                             <td style="padding:2px;text-align:center;width:37px;">{{lrd.totalDays}}</td>
                                                             <td style="padding:2px;text-align:center;width:60px;">
                                                                 <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
@@ -110,10 +117,11 @@
                                                     </table>
                                                 </td>
                                                 <td style="text-align:center;padding:2px;">
-                                                    <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                    <table class="table table-condensed table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
                                                         <tr ng-repeat="m in ld.leaveApplicationDetails">
-                                                            <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
-                                                            <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E'">{{m.coDate2| date:'dd/MM/yy'}}</td>
+                                                            <td style="padding-left:2px;padding-right:2px;width:30px;">{{m.coMode}}</td>
+                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E' && m.halfDayFlag == false">{{m.coDate2| date:'dd/MM/yy'}}</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -132,13 +140,15 @@
                         </div>
                         <div class="panel-footer">
                             @*<strong>Note For Leave Group : LA - Leave Application </strong><br />*@
-                            <strong>Note For Release Status :  N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                            <strong>Note For Release Status : N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
                             <br />
-                            <strong>Note For Background Color :  <text style="background-color:#F8EFBA;color:black;">Yellow Background Color is Your Cancelled Leave </text></strong>
+                            <strong>Note For Background Color : <text style="background-color:#F8EFBA;color:black;">Yellow Background Color is Your Cancelled Leave </text></strong>
+                            <br />
+                            <strong>Note For CO Mode : W - Weekly Off, H - Holiday, E - Extra Hours</strong>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     @* Leave Balance Grid  *@
                     <div class="panel panel-info">
                         <div class="panel-heading">

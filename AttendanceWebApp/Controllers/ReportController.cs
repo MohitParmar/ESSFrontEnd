@@ -44,6 +44,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         //HR Reports
         public ActionResult PostedLeaveReport()
         {
@@ -198,6 +199,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         //Common User Report
         public ActionResult PerformanceReport()
         {
@@ -210,6 +212,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         //Common User Gatepass Report
         public ActionResult PrintGatePassReport()
         {
@@ -222,6 +225,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         //Releaser GatePass Report
         public ActionResult ReleaserGatePassReport()
         {

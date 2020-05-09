@@ -37,7 +37,7 @@
     window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate()); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(firstDay); }
 </script>
 <div ng-app="myApp" ng-controller="GatePassCntroller">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             @* Gate Pass Information *@
             <div class="col-sm-12">

@@ -1,9 +1,9 @@
 ﻿// declare a main-angular module and submodule
 var myApp = angular.module('myApp',
     [
-    "ngTable",
-    "myApp.Controllers",
-    "myApp.Services"
+        "ngTable",
+        "myApp.Controllers",
+        "myApp.Services"
     ]);
 //Sub modules
 angular.module("myApp.Controllers", []);
@@ -13,7 +13,6 @@ angular.module("myApp.Services", []);
 angular.module("myApp").run([
     "$rootScope",
     function ($rootScope) {
-
         $rootScope.$safeApply = function ($scope, fn) {
             fn = fn || function () { };
             if ($scope.$$phase) {

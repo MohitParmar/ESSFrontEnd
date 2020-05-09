@@ -5,7 +5,7 @@
 <script src="~/Scripts/Controller/LeaveReleaseCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <div ng-app="myApp" ng-controller="LeaveReleaseCntrloller">
-    <div class="container">
+    <div class="container-fluid">
         <input type="hidden" value="LA" id="releaseGroupCode" />
         <div id="MessageBox"></div>
         <div class="row">
@@ -118,7 +118,14 @@
                                                     </tr>
                                                 </table>
                                             </th>
-                                            <th style="text-align:center;width:54px;">HL Date (CO)</th>
+                                            <th style="padding:0px;">
+                                                <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
+                                                    <tr>
+                                                        <th style="text-align:center;padding:3px;width:25px;">CO Mode</th>
+                                                        <th style="text-align:center;padding:3px;width:54px;">HL Date (CO)</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
                                             <th style="text-align:center;">Remarks</th>
                                             <th style="text-align:center;width: 191px;">Action</th>
                                             <th style="text-align:center;width:46px;">Status</th>
@@ -133,7 +140,7 @@
                                             <td style="padding:2px;font-size: x-small;">
                                                 <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="padding:2px;text-align:center;width:91px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="padding:2px;text-align:center;width:91px;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                         <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                         <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
@@ -151,9 +158,11 @@
                                                 </table>
                                             </td>
                                             <td style="text-align:center;padding:2px;">
-                                                <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                <table class="table table-condensed table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
                                                     <tr ng-repeat="m in d.leaveApplicationDetails">
-                                                        <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:30px;">{{m.coMode}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E' && m.halfDayFlag == false">{{m.coDate2| date:'dd/MM/yy'}}</td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -182,9 +191,11 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <strong>Note For Leave Group : LA - Leave Application, CO - COff Application </strong>
                         <br />
                         <strong>Note For Release Status : N - Not released, <text style="color:#ff9800;"> P - Partially released</text></strong>
+                        <br />
+                        <strong>Note For CO Mode : W - Weekly Off, H - Holiday, E - Extra Hours</strong>
                     </div>
                 </div>
             </div>
@@ -211,7 +222,14 @@
                                             <th style="text-align:center;width:7%;">To Date</th>
                                             <th style="text-align:center;width:3%;">Days</th>
                                             <th style="text-align:center;width:6%;">Half Day</th>
-                                            <th style="text-align:center;width:8%;">HL Date (CO)</th>
+                                            <th style="padding:0px;width:8%;">
+                                                <table class="table table-bordered" style="padding:3px;margin-bottom:0px;">
+                                                    <tr>
+                                                        <th style="text-align:center;padding:3px;width:25px;">CO Mode</th>
+                                                        <th style="text-align:center;padding:3px;width:54px;">HL Date (CO)</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -225,7 +243,7 @@
                                             <td colspan="7">
                                                 <table class="table table-hover table-condensed table-hover table-bordered">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="text-align:left;width:215px;" data-title="'remarks'">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="text-align:left;width:215px;" data-title="'remarks'">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
                                                         <td style="text-align:center;width:55px;" data-title="'leaveAppItem'">{{lrd.leaveAppItem}}</td>
                                                         <td style="text-align:center;width:38px;" data-title="'leaveTypeCode'">{{lrd.leaveTypeCode}}</td>
                                                         <td style="text-align:center;width:77px;" data-title="'fromDt'">{{lrd.fromDt | date:'dd/MM/yyyy'}}</td>
@@ -240,7 +258,9 @@
                                             <td style="text-align:center;padding:2px;">
                                                 <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
                                                     <tr ng-repeat="m in d.leaveApplicationDetails">
-                                                        <td style="text-align:center;padding:3px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:30px;">{{m.coMode}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E' && m.halfDayFlag == false">{{m.coDate2| date:'dd/MM/yy'}}</td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -252,9 +272,11 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <strong>Note For Leave Group : LA - Leave Application, CO - COff Application </strong>
                         <br />
                         <strong>Note For Release Status :  N - Not released ,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                        <br />
+                        <strong>Note For CO Mode : W - Weekly Off, H - Holiday, E - Extra Hours</strong>
                     </div>
                 </div>
             </div>

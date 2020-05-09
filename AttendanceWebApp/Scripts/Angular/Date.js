@@ -31,5 +31,3 @@ myApp.directive('uiDate', function () {
         }
     };
 });
-
-

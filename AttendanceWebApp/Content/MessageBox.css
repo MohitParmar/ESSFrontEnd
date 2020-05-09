@@ -1,5 +1,4 @@
-﻿.ontop
-{
+﻿.ontop {
     z-index: 999;
     width: 100%;
     height: 100%;
@@ -13,22 +12,19 @@
     filter: alpha(opacity = 50);
 }
 
-.MessageHeader
-{
+.MessageHeader {
     color: white;
     float: right;
     position: relative;
     width: 116px;
 }
 
-.MessageLogo
-{
+.MessageLogo {
     display: block;
     position: absolute;
 }
 
-#popup
-{
+#popup {
     background-color: white;
     border: medium double;
     color: white;
@@ -43,9 +39,7 @@
     width: 250px;
 }
 
-
-#popAbout
-{
+#popAbout {
     /*background-color: white;
     border: medium double;
     color: white;
@@ -72,21 +66,18 @@
     width: 628px;
 }
 
-#popup p
-{
+#popup p {
     color: red;
     position: relative;
 }
 
-.Messagebox
-{
+.Messagebox {
     background-color: red;
     height: 55px;
     position: relative;
 }
 
-#btnOK
-{
+#btnOK {
     background-color: #428bca;
     color: white;
     float: right;
@@ -96,8 +87,7 @@
     width: 30%;
 }
 
-#Waitpopup
-{
+#Waitpopup {
     background-color: white;
     color: white;
     font-size: 100%;
@@ -112,68 +102,57 @@
     display: block;
 }
 
-.BankDetails
-{
+.BankDetails {
     display: block;
 }
 
-    .BankDetails h3
-    {
+    .BankDetails h3 {
         background-color: #2d4ca1;
         color: white;
         text-align: center;
     }
 
-    .BankDetails table
-    {
+    .BankDetails table {
         vertical-align: central;
         color: black;
         font-size: 12px;
     }
 
-    .BankDetails th
-    {
+    .BankDetails th {
         text-align: left;
         width: 90px;
     }
 
-    .BankDetails p
-    {
+    .BankDetails p {
         font-size: 11px;
     }
 
-.OrederNow
-{
+.OrederNow {
     display: block;
 }
 
-    .OrederNow h3
-    {
+    .OrederNow h3 {
         background-color: #2d4ca1;
         color: white;
         text-align: center;
     }
 
-    .OrederNow table
-    {
+    .OrederNow table {
         vertical-align: central;
         color: black;
         font-size: 12px;
     }
 
-    .OrederNow th
-    {
+    .OrederNow th {
         text-align: left;
         width: 90px;
     }
 
-    .OrederNow input[type="text"]
-    {
+    .OrederNow input[type="text"] {
         background-color: wheat;
     }
 
-    .OrederNow input[type="button"]
-    {
+    .OrederNow input[type="button"] {
         background-color: #ebbd57;
         color: black;
         height: 35px;
@@ -182,33 +161,28 @@
         width: 100px;
     }
 
-.ContectUS
-{
+.ContectUS {
     display: block;
 }
 
-    .ContectUS h3
-    {
+    .ContectUS h3 {
         background-color: #2d4ca1;
         color: white;
         text-align: center;
     }
 
-    .ContectUS table
-    {
+    .ContectUS table {
         vertical-align: central;
         color: black;
         font-size: 12px;
     }
 
-    .ContectUS th
-    {
+    .ContectUS th {
         text-align: left;
         width: 90px;
     }
 
-    .ContectUS input[type="button"]
-    {
+    .ContectUS input[type="button"] {
         background-color: #ebbe58;
         color: black;
         height: 35px;
@@ -217,32 +191,27 @@
         width: 95px;
     }
 
-.Details
-{
+.Details {
     color: black;
     font-size: 13px;
 }
 
-.AboutUs
-{
+.AboutUs {
     display: block;
 }
 
-    .AboutUs h3
-    {
+    .AboutUs h3 {
         background-color: #2d4ca1;
         color: white;
         text-align: center;
     }
 
-    .AboutUs img
-    {
+    .AboutUs img {
         height: 70px;
         width: 100%;
     }
 
-    .AboutUs input[type="button"]
-    {
+    .AboutUs input[type="button"] {
         background-color: #ebbd56;
         color: black;
         float: right;
@@ -253,11 +222,8 @@
         width: 100px;
     }
 
-
-@media only screen and (max-width: 320px)
-{
-    .ontop
-    {
+@media only screen and (max-width: 320px) {
+    .ontop {
         z-index: 999;
         width: 100%;
         height: 100%;
@@ -271,22 +237,19 @@
         filter: alpha(opacity = 50);
     }
 
-    .MessageHeader
-    {
+    .MessageHeader {
         color: white;
         float: right;
         position: relative;
         width: 116px;
     }
 
-    .MessageLogo
-    {
+    .MessageLogo {
         display: block;
         position: absolute;
     }
 
-    #popup
-    {
+    #popup {
         background-color: white;
         border: medium double;
         color: white;
@@ -301,16 +264,12 @@
         width: 250px;
     }
 
-
-        #popup p
-        {
+        #popup p {
             color: red;
             position: relative;
         }
 
-
-    #popAbout
-    {
+    #popAbout {
         background-color: white;
         border: medium double;
         color: white;
@@ -325,15 +284,13 @@
         width: 250px;
     }
 
-    .Messagebox
-    {
+    .Messagebox {
         background-color: red;
         height: 55px;
         position: relative;
     }
 
-    #btnOK
-    {
+    #btnOK {
         background-color: #428bca;
         color: white;
         float: right;
@@ -343,8 +300,7 @@
         width: 30%;
     }
 
-    #Waitpopup
-    {
+    #Waitpopup {
         background-color: white;
         color: white;
         font-size: 100%;
@@ -359,68 +315,57 @@
         display: block;
     }
 
-    .BankDetails
-    {
+    .BankDetails {
         display: block;
     }
 
-        .BankDetails h3
-        {
+        .BankDetails h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .BankDetails table
-        {
+        .BankDetails table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .BankDetails th
-        {
+        .BankDetails th {
             text-align: left;
             width: 90px;
         }
 
-        .BankDetails p
-        {
+        .BankDetails p {
             font-size: 11px;
         }
 
-    .OrederNow
-    {
+    .OrederNow {
         display: block;
     }
 
-        .OrederNow h3
-        {
+        .OrederNow h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .OrederNow table
-        {
+        .OrederNow table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .OrederNow th
-        {
+        .OrederNow th {
             text-align: left;
             width: 90px;
         }
 
-        .OrederNow input[type="text"]
-        {
+        .OrederNow input[type="text"] {
             background-color: wheat;
         }
 
-        .OrederNow input[type="button"]
-        {
+        .OrederNow input[type="button"] {
             background-color: #ebbd57;
             color: black;
             height: 35px;
@@ -429,33 +374,28 @@
             width: 100px;
         }
 
-    .ContectUS
-    {
+    .ContectUS {
         display: block;
     }
 
-        .ContectUS h3
-        {
+        .ContectUS h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .ContectUS table
-        {
+        .ContectUS table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .ContectUS th
-        {
+        .ContectUS th {
             text-align: left;
             width: 90px;
         }
 
-        .ContectUS input[type="button"]
-        {
+        .ContectUS input[type="button"] {
             background-color: #ebbe58;
             color: black;
             height: 35px;
@@ -464,41 +404,34 @@
             width: 95px;
         }
 
-    .ContectDetails
-    {
+    .ContectDetails {
         color: black;
         font-size: 13px;
     }
 
-
-    .Details
-    {
+    .Details {
         color: black;
         font-size: 13px;
         height: 100px;
         overflow: scroll;
     }
 
-    .AboutUs
-    {
+    .AboutUs {
         display: block;
     }
 
-        .AboutUs h3
-        {
+        .AboutUs h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .AboutUs img
-        {
+        .AboutUs img {
             height: 70px;
             width: 100%;
         }
 
-        .AboutUs input[type="button"]
-        {
+        .AboutUs input[type="button"] {
             background-color: #ebbd56;
             color: black;
             float: right;
@@ -510,10 +443,8 @@
         }
 }
 
-@media only screen and (min-width: 321px) and (max-width: 480px) and (orientation: landscape)
-{
-    .ontop
-    {
+@media only screen and (min-width: 321px) and (max-width: 480px) and (orientation: landscape) {
+    .ontop {
         z-index: 999;
         width: 100%;
         height: 100%;
@@ -527,22 +458,19 @@
         filter: alpha(opacity = 50);
     }
 
-    .MessageHeader
-    {
+    .MessageHeader {
         color: white;
         float: right;
         position: relative;
         width: 116px;
     }
 
-    .MessageLogo
-    {
+    .MessageLogo {
         display: block;
         position: absolute;
     }
 
-    #popup
-    {
+    #popup {
         background-color: white;
         border: medium double;
         color: white;
@@ -557,15 +485,12 @@
         width: 250px;
     }
 
-        #popup p
-        {
+        #popup p {
             color: red;
             position: relative;
         }
 
-
-    #popAbout
-    {
+    #popAbout {
         background-color: white;
         border: medium double;
         color: white;
@@ -580,15 +505,13 @@
         width: 250px;
     }
 
-    .Messagebox
-    {
+    .Messagebox {
         background-color: red;
         height: 55px;
         position: relative;
     }
 
-    #btnOK
-    {
+    #btnOK {
         background-color: #428bca;
         color: white;
         float: right;
@@ -598,8 +521,7 @@
         width: 30%;
     }
 
-    #Waitpopup
-    {
+    #Waitpopup {
         background-color: white;
         color: white;
         font-size: 100%;
@@ -614,68 +536,57 @@
         display: block;
     }
 
-    .BankDetails
-    {
+    .BankDetails {
         display: block;
     }
 
-        .BankDetails h3
-        {
+        .BankDetails h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .BankDetails table
-        {
+        .BankDetails table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .BankDetails th
-        {
+        .BankDetails th {
             text-align: left;
             width: 90px;
         }
 
-        .BankDetails p
-        {
+        .BankDetails p {
             font-size: 11px;
         }
 
-    .OrederNow
-    {
+    .OrederNow {
         display: block;
     }
 
-        .OrederNow h3
-        {
+        .OrederNow h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .OrederNow table
-        {
+        .OrederNow table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .OrederNow th
-        {
+        .OrederNow th {
             text-align: left;
             width: 90px;
         }
 
-        .OrederNow input[type="text"]
-        {
+        .OrederNow input[type="text"] {
             background-color: wheat;
         }
 
-        .OrederNow input[type="button"]
-        {
+        .OrederNow input[type="button"] {
             background-color: #ebbd57;
             color: black;
             height: 35px;
@@ -684,33 +595,28 @@
             width: 100px;
         }
 
-    .ContectUS
-    {
+    .ContectUS {
         display: block;
     }
 
-        .ContectUS h3
-        {
+        .ContectUS h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .ContectUS table
-        {
+        .ContectUS table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .ContectUS th
-        {
+        .ContectUS th {
             text-align: left;
             width: 90px;
         }
 
-        .ContectUS input[type="button"]
-        {
+        .ContectUS input[type="button"] {
             background-color: #ebbe58;
             color: black;
             height: 35px;
@@ -719,32 +625,27 @@
             width: 95px;
         }
 
-    .Details
-    {
+    .Details {
         color: black;
         font-size: 13px;
     }
 
-    .AboutUs
-    {
+    .AboutUs {
         display: block;
     }
 
-        .AboutUs h3
-        {
+        .AboutUs h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .AboutUs img
-        {
+        .AboutUs img {
             height: 70px;
             width: 100%;
         }
 
-        .AboutUs input[type="button"]
-        {
+        .AboutUs input[type="button"] {
             background-color: #ebbd56;
             color: black;
             float: right;
@@ -756,10 +657,8 @@
         }
 }
 
-@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: portrait)
-{
-    .ontop
-    {
+@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: portrait) {
+    .ontop {
         z-index: 999;
         width: 100%;
         height: 100%;
@@ -773,22 +672,19 @@
         filter: alpha(opacity = 50);
     }
 
-    .MessageHeader
-    {
+    .MessageHeader {
         color: white;
         float: right;
         position: relative;
         width: 116px;
     }
 
-    .MessageLogo
-    {
+    .MessageLogo {
         display: block;
         position: absolute;
     }
 
-    #popup
-    {
+    #popup {
         background-color: white;
         border: medium double;
         color: white;
@@ -803,8 +699,7 @@
         width: 250px;
     }
 
-    #popAbout
-    {
+    #popAbout {
         background-color: white;
         border: medium double;
         color: white;
@@ -819,21 +714,18 @@
         width: 250px;
     }
 
-    #popup p
-    {
+    #popup p {
         color: red;
         position: relative;
     }
 
-    .Messagebox
-    {
+    .Messagebox {
         background-color: red;
         height: 55px;
         position: relative;
     }
 
-    #btnOK
-    {
+    #btnOK {
         background-color: #428bca;
         color: white;
         float: right;
@@ -843,8 +735,7 @@
         width: 30%;
     }
 
-    #Waitpopup
-    {
+    #Waitpopup {
         background-color: white;
         color: white;
         font-size: 100%;
@@ -859,68 +750,57 @@
         display: block;
     }
 
-    .BankDetails
-    {
+    .BankDetails {
         display: block;
     }
 
-        .BankDetails h3
-        {
+        .BankDetails h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .BankDetails table
-        {
+        .BankDetails table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .BankDetails th
-        {
+        .BankDetails th {
             text-align: left;
             width: 90px;
         }
 
-        .BankDetails p
-        {
+        .BankDetails p {
             font-size: 11px;
         }
 
-    .OrederNow
-    {
+    .OrederNow {
         display: block;
     }
 
-        .OrederNow h3
-        {
+        .OrederNow h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .OrederNow table
-        {
+        .OrederNow table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .OrederNow th
-        {
+        .OrederNow th {
             text-align: left;
             width: 90px;
         }
 
-        .OrederNow input[type="text"]
-        {
+        .OrederNow input[type="text"] {
             background-color: wheat;
         }
 
-        .OrederNow input[type="button"]
-        {
+        .OrederNow input[type="button"] {
             background-color: #ebbd57;
             color: black;
             height: 35px;
@@ -929,33 +809,28 @@
             width: 100px;
         }
 
-    .ContectUS
-    {
+    .ContectUS {
         display: block;
     }
 
-        .ContectUS h3
-        {
+        .ContectUS h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .ContectUS table
-        {
+        .ContectUS table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .ContectUS th
-        {
+        .ContectUS th {
             text-align: left;
             width: 90px;
         }
 
-        .ContectUS input[type="button"]
-        {
+        .ContectUS input[type="button"] {
             background-color: #ebbe58;
             color: black;
             height: 35px;
@@ -964,34 +839,29 @@
             width: 95px;
         }
 
-    .Details
-    {
+    .Details {
         color: black;
         font-size: 13px;
         height: 160px;
         overflow: scroll;
     }
 
-    .AboutUs
-    {
+    .AboutUs {
         display: block;
     }
 
-        .AboutUs h3
-        {
+        .AboutUs h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .AboutUs img
-        {
+        .AboutUs img {
             height: 70px;
             width: 100%;
         }
 
-        .AboutUs input[type="button"]
-        {
+        .AboutUs input[type="button"] {
             background-color: #ebbd56;
             color: black;
             float: right;
@@ -1003,10 +873,8 @@
         }
 }
 
-@media only screen and (min-width: 640px) and (max-width: 1024px) and (orientation: portrait)
-{
-    .ontop
-    {
+@media only screen and (min-width: 640px) and (max-width: 1024px) and (orientation: portrait) {
+    .ontop {
         z-index: 999;
         width: 100%;
         height: 100%;
@@ -1020,22 +888,19 @@
         filter: alpha(opacity = 50);
     }
 
-    .MessageHeader
-    {
+    .MessageHeader {
         color: white;
         float: right;
         position: relative;
         width: 116px;
     }
 
-    .MessageLogo
-    {
+    .MessageLogo {
         display: block;
         position: absolute;
     }
 
-    #popup
-    {
+    #popup {
         background-color: white;
         border: medium double;
         color: white;
@@ -1050,15 +915,12 @@
         width: 250px;
     }
 
-        #popup p
-        {
+        #popup p {
             color: red;
             position: relative;
         }
 
-
-    #popAbout
-    {
+    #popAbout {
         background-color: white;
         border: medium double;
         color: white;
@@ -1073,15 +935,13 @@
         width: 390px;
     }
 
-    .Messagebox
-    {
+    .Messagebox {
         background-color: red;
         height: 55px;
         position: relative;
     }
 
-    #btnOK
-    {
+    #btnOK {
         background-color: #428bca;
         color: white;
         float: right;
@@ -1091,8 +951,7 @@
         width: 30%;
     }
 
-    #Waitpopup
-    {
+    #Waitpopup {
         background-color: white;
         color: white;
         font-size: 100%;
@@ -1107,68 +966,57 @@
         display: block;
     }
 
-    .BankDetails
-    {
+    .BankDetails {
         display: block;
     }
 
-        .BankDetails h3
-        {
+        .BankDetails h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .BankDetails table
-        {
+        .BankDetails table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .BankDetails th
-        {
+        .BankDetails th {
             text-align: left;
             width: 90px;
         }
 
-        .BankDetails p
-        {
+        .BankDetails p {
             font-size: 11px;
         }
 
-    .OrederNow
-    {
+    .OrederNow {
         display: block;
     }
 
-        .OrederNow h3
-        {
+        .OrederNow h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .OrederNow table
-        {
+        .OrederNow table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .OrederNow th
-        {
+        .OrederNow th {
             text-align: left;
             width: 90px;
         }
 
-        .OrederNow input[type="text"]
-        {
+        .OrederNow input[type="text"] {
             background-color: wheat;
         }
 
-        .OrederNow input[type="button"]
-        {
+        .OrederNow input[type="button"] {
             background-color: #ebbd57;
             color: black;
             height: 35px;
@@ -1177,33 +1025,28 @@
             width: 100px;
         }
 
-    .ContectUS
-    {
+    .ContectUS {
         display: block;
     }
 
-        .ContectUS h3
-        {
+        .ContectUS h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .ContectUS table
-        {
+        .ContectUS table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .ContectUS th
-        {
+        .ContectUS th {
             text-align: left;
             width: 90px;
         }
 
-        .ContectUS input[type="button"]
-        {
+        .ContectUS input[type="button"] {
             background-color: #ebbe58;
             color: black;
             height: 35px;
@@ -1212,32 +1055,27 @@
             width: 95px;
         }
 
-    .Details
-    {
+    .Details {
         color: black;
         font-size: 13px;
     }
 
-    .AboutUs
-    {
+    .AboutUs {
         display: block;
     }
 
-        .AboutUs h3
-        {
+        .AboutUs h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .AboutUs img
-        {
+        .AboutUs img {
             height: 70px;
             width: 100%;
         }
 
-        .AboutUs input[type="button"]
-        {
+        .AboutUs input[type="button"] {
             background-color: #ebbd56;
             color: black;
             float: right;
@@ -1249,10 +1087,8 @@
         }
 }
 
-@media only screen and (min-width: 481px) and (max-width: 1024px) and (orientation: landscape)
-{
-    .ontop
-    {
+@media only screen and (min-width: 481px) and (max-width: 1024px) and (orientation: landscape) {
+    .ontop {
         z-index: 999;
         width: 100%;
         height: 100%;
@@ -1266,22 +1102,19 @@
         filter: alpha(opacity = 50);
     }
 
-    .MessageHeader
-    {
+    .MessageHeader {
         color: white;
         float: right;
         position: relative;
         width: 116px;
     }
 
-    .MessageLogo
-    {
+    .MessageLogo {
         display: block;
         position: absolute;
     }
 
-    #popup
-    {
+    #popup {
         background-color: white;
         border: medium double;
         color: white;
@@ -1296,15 +1129,12 @@
         width: 250px;
     }
 
-        #popup p
-        {
+        #popup p {
             color: red;
             position: relative;
         }
 
-
-    #popAbout
-    {
+    #popAbout {
         background-color: white;
         border: medium double;
         color: white;
@@ -1319,15 +1149,13 @@
         width: 250px;
     }
 
-    .Messagebox
-    {
+    .Messagebox {
         background-color: red;
         height: 55px;
         position: relative;
     }
 
-    #btnOK
-    {
+    #btnOK {
         background-color: #428bca;
         color: white;
         float: right;
@@ -1337,8 +1165,7 @@
         width: 30%;
     }
 
-    #Waitpopup
-    {
+    #Waitpopup {
         background-color: white;
         color: white;
         font-size: 100%;
@@ -1353,68 +1180,57 @@
         display: block;
     }
 
-    .BankDetails
-    {
+    .BankDetails {
         display: block;
     }
 
-        .BankDetails h3
-        {
+        .BankDetails h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .BankDetails table
-        {
+        .BankDetails table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .BankDetails th
-        {
+        .BankDetails th {
             text-align: left;
             width: 90px;
         }
 
-        .BankDetails p
-        {
+        .BankDetails p {
             font-size: 11px;
         }
 
-    .OrederNow
-    {
+    .OrederNow {
         display: block;
     }
 
-        .OrederNow h3
-        {
+        .OrederNow h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .OrederNow table
-        {
+        .OrederNow table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .OrederNow th
-        {
+        .OrederNow th {
             text-align: left;
             width: 90px;
         }
 
-        .OrederNow input[type="text"]
-        {
+        .OrederNow input[type="text"] {
             background-color: wheat;
         }
 
-        .OrederNow input[type="button"]
-        {
+        .OrederNow input[type="button"] {
             background-color: #ebbd57;
             color: black;
             height: 35px;
@@ -1423,33 +1239,28 @@
             width: 100px;
         }
 
-    .ContectUS
-    {
+    .ContectUS {
         display: block;
     }
 
-        .ContectUS h3
-        {
+        .ContectUS h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .ContectUS table
-        {
+        .ContectUS table {
             vertical-align: central;
             color: black;
             font-size: 12px;
         }
 
-        .ContectUS th
-        {
+        .ContectUS th {
             text-align: left;
             width: 90px;
         }
 
-        .ContectUS input[type="button"]
-        {
+        .ContectUS input[type="button"] {
             background-color: #ebbe58;
             color: black;
             height: 35px;
@@ -1458,32 +1269,27 @@
             width: 95px;
         }
 
-    .Details
-    {
+    .Details {
         color: black;
         font-size: 13px;
     }
 
-    .AboutUs
-    {
+    .AboutUs {
         display: block;
     }
 
-        .AboutUs h3
-        {
+        .AboutUs h3 {
             background-color: #2d4ca1;
             color: white;
             text-align: center;
         }
 
-        .AboutUs img
-        {
+        .AboutUs img {
             height: 70px;
             width: 100%;
         }
 
-        .AboutUs input[type="button"]
-        {
+        .AboutUs input[type="button"] {
             background-color: #ebbd56;
             color: black;
             float: right;
