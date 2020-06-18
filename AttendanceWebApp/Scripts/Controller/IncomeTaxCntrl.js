@@ -3,7 +3,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 50; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); jQuery.support.cors = true;
     $('.btnNext').click(function () { $('.nav-tabs > .active').next('li').find('a').trigger('click'); });
     $('.btnPrevious').click(function () { $('.nav-tabs > .active').prev('li').find('a').trigger('click'); });
-    $scope.ITDInfo; $scope.ResetView = function () { window.location.reload(true); }; $scope.SetBankPan = function (value) { $scope.bankPan = value.bankPan; $scope.bankName = value.bankName; };
+    $scope.ITDInfo; $scope.ResetView = function () { window.location.reload(true); };
+    $scope.SetBankPan = function (value) { $scope.bankPan = value.bankPan; $scope.bankName = value.bankName; var act = $('#hidactualFlag').val(); if ($scope.bankName !== "") { if (act === "true") { $('#a_amountofinterest').attr("disabled", false); $('#p_amountofinterest').attr("disabled", true); } else { $('#p_amountofinterest').attr("disabled", false); $('#a_amountofinterest').attr("disabled", true); }; }; };
     //Calculation Method Rent and Mediclaim
     $scope.calcRent = function () { var renttotal = storeTblValues(); function storeTblValues() { var renttotal = new Array(); $('#renttable tr').each(function (row, tr) { if (row > 0) { renttotal[row] = { "rentpm1": $(tr).find('td:eq(1) input[type="text"]').val(), "rentpm2": $(tr).find('td:eq(2) input[type="text"]').val(), "rentpm3": $(tr).find('td:eq(3) input[type="text"]').val(), "rentpm4": $(tr).find('td:eq(4) input[type="text"]').val(), "rentpm5": $(tr).find('td:eq(5) input[type="text"]').val(), "rentpm6": $(tr).find('td:eq(6) input[type="text"]').val(), "rentpm7": $(tr).find('td:eq(7) input[type="text"]').val(), "rentpm8": $(tr).find('td:eq(8) input[type="text"]').val(), "rentpm9": $(tr).find('td:eq(9) input[type="text"]').val(), "rentpm10": $(tr).find('td:eq(10) input[type="text"]').val(), "rentpm11": $(tr).find('td:eq(11) input[type="text"]').val(), "rentpm12": $(tr).find('td:eq(12) input[type="text"]').val() } } }); renttotal.shift(); return renttotal; }; if (renttotal.length > 0) { var rentPM = 0; var act = $('#hidactualFlag').val(); if (act === "true") { rentPM = (parseInt(renttotal[1].rentpm1) || 0) + (parseInt(renttotal[1].rentpm2) || 0) + (parseInt(renttotal[1].rentpm3) || 0) + (parseInt(renttotal[1].rentpm4) || 0) + (parseInt(renttotal[1].rentpm5) || 0) + (parseInt(renttotal[1].rentpm6) || 0) + (parseInt(renttotal[1].rentpm7) || 0) + (parseInt(renttotal[1].rentpm8) || 0) + (parseInt(renttotal[1].rentpm9) || 0) + (parseInt(renttotal[1].rentpm10) || 0) + (parseInt(renttotal[1].rentpm11) || 0) + (parseInt(renttotal[1].rentpm12) || 0); } else { rentPM = (parseInt(renttotal[0].rentpm1) || 0) + (parseInt(renttotal[0].rentpm2) || 0) + (parseInt(renttotal[0].rentpm3) || 0) + (parseInt(renttotal[0].rentpm4) || 0) + (parseInt(renttotal[0].rentpm5) || 0) + (parseInt(renttotal[0].rentpm6) || 0) + (parseInt(renttotal[0].rentpm7) || 0) + (parseInt(renttotal[0].rentpm8) || 0) + (parseInt(renttotal[0].rentpm9) || 0) + (parseInt(renttotal[0].rentpm10) || 0) + (parseInt(renttotal[0].rentpm11) || 0) + (parseInt(renttotal[0].rentpm12) || 0); }; document.getElementById("renttotal").value = rentPM; var landlord = $('#landlord').val(); var rentalpan = $('#rentalpan').val(); if (rentPM > 100000 && (landlord === '' || rentalpan === '')) { alert("Landlord Name & PAN Number is Required."); } }; }; $scope.calmediclaim = function () { var act = $('#hidactualFlag').val(); var mediclaimpremiumforfamily = 0, mediclaimpremiumforparents = 0, mediclaimpremiumforhealth = 0; if (act === "true") { mediclaimpremiumforfamily = parseInt(document.getElementById('a_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('a_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('a_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_a_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; } else { mediclaimpremiumforfamily = parseInt(document.getElementById('p_mediclaimpremiumforfamily').value) || 0; mediclaimpremiumforparents = parseInt(document.getElementById('p_mediclaimpremiumforparents').value) || 0; mediclaimpremiumforhealth = parseInt(document.getElementById('p_mediclaimpremiumforhealth').value) || 0; document.getElementById("tot_p_mediclaimpremium").value = mediclaimpremiumforfamily + mediclaimpremiumforparents + mediclaimpremiumforhealth; }; };
     //Check Limits under setion 80 c
@@ -12,63 +13,91 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.Populateipmodel = function () { $('#model1').modal('show'); $scope.calPolicy(); }; $scope.Populatemfmodel = function () { $('#model2').modal('show'); $scope.calMFUND(); }; $scope.PopulateNSCpmodel = function () { $('#model3').modal('show'); $scope.calNSC(); }; $scope.Populateppfmodel = function () { $('#model4').modal('show'); $scope.calPPF(); }; $scope.PopulateFDModel = function () { $('#model5').modal('show'); $scope.calFD(); }; $scope.PopulateULIPModel = function () { $('#model6').modal('show'); $scope.calUlip(); }; $scope.PopulateSSModel = function () { $('#model7').modal('show'); $scope.calSS(); };    //POPUP MODELS
     $scope.GetBankDetails = function () { var pan = new XMLHttpRequest(); pan.open('GET', $scope._Conpath + 'TaxDeclaration/GetBankNames?flag=BC', true); pan.setRequestHeader('Accept', 'application/json'); pan.onreadystatechange = function () { if (pan.readyState === 4) { var json = JSON.parse(pan.responseText); $scope.bdata = json; $scope.$digest(); }; }; pan.send(); };
     $scope.GetEmpInfo = function () { var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#eCode').val(), true); emp.setRequestHeader('Accept', 'application/json'); emp.onreadystatechange = function () { if (emp.readyState === 4) { var json1 = JSON.parse(emp.responseText); $scope.empdata = json1; $scope.$digest(); document.getElementById("btnSearch").disabled = true; $scope.GetActualInfo(); } else if (emp.status !== 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>"; $('#MessageBox').show(); }; }; emp.send(); };
-    $scope.GetActualInfo = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth); $('#hidcloseFlag').val($scope.configdata.closeFlag); var clsflg = $scope.configdata.closeFlag; var str = $scope.configdata.yearMonth.toString(); var res = str.substring(0, 4); var res2 = str.substring(4, 6); $('#lblyearmonth1').text(res + "-" + res2); $('#lblyearmonth3').text(res + "-" + res2); $('#lblyearmonth4').text(res + "-" + res2); $('#lblyearmonth5').text(res + "-" + res2); $('#lblyearmonth6').text(res + "-" + res2); var ecode = $('#eCode').val() || 0; if (clsflg === true) { if (ecode === 0) { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); }; }; $scope.GetBankDetails(); $scope.GetTaxDeclaration(); } else { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }; }; req.send(); };
+    $scope.GetActualInfo = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var req = new XMLHttpRequest();
+        req.open('GET', $scope._Conpath + 'TaxDeclaration/GetTaxDeclarationConfig', true); req.setRequestHeader('Accept', 'application/json');
+        req.onreadystatechange = function () {
+            if (req.readyState === 4) {
+                var json = JSON.parse(req.responseText);
+                $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth);
+                $('#hidcloseFlag').val($scope.configdata.closeFlag); var clsflg = $scope.configdata.closeFlag; var str = $scope.configdata.yearMonth.toString();
+                var res = str.substring(0, 4); var res2 = str.substring(4, 6); $('#lblyearmonth1').text(res + "-" + res2); $('#lblyearmonth3').text(res + "-" + res2);
+                $('#lblyearmonth4').text(res + "-" + res2); $('#lblyearmonth5').text(res + "-" + res2); $('#lblyearmonth6').text(res + "-" + res2);
+                var ecode = $('#eCode').val() || 0; if (clsflg === true) {
+                    if (ecode === 0) {
+                        document.getElementById("btnsave").disabled = true;
+                        $("#maindiv *").attr("readonly", "readonly").off('click');
+                    };
+                }; $scope.GetBankDetails(); $scope.GetTaxDeclaration();
+            } else { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); };
+        }; req.send();
+    };
     $scope.ChangeTaxRegimefromPOPUP = function () {
         var TaxRegime = $('#cmb_taxRegime1').val(); $('#cmb_taxRegime').val(TaxRegime);
         if (TaxRegime === 'N') {
-            $("#homenext *").attr("readonly", true).off('click');
-            $("#menu1Prevnext *").attr("readonly", true).off('click');
-            $("#menu2Prevnext *").attr("readonly", true).off('click');
-            $("#menu3Prevnext *").attr("readonly", true).off('click');
-            $("#menu4Prevnext *").attr("readonly", true).off('click');
-            $("#menu5Prevnext *").attr("readonly", true).off('click');
-            $("#menu6Prevnext *").attr("readonly", true).off('click');
-            $("#menu7Prevnext *").attr("readonly", true).off('click');
+            $("#homenext *").attr("readonly", true).off('click'); $("#menu1Prevnext *").attr("readonly", true).off('click');
+            $("#menu2Prevnext *").attr("readonly", true).off('click'); $("#menu3Prevnext *").attr("readonly", true).off('click');
+            $("#menu4Prevnext *").attr("readonly", true).off('click'); $("#menu5Prevnext *").attr("readonly", true).off('click');
+            $("#menu6Prevnext *").attr("readonly", true).off('click'); $("#menu7Prevnext *").attr("readonly", true).off('click');
             //$("#maindiv *").attr("readonly", true).off('click');
         } else {
-            $("#homenext *").attr("readonly", false).off('click');
-            $("#menu1Prevnext *").attr("readonly", false).off('click');
-            $("#menu2Prevnext *").attr("readonly", false).off('click');
-            $("#menu3Prevnext *").attr("readonly", false).off('click');
-            $("#menu4Prevnext *").attr("readonly", false).off('click');
-            $("#menu5Prevnext *").attr("readonly", false).off('click');
-            $("#menu6Prevnext *").attr("readonly", false).off('click');
-            $("#menu7Prevnext *").attr("readonly", false).off('click');
+            $("#homenext *").attr("readonly", false).off('click'); $("#menu1Prevnext *").attr("readonly", false).off('click');
+            $("#menu2Prevnext *").attr("readonly", false).off('click'); $("#menu3Prevnext *").attr("readonly", false).off('click');
+            $("#menu4Prevnext *").attr("readonly", false).off('click'); $("#menu5Prevnext *").attr("readonly", false).off('click');
+            $("#menu6Prevnext *").attr("readonly", false).off('click'); $("#menu7Prevnext *").attr("readonly", false).off('click');
             //$("#maindiv *").attr("readonly", false).off('click');
         }
-        var act = $('#hidactualFlag').val(); $scope.EnableCntrl(act);
+        var act = $('#hidactualFlag').val(); $scope.EnableCntrl(act); var companyacco = $('#hidCompanyaccoFlag').val();
+        if (companyacco === true) {
+            $('#a_rentpm1').attr("readonly", true); $('#a_rentpm2').attr("readonly", true); $('#a_rentpm3').attr("readonly", true);
+            $('#a_rentpm4').attr("readonly", true); $('#a_rentpm5').attr("readonly", true); $('#a_rentpm6').attr("readonly", true);
+            $('#a_rentpm7').attr("readonly", true); $('#a_rentpm8').attr("readonly", true); $('#a_rentpm9').attr("readonly", true);
+            $('#a_rentpm10').attr("readonly", true); $('#a_rentpm11').attr("readonly", true); $('#a_rentpm12').attr("readonly", true);
+            $('#p_rentpm1').attr("readonly", true); $('#p_rentpm2').attr("readonly", true); $('#p_rentpm3').attr("readonly", true);
+            $('#p_rentpm4').attr("readonly", true); $('#p_rentpm5').attr("readonly", true); $('#p_rentpm6').attr("readonly", true);
+            $('#p_rentpm7').attr("readonly", true); $('#p_rentpm8').attr("readonly", true); $('#p_rentpm9').attr("readonly", true);
+            $('#p_rentpm10').attr("readonly", true); $('#p_rentpm11').attr("readonly", true); $('#p_rentpm12').attr("readonly", true);
+            $("#presentAddress").attr("readonly", true); $("#landlord").attr("readonly", true); $("#rentalpan").attr("readonly", true);
+        };
     };
     $scope.ChangeTaxRegimefromtbl = function () {
-        var TaxRegime = $('#cmb_taxRegime').val(); $('#cmb_taxRegime1').val(TaxRegime);
+        var TaxRegime = $('#cmb_taxRegime').val(); //$('#cmb_taxRegime1').val(TaxRegime);
         if (TaxRegime === 'N') {
-            $("#homenext *").attr("readonly", true).off('click');
-            $("#menu1Prevnext *").attr("readonly", true).off('click');
-            $("#menu2Prevnext *").attr("readonly", true).off('click');
-            $("#menu3Prevnext *").attr("readonly", true).off('click');
-            $("#menu4Prevnext *").attr("readonly", true).off('click');
-            $("#menu5Prevnext *").attr("readonly", true).off('click');
-            $("#menu6Prevnext *").attr("readonly", true).off('click');
-            $("#menu7Prevnext *").attr("readonly", true).off('click');
+            $("#homenext *").attr("readonly", true).off('click'); $("#menu1Prevnext *").attr("readonly", true).off('click');
+            $("#menu2Prevnext *").attr("readonly", true).off('click'); $("#menu3Prevnext *").attr("readonly", true).off('click');
+            $("#menu4Prevnext *").attr("readonly", true).off('click'); $("#menu5Prevnext *").attr("readonly", true).off('click');
+            $("#menu6Prevnext *").attr("readonly", true).off('click'); $("#menu7Prevnext *").attr("readonly", true).off('click');
             //$("#maindiv *").attr("readonly", true).off('click');
         } else {
-            $("#homenext *").attr("readonly", false).off('click');
-            $("#menu1Prevnext *").attr("readonly", false).off('click');
-            $("#menu2Prevnext *").attr("readonly", false).off('click');
-            $("#menu3Prevnext *").attr("readonly", false).off('click');
-            $("#menu4Prevnext *").attr("readonly", false).off('click');
-            $("#menu5Prevnext *").attr("readonly", false).off('click');
-            $("#menu6Prevnext *").attr("readonly", false).off('click');
-            $("#menu7Prevnext *").attr("readonly", false).off('click');
+            $("#homenext *").attr("readonly", false).off('click'); $("#menu1Prevnext *").attr("readonly", false).off('click');
+            $("#menu2Prevnext *").attr("readonly", false).off('click'); $("#menu3Prevnext *").attr("readonly", false).off('click');
+            $("#menu4Prevnext *").attr("readonly", false).off('click'); $("#menu5Prevnext *").attr("readonly", false).off('click');
+            $("#menu6Prevnext *").attr("readonly", false).off('click'); $("#menu7Prevnext *").attr("readonly", false).off('click');
             //$("#maindiv *").attr("readonly", false).off('click');
         }
-        var act = $('#hidactualFlag').val(); $scope.EnableCntrl(act);
+        var act = $('#hidactualFlag').val(); $scope.EnableCntrl(act); var companyacco = $('#hidCompanyaccoFlag').val();
+        if (companyacco === true) {
+            $('#a_rentpm1').attr("readonly", true); $('#a_rentpm2').attr("readonly", true); $('#a_rentpm3').attr("readonly", true);
+            $('#a_rentpm4').attr("readonly", true); $('#a_rentpm5').attr("readonly", true); $('#a_rentpm6').attr("readonly", true);
+            $('#a_rentpm7').attr("readonly", true); $('#a_rentpm8').attr("readonly", true); $('#a_rentpm9').attr("readonly", true);
+            $('#a_rentpm10').attr("readonly", true); $('#a_rentpm11').attr("readonly", true); $('#a_rentpm12').attr("readonly", true);
+            $('#p_rentpm1').attr("readonly", true); $('#p_rentpm2').attr("readonly", true); $('#p_rentpm3').attr("readonly", true);
+            $('#p_rentpm4').attr("readonly", true); $('#p_rentpm5').attr("readonly", true); $('#p_rentpm6').attr("readonly", true);
+            $('#p_rentpm7').attr("readonly", true); $('#p_rentpm8').attr("readonly", true); $('#p_rentpm9').attr("readonly", true);
+            $('#p_rentpm10').attr("readonly", true); $('#p_rentpm11').attr("readonly", true); $('#p_rentpm12').attr("readonly", true);
+            $("#presentAddress").attr("readonly", true); $("#landlord").attr("readonly", true); $("#rentalpan").attr("readonly", true);
+        };
     };
     $scope.GetTaxDeclaration = function () {
         var act = $('#hidactualFlag').val(); var YearMonth = $('#hidyearMonth').val(); $scope.EnableCntrl(act);
         //Get Address Details
         var addr = ""; var Udata1; var Uperdata2; var xy = {}; var xhr = new XMLHttpRequest();
-        var ecode = $('#eCode').val() || 0; if (ecode === 0) { xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true); }
-        else { xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + ecode, true); };
+        var ecode = $('#eCode').val() || 0; if (ecode === 0) {
+            xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true);
+        }
+        else {
+            xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + ecode, true);
+        };
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -80,10 +109,9 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                     if (per.readyState === 4 && per.status === 200) {
                         var json = JSON.parse(per.responseText); $scope.Uperdata = json; Uperdata2 = $scope.Uperdata; Udata1 = $scope.Udata; angular.merge(xy, Udata1, Uperdata2);
                         $scope.UserInfo = xy; $scope.$digest(); $('#lblMono').text($scope.UserInfo[0].prePhone);
-                        if ($scope.taxdata.length <= 0) {
-                            addr = $scope.UserInfo[0].preAdd1 + " " + $scope.UserInfo[0].preAdd2 + " " + $scope.UserInfo[0].preAdd3 + " " + $scope.UserInfo[0].preAdd4 + " " +
-                                $scope.UserInfo[0].preDistrict + " " + $scope.UserInfo[0].preState + " " + $scope.UserInfo[0].prePin; $('#presentAddress').val(addr);
-                        }; var companyacco = $scope.UserInfo[0].companyAcc; $('#hidCompanyaccoFlag').val(companyacco);
+                        if ($scope.taxdata.length <= 0) { addr = $scope.UserInfo[0].houseNumber + " " + $scope.UserInfo[0].societyName + " " + $scope.UserInfo[0].areaName + " " + $scope.UserInfo[0].landMark + " " + $scope.UserInfo[0].preCity + " " + $scope.UserInfo[0].tehsil + " " + $scope.UserInfo[0].preDistrict + " " + $scope.UserInfo[0].preState + " " + $scope.UserInfo[0].prePin; $('#presentAddress').val(addr); };
+                        $('#p_amountofinterest').attr("disabled", true); $('#a_amountofinterest').attr("disabled", true);
+                        var companyacco = $scope.UserInfo[0].companyAcc; $('#hidCompanyaccoFlag').val(companyacco);
                         if (companyacco === true) {
                             if (act === "true") {
                                 $('#a_rentpm1').attr("readonly", true); $('#a_rentpm2').attr("readonly", true); $('#a_rentpm3').attr("readonly", true);
@@ -376,9 +404,11 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                     $scope.Total80c();
                 };
                 var lockEntry = $scope.taxdata[d].lockEntry;
-                if (ecode === 0 && lockEntry === true && act === false) {
+                if (ecode === 0 && lockEntry === true && act === "false") {
                     document.getElementById("btnsave").disabled = true;
                     $("#maindiv *").attr("readonly", "readonly").off('click');
+                    $("#cmb_taxRegime1").attr("disabled", "disabled").off('click');
+                    $("#cmb_taxRegime").attr("disabled", "disabled").off('click');
                 }; $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; xhr1.send();
@@ -396,7 +426,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             $("#p_mediclaimpremiumforfamily").attr("readonly", true); $("#p_mediclaimpremiumforparents").attr("readonly", true);
             $("#p_mediclaimpremiumforhealth").attr("readonly", true); $("#p_eduloan").attr("readonly", true); $("#p_disablity").attr("readonly", true);
             $("#p_severedisablity").attr("readonly", true); $("#p_NPS").attr("readonly", true); $("#p_disdependent").attr("readonly", true);
-            $("#p_medicalexpenditure").attr("readonly", true); $("#p_amountofinterest").attr("readonly", true); $("#p_amountofinterestasperit").attr("readonly", true);
+            $("#p_medicalexpenditure").attr("readonly", true); $("#p_amountofinterest").attr("disabled", true); $("#p_amountofinterestasperit").attr("readonly", true);
             $("#p_optionalinterest").attr("readonly", true); $("#p_optionalotherincome").attr("readonly", true);
         } else {
             $("#a_rentpm1").attr("readonly", true); $("#a_rentpm2").attr("readonly", true); $("#a_rentpm3").attr("readonly", true);
@@ -410,7 +440,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             $("#a_equityscheme").attr("readonly", true); $("#a_mediclaimpremiumforfamily").attr("readonly", true);
             $("#a_mediclaimpremiumforparents").attr("readonly", true); $("#a_mediclaimpremiumforhealth").attr("readonly", true); $("#a_eduloan").attr("readonly", true);
             $("#a_disablity").attr("readonly", true); $("#a_severedisablity").attr("readonly", true); $("#a_NPS").attr("readonly", true);
-            $("#a_disdependent").attr("readonly", true); $("#a_medicalexpenditure").attr("readonly", true); $("#a_amountofinterest").attr("readonly", true);
+            $("#a_disdependent").attr("readonly", true); $("#a_medicalexpenditure").attr("readonly", true); $("#a_amountofinterest").attr("disabled", true);
             $("#a_amountofinterestasperit").attr("readonly", true); $("#a_optionalinterest").attr("readonly", true); $("#a_optionalotherincome").attr("readonly", true);
         };
     };    //Controls readonly Provisional or Actual Wise
@@ -501,10 +531,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     $scope.AddDetails = function () {
         var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional
         //TAX REGIME//
-
         var TaxRegime = $('#cmb_taxRegime').val();
         var strchl = TaxRegime.includes("undefined");
-        //function getRadioVal(form, name) {//    var val; var radios = form.elements[name];//    for (var i = 0, len = radios.length; i < len; i++) {//        if (radios[i].checked) {//            val = radios[i].value; break;        //        };//    }; return val;//};
         if (TaxRegime === "X" || strchl === true) {
             alert("Please Select TAX Regime OLD / NEW.");
             document.getElementById("MessageBox").innerHTML =
@@ -519,9 +547,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         if ((loan !== 0 && loan !== "0") && ($scope.bankName === "" || $scope.bankName === "undefined")) { alert("Please Select Your Housing Loan Bank before enter housing loan interest"); return false; };
         var jsonObj = {}; var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         function storeTblValues() {
-            jsonObj.yearMonth = $('#hidyearMonth').val(); jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.actualFlag = $('#hidactualFlag').val();
-            jsonObj.taxRegime = TaxRegime;
-
+            jsonObj.yearMonth = $('#hidyearMonth').val(); jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.actualFlag = $('#hidactualFlag').val(); jsonObj.taxRegime = TaxRegime;
             jsonObj.totalRentPaid = $('#renttotal').val() || 0; jsonObj.rentHouseAddress = $('#presentAddress').val() || 0;
             jsonObj.landLordName = $('#landlord').val() || '';
             jsonObj.landLordPan = $('#rentalpan').val() || ''; jsonObj.prevCompSalary = $('#p_salary').val() || 0; jsonObj.prevCompTds = $('#p_taxdeduct').val() || 0;
@@ -616,88 +642,33 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 $('#aliasTable7 tr').each(function (row, tr) { if (row > 1) { SSData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": $('#myEmpUnqId').val(), "actualFlag": $('#hidactualFlag').val(), "sukanyaName": $(tr).find('td:eq(0)').text(), "sukanyaDate": $(tr).find('td:eq(1)').text(), "sukanyaAmount": $(tr).find('td:eq(2)').text() } }; }); SSData.shift();
             };
             if (RentData.length > 1) { RentData.shift(); }; if (PPFData.length > 1) { PPFData.shift(); }; if (FDData.length > 1) { FDData.shift(); }; if (PremiumData.length > 1) { PremiumData.shift(); }; if (NSCData.length > 1) { NSCData.shift(); }; if (MutualFund.length > 1) { MutualFund.shift(); }; if (ULIPData.length > 1) { ULIPData.shift(); }; if (SSData.length > 1) { SSData.shift(); };
-            jsonObj.rentDetails = RentData; jsonObj.ppfDetails = PPFData; jsonObj.bankDeposits = FDData; jsonObj.insuranceDetails = PremiumData; jsonObj.nscDetails = NSCData;
-            jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
-
+            jsonObj.rentDetails = RentData; jsonObj.ppfDetails = PPFData; jsonObj.bankDeposits = FDData; jsonObj.insuranceDetails = PremiumData; jsonObj.nscDetails = NSCData; jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
             if (TaxRegime === "N") {
                 var n = new Array();
-
-                jsonObj.totalRentPaid = "0",
-                    jsonObj.landLordName = "",
-                    jsonObj.landLordPan = "",
-                    jsonObj.prevCompSalary = "0",
-                    jsonObj.prevCompTds = "0",
-                    jsonObj.child1Name = "",
-                    jsonObj.child2Name = "",
-                    jsonObj.others1Desc = "",
-                    jsonObj.others2Desc = "",
-                    jsonObj.medicalPremiumParentsAge = "0",
-                    jsonObj.propertyAddress = "",
-                    jsonObj.propertyStatus = "x",
-                    jsonObj.loanAmount = "0",
-                    jsonObj.loanDate = "",
-                    jsonObj.purpose = "x",
-                    jsonObj.constructionCompDate = "",
-                    jsonObj.possessionDate = "",
-                    jsonObj.ownership = "x",
-                    jsonObj.jointOwnerName = "",
-                    jsonObj.jointOwnerRelation = "",
-                    jsonObj.jointOwnerShare = "0",
-                    jsonObj.rentalIncomePerMonth = "0",
-                    jsonObj.municipalTax = "0",
-                    jsonObj.otherIncomeDesc = "",
-                    jsonObj.totalPpfAmt = "0",
-                    jsonObj.totalBankDepositAmount = "0",
-                    jsonObj.totalInsurancePremium = "0",
-                    jsonObj.totalNscAmount = "0",
-                    jsonObj.totalMutualFund = "0",
-                    jsonObj.totalUlip = "0",
-                    jsonObj.totalSukanya = "0",
-                    jsonObj.houseLoanPrincipal = "0",
-                    jsonObj.tuitionFeeChild1 = "0",
-                    jsonObj.tuitionFeeChild2 = "0",
-                    jsonObj.notifiedPensionScheme = "0",
-                    jsonObj.others1Amount = "0",
-                    jsonObj.others2Amount = "0",
-                    jsonObj.rajivGandhiEquity = "0",
-                    jsonObj.medicalPremiumSelf = "0",
-                    jsonObj.medicalPremiumParents = "0",
-                    jsonObj.medicalPreventiveHealthCheckup = "0",
-                    jsonObj.educationLoanInterest = "0",
-                    jsonObj.physicalDisability = "0",
-                    jsonObj.severeDisability = "0",
-                    jsonObj.nationalPensionScheme = "0",
-                    jsonObj.disableDependent = "0",
-                    jsonObj.medicalExpenditure = "0",
-                    jsonObj.interestOnLoan = "0",
-                    jsonObj.interestPreConstruction = "0",
-                    jsonObj.otherInterest = "0",
-                    jsonObj.otherIncomeAmount = "0",
+                jsonObj.totalRentPaid = "0", jsonObj.landLordName = "", jsonObj.landLordPan = "", jsonObj.prevCompSalary = "0", jsonObj.prevCompTds = "0",
+                    jsonObj.child1Name = "", jsonObj.child2Name = "", jsonObj.others1Desc = "", jsonObj.others2Desc = "", jsonObj.medicalPremiumParentsAge = "0",
+                    jsonObj.propertyAddress = "", jsonObj.propertyStatus = "x", jsonObj.loanAmount = "0", jsonObj.loanDate = "", jsonObj.purpose = "x",
+                    jsonObj.constructionCompDate = "", jsonObj.possessionDate = "", jsonObj.ownership = "x", jsonObj.jointOwnerName = "", jsonObj.jointOwnerRelation = "",
+                    jsonObj.jointOwnerShare = "0", jsonObj.rentalIncomePerMonth = "0", jsonObj.municipalTax = "0", jsonObj.otherIncomeDesc = "",
+                    jsonObj.totalPpfAmt = "0", jsonObj.totalBankDepositAmount = "0", jsonObj.totalInsurancePremium = "0", jsonObj.totalNscAmount = "0",
+                    jsonObj.totalMutualFund = "0", jsonObj.totalUlip = "0", jsonObj.totalSukanya = "0", jsonObj.houseLoanPrincipal = "0", jsonObj.tuitionFeeChild1 = "0",
+                    jsonObj.tuitionFeeChild2 = "0", jsonObj.notifiedPensionScheme = "0", jsonObj.others1Amount = "0", jsonObj.others2Amount = "0",
+                    jsonObj.rajivGandhiEquity = "0", jsonObj.medicalPremiumSelf = "0", jsonObj.medicalPremiumParents = "0", jsonObj.medicalPreventiveHealthCheckup = "0",
+                    jsonObj.educationLoanInterest = "0", jsonObj.physicalDisability = "0", jsonObj.severeDisability = "0", jsonObj.nationalPensionScheme = "0",
+                    jsonObj.disableDependent = "0", jsonObj.medicalExpenditure = "0", jsonObj.interestOnLoan = "0", jsonObj.interestPreConstruction = "0",
+                    jsonObj.otherInterest = "0", jsonObj.otherIncomeAmount = "0",
                     jsonObj.rentDetails = [
                         {
-                            "yearMonth": $('#hidyearMonth').val(),
-                            "empUnqId": $('#myEmpUnqId').val(),
-                            "actualFlag": $('#hidactualFlag').val(),
-                            "empUnqIdYear": $('#myEmpUnqId').val() + $('#hidyearMonth').val(),
-                            "april": "0", "may": "0",
-                            "june": "0", "july": "0",
-                            "august": "0", "september": "0",
-                            "october": "0", "november": "0",
-                            "december": "0", "january": "0",
-                            "february": "0", "march": "0"
+                            "yearMonth": $('#hidyearMonth').val(), "empUnqId": $('#myEmpUnqId').val(), "actualFlag": $('#hidactualFlag').val(),
+                            "empUnqIdYear": $('#myEmpUnqId').val() + $('#hidyearMonth').val(), "april": "0", "may": "0", "june": "0", "july": "0", "august": "0", "september": "0",
+                            "october": "0", "november": "0", "december": "0", "january": "0", "february": "0", "march": "0"
                         }
                     ],
-                    jsonObj.ppfDetails = n,
-                    jsonObj.bankDeposits = n,
-                    jsonObj.insuranceDetails = n,
-                    jsonObj.nscDetails = n,
-                    jsonObj.mutualFundDetails = n,
-                    jsonObj.ulipDetails = n,
-                    jsonObj.sukanyaDetails = n
+                    jsonObj.ppfDetails = n, jsonObj.bankDeposits = n, jsonObj.insuranceDetails = n, jsonObj.nscDetails = n, jsonObj.mutualFundDetails = n,
+                    jsonObj.ulipDetails = n, jsonObj.sukanyaDetails = n
             };
             return jsonObj;
         };
-
         var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true);
         tax.setRequestHeader('Content-type', 'application/json');
         tax.onreadystatechange = function () {
@@ -717,11 +688,16 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         var ecode = $('#eCode').val() || 0; if (ecode === 0) { alert("Records not Updated"); document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record not Updated.</strong></div>"; $('#MessageBox').show(); return false; };
         var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional
         //TAX REGIME//
-        var TaxRegime = getRadioVal(frmTaxRegime, 'TaxRegime');
-        function getRadioVal(form, name) {
-            var val; var radios = form.elements[name];
-            for (var i = 0, len = radios.length; i < len; i++) { if (radios[i].checked) { val = radios[i].value; break; }; }; return val;
-        };
+        var TaxRegime = $('#cmb_taxRegime').val();
+        var strchl = TaxRegime.includes("undefined");
+        if (TaxRegime === "X" || strchl === true) {
+            alert("Please Select TAX Regime OLD / NEW.");
+            document.getElementById("MessageBox").innerHTML =
+                "<div class='alert alert-danger alert-dismissable'>" +
+                "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Select TAX Regime OLD / NEW." +
+                "</strong></div>"; $('#MessageBox').show();
+            return false;
+        }
         var rnttotal = $('#renttotal').val() || 0; if (rnttotal > 100000) { var rntpan = $('#rentalpan').val() || ''; var rntname = $('#landlord').val() || ''; if (rntname === '' || rntpan === '') { alert("Landlord Name & PAN Number is Required Please fill Details."); return false; }; };
         var loan = 0; if (act === "true") { loan = $('#a_amountofinterest').val() || 0; } else { loan = $('#p_amountofinterest').val() || 0; };
         if (loan > 200000) { if (act === "true") { $('#a_amountofinterest').val("200000"); } else { $('#p_amountofinterest').val("200000"); }; };
@@ -741,17 +717,37 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             jsonObj.jointOwnerShare = $('#txt_jointownershare').val() || 0; jsonObj.rentalIncomePerMonth = $('#rentalincome').val() || 0;
             jsonObj.otherIncomeDesc = $('#txt_otherincometext').val() || ''; jsonObj.updateUserId = $('#myEmpUnqId').val(); jsonObj.updateDate = new Date();
             if (jsonObj.actualFlag === "true") {
-                jsonObj.totalPpfAmt = $('#tot_a_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_a_fd').val() || 0; jsonObj.totalInsurancePremium = $('#tot_a_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_a_nsc').val() || 0; jsonObj.totalMutualFund = $('#tot_a_mfund').val() || 0; jsonObj.totalUlip = $('#tot_a_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_a_ssAmt').val() || 0;
-                jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0; jsonObj.tuitionFeeChild2 = $('#a_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#a_pensionscheme').val() || 0; jsonObj.others1Amount = $('#a_others1').val() || 0; jsonObj.others2Amount = $('#a_others2').val() || 0;
-                jsonObj.rajivGandhiEquity = $('#a_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#a_mediclaimpremiumforfamily').val() || 0; jsonObj.medicalPremiumParents = $('#a_mediclaimpremiumforparents').val() || 0; jsonObj.medicalPreventiveHealthCheckup = $('#a_mediclaimpremiumforhealth').val() || 0; jsonObj.educationLoanInterest = $('#a_eduloan').val() || 0;
-                jsonObj.physicalDisability = $('#a_disablity').val() || 0; jsonObj.severeDisability = $('#a_severedisablity').val() || 0; jsonObj.nationalPensionScheme = $('#a_NPS').val() || 0; jsonObj.disableDependent = $('#a_disdependent').val() || 0; jsonObj.medicalExpenditure = $('#a_medicalexpenditure').val() || 0;
-                jsonObj.interestOnLoan = $('#a_amountofinterest').val() || 0; jsonObj.interestPreConstruction = $('#a_amountofinterestasperit').val() || 0; jsonObj.otherInterest = $('#a_optionalinterest').val() || 0; jsonObj.otherIncomeAmount = $('#a_optionalotherincome').val() || 0;
+                jsonObj.totalPpfAmt = $('#tot_a_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_a_fd').val() || 0;
+                jsonObj.totalInsurancePremium = $('#tot_a_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_a_nsc').val() || 0;
+                jsonObj.totalMutualFund = $('#tot_a_mfund').val() || 0; jsonObj.totalUlip = $('#tot_a_ulip').val() || 0;
+                jsonObj.totalSukanya = $('#tot_a_ssAmt').val() || 0;
+                jsonObj.houseLoanPrincipal = $('#a_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#a_childfees1').val() || 0;
+                jsonObj.tuitionFeeChild2 = $('#a_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#a_pensionscheme').val() || 0;
+                jsonObj.others1Amount = $('#a_others1').val() || 0; jsonObj.others2Amount = $('#a_others2').val() || 0;
+                jsonObj.rajivGandhiEquity = $('#a_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#a_mediclaimpremiumforfamily').val() || 0;
+                jsonObj.medicalPremiumParents = $('#a_mediclaimpremiumforparents').val() || 0;
+                jsonObj.medicalPreventiveHealthCheckup = $('#a_mediclaimpremiumforhealth').val() || 0; jsonObj.educationLoanInterest = $('#a_eduloan').val() || 0;
+                jsonObj.physicalDisability = $('#a_disablity').val() || 0; jsonObj.severeDisability = $('#a_severedisablity').val() || 0;
+                jsonObj.nationalPensionScheme = $('#a_NPS').val() || 0; jsonObj.disableDependent = $('#a_disdependent').val() || 0;
+                jsonObj.medicalExpenditure = $('#a_medicalexpenditure').val() || 0;
+                jsonObj.interestOnLoan = $('#a_amountofinterest').val() || 0; jsonObj.interestPreConstruction = $('#a_amountofinterestasperit').val() || 0;
+                jsonObj.otherInterest = $('#a_optionalinterest').val() || 0; jsonObj.otherIncomeAmount = $('#a_optionalotherincome').val() || 0;
             } else {
-                jsonObj.totalPpfAmt = $('#tot_p_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_p_fd').val() || 0; jsonObj.totalInsurancePremium = $('#tot_p_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_p_nsc').val() || 0; jsonObj.totalMutualFund = $('#tot_p_mfund').val() || 0; jsonObj.totalUlip = $('#tot_p_ulip').val() || 0; jsonObj.totalSukanya = $('#tot_p_ssAmt').val() || 0;
-                jsonObj.houseLoanPrincipal = $('#p_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#p_childfees1').val() || 0; jsonObj.tuitionFeeChild2 = $('#p_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#p_pensionscheme').val() || 0; jsonObj.others1Amount = $('#p_others1').val() || 0; jsonObj.others2Amount = $('#p_others2').val() || 0;
-                jsonObj.rajivGandhiEquity = $('#p_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#p_mediclaimpremiumforfamily').val() || 0; jsonObj.medicalPremiumParents = $('#p_mediclaimpremiumforparents').val() || 0; jsonObj.medicalPreventiveHealthCheckup = $('#p_mediclaimpremiumforhealth').val() || 0; jsonObj.educationLoanInterest = $('#p_eduloan').val() || 0;
-                jsonObj.physicalDisability = $('#p_disablity').val() || 0; jsonObj.severeDisability = $('#p_severedisablity').val() || 0; jsonObj.nationalPensionScheme = $('#p_NPS').val() || 0; jsonObj.disableDependent = $('#p_disdependent').val() || 0; jsonObj.medicalExpenditure = $('#p_medicalexpenditure').val() || 0;
-                jsonObj.interestOnLoan = $('#p_amountofinterest').val() || 0; jsonObj.interestPreConstruction = $('#p_amountofinterestasperit').val() || 0; jsonObj.otherInterest = $('#p_optionalinterest').val() || 0; jsonObj.otherIncomeAmount = $('#p_optionalotherincome').val() || 0;
+                jsonObj.totalPpfAmt = $('#tot_p_ppf').val() || 0; jsonObj.totalBankDepositAmount = $('#tot_p_fd').val() || 0;
+                jsonObj.totalInsurancePremium = $('#tot_p_premium').val() || 0; jsonObj.totalNscAmount = $('#tot_p_nsc').val() || 0;
+                jsonObj.totalMutualFund = $('#tot_p_mfund').val() || 0; jsonObj.totalUlip = $('#tot_p_ulip').val() || 0;
+                jsonObj.totalSukanya = $('#tot_p_ssAmt').val() || 0;
+                jsonObj.houseLoanPrincipal = $('#p_houseloan').val() || 0; jsonObj.tuitionFeeChild1 = $('#p_childfees1').val() || 0;
+                jsonObj.tuitionFeeChild2 = $('#p_childfees2').val() || 0; jsonObj.notifiedPensionScheme = $('#p_pensionscheme').val() || 0;
+                jsonObj.others1Amount = $('#p_others1').val() || 0; jsonObj.others2Amount = $('#p_others2').val() || 0;
+                jsonObj.rajivGandhiEquity = $('#p_equityscheme').val() || 0; jsonObj.medicalPremiumSelf = $('#p_mediclaimpremiumforfamily').val() || 0;
+                jsonObj.medicalPremiumParents = $('#p_mediclaimpremiumforparents').val() || 0;
+                jsonObj.medicalPreventiveHealthCheckup = $('#p_mediclaimpremiumforhealth').val() || 0; jsonObj.educationLoanInterest = $('#p_eduloan').val() || 0;
+                jsonObj.physicalDisability = $('#p_disablity').val() || 0; jsonObj.severeDisability = $('#p_severedisablity').val() || 0;
+                jsonObj.nationalPensionScheme = $('#p_NPS').val() || 0; jsonObj.disableDependent = $('#p_disdependent').val() || 0;
+                jsonObj.medicalExpenditure = $('#p_medicalexpenditure').val() || 0;
+                jsonObj.interestOnLoan = $('#p_amountofinterest').val() || 0; jsonObj.interestPreConstruction = $('#p_amountofinterestasperit').val() || 0;
+                jsonObj.otherInterest = $('#p_optionalinterest').val() || 0; jsonObj.otherIncomeAmount = $('#p_optionalotherincome').val() || 0;
             };
             //Add Details Table Records on actual flag wise
             var RentData = new Array(); var PPFData = new Array(); var FDData = new Array(); var PremiumData = new Array(); var NSCData = new Array(); var MutualFund = new Array(); var ULIPData = new Array(); var SSData = new Array(); var companyaccomodation = $('#hidCompanyaccoFlag').val();
@@ -796,10 +792,33 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 $('#aliasTable6 tr').each(function (row, tr) { if (row > 1) { ULIPData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "ulipNo": $(tr).find('td:eq(0)').text(), "ulipDate": $(tr).find('td:eq(1)').text(), "ulipAmount": $(tr).find('td:eq(2)').text() } }; }); ULIPData.shift();
                 $('#aliasTable7 tr').each(function (row, tr) { if (row > 1) { SSData[row] = { "yearMonth": $('#hidyearMonth').val(), "empUnqId": ecode, "actualFlag": $('#hidactualFlag').val(), "sukanyaName": $(tr).find('td:eq(0)').text(), "sukanyaDate": $(tr).find('td:eq(1)').text(), "sukanyaAmount": $(tr).find('td:eq(2)').text() } }; }); SSData.shift();
             };
-            if (RentData.length > 1) { RentData.shift(); }; if (PPFData.length > 1) { PPFData.shift(); }; if (FDData.length > 1) { FDData.shift(); };
-            if (PremiumData.length > 1) { PremiumData.shift(); }; if (NSCData.length > 1) { NSCData.shift(); }; if (MutualFund.length > 1) { MutualFund.shift(); };
-            if (ULIPData.length > 1) { ULIPData.shift(); }; if (SSData.length > 1) { SSData.shift(); };
-            jsonObj.rentDetails = RentData; jsonObj.ppfDetails = PPFData; jsonObj.bankDeposits = FDData; jsonObj.insuranceDetails = PremiumData; jsonObj.nscDetails = NSCData; jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData; return jsonObj;
+            if (RentData.length > 1) { RentData.shift(); }; if (PPFData.length > 1) { PPFData.shift(); }; if (FDData.length > 1) { FDData.shift(); }; if (PremiumData.length > 1) { PremiumData.shift(); }; if (NSCData.length > 1) { NSCData.shift(); }; if (MutualFund.length > 1) { MutualFund.shift(); }; if (ULIPData.length > 1) { ULIPData.shift(); }; if (SSData.length > 1) { SSData.shift(); };
+            jsonObj.rentDetails = RentData; jsonObj.ppfDetails = PPFData; jsonObj.bankDeposits = FDData; jsonObj.insuranceDetails = PremiumData; jsonObj.nscDetails = NSCData; jsonObj.mutualFundDetails = MutualFund; jsonObj.ulipDetails = ULIPData; jsonObj.sukanyaDetails = SSData;
+            if (TaxRegime === "N") {
+                var n = new Array();
+                jsonObj.totalRentPaid = "0", jsonObj.landLordName = "", jsonObj.landLordPan = "", jsonObj.prevCompSalary = "0", jsonObj.prevCompTds = "0",
+                    jsonObj.child1Name = "", jsonObj.child2Name = "", jsonObj.others1Desc = "", jsonObj.others2Desc = "", jsonObj.medicalPremiumParentsAge = "0",
+                    jsonObj.propertyAddress = "", jsonObj.propertyStatus = "x", jsonObj.loanAmount = "0", jsonObj.loanDate = "", jsonObj.purpose = "x",
+                    jsonObj.constructionCompDate = "", jsonObj.possessionDate = "", jsonObj.ownership = "x", jsonObj.jointOwnerName = "", jsonObj.jointOwnerRelation = "",
+                    jsonObj.jointOwnerShare = "0", jsonObj.rentalIncomePerMonth = "0", jsonObj.municipalTax = "0", jsonObj.otherIncomeDesc = "", jsonObj.totalPpfAmt = "0",
+                    jsonObj.totalBankDepositAmount = "0", jsonObj.totalInsurancePremium = "0", jsonObj.totalNscAmount = "0", jsonObj.totalMutualFund = "0",
+                    jsonObj.totalUlip = "0", jsonObj.totalSukanya = "0", jsonObj.houseLoanPrincipal = "0", jsonObj.tuitionFeeChild1 = "0", jsonObj.tuitionFeeChild2 = "0",
+                    jsonObj.notifiedPensionScheme = "0", jsonObj.others1Amount = "0", jsonObj.others2Amount = "0", jsonObj.rajivGandhiEquity = "0",
+                    jsonObj.medicalPremiumSelf = "0", jsonObj.medicalPremiumParents = "0", jsonObj.medicalPreventiveHealthCheckup = "0",
+                    jsonObj.educationLoanInterest = "0", jsonObj.physicalDisability = "0", jsonObj.severeDisability = "0", jsonObj.nationalPensionScheme = "0",
+                    jsonObj.disableDependent = "0", jsonObj.medicalExpenditure = "0", jsonObj.interestOnLoan = "0", jsonObj.interestPreConstruction = "0",
+                    jsonObj.otherInterest = "0", jsonObj.otherIncomeAmount = "0",
+                    jsonObj.rentDetails = [
+                        {
+                            "yearMonth": $('#hidyearMonth').val(), "empUnqId": $('#myEmpUnqId').val(), "actualFlag": $('#hidactualFlag').val(),
+                            "empUnqIdYear": $('#myEmpUnqId').val() + $('#hidyearMonth').val(), "april": "0", "may": "0", "june": "0", "july": "0",
+                            "august": "0", "september": "0", "october": "0", "november": "0", "december": "0", "january": "0", "february": "0", "march": "0"
+                        }
+                    ],
+                    jsonObj.ppfDetails = n, jsonObj.bankDeposits = n, jsonObj.insuranceDetails = n, jsonObj.nscDetails = n, jsonObj.mutualFundDetails = n,
+                    jsonObj.ulipDetails = n, jsonObj.sukanyaDetails = n
+            };
+            return jsonObj;
         };
         var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true); tax.setRequestHeader('Content-type', 'application/json');
         tax.onreadystatechange = function () {
@@ -830,6 +849,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0; myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = "";
                             myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf; myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity; myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf; myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents; myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup; myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability; myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = "";
                             myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd; myArray[i]["InterestOnLoan"] = it[i].interestOnLoan;
+                            myArray[i]["InterestPreConstruction"] = it[i].interestPreConstruction;
                             myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = ""; var bname = it[i].bankName; if (bname === null) { myArray[i]["BankName"] = ""; } else { myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, ""); }; var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; }; if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = "";
                             myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd; myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = "";
                             if ($scope.configdata.actualFlag === "true" || $scope.configdata.actualFlag === true) { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct; } else { myArray[i]["RentPerMonth"] = it[i].rentPaidAprilPro; myArray[i]["RentPaid"] = it[i].rentPaidPro; }; myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan; myArray[i]["LockEntry"] = it[i].lockEntry;

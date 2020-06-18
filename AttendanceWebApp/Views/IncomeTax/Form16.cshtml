@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Form16";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/Form16Cntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="Form16Cntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>TDS Forms</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetForm16Link()">
+                            <select class="form-control" id="yearMonth" ng-model="N.assYear" ng-options="f for f in f16data" style="width:322px;" required>
+                                <option value="" selected>--- Select Financial Year ---</option>
+                            </select>
+                        </div><br />
+                        <div class="input-group-btn form">
+                            <button class="btn btn-info" type="button" id="buttonUpload1" ng-click="GetFrom16Details(N,'16')">
+                                <i class="fa fa-download"></i>&nbsp;Form 16 Part A
+                            </button>
+                            <button class="btn btn-default" type="button" id="buttonUpload1" ng-click="GetFrom16Details(N,'12')">
+                                <i class="fa fa-download"></i>&nbsp;Form 16 Part B
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note : Please Select Financial Year and Press Form 16 Part A/B Button to Open Document in new tab window.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

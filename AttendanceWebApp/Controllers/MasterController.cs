@@ -61,6 +61,25 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        public ActionResult VerifyAddressHR()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         //Manage Leave Application Changes
         public ActionResult ManageLeaveMaster()
         {

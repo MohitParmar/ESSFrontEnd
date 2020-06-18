@@ -7,13 +7,23 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
     $scope.CostLeave = function (data, value, value1, value2) {
         var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         function storeTblValues() {
-            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(1)').text(), "IsPosted": $(tr).find("select").val(), "Posted": $(tr).find('td:eq(9)').text() } });
+            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) {
+                TableData[row] = {
+                    "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(1)').text(), "IsPosted": $(tr).find("select").val(),
+                    "Posted": $(tr).find('td:eq(9)').text()
+                }
+            });
             var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length; i++) {
                 var appid = TableData[i]["LeaveAppId"]; if (appid == value) {
                     var posted = TableData[i]["Posted"];
                     if (value2 === "R") { if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong>" + "</div>"; $('#MessageBox').show(); return; }; };//If Reject Leave & Remarks not enter
                     if (value2 === "R") { tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": value2, "Remarks": data.Remarks, "UserId": $('#myEmpUnqId').val() }; count++; };//R For Full Leave Rejection
-                    if (value2 === "P") { tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": TableData[i]["IsPosted"], "UserId": $('#myEmpUnqId').val() }; count++; };//P For Full Leave Posting
+                    if (value2 === "P") {
+                    tbl[count] = {
+                        "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": TableData[i]["IsPosted"],
+                        "UserId": $('#myEmpUnqId').val()
+                    }; count++;
+                    };//P For Full Leave Posting
                     if (value2 === "O" && posted === "P") {
                         tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "O", "UserId": $('#myEmpUnqId').val() }; count++;
                     };//O For ForceFully Leave Posting
@@ -35,7 +45,7 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         else if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = firstDay.getFullYear() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate() + ' 00:00:00'; ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getDate() + ' 23:59:59'; }
         else { FromDate = data.FromDt; document.getElementById("hidfromdt").value = data.FromDt; ToDate = data.ToDt; document.getElementById("hidtodt").value = data.ToDt; };
         var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; };
-        var WOflg = false; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeavePosting/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate + '&flag=' + WOflg, true); xhr.setRequestHeader('Accept', 'application/json');
+        var WOflg = false; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeavePosting/GetLeaves?fromDt=' + FromDate + '&toDt=' + ToDate + '&WOflag=' + WOflg, true); xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); $scope.InfoPL = xhr.responseText; var json = JSON.parse(xhr.responseText); var temparr = new Array();

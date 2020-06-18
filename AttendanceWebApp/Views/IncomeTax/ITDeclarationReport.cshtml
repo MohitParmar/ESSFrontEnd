@@ -81,7 +81,7 @@
                                                 <th></th>
                                                 <th colspan="10" style="text-align:center;">80CCF & 80d</th>
                                                 <th></th>
-                                                <th colspan="9" style="text-align:center;">Int on House Loan</th>
+                                                <th colspan="10" style="text-align:center;">Int on House Loan</th>
                                                 <th colspan="1"></th>
                                                 <th colspan="10" style="text-align:center;">HRA</th>
                                                 <th style="text-align:center;">Lock</th>
@@ -90,7 +90,8 @@
                                                 <th>Sr No.</th>
                                                 <th>Actual</th>
                                                 <th>Tax Regime</th>
-                                                <th style="text-align:center;" ng-click="sort('SapID')">Sap ID
+                                                <th style="text-align:center;" ng-click="sort('SapID')">
+                                                    Sap ID
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='SapID'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
@@ -150,6 +151,7 @@
                                                 <th style="text-align:center;">START DATE</th>
                                                 <th style="text-align:center;">END DATE</th>
                                                 <th style="text-align:center;">Interest On Loan</th>
+                                                <th style="text-align:center;">Interest Pre Construction</th>
                                                 <th style="text-align:center;">Notional rent</th>
                                                 <th style="text-align:center;">Net</th>
                                                 <th style="text-align:center;">BANK NAME</th>
@@ -197,7 +199,7 @@
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.SapId_3" />
                                                 </td>
-                                                <td colspan="5"></td>
+                                                <td colspan="6"></td>
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.BankName" />
                                                 </td>
@@ -290,6 +292,7 @@
                                                 @* Int on House Loan *@
                                                 <td style="text-align:center;">{{d.EndDate_2}}</td>
                                                 <td style="text-align:center;">{{d.InterestOnLoan}}</td>
+                                                <td style="text-align:center;">{{d.InterestPreConstruction}}</td>
                                                 <td style="text-align:center;">{{d.NationalRent}}</td>
                                                 <td style="text-align:center;">{{d.Net}}</td>
                                                 <td style="text-align:left;">{{d.BankName}}</td>

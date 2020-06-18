@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Verify Address by HR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/EmpListCntrl.js"></script>
+<div ng-app="myApp" ng-controller="EmployeeListCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>All Employee Details</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData()">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align:center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div ng-init="GetEmployeeList()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th style="text-align:center;" ng-click="sort('SAPID')">
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='SAPID'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('EmpName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            @* Present Address Details *@
+                                            <th style="text-align:center">House Number</th>
+                                            <th style="text-align:center">Society Name</th>
+                                            <th style="text-align:center">Area Name</th>
+                                            <th style="text-align:center">Nearest LandMark</th>
+                                            <th style="text-align:center;" ng-click="sort('PresentCity')">
+                                                Village / City
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PresentCity'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('PresentTehsil')">
+                                                Taluka
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PresentTehsil'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('PresentPoliceStation')">
+                                                Police Station
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PresentPoliceStation'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center" ng-click="sort('PresentDistrict')">
+                                                District
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PresentDistrict'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center" ng-click="sort('PresentState')">
+                                                State
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PresentState'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center">Pin Code</th>
+                                            <th style="text-align:center">Mobile No.</th>
+                                            <th style="text-align:center">Alt. Mobile No.</th>
+                                            <th style="text-align:center">Eamil Id</th>
+                                            <th style="text-align:center">Company Accomodation</th>
+                                            <th style="text-align:center">HR Verified</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.SAPID" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.EmpName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentSocietyName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentAreaName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentLandMark" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentCity" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentTehsil" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentPoliceStation" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentDistrict" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PresentState" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td colspan="4"></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.CompanyAccomodation" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.HRVerified" style="margin:0;padding:1px;" />
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                            <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center">{{d.SAPID}}</td>
+                                            <td style="text-align:left">{{d.EmpName}}</td>
+                                            <td style="text-align:left">{{d.PresentHouseNumber}}</td>
+                                            <td style="text-align:left">{{d.PresentSocietyName}}</td>
+                                            <td style="text-align:left">{{d.PresentAreaName}}</td>
+                                            <td style="text-align:left">{{d.PresentLandMark}}</td>
+                                            <td style="text-align:left">{{d.PresentCity}}</td>
+                                            <td style="text-align:left">{{d.PresentTehsil}}</td>
+                                            <td style="text-align:left">{{d.PresentPoliceStation}}</td>
+                                            <td style="text-align:left">{{d.PresentDistrict}}</td>
+                                            <td style="text-align:left">{{d.PresentState}}</td>
+                                            <td style="text-align:center">{{d.PresentPinCode}}</td>
+                                            <td style="text-align:center">{{d.PresentPhone}}</td>
+                                            <td style="text-align:center">{{d.PresentResPhone}}</td>
+                                            <td style="text-align:center">{{d.PresentEmail}}</td>
+                                            <td style="text-align:center">{{d.CompanyAccomodation}}</td>
+                                            <td style="text-align:center">{{d.HRVerified}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

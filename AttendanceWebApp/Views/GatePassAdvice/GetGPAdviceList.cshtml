@@ -198,7 +198,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="right-inner-addon">
-                                                            <i class="icon-calendar"></i>
+                                                            <i class="fa fa-calendar"></i>
                                                             <input class="form-control" type="text" id="ApproxDt" ng-model="A.ApproxDt" ng-change="ToValidate()" data-date-format="yyyy/MM/dd" datepicker>
                                                         </div>
                                                     </td>
@@ -242,7 +242,7 @@
                                                     <td colspan="4" style="text-align: right;">
                                                         <strong>STEP - 1 : Add To List</strong>&nbsp;
                                                         <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddMaterial(M,true)">
-                                                            <i class="icon-plus-sign"></i>
+                                                            <i class="fa fa-plus-sign"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -374,13 +374,13 @@
                                         </td>
                                         <td style="text-align: center;padding: 3px;">
                                             <button class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.gpAdviceNo}},{{d.yearMonth}},false)">
-                                                <i class="icon-info-sign"></i>
+                                                <i class="fa fa-info"></i>
                                             </button>
                                             <button class="btn btn-primary" id="btnedit" ng-click="PopulateEdit({{d.gpAdviceNo}},{{d.yearMonth}})" ng-show="d.releaseStatusCode == 'N' && d.gpAdviceStatus!='R'">
-                                                <i class="icon-edit-sign"></i>
+                                                <i class="fa fa-edit"></i>
                                             </button>
                                             <button class="btn btn-danger" id="btndelete" ng-click="PostGpAdvice('Self Cancelled',{{d.gpAdviceNo}},{{d.yearMonth}},'R')" ng-show="d.releaseStatusCode == 'N' && d.gpAdviceStatus!='R'">
-                                                <i class="icon-remove-sign"></i>
+                                                <i class="fa fa-remove"></i>
                                             </button>
                                         </td>
                                     </tr>

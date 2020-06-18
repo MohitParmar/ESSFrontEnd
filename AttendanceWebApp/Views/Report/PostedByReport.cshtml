@@ -67,7 +67,7 @@
                                 </td>
                                 <td>
                                     <div class="right-inner-addon">
-                                        <i class="icon-calendar"></i>
+                                        <i class="fa fa-calendar"></i>
                                         <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                     </div>
                                 </td>
@@ -76,13 +76,13 @@
                                 </td>
                                 <td>
                                     <div class="right-inner-addon">
-                                        <i class="icon-calendar"></i>
+                                        <i class="fa fa-calendar"></i>
                                         <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                     </div>
                                 </td>
                                 <td>
                                     <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetPostedByReport(New)">
-                                        <i class="icon-search"></i>
+                                        <i class="fa fa-search"></i>
                                         Search
                                     </button>
                                     <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
@@ -140,13 +140,13 @@
                                                 ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                                 <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td style="text-align:left;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
+                                                <td style="text-align:left;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
                                                 <td style="text-align:left;" id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">{{s}}</td>
                                                 <td colspan="10">
                                                     <table id="aliasTable" class="table table-bordered table-hover">
                                                         <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="text-align:left;width: 140px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                            <td style="text-align:left;width: 140px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
                                                             <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
                                                             <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
                                                             <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>

@@ -2,6 +2,7 @@
     ViewBag.Title = "Salary Slip Upload";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <div ng-app="myApp" ng-controller="HomeCntrloller">
@@ -25,7 +26,7 @@
                                     <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
                                     <span class="input-group-btn">
                                         <button class="btn btn-success" type="button" id="buttonUpload" ng-click="FolderUpload(N.yearMonth)">
-                                            <i class="icon-upload"></i>&nbsp;Upload Payslips
+                                            <i class="fa fa-upload"></i>&nbsp;Upload Payslips
                                         </button>
                                         <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                     </span>

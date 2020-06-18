@@ -92,6 +92,18 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        public ActionResult LDLeaveApply()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         [HttpGet]
         [System.Web.Http.ActionName("GetLeaveTypeList")]
         public JsonResult GetLeaveTypeList(string compid)

@@ -305,9 +305,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\csvexport.js" />
     <Content Include="Content\FileUploadXLSXLib\jszip.js" />
     <Content Include="Content\FileUploadXLSXLib\xlsx.full.min.js" />
+    <Content Include="Content\New\animate.css" />
+    <Content Include="Content\New\main.css" />
+    <Content Include="Content\New\meanmenu.min.css" />
+    <Content Include="Content\New\normalize.css" />
+    <Content Include="Content\New\responsive.css" />
+    <Content Include="Content\New\style1.css" />
+    <Content Include="Content\Site - Def.css" />
     <Content Include="Content\standalone.css" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
     <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
@@ -315,6 +325,7 @@
     <Content Include="ESS_Images\ESS Icon\android-chrome-512x512.png" />
     <Content Include="ESS_Images\ESS Icon\apple-touch-icon.png" />
     <Content Include="ESS_Images\GatePass.png" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -450,9 +461,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
+    <Content Include="Scripts\Controller\AddressCntrl.js" />
     <Content Include="Scripts\Controller\default.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
+    <Content Include="Scripts\Controller\Form16Cntrl.js" />
     <Content Include="Scripts\Controller\GatePassCntrl.js" />
     <Content Include="Scripts\Controller\GPAdviceCntrl.js" />
     <Content Include="Scripts\Controller\HomeCntrl.js" />
@@ -486,6 +499,11 @@
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="ESS_Images\ESS Icon\site.webmanifest" />
     <Content Include="libman.json" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\ESS.pubxml" />
     <Content Include="Scripts\Angular\angular.min.js.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -494,6 +512,7 @@
     <Content Include="Scripts\Controller\LeavePostingCntrl.js" />
     <Content Include="Scripts\Controller\LeaveReleaseCntrl.js" />
     <Content Include="Scripts\Controller\LeaveReportCntrl.js" />
+    <Content Include="Scripts\Controller\LockDownCntrl.js" />
     <Content Include="Scripts\Controller\LoginCntrl.js" />
     <Content Include="Scripts\Controller\ManageLeaveCntrl.js" />
     <Content Include="Scripts\Controller\MasterCntrl.js" />
@@ -680,6 +699,10 @@
     <Content Include="Views\IncomeTax\TaxComparisonReport.cshtml" />
     <Content Include="Views\Master\UserProfileView.cshtml" />
     <Content Include="Views\Utils\VehicleRequisition.cshtml" />
+    <Content Include="Views\Master\VerifyAddressHR.cshtml" />
+    <Content Include="Views\IncomeTax\Form16Upload.cshtml" />
+    <Content Include="Views\IncomeTax\Form16.cshtml" />
+    <Content Include="Views\LeaveApp\LDLeaveApply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

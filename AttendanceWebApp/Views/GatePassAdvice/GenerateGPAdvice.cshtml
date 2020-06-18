@@ -81,7 +81,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>{{emp}}</label>
+                                                    <label>@*{{emp}}*@</label>
                                                 </td>
                                                 <td style="float: right;">
                                                     <label>
@@ -163,7 +163,7 @@
                                         <tr>
                                             <td>
                                                 <div class="right-inner-addon">
-                                                    <i class="icon-calendar"></i>
+                                                    <i class="fa fa-calendar"></i>
                                                     <input class="form-control" type="text" id="ApproxDt" ng-model="N.ApproxDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                                 </div>
                                             </td>
@@ -225,7 +225,7 @@
                                             <th colspan="5" style="text-align: right;">
                                                 <label>STEP - 1 : Add To List</label>
                                                 <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="AddMaterial(New,false)">
-                                                    <i class="icon-plus-sign"></i>
+                                                    <i class="fa fa-plus"></i>
                                                 </button>
                                             </th>
                                         </tr>
@@ -268,7 +268,7 @@
                                     <td style="        text-align: right;">
                                         <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
                                         <button id="btnSubmit" type="button" class="btn btn-success" value="Submit" name="submit" ng-click="GenerateGPAdvice(N,false)">
-                                            Generate Gate Pass Advice
+                                            <i class="fa fa-save"></i> Generate Gate Pass Advice
                                         </button>
                                     </td>
                                 </tr>

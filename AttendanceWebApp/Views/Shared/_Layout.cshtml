@@ -9,7 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
-    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    @*<link href="~/Content/css/font-awesome.css" rel="stylesheet">*@
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet">
     <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/Angular/angular.min.js"></script>
@@ -96,14 +97,14 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner" id="navmain">
             <div class="container-fluid">
-                @*<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>*@
+                @*<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="fa fa-bar"></span><span class="fa fa-bar"></span><span class="fa fa-bar"></span></a>*@
                 <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float:left;height:56px;width:56px;" />
                 <label class="navbar-brand" style="color:white" id="headtext"></label>
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="icon-user"></i>
+                                <i class="fa fa-user"></i>
                                 <strong>
                                     @Session["EmpName"].ToString() (@Session["EmpUnqId"].ToString())
                                     <b class="caret"></b>
@@ -150,10 +151,10 @@
             <div class="container" style="margin-left:15px;margin-right:15px;">
                 <ul class="mainnav">
                     <li hidden="hidden" class="active" id="mnuDashboard">
-                        <a href="/Home/Index"><i class="icon-dashboard"></i><span>Dashboard</span></a>
+                        <a href="/Home/Index"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuMaster">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Master</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Master</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnureleasestreategymaster">
                                 <a href="/Master/CreateReleaseStreategy">Release Streategy Master</a>
@@ -164,13 +165,16 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuLeave">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list-alt"></i><span>Leave</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Leave</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuLeaveRules">
                                 <a href="/LeaveApp/LeaveRules">Leave Rules</a>
                             </li>
                             <li hidden="hidden" id="mnuLeaveApplication">
                                 <a href="/LeaveApp/LeaveApply">Leave Application</a>
+                            </li>
+                            <li hidden="hidden" id="mnuLDLeaveApplication">
+                                <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
                             </li>
                             <li hidden="hidden" id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
@@ -185,7 +189,7 @@
                                     <a href="~/LeaveApp/WOChangeBEL">Weekly Off Change</a>
                                 </li>*@
                             <li class="dropdown-submenu">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="icon-caret-right"></b></span></a>
+                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li hidden="hidden" id="mnuShortLeaveCancel">
                                         <a href="/LeaveApp/LeaveCancellation">Short Leave Cancel</a>
@@ -199,7 +203,7 @@
                                 <a href="/ReleaseLeave/LeaveRelease">Leave Release</a>
                             </li>
                             <li hidden="hidden" class="dropdown-submenu" id="mnuLeavePosting">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Posting <b class="icon-caret-right"></b></span></a>
+                                <a href="#" class="test" data-toggle="dropdown"><span>Leave Posting <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li hidden="hidden" id="mnuFullLeavePosting">
                                         <a href="/LeavePosting/LeavePosting?flg=N">Full Leave Posting</a>
@@ -215,7 +219,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuGatePass">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-save"></i><span>Gate Pass</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-save"></i><span>Gate Pass</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuCreateGatePass">
                                 <a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a>
@@ -238,7 +242,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuGPAdvice">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bookmark-empty"></i><span>GP Advice</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bookmark-o"></i><span>GP Advice</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuGPAdviceGenerate">
                                 <a href="/GatePassAdvice/GenerateGPAdvice">New GP Advice</a>
@@ -264,7 +268,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuReport">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i><span>Report</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-th-list"></i><span>Report</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuReleaserEmpReport">
                                 <a href="/Report/EmployeeList">Employee List</a>
@@ -311,7 +315,7 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuUitility">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-magnet"></i><span>Uitility</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-magnet"></i><span>Uitility</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuAutoSync">
                                 <a href="#" onclick="AutoSync('@Session["Loc"]')">Sync Employees</a>
@@ -322,16 +326,25 @@
                             <li hidden="hidden" id="mnuResetPass">
                                 <a href="/Home/ResetPassword">Reset Password</a>
                             </li>
+                            <li id="mnuVerifyAddress">
+                                <a href="/Master/VerifyAddressHR">Address Verification</a>
+                            </li>
                             <li hidden="hidden" id="mnuManageLeave">
                                 <a href="~/Master/ManageLeaveMaster">Manage Leave</a>
                             </li>
                             <li hidden="hidden" id="mnuPayslipUpload">
                                 <a href="~/Master/SalarySlipUpload">Payslip Upload</a>
                             </li>
+                            <li hidden="hidden" id="mnuTDSUpload">
+                                <a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a>
+                            </li>
                         </ul>
                     </li>
                     <li hidden="hidden" id="mnuPayslip">
-                        <a href="~/Master/SalarySlip"><i class="icon-archive"></i><span></span>Payslip</a>
+                        <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span></span>Payslip</a>
+                    </li>
+                    <li hidden="hidden" id="mnuTDS">
+                        <a href="~/IncomeTax/Form16"><i class="fa fa-file-text"></i><span></span>TDS Forms</a>
                     </li>
                 </ul>
             </div>

@@ -106,7 +106,7 @@
                                         </td>
                                         <td>
                                             <div class="right-inner-addon">
-                                                <i class="icon-calendar"></i>
+                                                <i class="fa fa-calendar"></i>
                                                 <input class="form-control" type="text" id="FDt" ng-model="dta.fdt" data-date-format="yyyy/MM/dd" datepicker>
                                             </div>
                                         <td>
@@ -114,12 +114,12 @@
                                         </td>
                                         <td>
                                             <div class="right-inner-addon">
-                                                <i class="icon-calendar"></i>
+                                                <i class="fa fa-calendar"></i>
                                                 <input class="form-control" type="text" id="TDt" ng-model="dta.tdt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                             </div>
                                         <td>
                                             <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="PerformanceAttendanceRpt(dta)">
-                                                <i class="icon-search"></i>
+                                                <i class="fa fa-search"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -196,20 +196,22 @@
                                     </td>
                                     <td>
                                         <div class="right-inner-addon">
-                                            <i class="icon-calendar"></i>
+                                            <i class="fa fa-calendar"></i>
                                             <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
                                         </div>
+                                    </td>
                                     <td>
                                         <label>Select To Date : </label>
                                     </td>
                                     <td>
                                         <div class="right-inner-addon">
-                                            <i class="icon-calendar"></i>
+                                            <i class="fa fa-calendar"></i>
                                             <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
                                         </div>
+                                    </td>
                                     <td>
                                         <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetPostingLeaveApplicationLists(New)">
-                                            <i class="icon-search"></i>
+                                            <i class="fa fa-search"></i>
                                             Search
                                         </button>
                                         <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
@@ -290,7 +292,7 @@
                                                 {{lr.releaseDate | date:'dd/MM/yyyy'}}
                                             </td>
                                             <td style="text-align:center;padding:3px;" id="empUnqId">{{d.empUnqId}}</td>
-                                            <td style="text-align:left;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==11"
+                                            <td style="text-align:left;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14"
                                                 data-title="'empName'">
                                                 {{e}}
                                             </td>
@@ -305,7 +307,7 @@
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                         <td ng-hide="true">{{lrd.leaveAppId}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:42px;">{{lrd.leaveAppItem}}</td>
-                                                        <td style="padding-left:2px;padding-right:2px;width:63px;text-align:left;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:63px;text-align:left;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}-{{lrd.additionalRemarks}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:34px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:66px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
@@ -338,18 +340,18 @@
                                             </td>
                                             <td style="padding:3px;">
                                                 <button class="btn btn-success" id="btnSubmit" value="Post" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'P')" title="Post">
-                                                    <i class="icon-ok"></i>
+                                                    <i class="fa fa-check fa-lg"></i>
                                                 </button>
                                                 <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'R')" title="Reject"
                                                         ng-show="d.cancelled==false">
-                                                    <i class="icon-remove"></i>
+                                                    <i class="fa fa-remove fa-lg"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-info" id="btninfo" ng-click="PopulateData({{d.empUnqId}})" title="Info">
-                                                    <i class="icon-info"></i>
+                                                    <i class="fa fa-info fa-lg"></i>
                                                 </button>
                                                 <button class="btn btn-danger" id="btnForceFully" value="Post" title="ForceFully"
                                                         ng-click="CostLeave(New,{{d.leaveAppId}},{{d.yearMonth}},'O')">
-                                                    <i class="icon-random"></i>
+                                                    <i class="fa fa-random fa-lg"></i>
                                                 </button>
                                             </td>
                                         </tr>

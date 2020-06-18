@@ -23,7 +23,7 @@
                                     <div class="input-group form">
                                         <input type="text" class="form-control" placeholder="Search Releaser" id="Rel_Empid" name="Rel_Empid">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetReleaserInfo()"><i class="icon-search"></i></button>
+                                            <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetReleaserInfo()"><i class="fa fa-search"></i></button>
                                         </span>
                                     </div>
                                     <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
@@ -74,7 +74,7 @@
                                         <div class="input-group form">
                                             <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="icon-search"></i></button>
+                                                <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
                                             </span>
                                         </div>
                                     </td>
@@ -118,7 +118,7 @@
                                         <td style="text-align:center;">{{rls.empName}}</td>
                                         <td style="text-align:center;" ng-if="$last == true">
                                             <button type="submit" id="btnSearch" class="btn btn-danger" value="delete" name="delete" ng-click="RemoveReleaser()">
-                                                <i class="icon-remove"></i>
+                                                <i class="fa fa-remove"></i>
                                             </button>
                                         </td>
                                     </tr>

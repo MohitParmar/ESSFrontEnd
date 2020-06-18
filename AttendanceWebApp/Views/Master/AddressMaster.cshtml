@@ -25,32 +25,78 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label>Address 1</label>
+                                            <label>Plot/House/Flat/Room No.</label>
                                         </td>
-                                        <td colspan="3">
-                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd1" name="add1" required>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtHouseNumber" name="HouseNumber" required>
+                                        </td>
+                                        <td>
+                                            <label>Nearest Police Station</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtPoliceStation" name="Plcsta" required>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label>Address 2</label>
+                                            <label>Name of Society/Building</label>
                                         </td>
-                                        <td colspan="3">
-                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtadd2" name="add2" required>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtSocietyName" name="SocietyName" required>
+                                        </td>
+                                        <td>
+                                            <label>Personal E-mail Id</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="email" id="txtemailid" name="emailid"
+                                                   onchange="validateEmail()" placeholder="ex: abc@xyz.com">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label>Village</label>
+                                            <label>Name of Area/Location</label>
                                         </td>
                                         <td>
-                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtvlg" name="vlg" required>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtAreaName" name="AreaName" required>
                                         </td>
+                                        <td>
+                                            <label>Mobile No.</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtphoneno" name="phoneno"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                   required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Nearest Landmark</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtLandMark" name="LandMark" required>
+                                        </td>
+                                        <td>
+                                            <label>Alternate Mobile No.</label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" id="txtresno" name="resno"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Village / City </label>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtPreCity" name="PreCity" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <label>Taluka</label>
                                         </td>
                                         <td>
-                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txttlk" name="tlk" required>
+                                            <input class="form-control" style="text-transform: uppercase;" type="text" id="txtTehsil" name="Tehsil" required>
                                         </td>
                                     </tr>
                                     <tr>
@@ -60,6 +106,8 @@
                                         <td>
                                             <input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH">
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <label>State</label>
                                         </td>
@@ -76,37 +124,11 @@
                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                    onchange="validatePin()" required>
                                         </td>
-                                        <td>
-                                            <label>Personal E-mail Id</label>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" style="text-transform: uppercase;" type="email" id="txtemailid" name="emailid"
-                                                   onchange="validateEmail()" placeholder="ex: abc@xyz.com">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>Mobile No.</label>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="text" id="txtphoneno" name="phoneno"
-                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                   required>
-                                        </td>
-                                        <td>
-                                            <label>Alternate Mobile No.</label>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="text" id="txtresno" name="resno"
-                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" style="text-align:right;">
+                                        <td colspan="2">
                                             <span class="input-group-btn float-right">
                                                 <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
                                                         value="Submit Presenrt Address" name="Save" ng-click="UpdateAddress()">
-                                                    Submit Address Details
+                                                    <i class="fa fa-save"></i> Submit Address Details
                                                 </button>
                                                 <input id="BtnCancel" type="reset" class="btn btn-default" value="Reload" ng-click="ResetView()" />
                                             </span>
@@ -169,6 +191,9 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="panel-footer">
+                        <label style="color:red;">Note: If Any Change in Parmanent Address Please Contact to HR.</label>
                     </div>
                 </div>
             </div>

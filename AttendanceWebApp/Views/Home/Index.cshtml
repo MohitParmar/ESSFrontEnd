@@ -5,6 +5,7 @@
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -104,7 +105,7 @@
                                                     <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                         <tr ng-repeat="lrd in ld.leaveApplicationDetails">
                                                             <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="padding:2px;padding-left:5px;text-align:left;width:91px;">{{(ld.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                            <td style="padding:2px;padding-left:5px;text-align:left;width:91px;">{{(ld.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
                                                             <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                             <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
                                                             <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy HH:mm'}}</td>
@@ -126,9 +127,10 @@
                                                     </table>
                                                 </td>
                                                 <td>
-                                                    <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger" ng-show="ld.releaseStatusCode == 'N' && (ld.cancelled == false && ld.parentId == 0)"
+                                                    <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger"
+                                                            ng-show="ld.releaseStatusCode == 'N' && (ld.cancelled == false && ld.parentId == 0)"
                                                             ng-click="CancelLeave({{ld.yearMonth}},{{ld.leaveAppId}})">
-                                                        <i class="icon-remove"></i>
+                                                        <i class="fa fa-remove fa-lg"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -140,6 +142,8 @@
                         </div>
                         <div class="panel-footer">
                             @*<strong>Note For Leave Group : LA - Leave Application </strong><br />*@
+                            <strong>Note For LD Leave Type : LD - Lockdown Leave</strong>
+                            <br />
                             <strong>Note For Release Status : N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
                             <br />
                             <strong>Note For Background Color : <text style="background-color:#F8EFBA;color:black;">Yellow Background Color is Your Cancelled Leave </text></strong>

@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
-    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet">
     <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/Angular/angular.min.js"></script>
@@ -103,7 +103,7 @@
                                                                 </td>
                                                                 <td style="text-align:center;" colspan="4">
                                                                     <div class="right-inner-addon">
-                                                                        <i class="icon-calendar"></i>
+                                                                        <i class="fa fa-calendar"></i>
                                                                         <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" placeholder="Select From Date"
                                                                                datepicker required>
                                                                     </div>
@@ -115,7 +115,7 @@
                                                                 </td>
                                                                 <td style="text-align:center;" colspan="4">
                                                                     <div class="right-inner-addon">
-                                                                        <i class="icon-calendar"></i>
+                                                                        <i class="fa fa-calendar"></i>
                                                                         <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" placeholder="Select To Date"
                                                                                datepicker required>
                                                                     </div>
@@ -162,7 +162,7 @@
                                                                 <td colspan="7" style="text-align:right;">
                                                                     <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
                                                                             ng-click="createLeave(New)">
-                                                                        Save
+                                                                        <i class="fa fa-save"></i> Save
                                                                     </button>
                                                                 </td>
                                                             </tr>
@@ -203,7 +203,7 @@
                                                 <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
                                                 <span class="input-group-btn">
                                                     <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                                        <i class="icon-search"></i>Search
+                                                        <i class="fa fa-search"></i>
                                                     </button>
                                                 </span>
                                             </div>
@@ -304,7 +304,7 @@
                                         <td style="text-align:center;">{{d.postUser}}</td>
                                         <td style="text-align:center;">
                                             <button class="btn btn-info" id="btnEdit" value="Edit" ng-click="PopulateData({{d.leaveAppId}},{{d.leaveAppItem}})">
-                                                <i class="icon-edit"></i>
+                                                <i class="fa fa-edit"></i>
                                             </button>
                                         </td>
                                         <td style="text-align:center;">
@@ -312,7 +312,7 @@
                                         </td>
                                         <td style="text-align:center;">
                                             <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="LeaveReject(r,{{d.leaveAppId}},{{d.yearMonth}})">
-                                                <i class="icon-remove"></i>
+                                                <i class="fa fa-remove "></i>
                                             </button>
                                         </td>
                                     </tr>

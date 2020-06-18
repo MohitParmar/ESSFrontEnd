@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Form16Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/Form16Cntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="Form16Cntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>TDS Forms Upload</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form enctype="multipart/form-data" id="formUpload">
+                                <div ng-init="GetForm16Link()">
+                                    <select class="form-control" id="yearMonth" ng-model="N.year" ng-options="f for f in f16data" style="width:322px;" required>
+                                        <option value="" selected>--- Select Financial Year ---</option>
+                                    </select>
+                                </div><img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv"><br />
+                                <div class="input-group form">
+                                    <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" id="buttonUpload" ng-click="FromUpload(N.year,'form16')">
+                                            <i class="fa fa-upload"></i>&nbsp;Upload Form 16 Part A
+                                        </button>
+                                    </span>
+                                </div><br />
+                                <div class="input-group form">
+                                    <input type="file" id="files1" name="files1" multiple="multiple" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" id="buttonUpload1" ng-click="FromUpload(N.year,'form12')">
+                                            <i class="fa fa-upload"></i>&nbsp;Upload Form 16 Part B
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note : Select Financial Year before Uploading Files.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

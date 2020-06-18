@@ -34,7 +34,7 @@
                                         </tr>
                                     </table>
                                     @* Leave Application Details *@
-                                    <table class="table table-bordered table-condensed" id="aliasTable">
+                                    <table class="table table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">Unit</th>
@@ -135,12 +135,13 @@
                                         <tr ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                             <td style="text-align:center;" id="addDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
-                                            <td style="text-align:left;" id="empName" ng-repeat="e in d.employee track by $index" ng-if="$index==11" data-title="'empName'">{{e}}</td>
-                                            <td style="text-align:left;" id="desgName" ng-repeat="desg in d.employee track by $index" ng-if="$index==9" data-title="'desgName'">{{desg}}</td>
+                                            <td style="text-align:left;" id="empName" ng-repeat="e in d.employee track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
+                                            <td style="text-align:left;" id="desgName" ng-repeat="desg in d.employee track by $index" ng-if="$index==12" data-title="'desgName'">{{desg}}</td>
                                             <td style="padding:2px;font-size: x-small;">
                                                 <table class="table table-condensed table-hover" style="padding:2px;margin-bottom:0px;" id="aliasTable">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="padding:2px;text-align:center;width:91px;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td ng-hide="true">{{lrd.leaveAppId}}</td>
+                                                        <td style="padding:2px;text-align:left;width:91px;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
                                                         <td style="padding:2px;text-align:center;width:45px;">{{lrd.leaveAppItem}}</td>
                                                         <td style="padding:2px;text-align:center;width:36px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding:2px;text-align:center;width:71px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
@@ -191,6 +192,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
+                        <strong>Note For LD Leave Type : LD - Lockdown Leave</strong>
+                        <br />
                         <strong>Note For Leave Group : LA - Leave Application, CO - COff Application </strong>
                         <br />
                         <strong>Note For Release Status : N - Not released, <text style="color:#ff9800;"> P - Partially released</text></strong>
@@ -237,7 +240,7 @@
                                             ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}"
                                             ng-show="d.releaseStatusCode =='F'">
                                             <td style="text-align:center;padding-top:10px;">{{d.empUnqId}}</td>
-                                            <td style="text-align:left;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==11" data-title="'empName'">
+                                            <td style="text-align:left;padding-top:10px;" id=" empname" ng-repeat="e in d.employee  track by $index" ng-if="$index==14" data-title="'empName'">
                                                 {{e}}
                                             </td>
                                             <td colspan="7">
