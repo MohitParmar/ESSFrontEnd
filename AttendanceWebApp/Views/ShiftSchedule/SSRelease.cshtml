@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Shift Schedule Release";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <input type="hidden" value="SS" id="releaseGroupCode" />
+        <div class="row">
+            @* Main Model Display All Pending For Apporoval Leave Application List*@
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Pending Shift Schedule List</strong></div>
+                    <div class="panel-body">
+                        <div ng-init="GetSSList()">
+                            <div class="table-responsive">
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead ng-repeat="dd in ssdata track by $index" ng-if="$index==0">
+                                        <tr>
+                                            <th style="width:10px;">ID</th>
+                                            <th>
+                                                <table class="table table-bordered" style="padding:2px;margin-bottom:0px;" ng-repeat="sd in dd.schedules track by $index" ng-if="$index==0">
+                                                    <tr>
+                                                        <th style="width:70px;">SAPID</th>
+                                                        <th style="width:70px;">Employee Name</th>
+                                                        <th style="width:70px;">Station</th>
+                                                        <th style="width:32px;" ng-repeat="md in sd.shiftScheduleDetails ">
+                                                            {{md.shiftDay}}
+                                                        </th>
+                                                        @*<th>Sts</th>*@
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th style="width:10px;">Actions</th>
+                                            <th style="width:10px;">Created By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in ssdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:1" pagination-id="pg_1">
+                                        <tr>
+                                            <td style="width:10px;">{{d.scheduleId}}</td>
+                                            <td>
+                                                <table class="table table-condensed table-hover table-bordered table-striped" style="padding:2px;margin-bottom:0px;" id="aliasTable">
+                                                    <tr ng-repeat="s in d.schedules">
+                                                        <td style="width:70px;">{{s.empUnqId}}</td>
+                                                        <td style="width:70px;">{{s.empName}}</td>
+                                                        <td style="width:70px;">{{s.statName}}</td>
+                                                        <td style="width:32px;" ng-repeat="m in s.shiftScheduleDetails">
+                                                            {{m.shiftCode}}
+                                                        </td>
+                                                        @*<td style="width:21px;"
+                                                                ng-style="s.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
+                                                                s.releaseStatusCode==='I' && {'background-color':'#f44336','color':'White'} ||
+                                                                s.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                                {{s.releaseStatusCode}}
+                                                            </td>*@
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:10px;">
+                                                <button class="btn btn-success" id="btnSubmit" value="Approve" title="Approve"
+                                                        ng-click="UpdateSSReleaseStatus('F',{{d.scheduleId}})">
+                                                    <i class="fa fa-check fa-lg"></i>
+                                                </button>
+                                                <br /><br />
+                                                <button class="btn btn-danger" id="btnReject" value="Reject" title="Reject"
+                                                        ng-click="UpdateSSReleaseStatus('R',{{d.scheduleId}})">
+                                                    <i class="fa fa-remove fa-lg"></i>
+                                                </button>
+                                            </td>
+                                            <td style="width:10px;">{{d.addUser}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -270,6 +270,7 @@
     <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ShiftScheduleController.cs" />
     <Compile Include="Controllers\UtilsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -522,6 +523,7 @@
     <Content Include="Scripts\Controller\PostedByHRReportCntrl.js" />
     <Content Include="Scripts\Controller\ReleaseStreategyCntrl.js" />
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
+    <Content Include="Scripts\Controller\SSCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
     <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
     <Content Include="Scripts\Controller\VehicleRequisition.js" />
@@ -684,25 +686,27 @@
     <Content Include="Views\IncomeTax\IncomeTaxDecFin.cshtml" />
     <Content Include="Views\GatePass\VehicleGatePassInOut.cshtml" />
     <Content Include="Views\GatePass\VehicleGatePassReport.cshtml" />
+    <Content Include="Views\LeaveApp\COffApplyJFL.cshtml" />
+    <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
+    <Content Include="Views\Master\SalarySlip.cshtml" />
+    <Content Include="Views\Master\SalarySlipUpload.cshtml" />
+    <Content Include="Views\Master\UserProfileView.cshtml" />
+    <Content Include="Views\IncomeTax\Form16Upload.cshtml" />
+    <Content Include="Views\IncomeTax\Form16.cshtml" />
+    <Content Include="Views\LeaveApp\LDLeaveApply.cshtml" />
     <Content Include="Views\GatePassAdvice\GenerateGPAdvice.cshtml" />
-    <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
-    <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
     <Content Include="Views\GatePassAdvice\GetGPAdviceList.cshtml" />
     <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
     <Content Include="Views\GatePassAdvice\MasterUpload.cshtml" />
     <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
-    <Content Include="Views\LeaveApp\COffApplyJFL.cshtml" />
+    <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
     <Content Include="Views\OD\ODApply.cshtml" />
-    <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
-    <Content Include="Views\Master\SalarySlip.cshtml" />
-    <Content Include="Views\Master\SalarySlipUpload.cshtml" />
-    <Content Include="Views\IncomeTax\TaxComparisonReport.cshtml" />
-    <Content Include="Views\Master\UserProfileView.cshtml" />
     <Content Include="Views\Utils\VehicleRequisition.cshtml" />
-    <Content Include="Views\Master\VerifyAddressHR.cshtml" />
-    <Content Include="Views\IncomeTax\Form16Upload.cshtml" />
-    <Content Include="Views\IncomeTax\Form16.cshtml" />
-    <Content Include="Views\LeaveApp\LDLeaveApply.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSDLUP.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSRelease.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSReport.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSHRReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -326,9 +326,9 @@
                             <li hidden="hidden" id="mnuResetPass">
                                 <a href="/Home/ResetPassword">Reset Password</a>
                             </li>
-                            <li id="mnuVerifyAddress">
-                                <a href="/Master/VerifyAddressHR">Address Verification</a>
-                            </li>
+                            @*<li id="mnuVerifyAddress">
+                                    <a href="/Master/VerifyAddressHR">Address Verification</a>
+                                </li>*@
                             <li hidden="hidden" id="mnuManageLeave">
                                 <a href="~/Master/ManageLeaveMaster">Manage Leave</a>
                             </li>
@@ -337,6 +337,23 @@
                             </li>
                             <li hidden="hidden" id="mnuTDSUpload">
                                 <a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="mnuSSMaster">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>SS Master</span></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuSSDLUP">
+                                <a href="~/ShiftSchedule/SSDLUP"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule</a>
+                            </li>
+                            <li id="mnuSSRelease">
+                                <a href="/ShiftSchedule/SSRelease">Shift Schedule Release</a>
+                            </li>
+                            <li id="mnuSSRELRPT">
+                                <a href="/ShiftSchedule/SSReport">Shift Schedule Report</a>
+                            </li>
+                            <li id="mnuSSHRRPT">
+                                <a href="/ShiftSchedule/SSHRReport">Shift Schedule HR Report</a>
                             </li>
                         </ul>
                     </li>

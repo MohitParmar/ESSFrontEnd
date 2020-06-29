@@ -231,7 +231,7 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;padding:3px;width:56px;">Rel. Date</th>
+                                            <th style="text-align:center;padding:3px;width:56px;">Rel. Date - Remarks</th>
                                             <th style="text-align:center;padding:3px;width:61px;" ng-click="sort('empUnqId')">
                                                 Employee Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
@@ -289,7 +289,7 @@
                                             <td style="text-align:center;padding:3px;width:30px;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;padding:3px;" id="releaseDate" ng-repeat="lr in d.applReleaseStatus">
-                                                {{lr.releaseDate | date:'dd/MM/yyyy'}}
+                                                {{lr.releaseDate | date:'dd/MM/yyyy'}} - {{lr.remarks}}
                                             </td>
                                             <td style="text-align:center;padding:3px;" id="empUnqId">{{d.empUnqId}}</td>
                                             <td style="text-align:left;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14"
@@ -307,7 +307,7 @@
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
                                                         <td ng-hide="true">{{lrd.leaveAppId}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:42px;">{{lrd.leaveAppItem}}</td>
-                                                        <td style="padding-left:2px;padding-right:2px;width:63px;text-align:left;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}-{{lrd.additionalRemarks}}</td>
+                                                        <td style="padding-left:2px;padding-right:2px;width:63px;text-align:left;">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:34px;">{{lrd.leaveTypeCode}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:66px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
                                                         <td style="padding-left:2px;padding-right:2px;width:54px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>

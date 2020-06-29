@@ -21,23 +21,30 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         //Get ReleaseCode of Releaser
         var dataarr = []; for (i = 0; i < detailarr.length; i++) { var release_auth = detailarr[i]["releaseAuth"]; if (release_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
         var jsonObj = {}; jsonObj.YearMonth = dataarr.yearMonth; jsonObj.ReleaseGroupCode = dataarr.releaseGroupCode; jsonObj.ApplicationId = rlsappid; jsonObj.ReleaseStrategy = dataarr.releaseStrategy; jsonObj.ReleaseStrategyLevel = dataarr.releaseStrategyLevel; jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = dataarr.releaseStatusCode; jsonObj.ReleaseDate = strDate; jsonObj.ReleaseAuth = dataarr.releaseAuth; jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = rmks; jsonObj.LeaveApplications_YearMonth = null; jsonObj.LeaveApplications_LeaveAppId = null; jsonObj = JSON.stringify(jsonObj);
-        var xhr2 = new XMLHttpRequest(); xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode, true); xhr2.setRequestHeader("Content-type", "application/json"); xhr2.onreadystatechange = function () {
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode, true);
+        xhr2.setRequestHeader("Content-type", "application/json"); xhr2.onreadystatechange = function () {
             if (xhr2.readyState === 4) {
                 $('#btnClose').click(); if (releaseStatusCode === 'F') {
                     //Auto Mail Sending
                     var empcode = $('#myEmpUnqId').val(); var ind = 0; var rls_final = ''; if (detailarr.length > 0) { for (var rls = 0; rls < detailarr.length; rls++) { var rls_code = detailarr[rls]["releaseAuth"]; rls_final = detailarr[rls]["isFinalRelease"]; if (rls_code === empcode && rls_final !== true) { ind = rls + 1; break; }; }; }; if (rls_final !== true) { var relsauth = detailarr[ind]["releaseAuth"]; var rlsmail = new XMLHttpRequest(); rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=' + detailarr[ind]["releaseGroupCode"] + '&id=' + rlsappid + '&releaseAuth=' + relsauth, true); rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send(); };
                     //Auto Mail End
                     document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Approved Sucesfully.. </strong></div>";
-
                     ///Auto Leave Post
-                    ///var loc = $('#myLoc').val();
-                    ///if (loc === "IPU") {
-                    ///    var TableData = storeTblValues(); var ldata = new Array(); TableData = JSON.stringify(TableData); function storeTblValues() { var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(), "LeaveTypeCode": $(tr).find('td:eq(3)').text() } }); var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) { var appid = TableData[i]["LeaveAppId"]; if (appid == rlsappid) { tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++; }; }; ldata = tbl; return tbl; };
-                    ///    //for (var l = 0; l < ldata.length; l++) { var ltc = ldata[l]["LeaveTypeCode"]; if (ltc === "SL") { }; };
-                    ///    var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData);
-                    ///};
-                };
-                if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Rejected Sucesfully.. </strong></div>"; }; $('#MessageBox').show();
+                    //var loc = $('#myLoc').val(); if (rls_final === true && loc === "IPU") {
+                    //    var slflg = false; var TableData = storeTblValues(); var ldata = new Array(); TableData = JSON.stringify(TableData);
+                    //    function storeTblValues() {
+                    //        var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(), "LeaveTypeCode": $(tr).find('td:eq(3)').text() } });
+                    //        var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
+                    //            var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
+                    //            if (appid == rlsappid) {
+                    //                if (appleavetype === "SL" || appleavetype === "LD") { slflg = true; return false; };
+                    //                tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++;
+                    //            };
+                    //        }; ldata = tbl; return tbl;
+                    //    }; if (slflg === false) { var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData); };
+                    //};
+                }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Rejected Sucesfully.. </strong></div>"; }; $('#MessageBox').show();
             } else { jQuery('#btnClose').click(); if (releaseStatusCode === 'F') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Not Approved .. </strong></div>"; }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Leave Application Not Rejected .. </strong></div>"; }; $('#MessageBox').show(); }; $scope.GetLeaveRequestLists();
         }; xhr2.send(jsonObj);
     };      //Update Leave Application With Approve / Reject

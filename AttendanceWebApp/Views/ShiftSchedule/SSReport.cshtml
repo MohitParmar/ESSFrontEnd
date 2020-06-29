@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Shift Schedule Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <input type="hidden" value="SS" id="releaseGroupCode" />
+        <div class="row">
+            @* Main Model Display All Pending For Apporoval Leave Application List*@
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Shift Schedule Report for SS Releaser</strong></div>
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" ng-click="Download('1')"><i class="fa fa-download"></i>&nbsp;CurrentMonthAll</button>
+                            <button type="button" class="btn btn-primary" ng-click="Download('2')"><i class="fa fa-download"></i>&nbsp;CurrentMonthReleased</button>
+                            <button type="button" class="btn btn-default" ng-click="Download('3')"><i class="fa fa-download"></i>&nbsp;PreviousMonthAll</button>
+                            <button type="button" class="btn btn-primary" ng-click="Download('4')"><i class="fa fa-download"></i>&nbsp;PreviousMonthReleased</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

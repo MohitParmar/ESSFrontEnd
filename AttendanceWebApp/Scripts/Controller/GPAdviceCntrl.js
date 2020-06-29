@@ -16,7 +16,6 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
     //Generate / Update  Gate Pass Advice
     $scope.GenerateGPAdvice = function (data, editflag) {
         //$('#txtVenderName').val(); $('#txtVenderAdd1').val();
-        debugger;
         var d2 = new Date(); var year = d2.getFullYear().toString(); var month = d2.getMonth() + 1; var yearmonth = year + (month.toString());
         var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate(), d2.getHours(), d2.getMinutes(), d2.getSeconds());
         var now = (today.getFullYear()) + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -34,7 +33,7 @@ app.controller('GPAdviceController', function ($scope, $http, $filter) {
                 jsonObj.unitCode = $scope.empdata[0]['unitCode']; jsonObj.deptCode = $scope.empdata[0]['deptCode']; jsonObj.statCode = $scope.empdata[0]['statCode'];
                 jsonObj.addDt = now; jsonObj.addUser = $('#myEmpUnqId').val();
             }; if (editflag === true) {
-                debugger;
+                
                 $('#editTable tr').each(function (row, tr) { TableData[row] = { "yearMonth": yearmonth, "gpAdviceNo": $('#gpAdviceNo').val(), "gpAdviceItem": $(tr).find('td:eq(0)').text(), "materialCode": $(tr).find('td:eq(1)').text(), "materialDesc": $(tr).find('td:eq(2)').text(), "materialQty": $(tr).find('td:eq(3)').text(), "approxValue": $(tr).find('td:eq(4)').text(), "hsnCode": $(tr).find('td:eq(5)').text() } });
                 jsonObj.gpAdviceNo = $('#gpAdviceNo').val(); jsonObj.gpAdviceDate = $scope.pdata[0]['gpAdviceDate'];; jsonObj.gpAdviceType = $('#GpAdviceType').val();
                 jsonObj.purpose = $('#txtPurpose').val(); jsonObj.workOrderNo = $('#txtWONO').val(); jsonObj.vendorCode = $('#txtVenderCode').val();

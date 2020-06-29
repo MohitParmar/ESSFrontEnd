@@ -101,8 +101,16 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;width:48px;">App. Date</th>
-                                            <th style="text-align:center;width:64px;">Employee Code</th>
+                                            <th style="text-align:center;width:48px;" ng-click="sort('addDt')">
+                                                App. Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;width:64px;" ng-click="sort('empUnqId')">
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;width: 150px;">Employee Name</th>
                                             <th style="text-align:center;width: 100px;">Designation</th>
                                             <th style="text-align:center;padding:0px;">
@@ -128,7 +136,19 @@
                                             </th>
                                             <th style="text-align:center;">Remarks</th>
                                             <th style="text-align:center;width: 191px;">Action</th>
-                                            <th style="text-align:center;width:46px;">Status</th>
+                                            <th style="text-align:center;width:46px;" ng-click="sort('releaseStatusCode')">
+                                                Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                            </td>
+                                            <td colspan="6"></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
@@ -246,7 +266,7 @@
                                             <td colspan="7">
                                                 <table class="table table-hover table-condensed table-hover table-bordered">
                                                     <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                        <td style="text-align:left;width:215px;" data-title="'remarks'">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}}</td>
+                                                        <td style="text-align:left;width:215px;" data-title="'remarks'">{{(d.releaseGroupCode != 'OD') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
                                                         <td style="text-align:center;width:55px;" data-title="'leaveAppItem'">{{lrd.leaveAppItem}}</td>
                                                         <td style="text-align:center;width:38px;" data-title="'leaveTypeCode'">{{lrd.leaveTypeCode}}</td>
                                                         <td style="text-align:center;width:77px;" data-title="'fromDt'">{{lrd.fromDt | date:'dd/MM/yyyy'}}</td>
@@ -275,6 +295,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
+                        <strong>Note For LD Leave Type : LD - Lockdown Leave</strong>
+                        <br />
                         <strong>Note For Leave Group : LA - Leave Application, CO - COff Application </strong>
                         <br />
                         <strong>Note For Release Status :  N - Not released ,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>

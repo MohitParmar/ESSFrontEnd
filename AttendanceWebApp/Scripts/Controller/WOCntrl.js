@@ -39,7 +39,6 @@ app.controller('WeeklyOffCntroller', function ($scope, $http, $filter) {
                 "<strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false;
         } else { return true; };
     }; $scope.CreateWO = function (entity) {
-        debugger;
         document.getElementById("BtnCreate").disabled = true;
         var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var year = d.getFullYear().toString(); var month = d.getMonth() + 1; var yearmonth = year + (month.toString());
@@ -47,7 +46,6 @@ app.controller('WeeklyOffCntroller', function ($scope, $http, $filter) {
         var HalfDayFlag = false; var TotalDays = "1";
         var jsonObj = {}; var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
         function storeTblValues() { var TableData = new Array(); TableData[0] = { "yearMonth": yearmonth, "leaveAppId": 0, "compCode": $('#myCompCode').val(), "wrkGrp": $('#myWrkGrp').val(), "leaveAppItem": '1', "leaveTypeCode": 'WO', "fromDt": FromDateTime, "toDt": ToDateTime, "totalDays": TotalDays, "halfdayflag": HalfDayFlag, "remarks": entity.Remarks, "placeOfVisit": '', "contactAddress": '' }; jsonObj.yearMonth = yearmonth; jsonObj.leaveAppId = 0; jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.compCode = $('#myCompCode').val(); jsonObj.wrkGrp = $('#myWrkGrp').val(); jsonObj.unitCode = $('#myUnitCode').val(); jsonObj.deptCode = $('#myDeptCode').val(); jsonObj.statCode = $('#myStatCode').val(); jsonObj.catCode = $('#myCatCode').val(); jsonObj.isHOD = $('#myIsHod').val(); jsonObj.releaseGroupCode = $('#releaseGroupCode').val(); jsonObj.releaseStrategy = ""; jsonObj.releaseStatusCode = ""; jsonObj.addDt = dt; jsonObj.addUser = $('#myEmpUnqId').val(); jsonObj.clientIp = $('#myIPAddress').val(); jsonObj.updDt = dt; jsonObj.updUser = null; jsonObj.remarks = null; jsonObj.parentId = 0; jsonObj.leaveApplicationDetails = TableData; return jsonObj; };
-        debugger;
         var xhr = new XMLHttpRequest(); xhr.open('POST', $scope._Conpath + 'LeaveApplication/CreateLeaveApplication', true);
         xhr.setRequestHeader("Content-type", "application/json"); xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 201) {

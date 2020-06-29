@@ -116,6 +116,7 @@
                                                 <th style="text-align:center;padding:3px;width:56px;">App. Date</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">Rel. Status</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">Rel. Details</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Remarks</th>
                                                 <th style="text-align:center;padding:3px;width:56px;">Post. Date</th>
                                                 <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
                                                     Employee Code
@@ -126,7 +127,7 @@
                                                 <th style="text-align:center;">Station</th>
                                                 <th style="text-align:center;">Leave Reason</th>
                                                 <th style="text-align:center;">Sr No.</th>
-                                                <th style="text-align:center;">Type</th>
+                                                <th style="text-align:center;">Leave Type</th>
                                                 <th style="text-align:center;">From Date</th>
                                                 <th style="text-align:center;">To Date</th>
                                                 <th style="text-align:center;">Days</th>
@@ -141,7 +142,7 @@
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.releaseStatusCode" />
                                                 </td>
-                                                <td colspan="2"></td>
+                                                <td colspan="3"></td>
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.empUnqId" />
                                                 </td>
@@ -169,11 +170,12 @@
                                                 <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;padding:3px;" id="releaseStatusCode">{{d.releaseStatusCode}}</td>
                                                 <td style="text-align:left;padding:3px;" id="releaseDate">{{d.finalReleaser}}<br />{{d.releaserName}} <br /> {{d.releaseDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:left;padding:3px;" id="releasermks">{{d.releaserRemarks}}</td>
                                                 <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label></td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
                                                 <td style="text-align:left;">{{d.statName}}</td>
-                                                <td style="text-align:left;">{{d.remarks}}</td>
+                                                <td style="text-align:left;">{{d.remarks}} - {{d.additionalRemarks}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppItem}}</td>
                                                 <td style="text-align:center;">{{d.leaveTypeCode}}</td>
                                                 <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yyyy'}}</td>
