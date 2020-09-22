@@ -1,47 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AttendanceWebApp.Models
 {
     public class Employees
     {
+
         [Key]
         [StringLength(10)]
         public string EmpUnqId { get; set; }
 
         [StringLength(2)]
         public string CompCode { get; set; }
-
         [ForeignKey("CompCode")]
         public Company Company { get; set; }
 
         [StringLength(10)]
         public string WrkGrp { get; set; }
-
         [ForeignKey("CompCode, WrkGrp")]
         public WorkGroups WorkGroup { get; set; }
 
         [StringLength(3)]
         public string EmpTypeCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, EmpTypeCode")]
         public EmpTypes EmpTypes { get; set; }
 
         [StringLength(3)]
         public string UnitCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, UnitCode")]
         public Units Units { get; set; }
 
         [StringLength(3)]
         public string DeptCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode")]
         public Departments Departments { get; set; }
 
         [StringLength(3)]
         public string StatCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, UnitCode, DeptCode, StatCode")]
         public Stations Stations { get; set; }
 
@@ -52,19 +48,16 @@ namespace AttendanceWebApp.Models
 
         [StringLength(3)]
         public string CatCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, CatCode")]
         public Categories Categories { get; set; }
 
         [StringLength(3)]
         public string DesgCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, DesgCode")]
         public Designations Designations { get; set; }
 
         [StringLength(3)]
         public string GradeCode { get; set; }
-
         [ForeignKey("CompCode, WrkGrp, GradeCode")]
         public Grades Grades { get; set; }
 
@@ -87,9 +80,12 @@ namespace AttendanceWebApp.Models
 
         public bool IsGpReleaser { get; set; }
 
+        public bool IsGaReleaser { get; set; }
+
         public bool IsSecUser { get; set; }
 
         public bool IsAdmin { get; set; }
+
 
         [StringLength(20)]
         public string Pass { get; set; }
@@ -104,7 +100,6 @@ namespace AttendanceWebApp.Models
 
         public bool CompanyAcc { get; set; }
 
-        [StringLength(3)]
         public string RoleId { get; set; }
     }
 }

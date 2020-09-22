@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "Advance Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ReimbursementCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ReimbursementController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Application For Advance / Loan</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetEmpInfo()">
+                            <table class="table table-condensed table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th colspan="6" style="        text-align: center;">
+                                            <h3>
+                                                JINDAL SAW LTD.
+                                                <br />
+                                            </h3>
+                                            <h6>
+                                                (Integrated Pipe Unit)
+                                                <br />
+                                            </h6>
+                                            <h5>Village-Samaghogha, Taluka-Mundra-370421.</h5>
+                                            <h4>
+                                                <u>APPLICATION FOR ADVANCE / LOAN</u>
+                                            </h4>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="        text-align: right;">
+                                            <b>Date:~</b>
+                                            <script type="text/javascript">let date_ob = new Date(); let date = ("0" + date_ob.getDate()).slice(-2); let month = ("0" + (date_ob.getMonth() + 1)).slice(-2); let year = date_ob.getFullYear(); document.write(date + "-" + month + "-" + year);</script>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="emp in empdata">
+                                    <tr>
+                                        <td>
+                                            <b>Emp-code</b>
+                                        </td>
+                                        <td>{{emp.empUnqId}}</td>
+                                        <td>
+                                            <b>Name</b>
+                                        </td>
+                                        <td>{{emp.empName}}</td>
+                                        <td>
+                                            <b>Dept.</b>
+                                        </td>
+                                        <td>{{emp.deptName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Amount</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtAmount" />
+                                        </td>
+                                        <td>
+                                            <b>Rs.</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtRs" />
+                                        </td>
+                                        <td>
+                                            <b>Deduction</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtDeduction" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>w.e.f (Month)</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtwefMonth" />
+                                        </td>
+                                        <td>
+                                            <b>Purpose</b>
+                                        </td>
+                                        <td colspan="3">
+                                            <input class="form-control" id="txtPurpose" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Leave Granted From</b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Select From Date" datepicker required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <b>
+                                                To
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Select To Date" datepicker required>
+                                            </div>
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="        font-size: 15px;">
+                                            <br />
+                                            <br />
+                                            <b>Employee Signature</b>
+                                            <p>
+                                                <b>I hereby furnish the gurantee that; I will take care of Repayment of Advance/Loan of any default on the part of the concerned employee.</b>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="        text-align: center;
+        font-size: 15px;">
+                                            <br />
+                                            <br />
+                                            <b>H.O.D</b>
+                                        </td>
+                                        <td colspan="3" style="        text-align: center;
+        font-size: 15px;">
+                                            <br />
+                                            <br />
+                                            <b>Employee Signature & Employee Code</b>
+                                            <br />
+                                            <b>(Guaranter)</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="6" style="        text-align: center;
+        font-size: 15px;">
+                                            Approved by
+                                            <br />
+                                            ____________________(G.M)____________________
+                                            <br />
+                                            (For Personnel Department)
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Basic</b>
+                                        </td>
+                                        <td></td>
+                                        <td><b>D.O.J</b></td>
+                                        <td></td>
+                                        <td>
+                                            <b>Advance/Loan Recommended</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtRecommended" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Last advance taken and cleared</b>
+                                        </td>
+                                        <td colspan="2">
+                                            <input class="form-control" id="txtLoanTakenCleared" />
+                                        </td>
+                                        <td>
+                                            <b>Raemarks</b>
+                                        </td>
+                                        <td colspan="2"><input class="form-control" id="txtRemarks" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="        font-size: 15px;">
+                                            <br />
+                                            <br />
+                                            <b>Signatue</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

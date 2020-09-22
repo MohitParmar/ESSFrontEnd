@@ -73,7 +73,14 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                return View();
+                if (Session["UserRole"].ToString() == "17" || Session["UserRole"].ToString() == "11")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AuthorizationError", "CustomError");
+                }
             }
             else
             {

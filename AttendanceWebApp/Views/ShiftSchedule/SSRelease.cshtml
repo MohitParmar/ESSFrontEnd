@@ -13,21 +13,28 @@
             @* Main Model Display All Pending For Apporoval Leave Application List*@
             <div class="col-sm-12">
                 <div id="MessageBox"></div>
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Pending Shift Schedule List</strong></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Pending For Release</strong>
+                        <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
+                    </div>
                     <div class="panel-body">
                         <div ng-init="GetSSList()">
                             <div class="table-responsive">
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead ng-repeat="dd in ssdata track by $index" ng-if="$index==0">
                                         <tr>
-                                            <th style="width:10px;">ID</th>
+                                            <th>Open Month</th>
+                                            <th style="width:10px;">Created By</th>
+                                            @*<th style="width:10px;">ID</th>*@
                                             <th>
                                                 <table class="table table-bordered" style="padding:2px;margin-bottom:0px;" ng-repeat="sd in dd.schedules track by $index" ng-if="$index==0">
                                                     <tr>
+                                                        <th>Sr. No.</th>
                                                         <th style="width:70px;">SAPID</th>
-                                                        <th style="width:70px;">Employee Name</th>
+                                                        <th style="width:70px;">Name</th>
                                                         <th style="width:70px;">Station</th>
                                                         <th style="width:32px;" ng-repeat="md in sd.shiftScheduleDetails ">
                                                             {{md.shiftDay}}
@@ -37,15 +44,17 @@
                                                 </table>
                                             </th>
                                             <th style="width:10px;">Actions</th>
-                                            <th style="width:10px;">Created By</th>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in ssdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:1" pagination-id="pg_1">
                                         <tr>
-                                            <td style="width:10px;">{{d.scheduleId}}</td>
+                                            <td>{{d.yearMonth}}</td>
+                                            <td style="width:10px;">{{d.addUser}} {{d.addUserName}}</td>
+                                            @*<td style="width:10px;">{{d.scheduleId}}</td>*@
                                             <td>
-                                                <table class="table table-condensed table-hover table-bordered table-striped" style="padding:2px;margin-bottom:0px;" id="aliasTable">
+                                                <table class="table table-condensed table-hover table-bordered table-striped" style="padding:2px;margin-bottom:0px;" id="aliasTable" current-page="currentPage">
                                                     <tr ng-repeat="s in d.schedules">
+                                                        <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                                         <td style="width:70px;">{{s.empUnqId}}</td>
                                                         <td style="width:70px;">{{s.empName}}</td>
                                                         <td style="width:70px;">{{s.statName}}</td>
@@ -72,7 +81,6 @@
                                                     <i class="fa fa-remove fa-lg"></i>
                                                 </button>
                                             </td>
-                                            <td style="width:10px;">{{d.addUser}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

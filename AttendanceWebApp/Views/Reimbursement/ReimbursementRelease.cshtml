@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Reimbursement Release";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ReimbursementCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="ReimbursementController">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="RE" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Pending For Release</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetPendingForRelease()">
+                            <table class="table table-condensed table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            Empunqid
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('empName')">
+                                            Employee Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('deptName')">
+                                            Department
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('statName')">
+                                            Station
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('reimbType')">
+                                            Reimbursement Type
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='reimbType'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('reimbDate')">
+                                            Reimbursement Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='reimbDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('periodFrom')">
+                                            Period From
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='periodFrom'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('periodTo')">
+                                            Period To
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='periodTo'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('amountClaimed')">
+                                            Amount Claimed
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='amountClaimed'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reimbType" />
+                                        </td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in lstdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">
+                                    <tr>
+                                        <td style="text-align:center;">{{d.empUnqId}}</td>
+                                        <td style="text-align:center;">{{d.empName}}</td>
+                                        <td style="text-align:center;">{{d.deptName}}</td>
+                                        <td style="text-align:center;">{{d.statName}}</td>
+                                        <td style="text-align:center;">{{d.reimbType}}</td>
+                                        <td style="text-align:center;">{{d.reimbDate |date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.periodFrom}}</td>
+                                        <td style="text-align:center;">{{d.periodTo}}</td>
+                                        <td style="text-align:center;">{{d.amountClaimed}}</td>
+                                        <td style="text-align:center;">
+                                            <button class="btn btn-info" id="btnDetails" ng-click="PopulateData({{d.reimbId}})"><i class="fa fa-info-circle"></i> Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For CON Reimbursement Type : CON - Conveyance</strong>
+                        <br />
+                        <strong>Note For LTA Reimbursement Type : CAR - LTA Reimbursement</strong>
+                        <br />
+                        <strong>Note For CAR Reimbursement Type : CAR - CAR Reimbursement</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Reimbursement Details</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tbody ng-repeat="con in convData">
+                                            <tr>
+                                                <td colspan="10" class="info fc-header-center">
+                                                    <h4>Conveyance Details</h4>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;">EmpUnqId</th>
+                                                <th style="text-align:center;">Reimbursement Date</th>
+                                                <th style="text-align:center;">Period From</th>
+                                                <th style="text-align:center;">Period To</th>
+                                                <th style="text-align:center;">Invoice No</th>
+                                                <th style="text-align:center;">Amount Claimed</th>
+                                                <th style="text-align:center;" colspan="4">Remarks</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;">{{con.empUnqId}}</td>
+                                                <td style="text-align:center;">{{con.reimbDate |date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{con.periodFrom}}</td>
+                                                <td style="text-align:center;">{{con.periodTo}}</td>
+                                                <td style="text-align:center;">{{con.invoiceNo}}</td>
+                                                <td style="text-align:center;">{{con.amountClaimed}}</td>
+                                                <td style="text-align:center;" colspan="4">{{con.remarks}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;">Sr NO</th>
+                                                <th style="text-align:center;">Conveyance Date</th>
+                                                <th style="text-align:center;">Vehicle No.</th>
+                                                <th style="text-align:center;">Particulars</th>
+                                                <th style="text-align:center;">Meter From</th>
+                                                <th style="text-align:center;">Distance</th>
+                                                <th style="text-align:center;">Meter To</th>
+                                                <th style="text-align:center;">Rate</th>
+                                                <th style="text-align:center;">Amount</th>
+                                                <th style="text-align:center;">Remarks</th>
+                                            </tr>
+                                            <tr ng-repeat="c in con.reimbConv">
+                                                <td style="text-align:center;">{{c.sr}}</td>
+                                                <td style="text-align:center;">{{c.convDate |date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{c.vehicleNo}}</td>
+                                                <td style="text-align:center;">{{c.particulars}}</td>
+                                                <td style="text-align:center;">{{c.meterFrom}}</td>
+                                                <td style="text-align:center;">{{c.distance}}</td>
+                                                <td style="text-align:center;">{{c.meterTo}}</td>
+                                                <td style="text-align:center;">{{c.rate}}</td>
+                                                <td style="text-align:center;">{{c.amount}}</td>
+                                                <td style="text-align:center;">{{c.remarks}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    Amount Released
+                                                </td>
+                                                <td colspan="8">
+                                                    <input type="text" class="form-control" id="txtamountReleased" ng-model="N.amountReleased" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    Release Remarks
+                                                </td>
+                                                <td colspan="8">
+                                                    <input type="text" class="form-control" id="txtreleaseRemarks" ng-model="N.releaseRemarks" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" style="text-align:right;">
+                                                    <button id="btnSubmit" class="btn btn-success" ng-click="ReimbursementRelease('F',{{con.reimbId}},N)"><i class="fa fa-check-circle-o"></i>&nbsp;Approve</button>
+                                                    <button id="btnReject" class="btn btn-danger" ng-click="ReimbursementRelease('R',{{con.reimbId}},N)"><i class="fa fa-remove"></i>&nbsp;Reject</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

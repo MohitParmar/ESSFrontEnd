@@ -105,7 +105,7 @@
                                     <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1"
                                         ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                         <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yyyy HH:mm'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="
                                                 d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||

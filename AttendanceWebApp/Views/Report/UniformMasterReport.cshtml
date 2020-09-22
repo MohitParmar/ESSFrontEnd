@@ -2,9 +2,11 @@
     ViewBag.Title = "Uniform Master Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/UniformCntrl.js"></script>
-<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+@*<script src="~/Content/ng-grid-2.0.14.debug.js"></script>*@
+
 <style type="text/css">
     .ng-table-pager {
         display: none;
@@ -40,7 +42,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div ng-inti="GetAllUserUniformDetails()">
+                        <div ng-init="GetAllUserUniformDetails()">
                             <div class="table-responsive">
                                 @*<div class="input-group form">
                                         <div class="right-inner-addon">

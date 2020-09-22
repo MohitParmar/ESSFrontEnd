@@ -1,0 +1,658 @@
+﻿@{
+    ViewBag.Title = "ReimbursementFroms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ReimbursementCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<script>
+    window.onload = function () {
+        for (var i = 1; i <= 12; i++) { var opt; if (i < 10) { opt = new Option("0" + [i]); } else { opt = new Option([i]); }; $("#PeriodFromMonth").append(opt); }; for (var j = 1; j <= 12; j++) { var opt; if (j < 10) { opt = new Option("0" + [j]); } else { opt = new Option([j]); }; $("#PeriodToMonth").append(opt); }; var d = new Date(); var fyear = d.getFullYear(); for (var k = fyear; k < fyear + 2; k++) { var opt; opt = new Option(k); $("#PeriodFromYear").append(opt); }; for (var l = fyear; l < fyear + 2; l++) { var opt; opt = new Option(l); $("#PeriodToYear").append(opt); };
+    };
+</script>
+<div ng-app="myApp">
+    <div ng-controller="ReimbursementController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>Reimbursements</strong>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#Conveyance" class="ui-tabs-active" data-toggle="tab">Conveyance</a>
+                                    </li>
+                                    <li>
+                                        <a href="#LTA" data-toggle="tab">LTA</a>
+                                    </li>
+                                    <li>
+                                        <a href="#Advance" data-toggle="tab">Advance / Loan</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="Conveyance">
+                                        <div class="table-responsive">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <strong>REIMBURSEMENT CLAIM FORM ~ CONVEYANCE</strong>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" ng-init="GetEmpInfo()">
+                                                        <table class="table table-condensed table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td colspan="4" style="        text-align: center;">
+                                                                        <h3>JINDAL SAW LTD.</h3>
+                                                                        <h4>REIMBURSEMENT CLAIM FORM</h4>
+                                                                    </td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody ng-repeat="emp in empdata">
+                                                                <tr>
+                                                                    <td colspan="2" style="        text-align: right;">
+                                                                        DATE:~
+                                                                        <script type="text/javascript">let date_ob = new Date(); let date = ("0" + date_ob.getDate()).slice(-2); let month = ("0" + (date_ob.getMonth() + 1)).slice(-2); let year = date_ob.getFullYear(); let hours = date_ob.getHours(); let minutes = ("0" + date_ob.getMinutes()).slice(-2); let seconds = date_ob.getSeconds(); document.write(date + "-" + month + "-" + year + " " + hours + ":" + minutes + ":" + seconds);</script>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        EMPLOYEE CODE:~&nbsp;{{emp.empUnqId}}&nbsp;Employee Name:~&nbsp;{{emp.empName}}
+                                                                    </td>
+                                                                    <td style="        text-align: right;">
+                                                                        DEPARTMENT:~&nbsp;{{emp.deptName}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        DESIGNATION:~&nbsp;{{emp.desgName}}
+                                                                    </td>
+                                                                    <td style="        text-align: right;">
+                                                                        STATION:~&nbsp;{{emp.statName}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">GRADE:~&nbsp;{{emp.gradeName}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-condensed">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>
+                                                                        Period From
+                                                                        <br />
+                                                                        (Select Year Month)
+                                                                    </th>
+                                                                    <td>
+                                                                        <select class="form-control" ng-model="N.PeriodFromMonth" id="PeriodFromMonth">
+                                                                            <option selected="selected">Select</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="form-control" ng-model="N.PeriodFromYear" id="PeriodFromYear">
+                                                                            <option selected="selected">Select</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <th>
+                                                                        Period To
+                                                                        <br />
+                                                                        (Select Year Month)
+                                                                    </th>
+                                                                    <td>
+                                                                        <select class="form-control" ng-model="N.PeriodToMonth" id="PeriodToMonth">
+                                                                            <option selected="selected">Select</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="form-control" ng-model="N.PeriodToYear" id="PeriodToYear">
+                                                                            <option selected="selected">Select</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <th>Invoice No</th>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtInvoiceNo" ng-model="N.InvoiceNo" />
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-condensed table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="        text-align: center;">Conveyance Date</th>
+                                                                    <th style="        text-align: center;">Vehicle No</th>
+                                                                    <th style="        text-align: center;">Particulars</th>
+                                                                    <th style="        text-align: center;">Meter From</th>
+                                                                    <th style="        text-align: center;">KMs</th>
+                                                                    <th style="        text-align: center;">Meter To</th>
+                                                                    <th style="        text-align: center;">Rate</th>
+                                                                    <th style="        text-align: center;">Amount</th>
+                                                                    <th style="        text-align: center;">Add</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style=text-align:center;>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="Dt" ng-model="C.Dt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="yyyy-MM-dd" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtVehicleNo" placeholder="" class="form-control" ng-model="C.VNo" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtParticulars" placeholder="" class="form-control" ng-model="C.Perticular" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtMeterFrom" placeholder="" class="form-control" ng-model="C.MFrom" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtDistance" placeholder="" class="form-control" ng-model="C.KM" ng-change="CalMeterTo()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtMeterTo" placeholder="" class="form-control" ng-model="C.MTo" readonly />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="number" id="txtRate" placeholder="" class="form-control" ng-model="C.Rate" ng-change="CalAmount()" pattern="^\d*(\.\d{0,2})?$" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <input type="text" id="txtAmount" placeholder="" class="form-control" readonly ng-model="C.Amt" />
+                                                                    </td>
+                                                                    <td style=text-align:center;>
+                                                                        <button id="btnAddtoList" class="btn btn-primary" ng-click="AddtoListConv(C)"><i class="fa fa-plus"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table id="aliasTable" data-show-filter="true" class="data-table table table-bordered table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="        text-align: center;">Sr No.</th>
+                                                                    <th style="        text-align: center;">Date</th>
+                                                                    <th style="        text-align: center;">Vehicle No</th>
+                                                                    <th style="        text-align: center;">Particulars</th>
+                                                                    <th style="        text-align: center;">Meter From</th>
+                                                                    <th style="        text-align: center;">KMs</th>
+                                                                    <th style="        text-align: center;">Meter To</th>
+                                                                    <th style="        text-align: center;">Rate</th>
+                                                                    <th style="        text-align: center;">Amount</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="tempRow">
+                                                                    <td colspan="9">No information entered.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="pull-right table-responsive">
+                                                        <div class="input-group form">
+                                                            <input tyep="text" id="txtAmountClaimed" class="form-control" readonly style="        text-align: right;" placeholder="0" />
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-success" id="btnSubmit" ng-click="CreateReimbursement(N)"><i class="fa fa-save"></i> Submit</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer" style="        text-align: center;">
+                                                    <p>
+                                                        Note: Please furnish details of bills / cash memos on reverse.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="LTA">
+                                        <div class="table-responsive">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <strong>REIMBURSEMENT CLAIM FORM</strong>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" ng-init="GetEmpInfo()">
+                                                        <table class="table table-responsive table-condensed table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="4" style="        text-align: center;">
+                                                                        <h3>
+                                                                            JINDAL SAW LTD.
+                                                                            <br />
+                                                                        </h3>
+                                                                        <h4>LTA CLAIM FORM</h4>
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4" style="text-align:right;">
+                                                                        Date:~
+                                                                        <script type="text/javascript">
+                                                                            let date_ob1 = new Date();
+                                                                            let date1 = ("0" + date_ob1.getDate()).slice(-2);
+                                                                            let month1 = ("0" + (date_ob1.getMonth() + 1)).slice(-2);
+                                                                            let year1 = date_ob1.getFullYear();
+                                                                            document.write(date1 + "-" + month1 + "-" + year1);
+                                                                        </script>
+                                                                    </td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <b>A) I Declare</b> that I,along with th following, have visited Places:
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <table class="table table-responsive table-condensed table-bordered">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <input type="text" id="txtVisitedPlaces1" class="form-control" />
+                                                                                </td>
+                                                                                <td style="text-align:center;font-size: 30px;">\</td>
+                                                                                <td>
+                                                                                    <input type="text" id="txtVisitedPlaces2" class="form-control" />
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b>
+                                                                                        (homwtown or anywhere in India)
+                                                                                    </b>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>From Date (yyyy-MM-dd)</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select From Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>To Date (yyyy-MM-dd)</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select To Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>B) Leave Sanctioned:</b> From
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="SanctionedFromDt" ng-model="New.SanctionedFromDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select Sanctioned From Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        To
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="SanctionedToDt" ng-model="New.SanctionedToDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select Sanctioned To Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <b>C) Travel Details:</b>
+                                                                        <table class="table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <th style="text-align:center;">
+                                                                                        Names
+                                                                                    </th>
+                                                                                    <th style="text-align:center;">
+                                                                                        Relationship
+                                                                                    </th>
+                                                                                    <th style="text-align:center;">
+                                                                                        Mode of Travel
+                                                                                    </th>
+                                                                                    <th style="text-align:center;">
+                                                                                        Class of Travel
+                                                                                    </th>
+                                                                                    <th style="text-align:center;">
+                                                                                        To & From fare (Rupees)
+                                                                                    </th>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="text" id="txtTD1" class="form-control" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" id="txtTD2" class="form-control" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" id="txtTD3" class="form-control" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" id="txtTD4" class="form-control" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" id="txtTD5" class="form-control" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button id="btnAddTD" class="btn btn-primary"><i class="fa fa-plus"></i> Add to List</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table class="table table-bordered table-responsive" id="tblalias">
+                                                                            <tr>
+                                                                                <th>
+                                                                                    SINO
+                                                                                </th>
+                                                                                <th>
+                                                                                    Names
+                                                                                </th>
+                                                                                <th>
+                                                                                    Relationship
+                                                                                </th>
+                                                                                <th>
+                                                                                    Mode of Travel
+                                                                                </th>
+                                                                                <th>
+                                                                                    Class of Travel
+                                                                                </th>
+                                                                                <th>
+                                                                                    To & Fro fare (Rupees)
+                                                                                </th>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>
+                                                                            <b>
+                                                                                D) LTA amount availed: Rs
+                                                                            </b>
+                                                                            <label></label>
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot ng-repeat="emp in empdata">
+                                                                <tr>
+                                                                    <td style="text-align:center;">
+                                                                        {{emp.empName}}
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        {{emp.empUnqId}}
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        {{emp.empName}}
+                                                                    </td>
+                                                                    <td style="text-align:center;"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align:center;">
+                                                                        <p>Name of Employee</p>
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <p>SAP Code</p>
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <p>Signature of Employee</p>
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <p>Signature of Approving Authority</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="Advance">
+                                        <div class="table-responsive">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <strong>Application For Advance / Loan</strong>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" ng-init="GetEmpInfo()">
+                                                        <table class="table table-condensed table-bordered table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="6" style="        text-align: center;">
+                                                                        <h3>
+                                                                            JINDAL SAW LTD.
+                                                                            <br />
+                                                                        </h3>
+                                                                        <h6>
+                                                                            (Integrated Pipe Unit)
+                                                                            <br />
+                                                                        </h6>
+                                                                        <h5>Village-Samaghogha, Taluka-Mundra-370421.</h5>
+                                                                        <h4>
+                                                                            <u>APPLICATION FOR ADVANCE / LOAN</u>
+                                                                        </h4>
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="        text-align: right;">
+                                                                        <b>Date:~</b>
+                                                                        <script type="text/javascript">
+                                                                            let date_ob2 = new Date();
+                                                                            let date2 = ("0" + date_ob2.getDate()).slice(-2);
+                                                                            let month2 = ("0" + (date_ob2.getMonth() + 1)).slice(-2);
+                                                                            let year2 = date_ob2.getFullYear();
+                                                                            document.write(date2 + "-" + month2 + "-" + year2);
+                                                                        </script>
+                                                                    </td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody ng-repeat="emp in empdata">
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>Emp-code</b>
+                                                                    </td>
+                                                                    <td>{{emp.empUnqId}}</td>
+                                                                    <td>
+                                                                        <b>Name</b>
+                                                                    </td>
+                                                                    <td>{{emp.empName}}</td>
+                                                                    <td>
+                                                                        <b>Dept.</b>
+                                                                    </td>
+                                                                    <td>{{emp.deptName}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>Amount</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtAmount" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>Rs.</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtRs" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>Deduction</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtDeduction" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>w.e.f (Month)</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtwefMonth" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>Purpose</b>
+                                                                    </td>
+                                                                    <td colspan="3">
+                                                                        <input class="form-control" id="txtPurpose" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>Leave Granted From</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select From Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>
+                                                                            To
+                                                                        </b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="right-inner-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                                                   placeholder="Select To Date" datepicker required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td colspan="2"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="        font-size: 15px;">
+                                                                        <br />
+                                                                        <br />
+                                                                        <b>Employee Signature</b>
+                                                                        <p>
+                                                                            <b>I hereby furnish the gurantee that; I will take care of Repayment of Advance/Loan of any default on the part of the concerned employee.</b>
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" style="        text-align: center;
+        font-size: 15px;">
+                                                                        <br />
+                                                                        <br />
+                                                                        <b>H.O.D</b>
+                                                                    </td>
+                                                                    <td colspan="3" style="        text-align: center;
+        font-size: 15px;">
+                                                                        <br />
+                                                                        <br />
+                                                                        <b>Employee Signature & Employee Code</b>
+                                                                        <br />
+                                                                        <b>(Guaranter)</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th colspan="6" style="        text-align: center;
+        font-size: 15px;">
+                                                                        Approved by
+                                                                        <br />
+                                                                        ____________________(G.M)____________________
+                                                                        <br />
+                                                                        (For Personnel Department)
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>Basic</b>
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <b>D.O.J</b>
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <b>Advance/Loan Recommended</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" id="txtRecommended" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>Last advance taken and cleared</b>
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        <input class="form-control" id="txtLoanTakenCleared" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>Raemarks</b>
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        <input class="form-control" id="txtRemarks" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="        font-size: 15px;">
+                                                                        <br />
+                                                                        <br />
+                                                                        <b>Signatue</b>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

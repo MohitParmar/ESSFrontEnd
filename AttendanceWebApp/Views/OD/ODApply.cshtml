@@ -31,6 +31,9 @@
             pointer-events: none;
         }
 </style>
+<script>
+    function printData() { document.getElementById("printTable").hidden = false; var divToPrint = document.getElementById("printTable"); newWin = window.open(""); newWin.document.write(divToPrint.outerHTML); newWin.print(); document.getElementById("printTable").hidden = true; };
+</script>
 <div ng-app="myApp" ng-controller="ODController">
     <div class="container-fluid">
         <input type="hidden" value="OD" id="releaseGroupCode" />
@@ -39,7 +42,7 @@
             <div class="col-sm-12">
                 <div ng-init="GetRelesaseStratey()">
                     <div class="table-responsive">
-                        <table class="table table-condensed table-" style="text-align:center;">
+                        <table class="table table-condensed table-" style="        text-align: center;">
                             <tr>
                                 <td ng-repeat="rls in rlsdata.releaseStrategyLevels">
                                     <b> Releaser {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
@@ -51,32 +54,133 @@
             </div>
             @* Create Leave Application *@
             <div class="col-sm-12">
+                <div class="table-responsive" ng-init="GetEmpInfo()">
+                    <div dir-paginate="e in empdata|itemsPerPage:5">
+                        <table class="table table-responsive table-condensed" id="printTable"
+                               style="        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+        width: 100%;" hidden="hidden">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" style="        text-align: center;
+        height: 50px;">
+                                        <h3>
+                                            JINDAL SAW LTD.
+                                        </h3>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" style="        text-align: center;
+        height: 100px;">
+                                        <h4>
+                                            OUTDOOR DUTY SLIP
+                                            <br />
+                                            (OFFICIAL)
+                                        </h4>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="        height: 50px;">NAME : </td>
+                                    <td colspan="3" style="        border-bottom: solid;">{{e.empName}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="        height: 50px;">DESIGNATION :</td>
+                                    <td style="        border-bottom: solid;">{{e.desgName}}</td>
+                                    <td>EMP. CODE : </td>
+                                    <td style="        border-bottom: solid;">{{e.empUnqId}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="        height: 50px;">
+                                        DATE    (FROM) :
+                                    </td>
+                                    <td style="        border-bottom: solid;">
+                                        <label id="lblFromDate"></label>
+                                    </td>
+                                    <td>
+                                        (TO) :
+                                    </td>
+                                    <td style="        border-bottom: solid;">
+                                        <label id="lblToDate"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="        height: 50px;">
+                                        PLACE OF VISIT
+
+                                    </td>
+                                    <td colspan="3" style="        border-bottom: solid;">
+                                        <label id="lblPlaceOfVisit"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="        height: 50px;" colspan="4">CONTACT ADDRESS / TELEPHONE NO. (IF ANY):</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="        height: 50px;
+        border-bottom: solid;">
+                                        <label id="lblContactDetails"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="        height: 50px;
+        border-bottom: solid;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="        height: 50px;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="        height: 50px;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="        height: 50px;"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>SIGNATURE OF EMPLOYEE:</td>
+                                    <td style="        border-bottom: solid;"></td>
+                                    <td>APPROVED BY:</td>
+                                    <td style="        border-bottom: solid;"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Outdoor Duty Slip - Official</strong>
+                        <div class="pull-right">
+                            <button type="submit" id="btnPrint" class="btn btn-primary" onclick="printData()"><i class="fa fa-download"></i> Download</button>
+                        </div>
                     </div>
                     <div class="panel-body">
-                        <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                        <form role="form" name="LeaveForm" novalidate style="        margin-bottom: 0px;">
                             <div ng-init="GetEmpInfo()" class="table-responsive">
-                                <table id="myTable" class="table table-responsive table-condensed table-striped table-bordered">
-                                    <tbody dir-paginate="d in empdata|itemsPerPage:5">
+                                <table id="myTable" class="table table-responsive table-condensed" dir-paginate="d in empdata|itemsPerPage:5">
+                                    <thead>
                                         <tr>
-                                            <td>
+                                            <th>
                                                 <label>SAPID</label>
-                                            </td>
-                                            <td>
+                                            </th>
+                                            <th>
                                                 {{d.empUnqId}}
-                                            </td>
-                                            <td>
+                                            </th>
+                                            <th>
                                                 <label>Employee Name</label>
-                                            </td>
-                                            <td>
+                                            </th>
+                                            <th>
                                                 {{d.empName}}
-                                            </td>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
                                             <td>
                                                 <label>Designation</label>
                                             </td>
-                                            <td>
+                                            <td colspan="3">
                                                 {{d.desgName}}
                                             </td>
                                         </tr>
@@ -106,8 +210,18 @@
                                                     </span>
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
                                             <td>
-                                                <input class="form-control" type="checkbox" id="HalfFlag" ng-model="New.HalfFlag" title="Half Day" readonly>
+                                                <label>Half Day</label>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="checkbox" id="HalfFlag" ng-model="New.HalfFlag" title="Half Day">
+                                            </td>
+                                            <td>
+                                                <label>
+                                                    Total Days
+                                                </label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="TotalDays" ng-model="New.TotalDays" title="Total Days" placeholder="Total Days" readonly />
@@ -117,31 +231,45 @@
                                             <td>
                                                 <label>Place Of Visit</label>
                                             </td>
-                                            <td colspan="2">
+                                            <td colspan="3">
                                                 <input class="form-control" type="text" id="Place" name="Place" ng-model="New.Place" placeholder="Place Of Visit.."
-                                                       style="text-transform:uppercase" required>
-                                            </td>
-                                            <td>
-                                                <label>Contact Address / Telephone No. (If Any)</label>
-                                            </td>
-                                            <td colspan="2">
-                                                <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
-                                                       style="text-transform:uppercase" required />
+                                                       style="        text-transform: uppercase" required>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="6" style="text-align:right;">
-                                                <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="text-transform:uppercase" />
-                                                <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                            <td>
+                                                <label>Contact Address / Telephone No. (If Any)</label>
+                                            </td>
+                                            <td colspan="3">
+                                                <input class="form-control" type="text" id="ContactDetails" name="ContactDetails" ng-model="New.Details" placeholder="Write Here.."
+                                                       style="        text-transform: uppercase" required />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="        text-align: right;">
+                                                <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" style="        text-transform: uppercase" />
+                                                <button id="BtnSave" type="submit" class="btn btn-success btn-custom" style="        text-align: right;" value="Final Submit" name="Save"
                                                         ng-click='CreateOD(New)'>
                                                     Generate OD Application
                                                 </button>
+
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="        text-align: right;"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </form>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>
+                            <text style="        color: #f44336;">
+                                Note: OD application will be saved and forwarded for approval only when "Generate OD Applicaion" button is pressed.<br />
+                                Note: After appication generated Press "Download" button to Download or Print Preview the Application.
+                            </text>
+                        </strong>
                     </div>
                 </div>
             </div>

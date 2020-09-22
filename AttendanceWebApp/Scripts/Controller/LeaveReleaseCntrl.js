@@ -14,12 +14,24 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
         }; xhr1.send();
     };      //Get Leave Application Details from Leave Application ID
     $scope.UpdateLeaveReleaseStatus = function (releaseStatusCode, rlsappid, data) {
-        var rmks = ''; if (releaseStatusCode === "R") { if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false; } else { rmks = data.Remarks; }; } else { if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; }; };
+        var rmks = ''; if (releaseStatusCode === "R") {
+            if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false;
+            } else { rmks = data.Remarks; };
+        } else { if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; }; };
         var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
         // Get Releaser Details From AppReleaseStatus Table
-        var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var ecode = rlsarr[r]["leaveAppId"]; if (ecode == rlsappid) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
+        var leaveheaderarr = []; var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) {
+            var ecode = rlsarr[r]["leaveAppId"]; if (ecode == rlsappid) {
+                leaveheaderarr = rlsarr[r]; detailarr = rlsarr[r]["applReleaseStatus"]; break;
+            };
+        };
         //Get ReleaseCode of Releaser
-        var dataarr = []; for (i = 0; i < detailarr.length; i++) { var release_auth = detailarr[i]["releaseAuth"]; if (release_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
+        var dataarr = []; for (i = 0; i < detailarr.length; i++) {
+            var release_auth = detailarr[i]["releaseAuth"]; if (release_auth === $('#myEmpUnqId').val()) {
+                dataarr = detailarr[i]; break;
+            };
+        };
         var jsonObj = {}; jsonObj.YearMonth = dataarr.yearMonth; jsonObj.ReleaseGroupCode = dataarr.releaseGroupCode; jsonObj.ApplicationId = rlsappid; jsonObj.ReleaseStrategy = dataarr.releaseStrategy; jsonObj.ReleaseStrategyLevel = dataarr.releaseStrategyLevel; jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = dataarr.releaseStatusCode; jsonObj.ReleaseDate = strDate; jsonObj.ReleaseAuth = dataarr.releaseAuth; jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = rmks; jsonObj.LeaveApplications_YearMonth = null; jsonObj.LeaveApplications_LeaveAppId = null; jsonObj = JSON.stringify(jsonObj);
         var xhr2 = new XMLHttpRequest();
         xhr2.open('POST', $scope._Conpath + 'AppRelease/UpdateApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode, true);
@@ -31,19 +43,20 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     //Auto Mail End
                     document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Approved Sucesfully.. </strong></div>";
                     ///Auto Leave Post
-                    //var loc = $('#myLoc').val(); if (rls_final === true && loc === "IPU") {
-                    //    var slflg = false; var TableData = storeTblValues(); var ldata = new Array(); TableData = JSON.stringify(TableData);
-                    //    function storeTblValues() {
-                    //        var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(), "LeaveTypeCode": $(tr).find('td:eq(3)').text() } });
-                    //        var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
-                    //            var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
-                    //            if (appid == rlsappid) {
-                    //                if (appleavetype === "SL" || appleavetype === "LD") { slflg = true; return false; };
-                    //                tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++;
-                    //            };
-                    //        }; ldata = tbl; return tbl;
-                    //    }; if (slflg === false) { var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData); };
-                    //};
+                    var loc = $('#myLoc').val(); var cancelled = leaveheaderarr.cancelled; var parentid = leaveheaderarr.parentId;
+                    if (rls_final === true && loc === "IPU") {
+                        var slflg = false; var TableData = storeTblValues(); var ldata = new Array(); TableData = JSON.stringify(TableData);
+                        function storeTblValues() {
+                            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(), "LeaveTypeCode": $(tr).find('td:eq(3)').text() } });
+                            var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
+                                var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
+                                if (appid == rlsappid) {
+                                    if (appleavetype === "SL" || appleavetype === "LD" || parentid !== 0 || cancelled === true) { slflg = true; return false; };
+                                    tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++;
+                                };
+                            }; ldata = tbl; return tbl;
+                        }; if (slflg === false) { var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData); };
+                    };
                 }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Rejected Sucesfully.. </strong></div>"; }; $('#MessageBox').show();
             } else { jQuery('#btnClose').click(); if (releaseStatusCode === 'F') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Not Approved .. </strong></div>"; }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Leave Application Not Rejected .. </strong></div>"; }; $('#MessageBox').show(); }; $scope.GetLeaveRequestLists();
         }; xhr2.send(jsonObj);

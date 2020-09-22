@@ -4,7 +4,8 @@
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/EmpListCntrl.js"></script>
-<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+@*<script src="~/Content/ng-grid-2.0.14.debug.js"></script>*@
+
 <div ng-app="myApp" ng-controller="EmployeeListCntroller">
     <div class="container-fluid">
         <div class="row">
@@ -30,12 +31,13 @@
                                             <th colspan="10" style="text-align:center;">
                                                 <h4>JOB Profile Details</h4>
                                             </th>
+                                            <th colspan="15" style="text-align:center;">
+                                                <h4>Present Address</h4>
+                                            </th>
                                             <th colspan="10" style="text-align:center;">
                                                 <h4>Permanent Address</h4>
                                             </th>
-                                            <th colspan="16" style="text-align:center;">
-                                                <h4>Present Address</h4>
-                                            </th>
+                                            <th colspan="2" style="text-align:center;"></th>
                                         </tr>
                                         <tr>
                                             @* Profile Details *@
@@ -77,30 +79,8 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='DesgName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            @* Permanent Address Details *@
-                                            <th style="text-align:center">Add1</th>
-                                            <th style="text-align:center">Add2</th>
-                                            <th style="text-align:center">Add3</th>
-                                            <th style="text-align:center">Add4</th>
-                                            <th style="text-align:center;" ng-click="sort('PermanentCity')">
-                                                City
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentCity'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
-                                            <th style="text-align:center" ng-click="sort('PermanentDistrict')">
-                                                District
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentDistrict'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
-                                            <th style="text-align:center" ng-click="sort('PermanentState')">
-                                                State
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentState'"
-                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                            </th>
-                                            <th style="text-align:center">Pin Code</th>
-                                            <th style="text-align:center">Mobile No.</th>
-                                            <th style="text-align:center">Alt. Mobile No.</th>
                                             @* Present Address Details *@
+                                            <th style="text-align:left">Full Address</th>
                                             <th style="text-align:center">House Number</th>
                                             <th style="text-align:center">Society Name</th>
                                             <th style="text-align:center">Area Name</th>
@@ -139,6 +119,30 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='CompanyAccomodation'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            @* Permanent Address Details *@
+                                            <th style="text-align:center">Add1</th>
+                                            <th style="text-align:center">Add2</th>
+                                            <th style="text-align:center">Add3</th>
+                                            <th style="text-align:center">Add4</th>
+                                            <th style="text-align:center;" ng-click="sort('PermanentCity')">
+                                                City
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentCity'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center" ng-click="sort('PermanentDistrict')">
+                                                District
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentDistrict'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center" ng-click="sort('PermanentState')">
+                                                State
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PermanentState'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center">Pin Code</th>
+                                            <th style="text-align:center">Mobile No.</th>
+                                            <th style="text-align:center">Alt. Mobile No.</th>
+                                            @* hr *@
                                             <th style="text-align:center">HR Verified</th>
                                             <th style="text-align:center" ng-click="sort('UpdateDate')">
                                                 Update Date
@@ -173,17 +177,7 @@
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.DesgName" style="margin:0;padding:1px;" />
                                             </td>
-                                            <td colspan="4"></td>
-                                            <td>
-                                                <input class="form-control" type="text" ng-model="search.PermanentCity" style="margin:0;padding:1px;" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" type="text" ng-model="search.PermanentDistrict" style="margin:0;padding:1px;" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" type="text" ng-model="search.PermanentState" style="margin:0;padding:1px;" />
-                                            </td>
-                                            <td colspan="3"></td>
+                                            <td></td>
                                             <td></td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.PresentSocietyName" style="margin:0;padding:1px;" />
@@ -216,6 +210,17 @@
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.CompanyAccomodation" style="margin:0;padding:1px;" />
                                             </td>
+                                            <td colspan="4"></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PermanentCity" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PermanentDistrict" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.PermanentState" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td colspan="3"></td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.HRVerified" style="margin:0;padding:1px;" />
                                             </td>
@@ -234,16 +239,7 @@
                                             <td style="text-align:left">{{d.StatName}}</td>
                                             <td style="text-align:left">{{d.CatName}}</td>
                                             <td style="text-align:left">{{d.DesgName}}</td>
-                                            <td style="text-align:left">{{d.PermanentAdd1}}</td>
-                                            <td style="text-align:left">{{d.PermanentAdd2}}</td>
-                                            <td style="text-align:left">{{d.PermanentAdd3}}</td>
-                                            <td style="text-align:left">{{d.PermanentAdd4}}</td>
-                                            <td style="text-align:left">{{d.PermanentCity}}</td>
-                                            <td style="text-align:left">{{d.PermanentDistrict}}</td>
-                                            <td style="text-align:left">{{d.PermanentState}}</td>
-                                            <td style="text-align:center">{{d.PermanentPinCode}}</td>
-                                            <td style="text-align:center">{{d.PermanentPhone}}</td>
-                                            <td style="text-align:center"></td>
+                                            <td style="text-align:left">{{d.FullAddress}}</td>
                                             <td style="text-align:left">{{d.PresentHouseNumber}}</td>
                                             <td style="text-align:left">{{d.PresentSocietyName}}</td>
                                             <td style="text-align:left">{{d.PresentAreaName}}</td>
@@ -258,6 +254,16 @@
                                             <td style="text-align:center">{{d.PresentResPhone}}</td>
                                             <td style="text-align:center">{{d.PresentEmail}}</td>
                                             <td style="text-align:center">{{d.CompanyAccomodation}}</td>
+                                            <td style="text-align:left">{{d.PermanentAdd1}}</td>
+                                            <td style="text-align:left">{{d.PermanentAdd2}}</td>
+                                            <td style="text-align:left">{{d.PermanentAdd3}}</td>
+                                            <td style="text-align:left">{{d.PermanentAdd4}}</td>
+                                            <td style="text-align:left">{{d.PermanentCity}}</td>
+                                            <td style="text-align:left">{{d.PermanentDistrict}}</td>
+                                            <td style="text-align:left">{{d.PermanentState}}</td>
+                                            <td style="text-align:center">{{d.PermanentPinCode}}</td>
+                                            <td style="text-align:center">{{d.PermanentPhone}}</td>
+                                            <td style="text-align:center"></td>
                                             <td style="text-align:center">{{d.HRVerified}}</td>
                                             <td style="text-align:center">{{d.UpdateDate}}</td>
                                         </tr>

@@ -41,7 +41,7 @@ namespace AttendanceWebApp.Models
         public DbSet<LeaveTypes> LeaveTypes { get; set; }
 
         public DbSet<ReleaseGroups> ReleaseGroups { get; set; }
-
+        
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

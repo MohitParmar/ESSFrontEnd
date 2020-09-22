@@ -35,7 +35,15 @@
             pointer-events: none;
         }
 </style>
-
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() , 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(lastDay);
+    }
+</script>
 <div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
     <div class="container-fluid">
         <div class="row">
@@ -87,8 +95,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="table-responsive">
-                            @*ng-init="GetSchedule()"*@
+                        <div class="table-responsive" ng-init="GetSchedule()">
                             <table class="table table-condensed table-bordered table-">
                                 <thead>
                                     <tr>
@@ -124,6 +131,10 @@
                                         <th style="text-align:center;">d29</th>
                                         <th style="text-align:center;">d30</th>
                                         <th style="text-align:center;">d31</th>
+                                        <th style="text-align:center;">Add Date</th>
+                                        <th style="text-align:center;">Added By</th>
+                                        <th style="text-align:center;">Release Date</th>
+                                        <th style="text-align:center;">Released By</th>
                                     </tr>
                                     <tr>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
@@ -158,9 +169,10 @@
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d29" /></td>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d30" /></td>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d31" /></td>
+                                        <td colspan="4"></td>
                                     </tr>
                                 </thead>
-                                <tbody dir-paginate="d in GSLdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                <tbody dir-paginate="d in GSLdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">
                                     <tr>
                                         <td style="text-align:center;">{{d.empUnqId}}</td>
                                         <td style="text-align:center;" ng-style="d.d01==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d01}}</td>
@@ -194,6 +206,10 @@
                                         <td style="text-align:center;" ng-style="d.d29==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d29}}</td>
                                         <td style="text-align:center;" ng-style="d.d30==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d30}}</td>
                                         <td style="text-align:center;" ng-style="d.d31==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d31}}</td>
+                                        <td style="text-align:center;">{{d.addDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                                        <td style="text-align:center;">{{d.addUser}}</td>
+                                        <td style="text-align:center;">{{d.finalReleaseDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                                        <td style="text-align:center;">{{d.releaseUser}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -205,3 +221,4 @@
         </div>
     </div>
 </div>
+

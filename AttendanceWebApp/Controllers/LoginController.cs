@@ -1,6 +1,8 @@
-﻿using AttendanceWebApp.Models;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using System.Linq;
+using System.Web.Http;
+using AttendanceWebApp.Models;
 
 namespace AttendanceWebApp.Controllers
 {
@@ -26,7 +28,7 @@ namespace AttendanceWebApp.Controllers
 
         public static int iPasswordCounter = 0;
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public ActionResult Users(Employees requestData)
         {
             try
@@ -43,6 +45,7 @@ namespace AttendanceWebApp.Controllers
                 Session["GradeCode"] = Convert.ToString(requestData.GradeCode);
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["Loc"] = Convert.ToString(requestData.Location);
+
                 if (requestData.WrkGrp != "COMP" && requestData.RoleId != "2" && requestData.RoleId != "3")
                 {
                     Session["UserRole"] = Convert.ToString(10);
@@ -51,6 +54,7 @@ namespace AttendanceWebApp.Controllers
                 {
                     Session["UserRole"] = Convert.ToString(requestData.RoleId);
                 }
+
                 string IPAddress = GetIp();
                 return null;
             }

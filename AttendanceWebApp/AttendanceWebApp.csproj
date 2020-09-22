@@ -271,7 +271,7 @@
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ShiftScheduleController.cs" />
-    <Compile Include="Controllers\UtilsController.cs" />
+    <Compile Include="Controllers\ReimbursementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -306,6 +306,22 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="Content\csvexport.js" />
     <Content Include="Content\FileUploadXLSXLib\jszip.js" />
     <Content Include="Content\FileUploadXLSXLib\xlsx.full.min.js" />
@@ -322,20 +338,9 @@
     <Content Include="ESS_Images\ajax-loader.gif" />
     <Content Include="ESS_Images\body.jpg" />
     <Content Include="ESS_Images\ErrorImages\under-maintenance.png" />
-    <Content Include="ESS_Images\ESS Icon\android-chrome-192x192.png" />
-    <Content Include="ESS_Images\ESS Icon\android-chrome-512x512.png" />
-    <Content Include="ESS_Images\ESS Icon\apple-touch-icon.png" />
     <Content Include="ESS_Images\GatePass.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\Angular\AngularJSv1.2.0-rc.3.min.js" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-3.3.7.min.css" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js" />
-    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
-    <Content Include="Content\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -462,7 +467,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
-    <Content Include="Scripts\Controller\AddressCntrl.js" />
     <Content Include="Scripts\Controller\default.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
@@ -480,13 +484,6 @@
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Content\font\fontawesome-webfontd41d.eot" />
     <Content Include="Content\font\FontAwesome.otf" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Jquery 3.2.1\JQuery Slim Version 3.2.1\jquery-3.2.1.slim.min.map" />
     <Content Include="Content\Jquery 3.2.1\jquery-3.2.1.min.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -497,8 +494,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="ESS_Images\ESS Icon\site.webmanifest" />
     <Content Include="libman.json" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
@@ -525,8 +520,8 @@
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
     <Content Include="Scripts\Controller\SSCntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
+    <Content Include="Scripts\Controller\ReimbursementCntrl.js" />
     <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
-    <Content Include="Scripts\Controller\VehicleRequisition.js" />
     <Content Include="Scripts\Controller\WOCntrl.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -701,12 +696,16 @@
     <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
     <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
     <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
-    <Content Include="Views\OD\ODApply.cshtml" />
-    <Content Include="Views\Utils\VehicleRequisition.cshtml" />
     <Content Include="Views\ShiftSchedule\SSDLUP.cshtml" />
     <Content Include="Views\ShiftSchedule\SSRelease.cshtml" />
     <Content Include="Views\ShiftSchedule\SSReport.cshtml" />
     <Content Include="Views\ShiftSchedule\SSHRReport.cshtml" />
+    <Content Include="Views\OD\ODApply.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSUpdate.cshtml" />
+    <Content Include="Views\Reimbursement\Conveyance_Form.cshtml" />
+    <Content Include="Views\Reimbursement\ReimbursementReport.cshtml" />
+    <Content Include="Views\Reimbursement\ReimbursementRelease.cshtml" />
+    <Content Include="Views\Reimbursement\ReimbursementFroms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -741,9 +740,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61303</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61303/</IISUrl>
+          <IISUrl>http://localhost:3822/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

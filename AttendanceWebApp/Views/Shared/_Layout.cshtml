@@ -98,8 +98,10 @@
         <div class="navbar-inner" id="navmain">
             <div class="container-fluid">
                 @*<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="fa fa-bar"></span><span class="fa fa-bar"></span><span class="fa fa-bar"></span></a>*@
-                <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float:left;height:56px;width:56px;" />
-                <label class="navbar-brand" style="color:white" id="headtext"></label>
+                <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="        float: left;
+        height: 56px;
+        width: 56px;" />
+                <label class="navbar-brand" style="        color: white" id="headtext"></label>
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         <li class="dropdown">
@@ -120,9 +122,6 @@
                                 <li hidden="hidden" id="mnuIncomeTaxDeclaration">
                                     <a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a>
                                 </li>
-                                @*<li id="mnuTaxReport">
-                                        <a href="~/IncomeTax/TaxComparisonReport">Tax Compare Report</a>
-                                    </li>*@
                                 <li hidden="hidden" id="mnuAddressMaster">
                                     <a href="/Master/AddressMaster">Address/Contact Details</a>
                                 </li>
@@ -148,9 +147,10 @@
     </div>
     <div class="subnavbar" id="mnubar" hidden="hidden">
         <div class="subnavbar-inner">
-            <div class="container" style="margin-left:15px;margin-right:15px;">
+            <div class="container" style="        margin-left: 15px;
+        margin-right: 15px;">
                 <ul class="mainnav">
-                    <li hidden="hidden" class="active" id="mnuDashboard">
+                    <li class="active" id="mnuDashboard">
                         <a href="/Home/Index"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuMaster">
@@ -164,7 +164,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuLeave">
+                    <li class="dropdown" id="mnuLeave">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Leave</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuLeaveRules">
@@ -172,6 +172,9 @@
                             </li>
                             <li hidden="hidden" id="mnuLeaveApplication">
                                 <a href="/LeaveApp/LeaveApply">Leave Application</a>
+                            </li>
+                            <li hidden="hidden" id="mnuODApplication">
+                                <a href="/OD/ODApply">OD Application</a>
                             </li>
                             <li hidden="hidden" id="mnuLDLeaveApplication">
                                 <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
@@ -182,19 +185,13 @@
                             <li hidden="hidden" id="mnuCOffApplicationJFL">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
-                            @*<li id="mnuODLeave">
-                                    <a href="~/OD/ODApply">OutDoor Duty Application</a>
-                                </li>*@
-                            @*<li hidden="hidden" id="mnuWOChangeBEL">
-                                    <a href="~/LeaveApp/WOChangeBEL">Weekly Off Change</a>
-                                </li>*@
                             <li class="dropdown-submenu">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
-                                    <li hidden="hidden" id="mnuShortLeaveCancel">
+                                    <li id="mnuShortLeaveCancel">
                                         <a href="/LeaveApp/LeaveCancellation">Short Leave Cancel</a>
                                     </li>
-                                    <li hidden="hidden" id="mnuFullLeaveCancel">
+                                    <li id="mnuFullLeaveCancel">
                                         <a href="/LeaveApp/FullLeaveCancel">Full Leave Cancel</a>
                                     </li>
                                 </ul>
@@ -314,7 +311,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuUitility">
+                    <li class="dropdown" id="mnuUitility" hidden="hidden">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-magnet"></i><span>Uitility</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuAutoSync">
@@ -326,9 +323,6 @@
                             <li hidden="hidden" id="mnuResetPass">
                                 <a href="/Home/ResetPassword">Reset Password</a>
                             </li>
-                            @*<li id="mnuVerifyAddress">
-                                    <a href="/Master/VerifyAddressHR">Address Verification</a>
-                                </li>*@
                             <li hidden="hidden" id="mnuManageLeave">
                                 <a href="~/Master/ManageLeaveMaster">Manage Leave</a>
                             </li>
@@ -338,29 +332,52 @@
                             <li hidden="hidden" id="mnuTDSUpload">
                                 <a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a>
                             </li>
+                            <li id="mnuVR">
+                                <a href="~/Utils/VehicleRequisition">Vehicle Requisition</a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuSSMaster">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>SS Master</span></a>
+                    <li class="dropdown" id="mnuReimbursement">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-money"></i><span>Reimbursement</span></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuSSDLUP">
-                                <a href="~/ShiftSchedule/SSDLUP"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule</a>
+                            <li id="mnuConveyance">
+                                <a href="~/Reimbursement/Conveyance_Form">Conveyance</a>
                             </li>
-                            <li id="mnuSSRelease">
+                            <li>
+                                <a href="~/Reimbursement/ReimbursementFroms">Reimbursement</a>
+                            </li>
+                            <li id="mnuReimbursementRelease">
+                                <a href="~/Reimbursement/ReimbursementRelease">Release Reimbursement</a>
+                            </li>
+                            <li id="mnuReimbursementReport">
+                                <a href="~/Reimbursement/ReimbursementReport">Reimbursement Report</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li hidden="hidden" class="dropdown" id="mnuSSMaster">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Shift Schedule</span></a>
+                        <ul class="dropdown-menu">
+                            <li hidden="hidden" id="mnuSSDLUP">
+                                <a href="~/ShiftSchedule/SSDLUP"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Generate</a>
+                            </li>
+                            <li hidden="hidden" id="mnuSSUpdate">
+                                <a href="~/ShiftSchedule/SSUpdate"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Update</a>
+                            </li>
+                            <li hidden="hidden" id="mnuSSRelease">
                                 <a href="/ShiftSchedule/SSRelease">Shift Schedule Release</a>
                             </li>
-                            <li id="mnuSSRELRPT">
+                            <li hidden="hidden" id="mnuSSRELRPT">
                                 <a href="/ShiftSchedule/SSReport">Shift Schedule Report</a>
                             </li>
-                            <li id="mnuSSHRRPT">
+                            <li hidden="hidden" id="mnuSSHRRPT">
                                 <a href="/ShiftSchedule/SSHRReport">Shift Schedule HR Report</a>
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" id="mnuPayslip">
+                    <li id="mnuPayslip">
                         <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span></span>Payslip</a>
                     </li>
-                    <li hidden="hidden" id="mnuTDS">
+                    <li id="mnuTDS">
                         <a href="~/IncomeTax/Form16"><i class="fa fa-file-text"></i><span></span>TDS Forms</a>
                     </li>
                 </ul>
@@ -376,10 +393,11 @@
             </div>
         </div>
     </div>
-    <div class="navbar-fixed-bottom" style="height:30px;">
+    <div class="navbar-fixed-bottom" style="        height: 30px;">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <div class="brand" style="text-align:center;color:white">
+                <div class="brand" style="        text-align: center;
+        color: white">
                     <span><label id="footext"></label> (<label>@Session["IP"]</label>)</span>
                 </div>
             </div>

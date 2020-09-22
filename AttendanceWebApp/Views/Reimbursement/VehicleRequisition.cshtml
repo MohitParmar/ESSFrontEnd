@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "VehicleRequisition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/UtilCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="UtilityController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Vehicle Requisition</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetEmpInfo()">
+                            <table class="table table-condensed table-responsive table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td colspan="6" style="text-align: center;background-color: #FFFF99;">
+                                            <h2>Vehicle Requisition Form</h2>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="emp in empdata">
+                                    <tr>
+                                        <td colspan="4">
+                                            <p>
+                                                <b>Requisitioned By (Name):&nbsp;</b>{{emp.empName}}
+                                            </p>
+                                        </td>
+                                        <td colspan="2" style="        text-align: right;">
+                                            <p>
+                                                <b>Date of Requisition:&nbsp;</b>
+                                                <script type="text/javascript">let date_ob = new Date(); let date = ("0" + date_ob.getDate()).slice(-2); let month = ("0" + (date_ob.getMonth() + 1)).slice(-2); let year = date_ob.getFullYear(); document.write(date + "-" + month + "-" + year);</script>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Employee Code:&nbsp;</b>
+                                        </td>
+                                        <td>
+                                            {{emp.empUnqId}}
+                                        </td>
+                                        <td>
+                                            <b>Department:&nbsp;</b>
+                                        </td>
+                                        <td>
+                                            {{emp.deptName}}
+                                        </td>
+                                        <td>
+                                            <b>Designation:&nbsp;</b>
+                                        </td>
+                                        <td>{{emp.desgName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Vehicle Requirement Date and Time:</b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="RequireDt" ng-model="New.RequireDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Requirement Date" datepicker required>
+                                                <span class="input-group-btn">
+                                                    <input type="time" class="form-control" id="RequireTm" ng-model="New.RequireTm" required />
+                                                </span>
+                                            </div>
+                                            @*<div class="input-group form">
+                                                    <input class="form-control" type="text" id="RequireDt" ng-model="New.RequireDt"
+                                                           placeholder="Requirement Date" datepicker required>
+                                                    <span class="input-group-btn">
+                                                        <input type="time" class="form-control" id="RequireTm" ng-model="New.RequireTm" required />
+                                                    </span>
+                                                </div>*@
+                                        </td>
+                                        <td>
+                                            <b>Place of Boarding:</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtPlaceofBoarding" />
+                                        </td>
+                                        <td>
+                                            <b>Purpose - Official/Personal:</b>
+                                        </td>
+                                        <td>
+                                            <select id="selPurpose" class="form-control">
+                                                <option value="O">Official</option>
+                                                <option value="P">Personal</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Place of Visit:</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtPlace" />
+                                        </td>
+                                        <td>
+                                            <b>From:</b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Select From Date" datepicker required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <b>To:</b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="FromDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Select To Date" datepicker required>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Expected Time of Return:</b>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="ReturnDt" ng-model="New.ReturnDt" data-date-format="yyyy/MM/dd"
+                                                       placeholder="Return Date" datepicker required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <b>Contact Number:</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="txtContactNumber" />
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align: center;background-color: #FFFF99;">
+                                            <b>Applicant Sign</b>
+                                        </td>
+                                        <td colspan="2" style="text-align: center;background-color: #FFFF99;">
+                                            <b>HOD Approval</b>
+                                        </td>
+                                        <td colspan="2" style="text-align: center;background-color: #FFFF99;">
+                                            <b>Approved By</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="        text-align: center;">
+                                            Name & Sign
+                                        </td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            Name & Sign
+                                        </td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            Name & Sign
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="        text-align: center;">
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            (Respective Dept. Authorised)
+                                        </td>
+                                        <td colspan="2" style="        text-align: center;">
+                                            (Admin Authorised)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6">
+                                            <p>Note: The form should be submitted to Transport department at least 24 hrs in advance duly completed for smooth operations.</p>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

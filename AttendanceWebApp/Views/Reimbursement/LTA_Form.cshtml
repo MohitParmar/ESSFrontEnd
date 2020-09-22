@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "LTA Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ReimbursementCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp">
+    <div ng-controller="ReimbursementController">
+        <div class="container-fluid">
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>REIMBURSEMENT CLAIM FORM</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive" ng-init="GetEmpInfo()">
+                                <table class="table table-responsive table-condensed table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4" style="        text-align: center;">
+                                                <h3>JINDAL SAW LTD.<br /></h3>
+                                                <h4>LTA CLAIM FORM</h4>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="text-align:right;">
+                                                Date:~
+                                                <script type="text/javascript">let date_ob = new Date(); let date = ("0" + date_ob.getDate()).slice(-2); let month = ("0" + (date_ob.getMonth() + 1)).slice(-2); let year = date_ob.getFullYear(); document.write(date + "-" + month + "-" + year);</script>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">
+                                                <b>A) I Declare</b> that I,along with th following, have visited Places:
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <table class="table table-responsive table-condensed table-bordered">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" id="txtVisitedPlaces1" class="form-control" />
+                                                        </td>
+                                                        <td style="text-align:center;font-size: 30px;">\</td>
+                                                        <td>
+                                                            <input type="text" id="txtVisitedPlaces2" class="form-control" />
+                                                        </td>
+                                                        <td>
+                                                            <b>
+                                                                (homwtown or anywhere in India)
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>From Date (yyyy-MM-dd)</p>
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                                           placeholder="Select From Date" datepicker required>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p>To Date (yyyy-MM-dd)</p>
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd"
+                                                           placeholder="Select To Date" datepicker required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>B) Leave Sanctioned:</b> From
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="SanctionedFromDt" ng-model="New.SanctionedFromDt" data-date-format="yyyy/MM/dd"
+                                                           placeholder="Select Sanctioned From Date" datepicker required>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                To
+                                            </td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="SanctionedToDt" ng-model="New.SanctionedToDt" data-date-format="yyyy/MM/dd"
+                                                           placeholder="Select Sanctioned To Date" datepicker required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <b>C) Travel Details:</b>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="text-align:center;">
+                                                                Names
+                                                            </th>
+                                                            <th style="text-align:center;">
+                                                                Relationship
+                                                            </th>
+                                                            <th style="text-align:center;">
+                                                                Mode of Travel
+                                                            </th>
+                                                            <th style="text-align:center;">
+                                                                Class of Travel
+                                                            </th>
+                                                            <th style="text-align:center;">
+                                                                To & From fare (Rupees)
+                                                            </th>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" id="txtTD1" class="form-control" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="txtTD2" class="form-control" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="txtTD3" class="form-control" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="txtTD4" class="form-control" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="txtTD5" class="form-control" />
+                                                            </td>
+                                                            <td> <button id="btnAddTD" class="btn btn-primary"><i class="fa fa-plus"></i> Add to List</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table table-bordered table-responsive" id="tblalias">
+                                                    <tr>
+                                                        <th>
+                                                            SINO
+                                                        </th>
+                                                        <th>
+                                                            Names
+                                                        </th>
+                                                        <th>
+                                                            Relationship
+                                                        </th>
+                                                        <th>
+                                                            Mode of Travel
+                                                        </th>
+                                                        <th>
+                                                            Class of Travel
+                                                        </th>
+                                                        <th>
+                                                            To & Fro fare (Rupees)
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    <b>
+                                                        D) LTA amount availed: Rs
+                                                    </b>
+                                                    <label></label>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-repeat="emp in empdata">
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                {{emp.empName}}
+                                            </td>
+                                            <td style="text-align:center;">
+                                                {{emp.empUnqId}}
+                                            </td>
+                                            <td style="text-align:center;">
+                                                {{emp.empName}}
+                                            </td>
+                                            <td style="text-align:center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <p>Name of Employee</p>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <p>SAP Code</p>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <p>Signature of Employee</p>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <p>Signature of Approving Authority</p>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

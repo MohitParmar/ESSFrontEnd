@@ -2,10 +2,9 @@
 
 namespace AttendanceWebApp.Controllers
 {
-    public class ShiftScheduleController : Controller
+    public class ReimbursementController : Controller
     {
-        // GET: ShiftSchedule
-        public ActionResult SSDLUP()
+        public ActionResult Conveyance_Form()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
@@ -16,7 +15,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-        public ActionResult SSUpdate()
+        public ActionResult LTA_Form()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
@@ -27,7 +26,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-        public ActionResult SSRelease()
+        public ActionResult Advance_Form()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
@@ -38,7 +37,7 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-        public ActionResult SSReport()
+        public ActionResult ReimbursementFroms()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
@@ -49,7 +48,18 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-        public ActionResult SSHRReport()
+        public ActionResult ReimbursementReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        public ActionResult ReimbursementRelease()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {

@@ -77,6 +77,9 @@
                                             Search
                                         </button>
                                     </td>
+                                    <td>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -91,6 +94,7 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;">Rel. Date</th>
                                             <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
                                                 Release Status
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
@@ -112,7 +116,7 @@
                                             <th style="text-align:center;">Half Day</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"></td>
+                                            <td colspan="3"></td>
                                             <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" />
                                             </td>
@@ -133,6 +137,7 @@
                                             ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                             <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:left;">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;" ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'} ||

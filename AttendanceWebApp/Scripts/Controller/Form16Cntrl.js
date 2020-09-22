@@ -1,28 +1,6 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('Form16Cntroller', function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
-    $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
-    $scope.GetForm16Link = function () {
-        var f16 = new XMLHttpRequest(); f16.open('GET', $scope._Conpath + 'form16/GetLinks?empunqid=' + $('#myEmpUnqId').val(), true);
-        f16.setRequestHeader('Accept', 'application/json'); f16.onreadystatechange = function () {
-            if (f16.readyState === 4) { var json = JSON.parse(f16.responseText); $scope.f16data = json; $scope.$digest(); };
-        }; f16.send();
-    };
-    $scope.GetFrom16Details = function (ydata, frmno) {
-        var jsonobj = {}; jsonobj.assYear = ydata.assYear; jsonobj.empUnqId = $('#myEmpUnqId').val(); jsonobj.formNumber = frmno; jsonobj = JSON.stringify(jsonobj);
-        var slpdls = new XMLHttpRequest(); slpdls.open('POST', $scope._Conpath + 'form16/GetForm16', true);
-        slpdls.setRequestHeader("Content-type", "application/json"); slpdls.responseType = "arraybuffer"; slpdls.onload = function () {
-            if (slpdls.status == 200) {
-                var blob = new Blob([slpdls.response], {
-                    type: "application/pdf"
-                }); var objectUrl = URL.createObjectURL(blob); window.open(objectUrl);
-            } else {
-                document.getElementById("MessageBox").innerHTML =
-                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                    "<strong> File Not Found...</strong></div>"; $('#MessageBox').show();
-            };
-        }; slpdls.send(jsonobj);
-    };
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true; $scope.GetForm16Link = function () { var f16 = new XMLHttpRequest(); f16.open('GET', $scope._Conpath + 'form16/GetLinks?empunqid=' + $('#myEmpUnqId').val(), true); f16.setRequestHeader('Accept', 'application/json'); f16.onreadystatechange = function () { if (f16.readyState === 4) { var json = JSON.parse(f16.responseText); $scope.f16data = json; $scope.$digest(); }; }; f16.send(); }; $scope.GetFrom16Details = function (ydata, frmno) { var jsonobj = {}; jsonobj.assYear = ydata.assYear; jsonobj.empUnqId = $('#myEmpUnqId').val(); jsonobj.formNumber = frmno; jsonobj = JSON.stringify(jsonobj); var slpdls = new XMLHttpRequest(); slpdls.open('POST', $scope._Conpath + 'form16/GetForm16', true); slpdls.setRequestHeader("Content-type", "application/json"); slpdls.responseType = "arraybuffer"; slpdls.onload = function () { if (slpdls.status == 200) { var blob = new Blob([slpdls.response], { type: "application/pdf" }); var objectUrl = URL.createObjectURL(blob); window.open(objectUrl); } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong> File Not Found...</strong></div>"; $('#MessageBox').show(); }; }; slpdls.send(jsonobj); };
     $scope.FromUpload = function (fyear, frmname) {
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var fyearpath = fyear + "/" + frmname; var data = new FormData();
         if (frmname === "form16") { var files = $("#files").get(0).files; if (files.length > 0) { for (f = 0; f < files.length; f++) { data.append("UploadedImage", files[f]); }; }; };
