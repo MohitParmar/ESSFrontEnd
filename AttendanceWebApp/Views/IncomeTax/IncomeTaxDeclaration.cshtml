@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "IncomeTaxDeclaration";
+    ViewBag.Title = "Income Tax Declaration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/Controller/IncomeTaxCntrl.js"></script>
@@ -224,12 +224,12 @@
                                 <div dir-paginate="t in taxdata|itemsPerPage:5" id="homenext">
                                     @*<h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>*@
                                     <table class="table table-responsive table-bordered table-striped table-hover table-condensed" id="printTable"
-                                           border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif">
+                                           border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif" ng-iF="t.actualFlag">
                                         @* ng-iF="t.actualFlag" *@
                                         <thead>
                                             <tr>
                                                 <th colspan="2" style="text-align:center;">
-                                                    <h1>Provisional Income Tax Declaration</h1>
+                                                    <h1>Actual Income Tax Declaration</h1>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -534,9 +534,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <b>Housing Loan Principal Amount</b>
+                                                    <b>First Housing Loan Principal Amount</b>
                                                 </td>
                                                 <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Second Housing Loan Principal Amount</b>
+                                                </td>
+                                                <td style="text-align: right;">{{t.houseLoanPrincipal2| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -582,7 +588,7 @@
                                                     <b>Total Investment u/s 80C</b>
                                                 </td>
                                                 <td style="text-align:right;background-color:yellow;">
-                                                    <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
+                                                    <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.houseLoanPrincipal2+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -617,9 +623,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Housing Loan Interest</label>
+                                                    <label>First Housing Loan Interest</label>
                                                 </td>
                                                 <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Second Housing Loan Interest</label>
+                                                </td>
+                                                <td style="text-align: right;">{{t.interestOnLoan2| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
@@ -1609,7 +1621,7 @@
                                             </tr>
                                             @* Housing Loan *@
                                             <tr>
-                                                <td style="text-align:center;">
+                                                <td style="text-align:center;" rowspan="2">
                                                     <p>9</p>
                                                 </td>
                                                 <td>
@@ -1620,6 +1632,17 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" id="a_houseloan" placeholder="0" ng-model="New.a_houseloan" ng-change="Total80c()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Second Housing Loan Repayment Principal amount only</p>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="p_houseloan2" placeholder="0" ng-model="New.p_houseloan2" ng-change="Total80c()" style="text-align: right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="a_houseloan2" placeholder="0" ng-model="New.a_houseloan2" ng-change="Total80c()" style="text-align: right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                                 </td>
                                             </tr>
                                             @* Tuition Fees *@
@@ -1919,244 +1942,497 @@
                             @* PART : E *@
                             <div id="menu6" class="tab-pane fade">
                                 <h3>Exemptions under Section 24</h3>
-                                <div id="menu6Prevnext">
-                                    <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align:center;">E</th>
-                                                <th style="text-align:center;">Exemptions under Section 24</th>
-                                                <th colspan="2" style="text-align:center;">AMOUNT</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"></td>
-                                                <th style="text-align:center;">Provisional</th>
-                                                <th style="text-align:center;">Actual</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>1</p>
-                                                </td>
-                                                <td>
-                                                    <p>Address of Property Purchased / Constructed</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="txt_addofproperty" placeholder="Enter Text" ng-model="New.p_addofproperty" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>2</p>
-                                                </td>
-                                                <td>
-                                                    <p>Status of Property (Self Occupied / Let-out / Vacant)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <select id="cmb_statusofproperty" class="form-control" required>
-                                                        <option value="x">---Select---</option>
-                                                        <option value="S" title="Self Occupied">Self Occupied</option>
-                                                        <option value="L" title="Letout">Letout</option>
-                                                        <option value="V" title="Vacant">Vacant</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="2" style="text-align:center;">
-                                                    <p>3</p>
-                                                </td>
-                                                <td>
-                                                    <p>Housing Loan Taken From (Bank Name)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <select class="form-control" id="txt_hloanbank" ng-model="New.p_hloanbank"
-                                                            ng-options="l.bankName for l in bdata track by l.bankPan" ng-change="SetBankPan(New.p_hloanbank)" required>
-                                                        <option value="" selected>--- Select ---</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">
-                                                    <label id="bankname" class="form-control" style="background-color:yellowgreen;" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>4</p>
-                                                </td>
-                                                <td>
-                                                    <p>Aforesaid Housing Loan Amount</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="hloanAforesaid" placeholder="0" ng-model="New.p_hloanAforesaid" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>5</p>
-                                                </td>
-                                                <td>
-                                                    <p>Date on Which Loan Taken</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <div class="right-inner-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                        <input class="form-control" type="text" id="loantakendate" ng-model="New.p_loantakendate" data-date-format="yyyy/MM/dd" datepicker>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>6</p>
-                                                </td>
-                                                <td>
-                                                    <p>Purpose of Loan (Construction / Purchase / Repairs)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <select id="cmb_purposeofloan" class="form-control" required>
-                                                        <option value="x">---Select---</option>
-                                                        <option value="C" title="Construction">Construction</option>
-                                                        <option value="P" title="Purchase">Purchase</option>
-                                                        <option value="R" title="Repairs">Repairs</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>7</p>
-                                                </td>
-                                                <td>
-                                                    <p>Date on Which Construction is / will be Completed</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <div class="right-inner-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                        <input class="form-control" type="text" id="datecontcomplete" ng-model="New.p_datecontcomplete" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <p>8</p>
-                                                </td>
-                                                <td>
-                                                    <p>Date of Possession of Property</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <div class="right-inner-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                        <input class="form-control" type="text" id="datepsproperty" ng-model="New.p_datepsproperty" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="4" style="text-align:center;">
-                                                    <p>9</p>
-                                                </td>
-                                                <td>
-                                                    <p>Ownership (Joint / Sole)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <select id="cmb_ownership" class="form-control" required>
-                                                        <option value="x">---Select---</option>
-                                                        <option value="J" title="Joint">Joint</option>
-                                                        <option value="S" title="Sole">Sole</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p>Name of Joint Owner(s)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="txt_jointownername" placeholder="Enter Text" ng-model="New.p_jointownername" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p>Relationship with Joint Owner(s)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="txt_jointownerrelationship" placeholder="Enter Text" ng-model="New.p_jointownerrelationship" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p>Share of Joint Owner(s) in Property</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="txt_jointownershare" placeholder="0" ng-model="New.p_jointownershare" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align:center;" rowspan="2">
-                                                    <p>10</p>
-                                                </td>
-                                                <td>
-                                                    <p>
-                                                        Rental Income for FY
-                                                        <label id="lblyearmonth4"></label>
-                                                        @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
-                                                        (If house is given on rent)
-                                                    </p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="rentalincome" placeholder="0" ng-model="New.p_rentalincome" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                            @* New Column requirement from bellary *@
-                                            <tr>
-                                                <td>
-                                                    <p>
-                                                        Municipal Tax for FY
-                                                        <label id="lblyearmonth5"></label>
-                                                        @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
-                                                    </p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="muntax" placeholder="0" ng-model="New.p_muntax"
-                                                           style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="3" style="text-align:center;">
-                                                    <p>11</p>
-                                                </td>
-                                                <td>
-                                                    <p>Interest on Housing Loan (Tax Exemption - Self Occupied Property acquired /constructed before 01-04-1999 -  Rs.30,000 eligible & Self Occupied Property acquired /constructed after 01-04-1999  - Rs.200,000 eligible)</p>
-                                                </td>
-                                                <td colspan="2"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p>
-                                                        Amount of Interest for the F.Y.
-                                                        <label id="lblyearmonth6"></label>
-                                                        @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>*@
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="p_amountofinterest" placeholder="0" ng-model="New.p_amountofinterest" style="text-align:right;"
-                                                           ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="a_amountofinterest" placeholder="0" ng-model="New.a_amountofinterest" style="text-align:right;"
-                                                           ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p>Amount of Interest for Pre-construction Period (as per IT Rule)</p>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="p_amountofinterestasperit" placeholder="0" ng-model="New.p_amountofinterestasperit" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="a_amountofinterestasperit" placeholder="0" ng-model="New.a_amountofinterestasperit" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#menu6_1">Bank Loan 1</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#menu6_2">Bank Loan 2</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content table-responsive" id="maindiv1">
+                                    <div id="menu6_1" class="tab-pane active">
+                                        <div id="menu6Prevnext">
+                                            <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align:center;">E</th>
+                                                        <th style="text-align:center;">Exemptions under Section 24</th>
+                                                        <th colspan="2" style="text-align:center;">AMOUNT</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"></td>
+                                                        <th style="text-align:center;">Provisional</th>
+                                                        <th style="text-align:center;">Actual</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>1</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Address of Property Purchased / Constructed</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_addofproperty" placeholder="Enter Text" ng-model="New.p_addofproperty" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>2</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Status of Property (Self Occupied / Let-out / Vacant)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_statusofproperty" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="S" title="Self Occupied">Self Occupied</option>
+                                                                <option value="L" title="Letout">Letout</option>
+                                                                <option value="V" title="Vacant">Vacant</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2" style="text-align:center;">
+                                                            <p>3</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Housing Loan Taken From (Bank Name)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select class="form-control" id="txt_hloanbank" ng-model="New.p_hloanbank"
+                                                                    ng-options="l.bankName for l in bdata track by l.bankPan" ng-change="SetBankPan(New.p_hloanbank)" required>
+                                                                <option value="" selected>--- Select ---</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <label id="bankname" class="form-control" style="background-color:yellowgreen;" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>4</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Aforesaid Housing Loan Amount</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="hloanAforesaid" placeholder="0" ng-model="New.p_hloanAforesaid" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>5</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date on Which Loan Taken</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="loantakendate" ng-model="New.p_loantakendate" data-date-format="yyyy/MM/dd" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>6</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Purpose of Loan (Construction / Purchase / Repairs)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_purposeofloan" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="C" title="Construction">Construction</option>
+                                                                <option value="P" title="Purchase">Purchase</option>
+                                                                <option value="R" title="Repairs">Repairs</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>7</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date on Which Construction is / will be Completed</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="datecontcomplete" ng-model="New.p_datecontcomplete" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>8</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date of Possession of Property</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="datepsproperty" ng-model="New.p_datepsproperty" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="4" style="text-align:center;">
+                                                            <p>9</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Ownership (Joint / Sole)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_ownership" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="J" title="Joint">Joint</option>
+                                                                <option value="S" title="Sole">Sole</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Name of Joint Owner(s)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownername" placeholder="Enter Text" ng-model="New.p_jointownername" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Relationship with Joint Owner(s)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownerrelationship" placeholder="Enter Text" ng-model="New.p_jointownerrelationship" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Share of Joint Owner(s) in Property</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownershare" placeholder="0" ng-model="New.p_jointownershare" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;" rowspan="2">
+                                                            <p>10</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>
+                                                                Rental Income for FY
+                                                                <label id="lblyearmonth4"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
+                                                                (If house is given on rent)
+                                                            </p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="rentalincome" placeholder="0" ng-model="New.p_rentalincome" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    @* New Column requirement from bellary *@
+                                                    <tr>
+                                                        <td>
+                                                            <p>
+                                                                Municipal Tax for FY
+                                                                <label id="lblyearmonth5"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
+                                                            </p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="muntax" placeholder="0" ng-model="New.p_muntax"
+                                                                   style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="3" style="text-align:center;">
+                                                            <p>11</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Interest on Housing Loan (Tax Exemption - Self Occupied Property acquired /constructed before 01-04-1999 -  Rs.30,000 eligible & Self Occupied Property acquired /constructed after 01-04-1999  - Rs.200,000 eligible)</p>
+                                                        </td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>
+                                                                Amount of Interest for the F.Y.
+                                                                <label id="lblyearmonth6"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>*@
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="p_amountofinterest" placeholder="0" ng-model="New.p_amountofinterest" style="text-align:right;"
+                                                                   ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="a_amountofinterest" placeholder="0" ng-model="New.a_amountofinterest" style="text-align:right;"
+                                                                   ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Amount of Interest for Pre-construction Period (as per IT Rule)</p>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="p_amountofinterestasperit" placeholder="0" ng-model="New.p_amountofinterestasperit" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="a_amountofinterestasperit" placeholder="0" ng-model="New.a_amountofinterestasperit" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="menu6_2" class="tab-pane fade">
+                                        <div id="menu6Prevnext1">
+                                            <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align:center;">E</th>
+                                                        <th style="text-align:center;">Exemptions under Section 24</th>
+                                                        <th colspan="2" style="text-align:center;">AMOUNT</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"></td>
+                                                        <th style="text-align:center;">Provisional</th>
+                                                        <th style="text-align:center;">Actual</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>1</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Address of Property Purchased / Constructed</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_addofproperty2" placeholder="Enter Text" ng-model="New.p_addofproperty2" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>2</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Status of Property (Self Occupied / Let-out / Vacant)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_statusofproperty2" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="S" title="Self Occupied">Self Occupied</option>
+                                                                <option value="L" title="Letout">Letout</option>
+                                                                <option value="V" title="Vacant">Vacant</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2" style="text-align:center;">
+                                                            <p>3</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Housing Loan Taken From (Bank Name)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select class="form-control" id="txt_hloanbank2" ng-model="New.p_hloanbank2"
+                                                                    ng-options="l.bankName for l in bdata track by l.bankPan" ng-change="SetBankPan2(New.p_hloanbank2)" required>
+                                                                <option value="" selected>--- Select ---</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <label id="bankname2" class="form-control" style="background-color:yellowgreen;" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>4</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Aforesaid Housing Loan Amount</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="hloanAforesaid2" placeholder="0" ng-model="New.p_hloanAforesaid2" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>5</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date on Which Loan Taken</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="loantakendate2" ng-model="New.p_loantakendate2" data-date-format="yyyy/MM/dd" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>6</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Purpose of Loan (Construction / Purchase / Repairs)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_purposeofloan2" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="C" title="Construction">Construction</option>
+                                                                <option value="P" title="Purchase">Purchase</option>
+                                                                <option value="R" title="Repairs">Repairs</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>7</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date on Which Construction is / will be Completed</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="datecontcomplete2" ng-model="New.p_datecontcomplete2" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <p>8</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Date of Possession of Property</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <div class="right-inner-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <input class="form-control" type="text" id="datepsproperty2" ng-model="New.p_datepsproperty2" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="4" style="text-align:center;">
+                                                            <p>9</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Ownership (Joint / Sole)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select id="cmb_ownership2" class="form-control" required>
+                                                                <option value="x">---Select---</option>
+                                                                <option value="J" title="Joint">Joint</option>
+                                                                <option value="S" title="Sole">Sole</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Name of Joint Owner(s)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownername2" placeholder="Enter Text" ng-model="New.p_jointownername2" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Relationship with Joint Owner(s)</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownerrelationship2" placeholder="Enter Text" ng-model="New.p_jointownerrelationship2" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Share of Joint Owner(s) in Property</p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="txt_jointownershare2" placeholder="0" ng-model="New.p_jointownershare2" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;" rowspan="2">
+                                                            <p>10</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>
+                                                                Rental Income for FY
+                                                                <label id="lblyearmonth4_2"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
+                                                                (If house is given on rent)
+                                                            </p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="rentalincome2" placeholder="0" ng-model="New.p_rentalincome2" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    @* New Column requirement from bellary *@
+                                                    <tr>
+                                                        <td>
+                                                            <p>
+                                                                Municipal Tax for FY
+                                                                <label id="lblyearmonth5_2"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>*@
+                                                            </p>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control" id="muntax2" placeholder="0" ng-model="New.p_muntax2"
+                                                                   style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="3" style="text-align:center;">
+                                                            <p>11</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>Interest on Housing Loan (Tax Exemption - Self Occupied Property acquired /constructed before 01-04-1999 -  Rs.30,000 eligible & Self Occupied Property acquired /constructed after 01-04-1999  - Rs.200,000 eligible)</p>
+                                                        </td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>
+                                                                Amount of Interest for the F.Y.
+                                                                <label id="lblyearmonth6_2"></label>
+                                                                @*<script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1));</script>*@
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="p_amountofinterest2" placeholder="0" ng-model="New.p_amountofinterest2" style="text-align:right;"
+                                                                   ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="a_amountofinterest2" placeholder="0" ng-model="New.a_amountofinterest2" style="text-align:right;"
+                                                                   ng-change="CheckLoanInterest()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>Amount of Interest for Pre-construction Period (as per IT Rule)</p>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="p_amountofinterestasperit2" placeholder="0" ng-model="New.p_amountofinterestasperit2" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="a_amountofinterestasperit2" placeholder="0" ng-model="New.a_amountofinterestasperit2" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div style="float:left;">
                                     <a class="btn btn-warning btnPrevious">Previous</a>

@@ -10,40 +10,40 @@
         else if (loc === "JFL") { $('#link').text("“http://172.17.216.59:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/JFL.png"); }
         else if (loc === "KJQTL" || loc === "KJSAW") { $('#link').text("“http://172.16.16.77:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/KOSI.png"); }
         else if (loc === "BEL") { $('#link').text("“http://172.16.15.18:8080”"); $("#url").attr("src", "../../UserManuals/images/LeaveaApplication/BEL.png"); };
-        if (chk === "1" || chk === "4" || chk === "7" || chk === "9") {
-            $("#demoTabs").tabs({
-        disabled: [2]
-        });
-            //$('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide();
-        }
-        if (chk === "2" || chk === "6" || chk === "12") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); }
-        if (chk === "3") { $('#btnLA').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnLP').show(); }
-        if (chk === "8") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLP').show(); }
+        //if (chk === "1" || chk === "4" || chk === "7" || chk === "9") {
+        //    $("#demoTabs").tabs({
+        //disabled: [2]
+        //});
+        //    //$('#btnLA').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnRS').hide(); $('#btnLP').hide();
+        //}
+        //if (chk === "2" || chk === "6" || chk === "12") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnLC').show(); $('#btnRS').hide(); $('#btnLP').hide(); }
+        //if (chk === "3") { $('#btnLA').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLR').hide(); $('#btnLP').show(); }
+        //if (chk === "8") { $('#btnLA').show(); $('#btnLR').show(); $('#btnEM').show(); $('#btnRS').show(); $('#btnLC').show(); $('#btnLP').show(); }
     });
-    function LoadDiv(data) {
-        if (data === "IT") {
-            $('#div_IncomeTaxDeclaration').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
-            $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide();
-        }; if (data === "LR") {
-            $('#div_LeaveRelease').show(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
-            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
-        }; if (data === "LA") {
-            $('#div_LeaveApplication').show(); $('#div_LeaveRelease').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
-            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
-        }; if (data === "EM") {
-            $('#div_UpdateEmailId').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_ReleaseStrategy').hide();
-            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
-        }; if (data === "RS") {
-            $('#div_ReleaseStrategy').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
-            $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
-        }; if (data === "LC") {
-            $('#div_LeaveCancellation').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
-            $('#div_ReleaseStrategy').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
-        }; if (data === "LP") {
-            $('#div_LeavePosting').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
-            $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_IncomeTaxDeclaration').hide();
-        };
-    };
+    //function LoadDiv(data) {
+    //    if (data === "IT") {
+    //        $('#div_IncomeTaxDeclaration').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+    //        $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide();
+    //    }; if (data === "LR") {
+    //        $('#div_LeaveRelease').show(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
+    //        $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    }; if (data === "LA") {
+    //        $('#div_LeaveApplication').show(); $('#div_LeaveRelease').hide(); $('#div_UpdateEmailId').hide(); $('#div_ReleaseStrategy').hide();
+    //        $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    }; if (data === "EM") {
+    //        $('#div_UpdateEmailId').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_ReleaseStrategy').hide();
+    //        $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    }; if (data === "RS") {
+    //        $('#div_ReleaseStrategy').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+    //        $('#div_LeaveCancellation').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    }; if (data === "LC") {
+    //        $('#div_LeaveCancellation').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+    //        $('#div_ReleaseStrategy').hide(); $('#div_LeavePosting').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    }; if (data === "LP") {
+    //        $('#div_LeavePosting').show(); $('#div_LeaveRelease').hide(); $('#div_LeaveApplication').hide(); $('#div_UpdateEmailId').hide();
+    //        $('#div_ReleaseStrategy').hide(); $('#div_LeaveCancellation').hide(); $('#div_IncomeTaxDeclaration').hide();
+    //    };
+    //};
 </script>
 <div class="container-fluid">
     <div class="row">
@@ -57,6 +57,7 @@
                         <ul class="nav nav-tabs">
                             <li><a href="#login" class="ui-tabs-active" data-toggle="tab">Login Process</a></li>
                             <li><a href="#email" data-toggle="tab">Update Email Id</a></li>
+                            <li><a href="#shift" data-toggle="tab">Shift Schedule</a></li>
                             <li><a href="#tax" data-toggle="tab">Income Tax Declaration</a></li>
                             <li><a href="#leave" data-toggle="tab">Leave Application</a></li>
                             <li><a href="#cancel" data-toggle="tab">Leave Cancellation</a></li>
@@ -121,6 +122,70 @@
                                     <hr />
                                     <p>To verify, again go to Utility-&gt;Update Email ID, which will show following screen with updated email </p>
                                     <img src="~/UserManuals/images/UpdateEmailId/1 (1).png" class="img-thumbnail" />
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="shift">
+                                <div class="table-responsive">
+                                    <strong>Shift Schedule</strong>
+                                    <br />
+                                    <br />
+                                    <p>Facility to upload shift schedule has been added to ESS portal.  Where user can upload shift schedule for which he is authorized.  The same will undergo release procedure. </p>
+                                    <p>Go to Shift Schedule master -> Shift Schedule for upload of new shift schedule.</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/1.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>User will first need to download template, which will contain table in required upload format with employees for which the user is authorized.  After filling the template, the same is to be uploaded using “Upload template”</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/2.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Click on “Download Button” to download the Shift Schedule Template with employees list under user, which will display this message:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/3.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Enter file name to save shift schedule template. File will be downloaded with .csv extension.</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/4.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Fill the data in downloaded template in following format:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/5.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Many validations are applied, some of which are:</p>
+                                    <ul>
+                                        <li>Shift code must be correct (no spaces, no special characters, no invalid code will be allowed)</li>
+                                        <li>Any cell should not be blank for an employee</li>
+                                        <li>Already uploaded Shift schedule will not be permitted</li>
+                                    </ul>
+                                    <p>After filled template is ready, click on “choose File” Button to Open Dialog box for select a file.</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/6.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Only .csv extension files are permitted for upload:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/7.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Click “Upload Template” Button after selecting the file and wait for response:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/8.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>After successfully uploaded this message displayed.  In case of any errors, appropriate messages are shown.</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/9.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Shift Schedule Reports Menu:</p>
+                                    <ul>
+                                        <li>Current Month All: Current Month Uploaded Shift schedules by User.</li>
+                                        <li>Current Month Released: Current Month Uploaded and Released.</li>
+                                        <li>Previous Month All: Previous Month Uploaded by User.</li>
+                                        <li>Previous Month Released: Previous Month Released.</li>
+                                    </ul>
+                                    <img src="~/UserManuals/images/ShiftSchedule/10.jpg" class="img-thumbnail" />
+                                    <img src="~/UserManuals/images/ShiftSchedule/11.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Click on button to export the selected Report, which will open save file dialog:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/12.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Shift Schedule Release</p>
+                                    <p>Uploaded shift schedules are subjected to defined release procedure.  Concerned releaser will have option for releasing shift schedule under “Shift Schedule Release” menu.</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/13.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>Pending to release shift schedules list will be displayed.  Complete Shift schedule uploaded through one upload file will be shown and same will be released/rejected completed for all employees in one time.  On approving, the same will go to next level of release (if any).</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/14.jpg" class="img-thumbnail" />
+                                    <hr />
+                                    <p>On successful approval, message will be displayed:</p>
+                                    <img src="~/UserManuals/images/ShiftSchedule/15.jpg" class="img-thumbnail" />
+                                    <hr />
                                 </div>
                             </div>
                             <div class="tab-pane" id="tax">

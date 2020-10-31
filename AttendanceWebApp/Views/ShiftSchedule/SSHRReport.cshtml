@@ -37,7 +37,7 @@
 </style>
 <script>
     window.onload = function () {
-        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() , 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
         $('#FromDt').val(firstDay);
@@ -54,7 +54,7 @@
                     <div class="panel-heading">
                         <strong>Export Shift Schedules</strong>
                         <div style="float:right;">
-                            <a style="float: right;" href="#" ng-click="exportAllData('ShiftSchedule_')">
+                            <a style="float: right;" href="#" ng-click="exportAllData('HR_ShiftSchedule_')">
                                 <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />SS Report
                             </a>
                         </div>
@@ -81,6 +81,10 @@
                                             <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" datepicker>
                                         </div>
                                     </td>
+                                    <td>Enter Year Month : </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="txtYearMonth" placeholder="YYYYMM" ng-model="New.yearMonth" />
+                                    </td>
                                     <td>
                                         <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetSchedule(New)">
                                             <i class="fa fa-search"></i>
@@ -95,11 +99,16 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="table-responsive" ng-init="GetSchedule()">
+                        <div class="table-responsive">
+                            @*ng-init="GetSchedule()"*@
                             <table class="table table-condensed table-bordered table-">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;">Empunqid</th>
+                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            Empunqid
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                         <th style="text-align:center;">d01</th>
                                         <th style="text-align:center;">d02</th>
                                         <th style="text-align:center;">d03</th>
@@ -131,10 +140,26 @@
                                         <th style="text-align:center;">d29</th>
                                         <th style="text-align:center;">d30</th>
                                         <th style="text-align:center;">d31</th>
-                                        <th style="text-align:center;">Add Date</th>
-                                        <th style="text-align:center;">Added By</th>
-                                        <th style="text-align:center;">Release Date</th>
-                                        <th style="text-align:center;">Released By</th>
+                                        <th style="text-align:center;" ng-click="sort('addDate')">
+                                            Add Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('addUser')">
+                                            Added By
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addUser'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('finalReleaseDate')">
+                                            Release Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='finalReleaseDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('releaseUser')">
+                                            Released By
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseUser'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
@@ -169,7 +194,10 @@
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d29" /></td>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d30" /></td>
                                         <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.d31" /></td>
-                                        <td colspan="4"></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.addUser" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.releaseUser" /></td>
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="d in GSLdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">

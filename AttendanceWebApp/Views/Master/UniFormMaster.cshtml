@@ -34,7 +34,9 @@
         }
 </style>
 <script>
-    window.onload = function () { var d = new Date(); var Currentyear = (d.getFullYear()); $('#txtYear').val(Currentyear); };
+    window.onload = function () {
+        var d = new Date(); var Currentyear = (d.getFullYear()); $('#txtYear').val(Currentyear); $("#test *").attr("disabled", "disabled").off('click');
+    };
 </script>
 <div ng-app="myApp" ng-controller="UniformController">
     <div class="container-fluid">
@@ -47,7 +49,7 @@
                         <strong>Update Uniform Details</strong>
                     </div>
                     <div class="panel-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="test">
                             <table class="table table-bordered table-condensed">
                                 <tbody>
                                     <tr>
@@ -92,6 +94,7 @@
                         <strong>Details Of Uniform</strong>
                     </div>
                     <div class="panel-body">
+                        @*<div ng-init="GetUniformDetails()">*@
                         <div ng-init="GetUniformDetails()">
                             <div class="table-responsive">
                                 <table data-show-filter="true" class="table table-bordered table-condensed table-responsive">

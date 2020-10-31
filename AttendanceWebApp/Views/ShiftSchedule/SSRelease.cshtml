@@ -26,7 +26,7 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                     <thead ng-repeat="dd in ssdata track by $index" ng-if="$index==0">
                                         <tr>
-                                            <th>Open Month</th>
+                                            @*<th>Open Month</th>*@
                                             <th style="width:10px;">Created By</th>
                                             @*<th style="width:10px;">ID</th>*@
                                             <th>
@@ -48,7 +48,7 @@
                                     </thead>
                                     <tbody dir-paginate="d in ssdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:1" pagination-id="pg_1">
                                         <tr>
-                                            <td>{{d.yearMonth}}</td>
+                                            @*<td>{{d.yearMonth}}</td>*@
                                             <td style="width:10px;">{{d.addUser}} {{d.addUserName}}</td>
                                             @*<td style="width:10px;">{{d.scheduleId}}</td>*@
                                             <td>

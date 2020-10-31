@@ -9,15 +9,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
-                    Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -29,15 +21,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "8" ||
-                    Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -50,14 +34,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -69,14 +46,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -88,14 +58,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -107,14 +70,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -126,15 +82,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "9" ||
-                    Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -146,15 +94,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "4" ||
-                    Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -166,14 +106,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -185,14 +118,7 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "3" || Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
             }
             else
             {
@@ -231,15 +157,19 @@ namespace AttendanceWebApp.Controllers
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
-                if (Session["UserRole"].ToString() == "2" || Session["UserRole"].ToString() == "6" || Session["UserRole"].ToString() == "7" ||
-                    Session["UserRole"].ToString() == "8" || Session["UserRole"].ToString() == "11" || Session["UserRole"].ToString() == "12")
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("AuthorizationError", "CustomError");
-                }
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult PendingLeaveReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
             }
             else
             {

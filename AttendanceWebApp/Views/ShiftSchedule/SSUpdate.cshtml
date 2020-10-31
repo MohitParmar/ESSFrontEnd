@@ -12,6 +12,17 @@
         <div class="row">
             <input type="hidden" value="SS" id="releaseGroupCode" />
             <div class="col-sm-12">
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
                 <div class="col-sm-4">
                     <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
                     <div class="panel panel-default">
@@ -21,6 +32,7 @@
                         <div class="panel-body">
                             <button id="btnSSDownload" class="btn btn-info" ng-click="UpdateDownload()"><i class="fa fa-download"></i>&nbsp;Download Template (List of Emp.)</button>
                         </div>
+                        <div class="panel-footer"><span style="color: Red;">Note : Please do not remove any columns from downloaded template.</span></div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -37,6 +49,7 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="panel-footer"><span style="color: Red;">Note : Please do not remove any columns from downloaded template while uploading. Remarks Mandatory for Shift Change.</span></div>
                     </div>
                     <div class="table-responsive">
                         <div class="panel panel-default">
@@ -112,6 +125,16 @@
                 </div>
                 <div class="col-sm-8">
                     <div id="MessageBox"></div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <span style="color:Red;">Note: </span>
+                            <ul>
+                                <li><span style="color:Red;">Do not remove or change order of any columns from downloaded template.</span></li>
+                                <li><span style="color:Red;">Remarks field is mandatory for all employee at the time of shift schedule change.</span></li>
+                                <li><span style="color:Red;">Change of Weekly off at the time of shift schedule change is not allowed. Contact HR/ER for changing Weekly off.</span></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="panel panel-default" id="divDL">
                         <div class="panel-heading">
                             <strong>Already Uploaded Shift Schedule Details</strong>

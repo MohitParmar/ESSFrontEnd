@@ -113,28 +113,28 @@
                                 </strong>
                             </a>
                             <ul class="dropdown-menu">
-                                <li hidden="hidden" id="mnuEmployeeProfile">
+                                <li id="mnuEmployeeProfile">
                                     <a href="/Home/EmployeeProfile">Profile</a>
                                 </li>
-                                <li hidden="hidden" id="mnuPerformanceReport">
+                                <li id="mnuPerformanceReport">
                                     <a href="/Report/PerformanceReport">Performance Report</a>
                                 </li>
-                                <li hidden="hidden" id="mnuIncomeTaxDeclaration">
+                                <li id="mnuIncomeTaxDeclaration">
                                     <a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a>
                                 </li>
-                                <li hidden="hidden" id="mnuAddressMaster">
+                                <li id="mnuAddressMaster">
                                     <a href="/Master/AddressMaster">Address/Contact Details</a>
                                 </li>
-                                <li hidden="hidden" id="mnuuniformmaster">
+                                <li id="mnuuniformmaster">
                                     <a href="/Master/UniFormMaster">Uniform Details</a>
                                 </li>
-                                <li hidden="hidden" id="mnuUpdateEmailAdd">
+                                <li id="mnuUpdateEmailAdd">
                                     <a href="/Home/UpdateEmailAdd">Email ID</a>
                                 </li>
-                                <li hidden="hidden" id="mnuUserManual">
+                                <li id="mnuUserManual">
                                     <a href="~/Master/UserManual">User Manual</a>
                                 </li>
-                                <li hidden="hidden" id="mnuChangePassword">
+                                <li id="mnuChangePassword">
                                     <a href="/Home/ChangePassword">Change Password</a>
                                 </li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
@@ -145,7 +145,7 @@
             </div>
         </div>
     </div>
-    <div class="subnavbar" id="mnubar" hidden="hidden">
+    <div class="subnavbar" id="mnubar">
         <div class="subnavbar-inner">
             <div class="container" style="        margin-left: 15px;
         margin-right: 15px;">
@@ -157,7 +157,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Master</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnureleasestreategymaster">
-                                <a href="/Master/CreateReleaseStreategy">Release Streategy Master</a>
+                                <a href="/Master/CreateReleaseStreategy">Release Strategy Master</a>
                             </li>
                             <li hidden="hidden" id="mnuITDFinance">
                                 <a href="/IncomeTax/IncomeTaxDecFin">IncomeTax Declaration Edit For Finance</a>
@@ -167,19 +167,19 @@
                     <li class="dropdown" id="mnuLeave">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Leave</span></a>
                         <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuLeaveRules">
+                            <li id="mnuLeaveRules">
                                 <a href="/LeaveApp/LeaveRules">Leave Rules</a>
                             </li>
-                            <li hidden="hidden" id="mnuLeaveApplication">
+                            <li id="mnuLeaveApplication">
                                 <a href="/LeaveApp/LeaveApply">Leave Application</a>
                             </li>
-                            <li hidden="hidden" id="mnuODApplication">
+                            <li id="mnuODApplication">
                                 <a href="/OD/ODApply">OD Application</a>
                             </li>
-                            <li hidden="hidden" id="mnuLDLeaveApplication">
-                                <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
-                            </li>
-                            <li hidden="hidden" id="mnuCOffApplication">
+                            @*<li hidden="hidden" id="mnuLDLeaveApplication">
+                                    <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
+                                </li>*@
+                            <li id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
                             <li hidden="hidden" id="mnuCOffApplicationJFL">
@@ -213,18 +213,19 @@
                                     </li>
                                 </ul>
                             </li>
+
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuGatePass">
+                    <li class="dropdown" id="mnuGatePass">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-save"></i><span>Gate Pass</span></a>
                         <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuCreateGatePass">
+                            <li id="mnuCreateGatePass">
                                 <a href="/GatePass/GatePass">New Gate Pass (Regular Employee)</a>
                             </li>
                             <li hidden="hidden" id="mnuContCreateGatePass">
                                 <a href="/GatePass/ContractualGatePass">New Gate Pass (Others)</a>
                             </li>
-                            <li hidden="hidden" id="mnuPrintGatePass">
+                            <li id="mnuPrintGatePass">
                                 <a href="/Report/PrintGatePassReport">Gate Pass List</a>
                             </li>
                             <li hidden="hidden" id="mnuGatePassRelease">
@@ -309,6 +310,9 @@
                             <li hidden="hidden" id="mnuVehicleGatePassReport">
                                 <a href="/GatePass/VehicleGatePassReport">Vehicle Gate Pass Report</a>
                             </li>
+                            <li hidden="hidden" id="mnuPendingLeaveInfo">
+                                <a href="~/Report/PendingLeaveReport"><i class="fa fa-th-list"></i><span></span>Pending Leave Info</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown" id="mnuUitility" hidden="hidden">
@@ -332,24 +336,21 @@
                             <li hidden="hidden" id="mnuTDSUpload">
                                 <a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a>
                             </li>
-                            <li id="mnuVR">
+                            <li hidden="hidden" id="mnuVR">
                                 <a href="~/Utils/VehicleRequisition">Vehicle Requisition</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuReimbursement">
+                    <li hidden="hidden" class="dropdown" id="mnuReimbursement">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-money"></i><span>Reimbursement</span></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuConveyance">
+                            <li hidden="hidden" id="mnuConveyance">
                                 <a href="~/Reimbursement/Conveyance_Form">Conveyance</a>
                             </li>
-                            <li>
-                                <a href="~/Reimbursement/ReimbursementFroms">Reimbursement</a>
-                            </li>
-                            <li id="mnuReimbursementRelease">
+                            <li hidden="hidden" id="mnuReimbursementRelease">
                                 <a href="~/Reimbursement/ReimbursementRelease">Release Reimbursement</a>
                             </li>
-                            <li id="mnuReimbursementReport">
+                            <li hidden="hidden" id="mnuReimbursementReport">
                                 <a href="~/Reimbursement/ReimbursementReport">Reimbursement Report</a>
                             </li>
                         </ul>
@@ -361,7 +362,7 @@
                                 <a href="~/ShiftSchedule/SSDLUP"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Generate</a>
                             </li>
                             <li hidden="hidden" id="mnuSSUpdate">
-                                <a href="~/ShiftSchedule/SSUpdate"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Update</a>
+                                <a href="~/ShiftSchedule/SSUpdate"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Change</a>
                             </li>
                             <li hidden="hidden" id="mnuSSRelease">
                                 <a href="/ShiftSchedule/SSRelease">Shift Schedule Release</a>
@@ -374,12 +375,35 @@
                             </li>
                         </ul>
                     </li>
+                    <li hidden="hidden" class="dropdown" id="mnuMediclaim">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-hospital-o"></i><span>Mediclaim</span></a>
+                        <ul class="dropdown-menu">
+                            <li hidden="hidden" id="mnuMediclaimDetails">
+                                <a href="~/Mediclaim/NameAddition">Mediclaim Detail</a>
+                            </li>
+                            <li hidden="hidden" id="mnuDependentDetails">
+                                <a href="~/Mediclaim/DependentDetails">Dependent Details</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li hidden="hidden" class="dropdown" id="mnuMedicalFitness">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-medkit"></i><span>Medical Fitness</span></a>
+                        <ul class="dropdown-menu">
+                            <li hidden="hidden" id="mnuMedicalFitnessForm">
+                                <a href="/MedicalFitness/MedicalFit">Fitness Form</a>
+                            </li>
+                            <li hidden="hidden" id="mnuMedicalFitnessReport">
+                                <a href="/MedicalFitness/MedicalFitReport">Fitness Report</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li id="mnuPayslip">
                         <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span></span>Payslip</a>
                     </li>
                     <li id="mnuTDS">
                         <a href="~/IncomeTax/Form16"><i class="fa fa-file-text"></i><span></span>TDS Forms</a>
                     </li>
+
                 </ul>
             </div>
         </div>

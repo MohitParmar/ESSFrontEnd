@@ -1,5 +1,103 @@
-﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); $scope.InfoPL; $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; } };
-    $scope.GetLeaveInfo = function (entity) { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var FromDate, ToDate; if ((typeof (entity) === "undefined") || (typeof (entity.FromDt) === "undefined") || (typeof (entity.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate(); ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate()); } else { FromDate = entity.FromDt; ToDate = entity.ToDt; }; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?empunqid=' + $('#myEmpUnqId').val() + '&fromDt=' + FromDate + '&toDt=' + ToDate, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); var la = new Array; la = json; var applReleaseStatus = new Array; var leaveApplicationDetails = new Array; var empName, statName, releaseDate, releaseAuth, releaserName, releaserRemarks; var cnt = 0; var myArray = []; for (var i = 0; i < la.length; i++) { empName = la[i].employee.empName; statName = la[i].stations.statName; applReleaseStatus = la[i].applReleaseStatus; leaveApplicationDetails = la[i].leaveApplicationDetails; for (var j = 0; j < applReleaseStatus.length; j++) { releaseDate = applReleaseStatus[j].releaseDate; releaseAuth = applReleaseStatus[j].releaseAuth; releaserName = applReleaseStatus[j].releaserName; releaserRemarks = applReleaseStatus[j].remarks; }; for (var l = 0; l < leaveApplicationDetails.length; l++) { myArray.push([]); myArray[cnt]["leaveAppId"] = la[i].leaveAppId; myArray[cnt]["addDt"] = la[i].addDt.substring(0, la[i].addDt.indexOf("T")); myArray[cnt]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[cnt]["releaseDate"] = releaseDate ? releaseDate.substring(0, releaseDate.indexOf("T")) : ''; myArray[cnt]["finalReleaser"] = releaseAuth || ''; myArray[cnt]["releaserName"] = releaserName; myArray[cnt]["releaserRemarks"] = releaserRemarks; myArray[cnt]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[cnt]["empUnqId"] = la[i].empUnqId; myArray[cnt]["empName"] = empName; myArray[cnt]["statName"] = statName; myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks; myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem; myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode; myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt.substring(0, leaveApplicationDetails[l].fromDt.indexOf("T")); myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt.substring(0, leaveApplicationDetails[l].toDt.indexOf("T")); myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays; myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag; cnt++; }; leaveApplicationDetails = ""; }; $scope.data = myArray; $scope.InfoPL = $scope.data; $scope.data = $filter('orderBy')($scope.data, '-leaveAppId'); $scope.curPage = 0; $scope.pageSize = 25; $scope.$digest(); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }; }; xhr.send(); };  //Get Leave App Details report for Releaser
+﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']); app.controller('LeaveReportCntrloller', function ($scope, $http, $filter) {
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); $scope.InfoPL; $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; } };
+    $scope.GetLeaveInfo = function (entity) {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var FromDate, ToDate; if ((typeof (entity) === "undefined") || (typeof (entity.FromDt) === "undefined") || (typeof (entity.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate(); ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate()); } else { FromDate = entity.FromDt; ToDate = entity.ToDt; }; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; }; var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?empunqid=' + $('#myEmpUnqId').val() + '&fromDt=' + FromDate + '&toDt=' + ToDate, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); var la = new Array; la = json; var applReleaseStatus = new Array; var leaveApplicationDetails = new Array; var empName, statName, releaseDate, releaseAuth, releaserName, releaserRemarks; var cnt = 0; var myArray = []; for (var i = 0; i < la.length; i++) { empName = la[i].employee.empName; statName = la[i].stations.statName; applReleaseStatus = la[i].applReleaseStatus; leaveApplicationDetails = la[i].leaveApplicationDetails; for (var j = 0; j < applReleaseStatus.length; j++) { releaseDate = applReleaseStatus[j].releaseDate; releaseAuth = applReleaseStatus[j].releaseAuth; releaserName = applReleaseStatus[j].releaserName; releaserRemarks = applReleaseStatus[j].remarks; }; for (var l = 0; l < leaveApplicationDetails.length; l++) { myArray.push([]); myArray[cnt]["leaveAppId"] = la[i].leaveAppId; myArray[cnt]["addDt"] = la[i].addDt.substring(0, la[i].addDt.indexOf("T")); myArray[cnt]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[cnt]["releaseDate"] = releaseDate ? releaseDate.substring(0, releaseDate.indexOf("T")) : ''; myArray[cnt]["finalReleaser"] = releaseAuth || ''; myArray[cnt]["releaserName"] = releaserName; myArray[cnt]["releaserRemarks"] = releaserRemarks; myArray[cnt]["releaseStatusCode"] = la[i].releaseStatusCode; myArray[cnt]["empUnqId"] = la[i].empUnqId; myArray[cnt]["empName"] = empName; myArray[cnt]["statName"] = statName; myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks; myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem; myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode; myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt.substring(0, leaveApplicationDetails[l].fromDt.indexOf("T")); myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt.substring(0, leaveApplicationDetails[l].toDt.indexOf("T")); myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays; myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag; cnt++; }; leaveApplicationDetails = ""; }; $scope.data = myArray; $scope.InfoPL = $scope.data; $scope.data = $filter('orderBy')($scope.data, '-leaveAppId'); $scope.curPage = 0; $scope.pageSize = 25; $scope.$digest(); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }; }; xhr.send();
+    };  //Get Leave App Details report for Releaser
+    $scope.GetPendingLeaveInfo = function () {
+        $("#loading").removeClass("deactivediv");
+        $("#loading").addClass("activediv");
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", $scope._Conpath + "LeaveReport/GetLeaves", true);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                var json = JSON.parse(xhr.responseText);
+                var la = new Array();
+                la = json;
+                var applReleaseStatus = new Array();
+                var leaveApplicationDetails = new Array();
+                var empName, statName;
+                var releaseDate1, releaseAuth1 = '', releaserName1 = '', releaserRemarks1 = '', releaseStatusCode1 = '';
+                var releaseDate2, releaseAuth2 = '', releaserName2 = '', releaserRemarks2 = '', releaseStatusCode2 = '';
+                var releaseDate3, releaseAuth3 = '', releaserName3 = '', releaserRemarks3 = '', releaseStatusCode3 = '';
+                var cnt = 0;
+                var myArray = [];
+                for (var i = 0; i < la.length; i++) {
+                    empName = la[i].employee.empName;
+                    statName = la[i].stations.statName;
+                    applReleaseStatus = la[i].applReleaseStatus;
+                    leaveApplicationDetails = la[i].leaveApplicationDetails;
+                    for (var j = 0; j < applReleaseStatus.length; j++) {
+                        if (j == 0) {
+                            releaseDate1 = applReleaseStatus[j].releaseDate || null;
+                            releaseAuth1 = applReleaseStatus[j].releaseAuth || '';
+                            releaserName1 = applReleaseStatus[j].releaserName || '';
+                            releaserRemarks1 = applReleaseStatus[j].remarks || '';
+                            releaseStatusCode1 = applReleaseStatus[j].releaseStatusCode || '';
+                        }; if (j == 1) {
+                            releaseDate2 = applReleaseStatus[j].releaseDate || null;
+                            releaseAuth2 = applReleaseStatus[j].releaseAuth || '';
+                            releaserName2 = applReleaseStatus[j].releaserName || '';
+                            releaserRemarks2 = applReleaseStatus[j].remarks || '';
+                            releaseStatusCode2 = applReleaseStatus[j].releaseStatusCode || '';
+                        }; if (j == 2) {
+                            releaseDate3 = applReleaseStatus[j].releaseDate || null;
+                            releaseAuth3 = applReleaseStatus[j].releaseAuth || '';
+                            releaserName3 = applReleaseStatus[j].releaserName || '';
+                            releaserRemarks3 = applReleaseStatus[j].remarks || '';
+                            releaseStatusCode3 = applReleaseStatus[j].releaseStatusCode || '';
+                        };
+                    }
+                    for (var l = 0; l < leaveApplicationDetails.length; l++) {
+                        myArray.push([]);
+                        myArray[cnt]["leaveAppId"] = la[i].leaveAppId;
+                        myArray[cnt]["addDt"] = la[i].addDt.substring(0, la[i].addDt.indexOf("T"));
+                        myArray[cnt]["releaseStatusCode"] = la[i].releaseStatusCode;
+
+                        myArray[cnt]["releaseDate1"] = releaseDate1 ? releaseDate1.substring(0, releaseDate1.indexOf("T")) : "";
+                        myArray[cnt]["Releaser1"] = releaseAuth1 || "";
+                        myArray[cnt]["releaserName1"] = releaserName1 || "";
+                        myArray[cnt]["releaserRemarks1"] = releaserRemarks1 || "";
+                        myArray[cnt]["releaseStatusCode1"] = releaseStatusCode1 || "";
+
+                        myArray[cnt]["releaseDate2"] = releaseDate2 ? releaseDate2.substring(0, releaseDate2.indexOf("T")) : "";
+                        myArray[cnt]["Releaser2"] = releaseAuth2 || "";
+                        myArray[cnt]["releaserName2"] = releaserName2 || "";
+                        myArray[cnt]["releaserRemarks2"] = releaserRemarks2 || "";
+                        myArray[cnt]["releaseStatusCode2"] = releaseStatusCode2 || "";
+
+                        myArray[cnt]["releaseDate3"] = releaseDate3 ? releaseDate3.substring(0, releaseDate3.indexOf("T")) : "";
+                        myArray[cnt]["Releaser3"] = releaseAuth3 || "";
+                        myArray[cnt]["releaserName3"] = releaserName3 || "";
+                        myArray[cnt]["releaserRemarks3"] = releaserRemarks3 || "";
+                        myArray[cnt]["releaseStatusCode3"] = releaseStatusCode3 || "";
+
+                        myArray[cnt]["empUnqId"] = la[i].empUnqId;
+                        myArray[cnt]["empName"] = empName;
+                        myArray[cnt]["statName"] = statName;
+                        myArray[cnt]["remarks"] = leaveApplicationDetails[l].remarks;
+                        myArray[cnt]["leaveAppItem"] = leaveApplicationDetails[l].leaveAppItem;
+                        myArray[cnt]["leaveTypeCode"] = leaveApplicationDetails[l].leaveTypeCode;
+                        myArray[cnt]["fromDt"] = leaveApplicationDetails[l].fromDt.substring(0, leaveApplicationDetails[l].fromDt.indexOf("T"));
+                        myArray[cnt]["toDt"] = leaveApplicationDetails[l].toDt.substring(0, leaveApplicationDetails[l].toDt.indexOf("T"));
+                        myArray[cnt]["totalDays"] = leaveApplicationDetails[l].totalDays;
+                        myArray[cnt]["halfDayFlag"] = leaveApplicationDetails[l].halfDayFlag;
+                        cnt++;
+                    }
+                    leaveApplicationDetails = "";
+                }
+                $scope.data = myArray;
+                $scope.InfoPL = $scope.data;
+                $scope.data = $filter("orderBy")($scope.data, "-leaveAppId");
+                $scope.curPage = 0;
+                $scope.pageSize = 25;
+                $scope.$digest();
+                $("#loading").removeClass("activediv");
+                $("#loading").addClass("deactivediv");
+            }
+        };
+        xhr.send();
+    };
     $scope.GetPostedLeaveInfo = function (data) {
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var FromDate, ToDate; if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) {

@@ -51,7 +51,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                             var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
                                 var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
                                 if (appid == rlsappid) {
-                                    if (appleavetype === "SL" || appleavetype === "LD" || parentid !== 0 || cancelled === true) { slflg = true; return false; };
+                                    if (appleavetype === "SL" || appleavetype === "OD" || appleavetype === "LD"  || parentid !== 0 || cancelled === true) { slflg = true; return false; };
                                     tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++;
                                 };
                             }; ldata = tbl; return tbl;

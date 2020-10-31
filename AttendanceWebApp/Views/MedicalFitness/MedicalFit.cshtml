@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Medical Fit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MedicalFitnessCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="MedicalFitnessController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Medical Fitness</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="input-group form">
+                                                <input type="text" class="form-control" id="eCode" name="eCode" placeholder="Search Employee Code">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpBlock()"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                                    <button class="btn btn-success" type="reset" id="btnSave" style="text-align: right;" value="Reset" name="Reset" ng-click="ResetView()"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tbl_empdtl">
+                                <tbody dir-paginate="d in blockData|itemsPerPage:1">
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Employee Code</label></td>
+                                        <td class="text-uppercase">{{d.empUnqId}}</td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Employee Name</label></td>
+                                        <td class="text-uppercase">{{d.empName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Punching Blocked</label></td>
+                                        <td><input type="checkbox" ng-checked="{{d.punchingBlocked}}" disabled="disabled"></td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Block Date</label></td>
+                                        <td>{{d.blockDt| date:'dd/MM/yyyy HH:mm'}} &nbsp;<label>CARD BLOCKED DAYS : {{d.cardBlockedDays}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Block Remark</label></td>
+                                        <td class="text-uppercase">{{d.blockRemark}}</td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Block By</label></td>
+                                        <td class="text-uppercase">{{d.blockBy}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Employee Type</label></td>
+                                        <td class="text-uppercase">{{d.empTypeName}}</td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Unit</label></td>
+                                        <td class="text-uppercase">{{d.unitName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Station</label></td>
+                                        <td class="text-uppercase">{{d.statName}}</td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Category</label></td>
+                                        <td class="text-uppercase">{{d.catName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Grade</label></td>
+                                        <td class="text-uppercase">{{d.gradeName}}</td>
+                                        <td style="text-align: left;"><label class="text-uppercase">Designation</label></td>
+                                        <td class="text-uppercase">{{d.desgName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;"><label class="text-uppercase">Remarks</label></td>
+                                        <td>
+                                            <input type="text" id="txtRemarks" ng-model="N.Remarks" class="form-control text-uppercase">
+                                        </td>
+                                        <td style="text-align: left;"><label class="text-uppercase">FIT / UNFINT</label></td>
+                                        <td>
+                                            <select id="cmbFit" class="form-control" ng-model="N.FitUnfit">
+                                                <option value="true" selected>FIT</option>
+                                                <option value="false">UNFIT</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center;">
+                                            <button id="btnSubmit" class="btn btn-success" ng-click="CreateMedFitness(N)"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

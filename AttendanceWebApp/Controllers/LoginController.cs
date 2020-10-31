@@ -55,6 +55,18 @@ namespace AttendanceWebApp.Controllers
                     Session["UserRole"] = Convert.ToString(requestData.RoleId);
                 }
 
+                if (requestData.Location == "NKP")
+                {
+                    if (requestData.WrkGrp != "COMP" && requestData.WrkGrp != "APPRENTICE" && requestData.RoleId != "2" && requestData.RoleId != "3")
+                    {
+                        Session["UserRole"] = Convert.ToString(10);
+                    }
+                    else
+                    {
+                        Session["UserRole"] = Convert.ToString(requestData.RoleId);
+                    }
+                }
+
                 string IPAddress = GetIp();
                 return null;
             }

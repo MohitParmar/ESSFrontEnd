@@ -37,7 +37,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <input type="hidden" value="LA" id="releaseGroupCode" />
                 <input type="hidden" value="GP" id="gpreleaseGroupCode" />
                 <div class="panel panel-info">
@@ -81,6 +81,9 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;" ng-click="sort('addDt')">App. Date</th>
+                                        <th style="text-align: center; padding: 3px;">
+                                            Pending Here
+                                        </th>
                                         <th style="text-align:center;" ng-click="sort('releaseDate')">Rel. Date</th>
                                         <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
                                             Status
@@ -105,6 +108,15 @@
                                     <tr dir-paginate="d in lappdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1"
                                         ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
                                         <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <table>
+                                                <tr ng-repeat="a in d.applReleaseStatus">
+                                                    <td ng-if="a.releaseStatusCode === 'I' || a.releaseStatusCode === 'R'" style="width: 85px; font-size: x-small;">
+                                                        {{a.releaseStrategyLevel}} - {{a.releaserName}} - {{a.releaseDate | date:'dd/MM/yyyy'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                         <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yyyy HH:mm'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="
@@ -143,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 @* Leave Balance Grid  *@
                 <div class="panel panel-info">
                     <div class="panel-heading">

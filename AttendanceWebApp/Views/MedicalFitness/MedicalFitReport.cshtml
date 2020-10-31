@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "MedicalFitReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MedicalFitnessCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<script>
+    window.onload = function () {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        //var lastDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        if (firstDay.getMonth() + 1 < '10') {
+            firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+        } else {
+            firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+        }
+        //if (lastDay.getMonth() + 1 < '10') {
+        //    lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+        //} else {
+        //    lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+        //}
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(firstDay);
+    }
+</script>
+<div ng-app="myApp" ng-controller="MedicalFitnessController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Medical Fitness</strong>
+                        <div style="        float: right;">
+                            <i class="fa fa-file-excel-o fa-2x"></i>
+                            <a style="        float: right;" href="#" ng-click="exportAllData('Medical_Fitness_Report')">&nbsp;Medical Fitness Report</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.fromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.toDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetMedFitness(New)">
+                                            <i class="fa fa-search"></i>
+                                            &nbsp;Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div style="        text-align: center;">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" ng-init="GetMedFitness()">
+                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;" ng-click="sort('WorkGroup')">
+                                            Work Group
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='WorkGroup'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('EmpCode')">
+                                            Emp.Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('EmpName')">
+                                            Emp.Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('Dept')">
+                                            Dept.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Dept'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('Stat')">
+                                            Stat.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Stat'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('Cat')">
+                                            Cat.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Cat'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('Desg')">
+                                            Desg.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Desg'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('CardBlockedOn')">
+                                            Card Blocked On
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='CardBlockedOn'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('CardBlockedDays')">
+                                            Card Blocked Days
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='CardBlockedDays'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;">Card Blocked Reason</th>
+                                        <th style="text-align: center;" ng-click="sort('FitStatus')">
+                                            Fit.Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='FitStatus'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;">Fit.Remarks</th>
+                                        <th style="text-align: center;" ng-click="sort('FitDate')">
+                                            Fit.Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='FitDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('FitnessBy')">
+                                            Fitness By
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='FitnessBy'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.WorkGroup" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.EmpCode" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.EmpName" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Dept" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Stat" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Cat" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Desg" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.CardBlockedDays" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.CardBlockedReason" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.FitStatus"/></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.FitRemarks" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.FitnessBy" /></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in fitnessData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                    <tr>
+                                        <td style="text-align: left;">{{d.WorkGroup}}</td>
+                                        <td style="text-align: center;">{{d.EmpCode}}</td>
+                                        <td style="text-align: left;">{{d.EmpName}}</td>
+                                        <td style="text-align: left;">{{d.Dept}}</td>
+                                        <td style="text-align: left;">{{d.Stat}}</td>
+                                        <td style="text-align: left;">{{d.Cat}}</td>
+                                        <td style="text-align: left;">{{d.Desg}}</td>
+                                        <td style="text-align: center;">{{d.CardBlockedOn | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: right;">{{d.CardBlockedDays}}</td>
+                                        <td style="text-align: left;">{{d.CardBlockedReason}}</td>
+                                        <td style="text-align: center;">{{d.FitStatus}}</td>
+                                        <td style="text-align: left;">{{d.FitRemarks}}</td>
+                                        <td style="text-align: center;">{{d.FitDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;">{{d.FitnessBy}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

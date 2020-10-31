@@ -1,16 +1,57 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]); app.controller("ReimbursementController", function ($scope, $http, $filter) {
     $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope.currentPage = 1, $scope.itemsPerPage = 10, $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
     var rlsarr = []; $scope.jsondata; var c = 0;
-    $scope.GetEmpInfo = function () { var emp = new XMLHttpRequest; emp.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0), emp.setRequestHeader("Accept", "application/json"), emp.onreadystatechange = function () { if (4 === emp.readyState) { var json = JSON.parse(emp.responseText); $scope.empdata = json, $scope.$digest() } }, emp.send() };
-    $scope.AddtoListConv = function (Conv) { function storeTblValues() { var TableData = new Array; return $("#aliasTable tr").each(function (row, tr) { TableData[row] = { sr: $(tr).find("td:eq(0)").text(), convDate: $(tr).find("td:eq(1)").text(), vehicleNo: $(tr).find("td:eq(2)").text(), particulars: $(tr).find("td:eq(3)").text(), meterFrom: $(tr).find("td:eq(4)").text(), distance: $(tr).find("td:eq(5)").text(), meterTo: $(tr).find("td:eq(6)").text(), rate: $(tr).find("td:eq(7)").text(), amount: $(tr).find("td:eq(8)").text() } }), TableData.shift(), TableData } if ("undefined" == typeof Conv) return alert("Please Fill All Required Details Step by Step..."), !1; c++ , $(".tempRow").remove(); var row = $("<tr><td style='text-align:center;'><input type='hidden' name='SrNo' value='" + c + "'>" + c + "</td><td style='text-align:center;'><input type='hidden' name='Date' value='" + Conv.Dt + "'>" + Conv.Dt + "</td><td style='text-align:center;'><input type='hidden' name='VNo' value='" + Conv.VNo + "'>" + Conv.VNo + "</td><td style='text-align:center;'><input type='hidden' name='Perticular' value='" + Conv.Perticular + "'>" + Conv.Perticular + "</td><td style='text-align:center;'><input type='hidden' name='MFrom' value='" + Conv.MFrom + "'>" + Conv.MFrom + "</td><td style='text-align:center;'><input type='hidden' name='KM' value='" + Conv.KM + "'>" + Conv.KM + "</td><td style='text-align:center;'><input type='hidden' name='MTo' value='" + $("#txtMeterTo").val() + "'>" + $("#txtMeterTo").val() + "</td><td style='text-align:center;'><input type='hidden' name='Rate' value='" + Conv.Rate + "'>" + Conv.Rate + "</td><td style='text-align:center;'><input type='hidden' name='Amt' value='" + $("#txtAmount").val() + "'>" + $("#txtAmount").val() + "</td></tr>"); $("#aliasTable").append(row), document.getElementById("Dt").value = "", document.getElementById("txtVehicleNo").value = "", document.getElementById("txtParticulars").value = "", document.getElementById("txtMeterFrom").value = "", document.getElementById("txtMeterTo").value = "", document.getElementById("txtDistance").value = "", document.getElementById("txtRate").value = "", document.getElementById("txtAmount").value = ""; for (var TableData = storeTblValues(), TotalAmount = 0, i = 0; i < TableData.length; i++)TotalAmount += parseFloat(TableData[i].amount); document.getElementById("txtAmountClaimed").value = TotalAmount };
+    $scope.GetEmpInfo = function () {
+        var emp = new XMLHttpRequest; emp.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0);
+        emp.setRequestHeader("Accept", "application/json"), emp.onreadystatechange = function () {
+            if (4 === emp.readyState) { var json = JSON.parse(emp.responseText); $scope.empdata = json, $scope.$digest(); };
+        }, emp.send();
+    };
+    $scope.GetPresentAddress = function () {
+        var arr = new Array();
+        var ADD = new XMLHttpRequest(); ADD.open("GET", $scope._Conpath + "EmpAddress/GetEmpAddress?empUnqId=" + $("#myEmpUnqId").val(), true);
+        ADD.setRequestHeader("Accept", "application/json"); ADD.onreadystatechange = function () {
+            if (ADD.readyState === 4) {
+                debugger; var json = JSON.parse(ADD.responseText);
+                var tmparr = json;
+                arr[0] = {
+                    empUnqId: tmparr["empUnqId"],
+                    houseNumber: tmparr["houseNumber"],
+                    societyName: tmparr["societyName"],
+                    areaName: tmparr["areaName"],
+                    landMark: tmparr["landMark"],
+                    preCity: tmparr["preCity"],
+                    tehsil: tmparr["tehsil"],
+                    preDistrict: tmparr["preDistrict"],
+                    preState: tmparr["preState"],
+                    prePin: tmparr["prePin"],
+                    preEmail: tmparr["preEmail"],
+                    prePhone: tmparr["prePhone"],
+                    preResPhone: tmparr["preResPhone"],
+                    policeStation: tmparr["policeStation"]
+                };
+                $scope.addrdata = arr; $scope.$digest();
+            };
+        }; ADD.send();
+    };
+    $scope.AddtoListConv = function (Conv) {
+        function storeTblValues() {
+            var TableData = new Array; return $("#aliasTable tr").each(function (row,
+                tr) {
+                TableData[row] = { sr: $(tr).find("td:eq(0)").text(), convDate: $(tr).find("td:eq(1)").text(), vehicleNo: $(tr).find("td:eq(2)").text(), particulars: $(tr).find("td:eq(3)").text(), meterFrom: $(tr).find("td:eq(4)").text(), distance: $(tr).find("td:eq(5)").text(), meterTo: $(tr).find("td:eq(6)").text(), rate: $(tr).find("td:eq(7)").text(), amount: $(tr).find("td:eq(8)").text() }
+            }), TableData.shift(), TableData
+        } if ("undefined" == typeof Conv) return alert("Please Fill All Required Details Step by Step..."), !1; c++ , $(".tempRow").remove(); var row = $("<tr><td style='text-align:center;'><input type='hidden' name='SrNo' value='" + c + "'>" + c + "</td><td style='text-align:center;'><input type='hidden' name='Date' value='" + Conv.Dt + "'>" + Conv.Dt + "</td><td style='text-align:center;'><input type='hidden' name='VNo' value='" + Conv.VNo.toUpperCase() + "'>" + Conv.VNo.toUpperCase() + "</td><td style='text-align:center;'><input type='hidden' name='Perticular' value='" + Conv.Perticular.toUpperCase() + "'>" + Conv.Perticular.toUpperCase() + "</td><td style='text-align:center;'><input type='hidden' name='MFrom' value='" + Conv.MFrom + "'>" + Conv.MFrom + "</td><td style='text-align:center;'><input type='hidden' name='KM' value='" + Conv.KM + "'>" + Conv.KM + "</td><td style='text-align:center;'><input type='hidden' name='MTo' value='" + $("#txtMeterTo").val() + "'>" + $("#txtMeterTo").val() + "</td><td style='text-align:center;'><input type='hidden' name='Rate' value='" + Conv.Rate + "'>" + Conv.Rate + "</td><td style='text-align:center;'><input type='hidden' name='Amt' value='" + $("#txtAmount").val() + "'>" + $("#txtAmount").val() + "</td></tr>"); $("#aliasTable").append(row), document.getElementById("Dt").value = "", document.getElementById("txtVehicleNo").value = "", document.getElementById("txtParticulars").value = "", document.getElementById("txtMeterFrom").value = "", document.getElementById("txtMeterTo").value = "", document.getElementById("txtDistance").value = "", document.getElementById("txtRate").value = "", document.getElementById("txtAmount").value = ""; for (var TableData = storeTblValues(), TotalAmount = 0, i = 0; i < TableData.length; i++)TotalAmount += parseFloat(TableData[i].amount).toFixed(2); document.getElementById("txtAmountClaimed").value = TotalAmount
+    };
     $scope.CalMeterTo = function () { var MeterFrom = parseInt(document.getElementById("txtMeterFrom").value) || 0, Distance = parseInt(document.getElementById("txtDistance").value) || 0, MeterTo = MeterFrom + Distance; document.getElementById("txtMeterTo").value = MeterTo };
-    $scope.CalAmount = function () { var Rate = parseFloat(document.getElementById("txtRate").value) || 0, Distance = parseInt(document.getElementById("txtDistance").value) || 0; $("#txtAmount").val(parseFloat(Distance * Rate)) };
+    $scope.CalAmount = function () {
+        var Rate = parseFloat(document.getElementById("txtRate").value).toFixed(2) || 0; var Distance = parseInt(document.getElementById("txtDistance").value).toFixed(2) || 0; $("#txtAmount").val(parseFloat(Distance * Rate).toFixed(2));
+    };
     $scope.PopulateData = function (id) { $("#ConformModel").modal("show"), $scope.PopupDetails(id) };
     $scope.PopupDetails = function (reimbId) { var newArray = {}; newArray = $scope.jsondata; for (var i = 0; i < newArray.length; i++) { var id = newArray[i].reimbId; if (reimbId === id) { var tmparray = [0]; tmparray[0] = newArray[i], $scope.convData = tmparray } } };
     $scope.GetReimbursementReport = function (dates) { var FromDate = dates.FromDt, ToDate = dates.ToDt, reimbType = dates.reimbType, REM = new XMLHttpRequest; REM.open("GET", $scope._Conpath + "Reimbursement/GetReimb?reimbType=" + reimbType + "&fromDate=" + FromDate + "&toDate=" + ToDate, !0), REM.setRequestHeader("Accept", "application/json"), REM.onreadystatechange = function () { if (4 === REM.readyState && 200 === REM.status) { $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); var json = JSON.parse(REM.responseText); $scope.REMdata = json, $scope.REMdata = $filter("orderBy")($scope.REMdata, "empUnqId"), $scope.jsondata = $scope.REMdata, $scope.curPage1 = 0, $scope.pageSize1 = 10, $scope.$digest() } }, REM.send() };
     $scope.CreateReimbursement = function (Conv) {
-        document.getElementById("btnAddtoList").disabled = true;
-        document.getElementById("btnSubmit").disabled = true;
+        //document.getElementById("btnAddtoList").disabled = true;
+        //document.getElementById("btnSubmit").disabled = true;
         var d = new Date();
         var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var year = d.getFullYear().toString();

@@ -41,6 +41,17 @@
         <div class="row">
             <input type="hidden" value="SS" id="releaseGroupCode" />
             <div class="col-sm-12">
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
                 <div class="col-sm-4">
                     <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
                     <div class="panel panel-info">
@@ -48,7 +59,7 @@
                         <div class="panel-body">
                             <button id="btnSSDownload" class="btn btn-info" ng-click="Download('0')"><i class="fa fa-download"></i>&nbsp;Download Template (List of Emp.)</button>
                         </div>
-                        @*<div class="panel-footer"><span></span></div>*@
+                        <div class="panel-footer"><span style="color:Red;">Note : Please do not remove any columns from downloaded template.</span></div>
                     </div>
                     <div class="panel panel-info">
                         <div class="panel-heading"><strong>Upload Template</strong></div>
@@ -63,7 +74,7 @@
                                 </span>
                             </div>
                         </div>
-                        @*<div class="panel-footer"><span></span></div>*@
+                        <div class="panel-footer"><span style="color:Red;">Note : Please do not remove any columns from downloaded template while uploading.</span></div>
                     </div>
                     <div class="table-responsive">
                         <div class="panel panel-default">
