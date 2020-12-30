@@ -1,3 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=NODUES_005CNODUESADDUSER/@EntryIndexedValue">NoDues\NoDuesAddUser</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=NODUES_005CNODUESMASTER/@EntryIndexedValue">NoDues\NoDuesMaster</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=VIEWS_005CNODUES_005CNODUESMASTER/@EntryIndexedValue">Views\NoDues\NoDuesMaster</s:String>
 	<s:String x:Key="/Default/CodeInspection/WebPathMapping/MappedPaths/=VIEWS_005CREIMBURSEMENT_005CREIMBURSEMENTREPORT/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=NODUES_005CNODUESADDUSER/@EntryIndexedValue">NoDues\NoDuesAddUser</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=NODUES_005CNODUESMASTER/@EntryIndexedValue">NoDues\NoDuesMaster</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=VIEWS_005CNODUES_005CNODUESMASTER/@EntryIndexedValue">Views\NoDues\NoDuesMaster</s:String>
 	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=VIEWS_005CREIMBURSEMENT_005CREIMBURSEMENTREPORT/@EntryIndexedValue">Views\Reimbursement\ReimbursementReport</s:String></wpf:ResourceDictionary>

@@ -101,5 +101,7 @@ namespace AttendanceWebApp.Models
         public bool CompanyAcc { get; set; }
 
         public string RoleId { get; set; }
+
+        public bool NoDuesFlag { get; set; }
     }
 }

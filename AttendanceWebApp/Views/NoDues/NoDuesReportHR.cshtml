@@ -1,0 +1,477 @@
+﻿@{
+    ViewBag.Title = "No Dues Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<script>
+    function printData() {
+        var divToPrint = document.getElementById("printTable");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+    };
+    function printData1() {
+        var divToPrint = document.getElementById("printTable1");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+    };
+</script>
+<script>
+    window.onload = function () {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 3, 0);
+        if (firstDay.getMonth() + 1 < '10') {
+            firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+        } else {
+            firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+        }
+        if (lastDay.getMonth() + 1 < '10') {
+            lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+        } else {
+            lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+        }
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(lastDay);
+    }
+</script>
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <input type="hidden" id="hidDept" value="" />
+        <input type="hidden" id="hidreleaserFlag" value="" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>No Dues Details</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetNoDuesHR(New)">
+                                            <i class="fa fa-search"></i>
+                                            Search
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" ng-init="GetNoDuesHR()">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tr>
+                                    <th style="        text-align: center;">SAPID</th>
+                                    <th style="        text-align: center;">Employee Name</th>
+                                    <th style="        text-align: center;">Department</th>
+                                    <th style="        text-align: center;">Station</th>
+                                    <th style="        text-align: center;">Category</th>
+                                    <th style="        text-align: center;">Grade</th>
+                                    <th style="        text-align: center;">Date of Joining</th>
+                                    <th style="        text-align: center;">Date of Resign</th>
+                                    <th style="        text-align: center;">Date of Relieve</th>
+                                    <th style="        text-align: center;">Notice Period</th>
+                                    <th style="        text-align: center;">Unit of Notice Period</th>
+                                    <th style="        text-align: center;">Last Date of Working</th>
+                                    <th style="        text-align: center;">Mode of Leaving</th>
+                                    <th style="        text-align: center;">Exit interview</th>
+                                    <th style="        text-align: center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.deptName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.statName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.catName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.gradeName" />
+                                    </td>
+                                    <td colspan="9"></td>
+                                </tr>
+                                <tr dir-paginate="d in hrdData|itemsPerPage:5">
+                                    <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                    <td style="        text-align: left;">{{d.empName}}</td>
+                                    <td style="        text-align: left;">{{d.deptName}}</td>
+                                    <td style="        text-align: left;">{{d.statName}}</td>
+                                    <td style="        text-align: left;">{{d.catName}}</td>
+                                    <td style="        text-align: left;">{{d.gradeName}}</td>
+                                    <td style="        text-align: center;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.resignDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriod}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriodUnit}}</td>
+                                    <td style="        text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.modeOfLeaving}}</td>
+                                    <td style="        text-align: center;">
+                                        <input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-info" id="btnDetails" ng-click="PrintPreview({{d.empUnqId}})">
+                                            Print Preview
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="previewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Print Preview: </h4>
+                            <div style="        float: right;">
+                                <button type="submit" id="btnPrint" class="btn btn-primary" onclick="printData()"><i class="fa fa-print"></i>&nbsp;Print No Dues Form</button>
+                                <button type="submit" id="btnPrint1" class="btn btn-primary" onclick="printData1()"><i class="fa fa-print"></i>&nbsp;Print It Form</button>
+                            </div>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table table-condensed" ng-repeat="e in empArr" id="printTable"
+                                           border="1"
+                                           style="border-collapse: collapse;
+                                                  font-family: Arial, Helvetica, sans-serif;
+                                                  font-size: 14px;
+                                                  width: 793px;">
+                                        <tr>
+                                            <td colspan="5" style="        text-align: center;">
+                                                <h3>JINDAL SAW LTD. (IPU)</h3>
+                                                <h4>
+                                                    <u>NO DUES CERTIFICATE</u>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Location/Unit: {{e.unitName}}</td>
+                                            <td style="text-align: right;">Date: {{e.noDuesStartDate| date:'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Name: {{e.empName}}</td>
+                                            <td style="text-align: right;">SAP.Code: {{e.empUnqId}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation : {{e.gradeName}}</td>
+                                            <td>Grade : {{e.gradeName}}</td>
+                                            <td style="text-align: right;">Dept. & Station: {{e.statName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date of Joining: {{e.joinDate| date:'dd/MM/yyyy'}}</td>
+                                            <td>Date of Resignation: {{e.resignDate| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align: right;">Date of Relieving/Transfer: {{e.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p align="justify">
+                                                    I/We certify that the outstanding/No dues against Mr./Ms. <u>{{e.empName}}</u> is/are mentioned
+                                                    hereunder. In so far I/we concerned we have no objection to his/her release from the Company on the date
+                                                    indicated above by getting the items or by adjusting its value from him.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <table class="table table-bordered" border="1"
+                                                       style="border-collapse: collapse;width: 100%;font-size: 14px;">
+                                                    <tr>
+                                                        <th style="text-align: center;">SR. NO.</th>
+                                                        <th style="text-align: center;">Dept.</th>
+                                                        <th>
+                                                            <table class="table" border="0" style="border-collapse: collapse;width: 100%;font-size: 14px;">
+                                                                <tr>
+                                                                    <th style="text-align: center;width: 3%;">Sr</th>
+                                                                    <th style="text-align: center;width: 25%;">Particulars</th>
+                                                                    <th style="text-align: center;width: 25%;">Remarks</th>
+                                                                    <th style="text-align: center;width: 11%;">Amount</th>
+                                                                    <th></th>
+                                                                    <th style="text-align: center;width: 25%;">Release By</th>
+                                                                    <th style="text-align: center;width: 11%;">Release Date</th>
+                                                                </tr>
+                                                            </table>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: center;">1</td>
+                                                        <td style="text-align: left;">{{e.statName}}</td>
+                                                        <td>
+                                                            <table class="table" border="0" style="border-collapse: collapse;font-size: 14px;width: 100%;">
+                                                                <tbody ng-repeat="r in e.noDuesReleaseStatus">
+                                                                    <tr>
+                                                                        <td style="text-align: center;width:20px;;">1</td>
+                                                                        <td style="text-align: left;width: 164px;">{{e.deptParticulars}}</td>
+                                                                        <td style="text-align: left;width: 164px;">{{e.deptRemarks}}</td>
+                                                                        <td style="text-align: right;width: 71px;">{{e.deptAmount| number : 2}}</td>
+                                                                        <td></td>
+                                                                        <td style="text-align: left;width: 163px;">{{r.releaserName}}</td>
+                                                                        <td style="text-align: center;width: 71px;">{{r.releaseDate| date:'dd/MM/yyyy'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tbody ng-repeat="n in noDuesDepts">
+                                                        <tr>
+                                                            <td style="text-align: center;">{{n.no}}</td>
+                                                            <td style="text-align: left;">{{n.deptName}}</td>
+                                                            <td>
+                                                                <table class="table" border="0" style="border-collapse: collapse;font-size: 14px;width: 100%;">
+                                                                    <tr ng-repeat="h in n.noDuesDeptDetails">
+                                                                        <td style="text-align: center;width: 20px;">{{h.sr}}</td>
+                                                                        <td style="text-align: left;width: 164px;">{{h.particulars}}</td>
+                                                                        <td style="text-align: left;width: 164px;">{{h.remarks}}</td>
+                                                                        <td style="text-align: right;width: 71px;">{{h.amount| number : 2}}</td>
+                                                                        <td></td>
+                                                                        <td style="text-align: left;width: 163px;">{{n.approvedByName}}</td>
+                                                                        <td style="text-align: center;width: 71px;">
+                                                                            {{n.approvalDate| date:'dd/MM/yyyy'}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tr>
+                                                        <td style="        text-align: center;">16</td>
+                                                        <td style="        text-align: left;">HR Office</td>
+                                                        <td>
+                                                            <table class="table table-bordered" border="1" style="border-collapse: collapse;font-size: 14px;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th style="text-align: center;">Notice Period</th>
+                                                                        <th style="text-align: center;">Notice Period Basic / CTC</th>
+                                                                        <th style="text-align: center;">Last Working Date</th>
+                                                                        <th style="text-align: center;">Mode of Leaving</th>
+                                                                        <th style="text-align: center;">Exit Interview</th>
+                                                                        <th style="text-align: center;">Hr Approved By</th>
+                                                                        <th style="text-align: center;">Hr Approved Date</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="text-align: center;">{{e.noticePeriod}}</td>
+                                                                        <td style="text-align: center;">{{e.noticePeriodUnit}}</td>
+                                                                        <td style="text-align: center;">{{e.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                                                        <td style="text-align: center;">{{e.modeOfLeaving}}</td>
+                                                                        <td style="text-align: center;"><input type="checkbox" ng-checked="{{e.exitInterviewFlag}}" disabled></td>
+                                                                        <td style="text-align: center;">{{e.hrApprovedByName}}</td>
+                                                                        <td style="text-align: center;">{{e.hrApprovalDate| date:'dd/MM/yyyy'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p>
+                                                    I,
+                                                    <u> {{e.empName}}</u>, certify that having voluntarily resigned/Transferred to other location, I have handed over and accounted for all the Company’s moneys/properties including
+                                                    intellectual properties in whatever form i.e. whether in documentary or Pen drive, CDs, DVDs etc. to the concerned HOD/Person. I have neither retained any such property nor
+                                                    shall put to use/misuse any such property/asset of the Company for making any personal gain either individually or in combination with other/competitors of the Company. Any
+                                                    violation of this undertaking shall render me liable to legal action at the option of the Company.
+                                                </p>
+                                                <p>
+                                                    I confirm that I am responsible for all acts under my domain during my tenure of service.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Date: </td>
+                                            <td>Signature of Employee</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p>*For absconded case</p>
+                                                <p>**Serial No 13 is applicable only for employees who works at Pragpar Site.</p>
+                                                <p>***In case of LD Division</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Unit Head/</b>
+                                                <br />
+                                                <b>Sr.VP-OPTN.(SAW PIPE DIVN.)***</b>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <b>Approved</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-condensed" ng-repeat="x in empArr" id="printTable1"
+                                           border="1"
+                                           style="border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 14px; width: 793px;">
+                                        <tbody>
+                                            <tr>
+                                                <th colspan="6" style="text-align: center;"><h4><u>IT DECLARATION FORM</u></h4></th>
+                                            </tr>
+                                            <tr>
+                                                <td>E-code</td>
+                                                <td colspan="5">{{x.empUnqId}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td colspan="5">{{x.empName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Department</td>
+                                                <td colspan="5">{{x.statName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Plant</td>
+                                                <td colspan="5">{{x.deptName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6" style="text-align: center;"><h4>ASSET DETAILS</h4></th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center;">Type</th>
+                                                <th style="text-align: center;">Product</th>
+                                                <th style="text-align: center;">Name</th>
+                                                <th style="text-align: center;">Cost</th>
+                                                <th style="text-align: center;">Deduction</th>
+                                            </tr>
+                                            <tr ng-repeat="y in x.noDuesIt">
+                                                <td style="text-align: left;">{{y.typeName}}</td>
+                                                <td style="text-align: left;">{{y.componentName}}</td>
+                                                <td style="text-align: left;">{{y.asset}}</td>
+                                                <td style="text-align: right;">{{y.cost|number:2}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Employee Sign</td>
+                                                <td></td>
+                                                <td>HOD Sign</td>
+                                                <td colspan="2"></td> 
+                                            </tr>
+                                            <tr>
+                                                <td>Note</td>
+                                                <td colspan="5"><p>Res HOD, Please collect the Data required from the employee, as IT will not be responsible in case of any loss of Data after system handed over.</p></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6" style="text-align: center;"><h4>Transfer of Assets</h4></th>
+                                            </tr>
+                                            <tr>
+                                                <td>E-code</td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Department</td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Plant</td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Employee Sign</td>
+                                                <td></td>
+                                                <td>HOD Sign</td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Note</td>
+                                                <td colspan="5"><p>Employee needs to sign in presence in IT Office & agrees to Terms & Condition mentioned below.</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td>IT Receiver's Sign</td>
+                                                <td></td>
+                                                <td>IT HOD Sign</td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6"><p>1. No New E-mail id will be generated, only if the employee leaving has valid personal E-Mail ID</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <p>2. Employee needs to take separate Permission for Mobile Phone from Respective Unit Head</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <p>3. IT Department may change Asset Details as per Policy. Some facilities may be withdrawn/provided keeping in nature of view of duty.</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

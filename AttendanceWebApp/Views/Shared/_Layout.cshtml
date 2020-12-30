@@ -92,6 +92,7 @@
     <input type="hidden" value="@Session["OtFlag"]" id="myOtFlag" />
     <input type="hidden" value="@Session["Loc"]" id="myLoc" />
     <input type="hidden" value="@Session["UserRole"]" id="myUserRole" />
+    <input type="hidden" value="@Session["NDFlag"]" id="myNDFlag" />
     <input type="hidden" value="@Session["IP"]" id="myIPAddress" />
     @*<input type="hidden" value="@Session["IsHod"]" id="myIsHod" /><input type="hidden" value="@Session["IsSecUser"]" id="myIsSecUser" /><input type="hidden" value="@Session["IsGpReleaser"]" id="myIsGpReleaser" /><input type="hidden" value="@Session["IsAdmin"]" id="myAdmin" />*@@*<input type="hidden" value="@Session["ChkHeaders"]" id="myHeader" />*@
     <div class="navbar navbar-fixed-top">
@@ -119,8 +120,17 @@
                                 <li id="mnuPerformanceReport">
                                     <a href="/Report/PerformanceReport">Performance Report</a>
                                 </li>
+                                <li id="mnuSSEmployee">
+                                    <a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a>
+                                </li>
                                 <li id="mnuIncomeTaxDeclaration">
                                     <a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a>
+                                </li>
+                                <li id="mnuTDS">
+                                    <a href="~/IncomeTax/Form16">TDS Forms</a>
+                                </li>
+                                <li id="mnuNODuesStatus">
+                                    <a href="~/NoDues/NoDuesStatus">No Dues Status</a>
                                 </li>
                                 <li id="mnuAddressMaster">
                                     <a href="/Master/AddressMaster">Address/Contact Details</a>
@@ -150,9 +160,7 @@
             <div class="container" style="        margin-left: 15px;
         margin-right: 15px;">
                 <ul class="mainnav">
-                    <li class="active" id="mnuDashboard">
-                        <a href="/Home/Index"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
-                    </li>
+                    <li class="active" id="mnuDashboard"><a href="/Home/Index"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                     <li hidden="hidden" class="dropdown" id="mnuMaster">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Master</span></a>
                         <ul class="dropdown-menu">
@@ -177,8 +185,8 @@
                                 <a href="/OD/ODApply">OD Application</a>
                             </li>
                             @*<li hidden="hidden" id="mnuLDLeaveApplication">
-                                    <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
-                                </li>*@
+                    <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
+                </li>*@
                             <li id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
@@ -213,7 +221,6 @@
                                     </li>
                                 </ul>
                             </li>
-
                         </ul>
                     </li>
                     <li class="dropdown" id="mnuGatePass">
@@ -373,16 +380,22 @@
                             <li hidden="hidden" id="mnuSSHRRPT">
                                 <a href="/ShiftSchedule/SSHRReport">Shift Schedule HR Report</a>
                             </li>
+                            <li hidden="hidden" id="mnuSSOpenMonth">
+                                <a href="/ShiftSchedule/SSOpenMonth">Shift Schedule Open Month</a>
+                            </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuMediclaim">
+                    <li class="dropdown" id="mnuMediclaim" hidden>
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-hospital-o"></i><span>Mediclaim</span></a>
                         <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuMediclaimDetails">
+                            <li id="mnuMediclaimDetails" hidden>
                                 <a href="~/Mediclaim/NameAddition">Mediclaim Detail</a>
                             </li>
-                            <li hidden="hidden" id="mnuDependentDetails">
+                            <li id="mnuDependentDetails" hidden>
                                 <a href="~/Mediclaim/DependentDetails">Dependent Details</a>
+                            </li>
+                            <li id="mnuDependentRelease" hidden>
+                                <a href="~/Mediclaim/ReleaseDependents">Release Dependents</a>
                             </li>
                         </ul>
                     </li>
@@ -397,13 +410,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li hidden="hidden" class="dropdown" id="mnuNodUes">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-universal-access"></i><span>No Dues</span></a>
+                        <ul class="dropdown-menu">
+                            <li hidden="hidden" id="mnuNoDuesMaster"><a href="/NoDues/NoDuesMaster">No Dues Master</a></li>
+                            <li hidden="hidden" class="dropdown-submenu" id="mnuNoduesSectionHeadHOD">
+                                <a href="#" class="test" data-toggle="dropdown"><span>Section Head / HOD&nbsp;<b class="fa fa-caret-right"></b></span></a>
+                                <ul class="dropdown-menu">
+                                    <li id="mnuNoDuesDeptCreater"><a href="/NoDues/NoDuesAddUser?flg=false">No Dues Entry</a></li>
+                                    <li id="mnuNoDuesDeptApprove"><a href="/NoDues/NoDuesRelease?flg=true">Approve No Dues</a></li>
+                                </ul>
+                            </li>
+                            <li hidden="hidden" id="mnuNoduesCreater"><a href="/NoDues/NoDuesAddUser">No Dues Details</a></li>
+                            <li hidden="hidden" id="mnuNoduesReleaser"><a href="/NoDues/NoDuesRelease">No Dues Release</a></li>
+                            <li hidden="hidden" id="mnuNoduesReport"><a href="/NoDues/NoDuesReportHR">No Dues Report</a></li>
+                            <li hidden="hidden" id="mnuNODuesReleaseUH"><a href="~/NoDues/NoDuesReleaseUH">No Dues Release Unit Head</a></li>
+                        </ul>
+                    </li>
                     <li id="mnuPayslip">
-                        <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span></span>Payslip</a>
+                        <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span>Payslip</span></a>
                     </li>
-                    <li id="mnuTDS">
-                        <a href="~/IncomeTax/Form16"><i class="fa fa-file-text"></i><span></span>TDS Forms</a>
-                    </li>
-
                 </ul>
             </div>
         </div>

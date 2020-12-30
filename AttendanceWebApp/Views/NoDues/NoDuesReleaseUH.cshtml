@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "No Dues Release";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <input type="hidden" id="hidDept" value="" />
+        <input type="hidden" id="hidreleaserFlag" value="" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>No Dues Details</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div class="table-responsive" ng-init="GetNoDuesUH()">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tr>
+                                    <th style="text-align: center;">SAPID</th>
+                                    <th style="text-align: center;">Employee Name</th>
+                                    <th style="text-align: center;">Department</th>
+                                    <th style="text-align: center;">Station</th>
+                                    <th style="text-align: center;">Category</th>
+                                    <th style="text-align: center;">Grade</th>
+                                    <th style="text-align: center;">Date of Joining</th>
+                                    <th style="text-align: center;">Date of Resign</th>
+                                    <th style="text-align: center;">Date of Relieve</th>
+                                    <th style="text-align: center;">Notice Period</th>
+                                    <th style="text-align: center;">Unit of Notice Period</th>
+                                    <th style="text-align: center;">Last Date of Working</th>
+                                    <th style="text-align: center;">Mode of Leaving</th>
+                                    <th style="text-align: center;">Exit interview</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.deptName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.statName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.catName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.gradeName" />
+                                    </td>
+                                    <td colspan="9"></td>
+                                </tr>
+                                <tr dir-paginate="d in uhdData|itemsPerPage:5">
+                                    <td style="text-align: center;">{{d.empUnqId}}</td>
+                                    <td style="text-align: left;">{{d.empName}}</td>
+                                    <td style="text-align: left;">{{d.deptName}}</td>
+                                    <td style="text-align: left;">{{d.statName}}</td>
+                                    <td style="text-align: left;">{{d.catName}}</td>
+                                    <td style="text-align: left;">{{d.gradeName}}</td>
+                                    <td style="text-align: center;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align: center;">{{d.resignDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align: center;">{{d.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align: center;">{{d.noticePeriod}}</td>
+                                    <td style="text-align: center;">{{d.noticePeriodUnit}}</td>
+                                    <td style="text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align: center;">{{d.modeOfLeaving}}</td>
+                                    <td style="text-align: center;">
+                                        <input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled>
+                                    </td>
+                                    <td style="text-align: center; width: 105px;">
+                                        <button class="btn btn-info" id="btnDetails" ng-click="PopupModelUH({{d.empUnqId}},false)">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        <button class="btn btn-success" id="btnApprove" ng-click="ChangeNoDues(false,'',{{d.empUnqId}})">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details Preview: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table table-bordered" ng-repeat="e in empArr">
+                                        <tr>
+                                            <td colspan="5" style="        text-align: center;">
+                                                <h3>JINDAL SAW LTD. (IPU)</h3>
+                                                <h4>
+                                                    <u>NO DUES</u>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="text-align: right;">Date: {{e.noDuesStartDate| date:'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Name: {{e.empName}}</td>
+                                            <td>SAP.Code: {{e.empUnqId}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation : {{e.gradeName}}</td>
+                                            <td>Grade : {{e.gradeName}}</td>
+                                            <td>Dept. & Station: {{e.statName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date of Joining: {{e.joinDate| date:'dd/MM/yyyy'}}</td>
+                                            <td>Date of Resignation: {{e.resignDate| date:'dd/MM/yyyy'}}</td>
+                                            <td>Date of Relieving/Transfer: {{e.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <table class="table-condensed">
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <th style="text-align: center;width: 86px">Dept</th>
+                                                                    <th style="text-align: center;width: 39px;">Sr</th>
+                                                                    <th style="text-align: center;width: 253px;">Particulars</th>
+                                                                    <th style="text-align: center;width: 253px;">Remarks</th>
+                                                                    <th style="text-align: center;width: 111px%;">Amount</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5">
+                                                                        <table class="table-condensed">
+                                                                            <tr>
+                                                                                <td style="text-align: center;width:86px;">HOD</td>
+                                                                                <td style="text-align: center;width:39px;">1</td>
+                                                                                <td style="text-align: left;width: 253px;">{{e.deptParticulars}}</td>
+                                                                                <td style="text-align: left;width: 253px;">{{e.deptRemarks}}</td>
+                                                                                <td style="text-align: right;width: 111px;">{{e.deptAmount| number : 2}}</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr ng-repeat="n in noDuesDepts">
+                                                                    <td ng-repeat="h in n.noDuesDeptDetails" colspan="5">
+                                                                        <table class="table-condensed">
+                                                                            <tr>
+                                                                                <td style="text-align: center;width: 86px;">{{h.deptId}}</td>
+                                                                                <td style="text-align: center;width: 39px;">{{h.sr}}</td>
+                                                                                <td style="text-align: left;width: 253px;">{{h.particulars}}</td>
+                                                                                <td style="text-align: left;width: 253px;">{{h.remarks}}</td>
+                                                                                <td style="text-align: right;width: 111px;">{{h.amount| number : 2}}</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5">
+                                                                        <table class="table table-condensed">
+                                                                            <tr>
+                                                                                <th style="text-align: center;">Dept</th>
+                                                                                <th style="text-align: center;">Notice Period</th>
+                                                                                <th style="text-align: center;">Notice Period Basic / CTC</th>
+                                                                                <th style="text-align: center;">Last Working Date</th>
+                                                                                <th style="text-align: center;">Mode of Leaving</th>
+                                                                                <th style="text-align: center;">Exit Interview</th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="text-align: center;">HR Office</td>
+                                                                                <td style="text-align: center;">{{e.noticePeriod}}</td>
+                                                                                <td style="text-align: center;">{{e.noticePeriodUnit}}</td>
+                                                                                <td style="text-align: center;">{{e.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                                                                <td style="text-align: center;">{{e.modeOfLeaving}}</td>
+                                                                                <td style="text-align: center;"><input type="checkbox" ng-checked="{{e.exitInterviewFlag}}" disabled></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

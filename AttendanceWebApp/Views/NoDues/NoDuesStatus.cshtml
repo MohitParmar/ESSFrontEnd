@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "No Dues Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>No Dues Status</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetNoDuesStatus()">
+                            <div style="text-align: center;">
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </div>
+                            <table class="table table-bordered" dir-paginate="s in statusData|itemsPerPage:5">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;" ng-show="s.hod == false">Section Head/HOD</th>
+                                        <th style="text-align: center;" ng-show="s.finance == false">FINANCE & ACCOUNT</th>
+                                        <th style="text-align: center;" ng-show="s.stores == false">Stores</th>
+                                        <th style="text-align: center;" ng-show="s.admin == false">Admin</th>
+                                        <th style="text-align: center;" ng-show="s.cafeteria == false">Canteen</th>
+                                        <th style="text-align: center;" ng-show="s.hr == false">HR Office</th>
+                                        <th style="text-align: center;" ng-show="s.township == false">Township</th>
+                                        <th style="text-align: center;" ng-show="s.eandI == false">E & I</th>
+                                        <th style="text-align: center;" ng-show="s.it == false">I.T.</th>
+                                        <th style="text-align: center;" ng-show="s.security == false">Security</th>
+                                        <th style="text-align: center;" ng-show="s.safety == false">Safety</th>
+                                        <th style="text-align: center;" ng-show="s.ohc == false">O.H.C.</th>
+                                        <th style="text-align: center;" ng-show="s.prgHr == false">HR Office Pragpar</th>
+                                        <th style="text-align: center;" ng-show="s.school == false">School</th>
+                                        <th style="text-align: center;" ng-show="s.er == false">ER Office</th>
+                                        <th style="text-align: center;" ng-show="s.unitHead == false">Unit Head</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;"
+                                            ng-style="s.hod===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.hod===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.hod == false">
+                                            <input type="checkbox" ng-checked="{{s.hod}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.finance===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.finance===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.finance == false">
+                                            <input type="checkbox" ng-checked="{{s.finance}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.stores===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.stores===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.stores == false">
+                                            <input type="checkbox" ng-checked="{{s.stores}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.admin===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.admin===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.admin == false">
+                                            <input type="checkbox" ng-checked="{{s.admin}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.cafeteria===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.cafeteria===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.cafeteria == false">
+                                            <input type="checkbox" ng-checked="{{s.cafeteria}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.hr===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.hr===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.hr == false">
+                                            <input type="checkbox" ng-checked="{{s.hr}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.township===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.township===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.township == false">
+                                            <input type="checkbox" ng-checked="{{s.township}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.eandI===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.eandI===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.eandI == false">
+                                            <input type="checkbox" ng-checked="{{s.eandI}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.it===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.it===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.it == false">
+                                            <input type="checkbox" ng-checked="{{s.it}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.security===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.security===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.security == false">
+                                            <input type="checkbox" ng-checked="{{s.security}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.safety===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.safety===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.safety == false">
+                                            <input type="checkbox" ng-checked="{{s.safety}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.ohc===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.ohc===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.ohc == false">
+                                            <input type="checkbox" ng-checked="{{s.ohc}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.prgHr===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.prgHr===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.prgHr == false">
+                                            <input type="checkbox" ng-checked="{{s.prgHr}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.school===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.school===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.school == false">
+                                            <input type="checkbox" ng-checked="{{s.school}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.er===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.er===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.er == false">
+                                            <input type="checkbox" ng-checked="{{s.er}}" disabled>
+                                        </td>
+                                        <td style="text-align:center;" ng-style="s.unitHead===true && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    s.unitHead===false && {'background-color':'#f2dede','color':'#b94a48'}" ng-show="s.unitHead == false">
+                                            <input type="checkbox" ng-checked="{{s.unitHead}}" disabled>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

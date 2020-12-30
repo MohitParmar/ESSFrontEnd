@@ -2,6 +2,7 @@
     ViewBag.Title = "Shift Schedule Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/Controller/SSCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 
@@ -10,7 +11,6 @@
         <input type="hidden" value="SS" id="releaseGroupCode" />
         <div class="row">
             <div class="col-sm-12">
-                <div id="MessageBox"></div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Shift Schedule Report</strong>
@@ -23,144 +23,260 @@
                             <button type="button" class="btn btn-primary" ng-click="Download('4')"><i class="fa fa-download"></i>&nbsp;PreviousMonthReleased</button>
                             <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                         </div>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-bordered table-responsive" id="myStyledTable">
+                                <thead>
+                                    <tr>
+                                        <th style="        text-align: center;">Sr. No.</th>
+                                        <th style="        text-align: center;" ng-click="sort('d01')">
+                                            Emp. Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d01'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('d02')">
+                                            Emp. Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d02'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('d03')">
+                                            Dept.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d03'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('d04')">
+                                            Station
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d04'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('d05')">
+                                            Designation
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d05'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('d06')">
+                                            Category
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='d06'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;">d01</th>
+                                        <th style="        text-align: center;">d02</th>
+                                        <th style="        text-align: center;">d03</th>
+                                        <th style="        text-align: center;">d04</th>
+                                        <th style="        text-align: center;">d05</th>
+                                        <th style="        text-align: center;">d06</th>
+                                        <th style="        text-align: center;">d07</th>
+                                        <th style="        text-align: center;">d08</th>
+                                        <th style="        text-align: center;">d09</th>
+                                        <th style="        text-align: center;">d10</th>
+                                        <th style="        text-align: center;">d11</th>
+                                        <th style="        text-align: center;">d12</th>
+                                        <th style="        text-align: center;">d13</th>
+                                        <th style="        text-align: center;">d14</th>
+                                        <th style="        text-align: center;">d15</th>
+                                        <th style="        text-align: center;">d16</th>
+                                        <th style="        text-align: center;">d17</th>
+                                        <th style="        text-align: center;">d18</th>
+                                        <th style="        text-align: center;">d19</th>
+                                        <th style="        text-align: center;">d20</th>
+                                        <th style="        text-align: center;">d21</th>
+                                        <th style="        text-align: center;">d22</th>
+                                        <th style="        text-align: center;">d23</th>
+                                        <th style="        text-align: center;">d24</th>
+                                        <th style="        text-align: center;">d25</th>
+                                        <th style="        text-align: center;">d26</th>
+                                        <th style="        text-align: center;">d27</th>
+                                        <th style="        text-align: center;">d28</th>
+                                        <th style="        text-align: center;">d29</th>
+                                        <th style="        text-align: center;">d30</th>
+                                        <th style="        text-align: center;">d31</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d01" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d02" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d03" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d04" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d05" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" ng-model="search.d06" style="        margin: 0;
+        padding: 1px;" />
+                                        </td>
+                                        <td colspan="31"></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in ssddata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">
+                                    <tr>
+                                        <td style="        text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="        font-size: 10px;
+        text-align: center;">
+                                            {{d.d01}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: left;">
+                                            {{d.d02}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: left;">
+                                            {{d.d03}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: left;">
+                                            {{d.d04}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: left;">
+                                            {{d.d05}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: left;">
+                                            {{d.d06}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d07 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d07}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d08 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d08}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d09 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d09}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d10 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d10}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d11 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d11}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d12 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d12}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d13 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d13}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d14 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d14}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d15 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d15}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d16 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d16}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d17 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d17}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d18 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d18}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d19 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d19}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d20 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d20}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d21 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d21}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d22 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d22}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d23 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d23}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d24 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d24}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d25 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d25}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d26 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d26}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d27 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d27}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d28 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d28}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d29 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d29}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d30 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d30}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d31 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d31}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d32 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d32}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d33 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d33}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d34 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d34}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d35 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d35}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d36 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d36}}
+                                        </td>
+                                        <td style="        font-size: 10px;
+        text-align: center;" ng-style="d.d37 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">
+                                            {{d.d37}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="table-responsive">
-                    <table class="table table-condensed table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;">Sr. No.</th>
-                                <th style="text-align: center;" ng-click="sort('d01')">
-                                    Emp. Code
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d01'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;" ng-click="sort('d02')">
-                                    Emp. Name
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d02'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;" ng-click="sort('d03')">
-                                    Dept.
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d03'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;" ng-click="sort('d04')">
-                                    Station
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d04'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;" ng-click="sort('d05')">
-                                    Designation
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d05'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;" ng-click="sort('d06')">
-                                    Category
-                                    <span class="glyphicon sort-icon" ng-show="sortKey=='d06'"
-                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                </th>
-                                <th style="text-align: center;">d01</th>
-                                <th style="text-align: center;">d02</th>
-                                <th style="text-align: center;">d03</th>
-                                <th style="text-align: center;">d04</th>
-                                <th style="text-align: center;">d05</th>
-                                <th style="text-align: center;">d06</th>
-                                <th style="text-align: center;">d07</th>
-                                <th style="text-align: center;">d08</th>
-                                <th style="text-align: center;">d09</th>
-                                <th style="text-align: center;">d10</th>
-                                <th style="text-align: center;">d11</th>
-                                <th style="text-align: center;">d12</th>
-                                <th style="text-align: center;">d13</th>
-                                <th style="text-align: center;">d14</th>
-                                <th style="text-align: center;">d15</th>
-                                <th style="text-align: center;">d16</th>
-                                <th style="text-align: center;">d17</th>
-                                <th style="text-align: center;">d18</th>
-                                <th style="text-align: center;">d19</th>
-                                <th style="text-align: center;">d20</th>
-                                <th style="text-align: center;">d21</th>
-                                <th style="text-align: center;">d22</th>
-                                <th style="text-align: center;">d23</th>
-                                <th style="text-align: center;">d24</th>
-                                <th style="text-align: center;">d25</th>
-                                <th style="text-align: center;">d26</th>
-                                <th style="text-align: center;">d27</th>
-                                <th style="text-align: center;">d28</th>
-                                <th style="text-align: center;">d29</th>
-                                <th style="text-align: center;">d30</th>
-                                <th style="text-align: center;">d31</th>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d01" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d02" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d03" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d04" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d05" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng-model="search.d06" style="margin: 0; padding: 1px;" />
-                                </td>
-                                <td colspan="31"></td>
-                            </tr>
-                        </thead>
-                        <tbody dir-paginate="d in ssddata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">
-                            <tr>
-                                <td style="text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                <td style="text-align: center;">{{d.d01}}</td>
-                                <td style="text-align: center;">{{d.d02}}</td>
-                                <td style="text-align: center;">{{d.d03}}</td>
-                                <td style="text-align: center;">{{d.d04}}</td>
-                                <td style="text-align: center;">{{d.d05}}</td>
-                                <td style="text-align: center;">{{d.d06}}</td>
-                                <td style="text-align: center;" ng-style="d.d07 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d07}}</td>
-                                <td style="text-align: center;" ng-style="d.d08 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d08}}</td>
-                                <td style="text-align: center;" ng-style="d.d09 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d09}}</td>
-                                <td style="text-align: center;" ng-style="d.d10 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d10}}</td>
-                                <td style="text-align: center;" ng-style="d.d11 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d11}}</td>
-                                <td style="text-align: center;" ng-style="d.d12 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d12}}</td>
-                                <td style="text-align: center;" ng-style="d.d13 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d13}}</td>
-                                <td style="text-align: center;" ng-style="d.d14 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d14}}</td>
-                                <td style="text-align: center;" ng-style="d.d15 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d15}}</td>
-                                <td style="text-align: center;" ng-style="d.d16 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d16}}</td>
-                                <td style="text-align: center;" ng-style="d.d17 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d17}}</td>
-                                <td style="text-align: center;" ng-style="d.d18 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d18}}</td>
-                                <td style="text-align: center;" ng-style="d.d19 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d19}}</td>
-                                <td style="text-align: center;" ng-style="d.d20 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d20}}</td>
-                                <td style="text-align: center;" ng-style="d.d21 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d21}}</td>
-                                <td style="text-align: center;" ng-style="d.d22 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d22}}</td>
-                                <td style="text-align: center;" ng-style="d.d23 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d23}}</td>
-                                <td style="text-align: center;" ng-style="d.d24 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d24}}</td>
-                                <td style="text-align: center;" ng-style="d.d25 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d25}}</td>
-                                <td style="text-align: center;" ng-style="d.d26 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d26}}</td>
-                                <td style="text-align: center;" ng-style="d.d27 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d27}}</td>
-                                <td style="text-align: center;" ng-style="d.d28 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d28}}</td>
-                                <td style="text-align: center;" ng-style="d.d29 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d29}}</td>
-                                <td style="text-align: center;" ng-style="d.d30 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d30}}</td>
-                                <td style="text-align: center;" ng-style="d.d31 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d31}}</td>
-                                <td style="text-align: center;" ng-style="d.d32 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d32}}</td>
-                                <td style="text-align: center;" ng-style="d.d33 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d33}}</td>
-                                <td style="text-align: center;" ng-style="d.d34 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d34}}</td>
-                                <td style="text-align: center;" ng-style="d.d35 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d35}}</td>
-                                <td style="text-align: center;" ng-style="d.d36 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d36}}</td>
-                                <td style="text-align: center;" ng-style="d.d37 ==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.d37}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
                 </div>
             </div>
         </div>

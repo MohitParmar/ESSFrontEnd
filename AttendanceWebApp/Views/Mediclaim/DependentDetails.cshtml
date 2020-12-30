@@ -12,7 +12,7 @@
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <strong>Dependent Details</strong>
                     </div>
@@ -43,13 +43,13 @@
                                             <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empUnqId" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depSr"/>
+                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depSr" />
                                         </td>
                                         <td>
                                             <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depName" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.rleation" />
+                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.relation" />
                                         </td>
                                         <td colspan="2"></td>
                                         <td>
@@ -59,11 +59,11 @@
                                             <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.aadhar" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.birthCertiicateNo" />
+                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.birthCertificateNo" />
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.uhIds"/>
+                                            <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.uhIds" />
                                         </td>
                                     </tr>
                                 </thead>
@@ -73,12 +73,12 @@
                                         <td style="text-align:center;">{{d.empUnqId}}</td>
                                         <td style="text-align:center;">{{d.depSr}}</td>
                                         <td style="text-align:left;">{{d.depName}}</td>
-                                        <td style="text-align:center;">{{d.rleation}}</td>
+                                        <td style="text-align:center;">{{d.relation}}</td>
                                         <td style="text-align:center;">{{d.birthDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;">{{d.gender}}</td>
                                         <td style="text-align:center;">{{d.pan}}</td>
                                         <td style="text-align:center;">{{d.aadhar}}</td>
-                                        <td style="text-align:center;">{{d.birthCertiicateNo}}</td>
+                                        <td style="text-align:center;">{{d.birthCertificateNo}}</td>
                                         <td style="text-align:center;">{{d.effectiveDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;"><table><tr ng-repeat="e in d.uhIds"><td>{{e.uhid}}</td></tr></table></td>
                                     </tr>

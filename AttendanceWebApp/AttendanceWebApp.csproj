@@ -268,7 +268,6 @@
     <Compile Include="Controllers\CustomErrorController.cs" />
     <Compile Include="Controllers\GatePassAdviceController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
-    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IncomeTaxController.cs">
       <SubType>Code</SubType>
@@ -279,6 +278,7 @@
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\MedicalFitnessController.cs" />
     <Compile Include="Controllers\MediclaimController.cs" />
+    <Compile Include="Controllers\NoDuesController.cs" />
     <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -287,7 +287,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categories.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -309,7 +308,6 @@
     <Compile Include="Models\LeaveTypes.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReleaseGroups.cs" />
     <Compile Include="Models\Stations.cs" />
     <Compile Include="Models\Units.cs" />
@@ -526,6 +524,7 @@
     <Content Include="Scripts\Controller\MasterCntrl.js" />
     <Content Include="Scripts\Controller\MCCntrl.js" />
     <Content Include="Scripts\Controller\MedicalFitnessCntrl.js" />
+    <Content Include="Scripts\Controller\NoDuesCntrl.js" />
     <Content Include="Scripts\Controller\ODCntrl.js" />
     <Content Include="Scripts\Controller\OpenMonthCntrl.js" />
     <Content Include="Scripts\Controller\PendingLeaveReport.js" />
@@ -544,6 +543,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-TimePicker-1.0.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -603,6 +603,35 @@
     <Content Include="UserManuals\images\LeavePosting\1 %285%29%28P%29.png" />
     <Content Include="UserManuals\images\LeavePosting\1 %285%29%28R%29.png" />
     <Content Include="UserManuals\images\LeavePosting\LeavePositng.png" />
+    <Content Include="UserManuals\images\NoDues\1.jpg" />
+    <Content Include="UserManuals\images\NoDues\10.jpg" />
+    <Content Include="UserManuals\images\NoDues\11.jpg" />
+    <Content Include="UserManuals\images\NoDues\12.jpg" />
+    <Content Include="UserManuals\images\NoDues\13.jpg" />
+    <Content Include="UserManuals\images\NoDues\14.jpg" />
+    <Content Include="UserManuals\images\NoDues\15.jpg" />
+    <Content Include="UserManuals\images\NoDues\16.jpg" />
+    <Content Include="UserManuals\images\NoDues\17.jpg" />
+    <Content Include="UserManuals\images\NoDues\18.jpg" />
+    <Content Include="UserManuals\images\NoDues\19.jpg" />
+    <Content Include="UserManuals\images\NoDues\2.jpg" />
+    <Content Include="UserManuals\images\NoDues\20.jpg" />
+    <Content Include="UserManuals\images\NoDues\21.jpg" />
+    <Content Include="UserManuals\images\NoDues\22.jpg" />
+    <Content Include="UserManuals\images\NoDues\23.jpg" />
+    <Content Include="UserManuals\images\NoDues\24.jpg" />
+    <Content Include="UserManuals\images\NoDues\25.jpg" />
+    <Content Include="UserManuals\images\NoDues\26.jpg" />
+    <Content Include="UserManuals\images\NoDues\27.jpg" />
+    <Content Include="UserManuals\images\NoDues\28.jpg" />
+    <Content Include="UserManuals\images\NoDues\29.jpg" />
+    <Content Include="UserManuals\images\NoDues\3.jpg" />
+    <Content Include="UserManuals\images\NoDues\4.jpg" />
+    <Content Include="UserManuals\images\NoDues\5.jpg" />
+    <Content Include="UserManuals\images\NoDues\6.jpg" />
+    <Content Include="UserManuals\images\NoDues\7.jpg" />
+    <Content Include="UserManuals\images\NoDues\8.jpg" />
+    <Content Include="UserManuals\images\NoDues\9.jpg" />
     <Content Include="UserManuals\images\ReleaseStrategy\1 %282%29%281%29.png" />
     <Content Include="UserManuals\images\ReleaseStrategy\RemoveReleaser.jpg" />
     <Content Include="UserManuals\images\LeavePosting\1 %281%29.png" />
@@ -740,10 +769,18 @@
     <Content Include="Views\Mediclaim\DependentDetails.cshtml" />
     <Content Include="Views\MedicalFitness\MedicalFit.cshtml" />
     <Content Include="Views\MedicalFitness\MedicalFitReport.cshtml" />
+    <Content Include="Views\NoDues\NoDuesMaster.cshtml" />
+    <Content Include="Views\NoDues\NoDuesAddUser.cshtml" />
+    <Content Include="Views\NoDues\NoDuesRelease.cshtml" />
+    <Content Include="Views\NoDues\NoDuesReportHR.cshtml" />
+    <Content Include="Views\NoDues\NoDuesStatus.cshtml" />
+    <Content Include="Views\NoDues\NoDuesReleaseUH.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSEmployee.cshtml" />
+    <Content Include="Views\Mediclaim\ReleaseDependents.cshtml" />
+    <Content Include="Views\ShiftSchedule\SSOpenMonth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

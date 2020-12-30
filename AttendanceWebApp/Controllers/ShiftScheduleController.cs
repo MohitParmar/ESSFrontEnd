@@ -51,14 +51,15 @@ namespace AttendanceWebApp.Controllers
         }
         public ActionResult SSHRReport()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
+        public ActionResult SSEmployee()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
+        public ActionResult SSOpenMonth()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
     }
 }

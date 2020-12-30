@@ -5,10 +5,7 @@ namespace AttendanceWebApp.Controllers
 {
     public class HelperController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index => View();
 
         public string GetUrl()
         {

@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Employee Shift Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="SS" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Shift Schedule of Current Open Month</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-bordered" ng-init="GetEmployeeSS()">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">Sr NO.</th>
+                                        <th style="text-align: center;">Day 01</th>
+                                        <th style="text-align: center;">Day 02</th>
+                                        <th style="text-align: center;">Day 03</th>
+                                        <th style="text-align: center;">Day 04</th>
+                                        <th style="text-align: center;">Day 05</th>
+                                        <th style="text-align: center;">Day 06</th>
+                                        <th style="text-align: center;">Day 07</th>
+                                        <th style="text-align: center;">Day 08</th>
+                                        <th style="text-align: center;">Day 09</th>
+                                        <th style="text-align: center;">Day 10</th>
+                                        <th style="text-align: center;">Day 11</th>
+                                        <th style="text-align: center;">Day 12</th>
+                                        <th style="text-align: center;">Day 13</th>
+                                        <th style="text-align: center;">Day 14</th>
+                                        <th style="text-align: center;">Day 15</th>
+                                        <th style="text-align: center;">Day 16</th>
+                                        <th style="text-align: center;">Day 17</th>
+                                        <th style="text-align: center;">Day 18</th>
+                                        <th style="text-align: center;">Day 19</th>
+                                        <th style="text-align: center;">Day 20</th>
+                                        <th style="text-align: center;">Day 21</th>
+                                        <th style="text-align: center;">Day 22</th>
+                                        <th style="text-align: center;">Day 23</th>
+                                        <th style="text-align: center;">Day 24</th>
+                                        <th style="text-align: center;">Day 25</th>
+                                        <th style="text-align: center;">Day 26</th>
+                                        <th style="text-align: center;">Day 27</th>
+                                        <th style="text-align: center;">Day 28</th>
+                                        <th style="text-align: center;">Day 29</th>
+                                        <th style="text-align: center;">Day 30</th>
+                                        <th style="text-align: center;">Day 31</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="d in sseData">
+                                        <td style="text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align: center;" ng-style="d.01==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.01}}</td>
+                                        <td style="text-align: center;" ng-style="d.02==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.02}}</td>
+                                        <td style="text-align: center;" ng-style="d.03==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.03}}</td>
+                                        <td style="text-align: center;" ng-style="d.04==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.04}}</td>
+                                        <td style="text-align: center;" ng-style="d.05==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.05}}</td>
+                                        <td style="text-align: center;" ng-style="d.06==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.06}}</td>
+                                        <td style="text-align: center;" ng-style="d.07==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.07}}</td>
+                                        <td style="text-align: center;" ng-style="d.08==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.08}}</td>
+                                        <td style="text-align: center;" ng-style="d.09==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.09}}</td>
+                                        <td style="text-align: center;" ng-style="d.10==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.10}}</td>
+                                        <td style="text-align: center;" ng-style="d.11==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.11}}</td>
+                                        <td style="text-align: center;" ng-style="d.12==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.12}}</td>
+                                        <td style="text-align: center;" ng-style="d.13==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.13}}</td>
+                                        <td style="text-align: center;" ng-style="d.14==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.14}}</td>
+                                        <td style="text-align: center;" ng-style="d.15==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.15}}</td>
+                                        <td style="text-align: center;" ng-style="d.16==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.16}}</td>
+                                        <td style="text-align: center;" ng-style="d.17==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.17}}</td>
+                                        <td style="text-align: center;" ng-style="d.18==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.18}}</td>
+                                        <td style="text-align: center;" ng-style="d.19==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.19}}</td>
+                                        <td style="text-align: center;" ng-style="d.20==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.20}}</td>
+                                        <td style="text-align: center;" ng-style="d.21==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.21}}</td>
+                                        <td style="text-align: center;" ng-style="d.22==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.22}}</td>
+                                        <td style="text-align: center;" ng-style="d.23==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.23}}</td>
+                                        <td style="text-align: center;" ng-style="d.24==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.24}}</td>
+                                        <td style="text-align: center;" ng-style="d.25==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.25}}</td>
+                                        <td style="text-align: center;" ng-style="d.26==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.26}}</td>
+                                        <td style="text-align: center;" ng-style="d.27==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.27}}</td>
+                                        <td style="text-align: center;" ng-style="d.28==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.28}}</td>
+                                        <td style="text-align: center;" ng-style="d.29==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.29}}</td>
+                                        <td style="text-align: center;" ng-style="d.30==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.30}}</td>
+                                        <td style="text-align: center;" ng-style="d.31==='WO' && {'background-color':'#ffc7ce','color':'#9d1121'}">{{d.31}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

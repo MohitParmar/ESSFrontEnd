@@ -1197,9 +1197,16 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     };
     $scope.calPPF = function () {
         var PPF = storeTblValues(); function storeTblValues() {
-            var PPF = new Array(); $('#aliasTable4 tr').each(function (row, tr) { PPF[row] = { "ppf1": $(tr).find('td:eq(0)').text(), "ppf1": $(tr).find('td:eq(1)').text(), "p_ppf": $(tr).find('td:eq(2)').text(), "a_ppf": $(tr).find('td:eq(3)').text() }; }); PPF.shift(); return PPF;
+            var PPF = new Array(); $('#aliasTable4 tr').each(function(row, tr) {
+                 PPF[row] = { "ppf1": $(tr).find('td:eq(0)').text(), "ppf1": $(tr).find('td:eq(1)').text(), "p_ppf": $(tr).find('td:eq(2)').text(), "a_ppf": $(tr).find('td:eq(3)').text() };
+            }); PPF.shift(); return PPF;
         }; var p_ppfcount = 0; var a_ppfcount = 0; var act = $('#hidactualFlag').val();
-        if (act === "true") { for (var i = 0; i < PPF.length; i++) { a_ppfcount += parseInt(PPF[i]["a_ppf"]) || 0; document.getElementById('tot_a_ppf').value = a_ppfcount || 0; }; }
+        if (act === "true") {
+             for (var i = 0; i < PPF.length; i++) {
+                  a_ppfcount += parseInt(PPF[i]["a_ppf"]) || 0; 
+                  document.getElementById('tot_a_ppf').value = a_ppfcount || 0;
+             };
+        }
         else { for (var i = 0; i < PPF.length; i++) { p_ppfcount += parseInt(PPF[i]["p_ppf"]) || 0; document.getElementById('tot_p_ppf').value = p_ppfcount || 0; }; };
         $scope.Total80c();
     };

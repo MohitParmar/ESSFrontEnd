@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Release No Dues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <input type="hidden" id="hidDept" value="" />
+        <input type="hidden" id="hidreleaserFlag" value="" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending For Release No Dues</strong>
+                        <div style="float:right;">
+                            <select width="20px;" class="form-control"
+                                    ng-model="New.Dept"
+                                    ng-init="New.Dept = dept[0]"
+                                    ng-options="s as s for s in dept" ng-change="SetDeptValue(New.Dept)">
+                                <option value="" selected>--- Select Department ---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="        text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div class="table-responsive" ng-init="GetRoles(true)">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tr>
+                                    <th style="        text-align: center;">SAPID</th>
+                                    <th style="        text-align: center;">Employee Name</th>
+                                    <th style="        text-align: center;">Department</th>
+                                    <th style="        text-align: center;">Station</th>
+                                    <th style="        text-align: center;">Category</th>
+                                    <th style="        text-align: center;">Grade</th>
+                                    <th style="        text-align: center;">Date of Joining</th>
+                                    <th style="        text-align: center;">Date of Resign</th>
+                                    <th style="        text-align: center;">Date of Relieve</th>
+                                    <th style="        text-align: center;">Notice Period</th>
+                                    <th style="        text-align: center;">Unit of Notice Period</th>
+                                    <th style="        text-align: center;">Last Date of Working</th>
+                                    <th style="        text-align: center;">Mode of Leaving</th>
+                                    <th style="        text-align: center;">Exit interview</th>
+                                    <th style="        text-align: center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.deptName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.statName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.catName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.gradeName" />
+                                    </td>
+                                    <td colspan="9"></td>
+                                </tr>
+                                <tr dir-paginate="d in gndData|itemsPerPage:5">
+                                    <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                    <td style="        text-align: left;">{{d.empName}}</td>
+                                    <td style="        text-align: left;">{{d.deptName}}</td>
+                                    <td style="        text-align: left;">{{d.statName}}</td>
+                                    <td style="        text-align: left;">{{d.catName}}</td>
+                                    <td style="        text-align: left;">{{d.gradeName}}</td>
+                                    <td style="        text-align: center;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.resignDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriod}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriodUnit}}</td>
+                                    <td style="        text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.modeOfLeaving}}</td>
+                                    <td style="        text-align: center;">
+                                        <input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled>
+                                    </td>
+                                    <td style="        text-align: center;
+        width: 105px;">
+                                        <button class="btn btn-info" id="btnDetails" ng-click="PopulateData({{d.empUnqId}},false)">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        <button class="btn btn-success" id="btnApprove" ng-click="ChangeNoDues(false,'',{{d.empUnqId}})">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4>
+                            <h3><label id="eid"></label></h3>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table id="commonTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                        <tr>
+                                            <th style="        text-align: center;">EmpUnqId</th>
+                                            <th style="        text-align: center;">DeptId</th>
+                                            <th style="        text-align: center;">Sr</th>
+                                            <th style="        text-align: center;">Particulars</th>
+                                            <th style="        text-align: center;">Remarks</th>
+                                            <th style="        text-align: center;">Amount</th>
+                                        </tr>
+                                    </table>
+                                    <table class="table" style="        text-align: right;">
+                                        <tr>
+                                            <td><label>Total : </label></td>
+                                            <td><input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="        text-align: right;" /></td>
+                                        </tr>
+                                    </table>
+                                    @*<table id="itTable" class="table table-bordered" aria-hidden="True">
+                                        <tr>
+                                            <th style="text-align: center;">Type</th>
+                                            <th style="text-align: center;">Product</th>
+                                            <th style="text-align: center;">Name</th>
+                                            <th style="text-align: center;">Cost</th>
+                                        </tr>
+                                    </table>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

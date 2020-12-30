@@ -2,12 +2,15 @@
     ViewBag.Title = "Manage Release Streategy";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/Module/app.js"></script>
 <script src="~/Scripts/Controller/ReleaseStreategyCntrl.js"></script>
 <div ng-app="myApp" ng-controller="ReleaseStreategyCntrloller">
     <div class="container-fluid">
-        <input type="hidden" value="LA" id="releaseGroupCode" />
+        @*<input type="hidden" value="LA" id="releaseGroupCode" />*@
         <div id="MessageBox" class="table-responsive"></div>
+        <div id="MessageBoxOD" class="table-responsive"></div>
+        <div id="MessageBoxSS" class="table-responsive"></div>
         <div class="row">
             @* Add New Releaser *@
             <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -71,29 +74,50 @@
                             <table class="table-condensed">
                                 <tr>
                                     <td>
-                                        <div class="input-group form">
-                                            <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
-                                            </span>
-                                        </div>
+                                        <table class="table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label>Same For (LA/OD/SS):</label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="checkbox" id="chkSameForAll" ng-model="N.Same">
+                                                    </td>
+                                                    <td>
+                                                        <label>Select Release Group</label>
+                                                    </td>
+                                                    <td>
+                                                        <select id="releaseGroupCode" class="form-control" ng-model="N.ReleaseGroupCode">
+                                                            <option value="LA" selected>Leave </option>
+                                                            <option value="OD">Out Door Duty</option>
+                                                            <option value="SS">Shift Schedule</option>
+                                                            <option value="ND">No Dues</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group form">
+                                                            <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </td>
                                     <td>
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr ng-repeat="d in empdata">
                                                     <th>
-                                                        <b>Employee Code : </b>
+                                                        <b>Employee Code</b>
                                                     </th>
                                                     <td>{{d.empUnqId}}</td>
                                                     <th>
-                                                        <b>Employee Name : </b>
+                                                        <b>Employee Name</b>
                                                     </th>
                                                     <td>{{d.empName}}</td>
-                                                    <th>
-                                                        <b>Father Name : </b>
-                                                    </th>
-                                                    <td>{{d.fatherName}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -124,14 +148,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="text-align:right;">
+                            <div style="text-align: right;">
                                 <button type="reset" id="btnreset" class="btn btn-default" ng-click="ResetView()">Reset</button>
                                 <input type="button" id="btnAddNewReleaser" class="btn btn-primary" name="AddNewReleaser" value="Add New Releaser" data-ng-click="PopulateData()" />
+                            </div>
+                            <div class="float-left">
+                                <strong style="color: #f44336;">Note For Release Group Code : LA - Leave Application, OD - Out Door Application, SS - Shift Schedule</strong>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer" style="text-align:right;">
-                        <input type="button" id="btnCreateUpdate" class="btn btn-success" name="CreateReleaseStrategy" value="Create Release Strategy" data-ng-click="CreateReleaseStrategy()" />
+                        <input type="button" id="btnCreateUpdate" class="btn btn-success" name="CreateReleaseStrategy" value="Create Release Strategy" ng-click="CreateReleaseStrategy(N)" />
                     </div>
                 </div>
             </div>

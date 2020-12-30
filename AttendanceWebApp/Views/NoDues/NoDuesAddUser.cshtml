@@ -1,0 +1,380 @@
+﻿@{
+    ViewBag.Title = "No Dues Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<script type="text/javascript">
+    function RemoveRowTBL1(element) { var tables = document.getElementById("commonTable"); tables.deleteRow(element.closest('tr').rowIndex); };
+    function RemoveRowTBL2(element) { var tables = document.getElementById("commonTable1"); tables.deleteRow(element.closest('tr').rowIndex); };
+</script>
+
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <input type="hidden" id="hidDept" value="" />
+        <input type="hidden" id="hidreleaserFlag" value="" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending for No Dues Entry</strong>
+                        <div style="float:right;">
+                            <select width="20px;" class="form-control" ng-model="New.Dept" ng-options="s for s in dept" ng-change="SetDeptValue(New.Dept)">
+                                <option value="" selected>--- Select Department ---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="        text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div class="table-responsive" ng-init="GetRoles(false)">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tr>
+                                    <th style="        text-align: center;">SAPID</th>
+                                    <th style="        text-align: center;">Employee Name</th>
+                                    <th style="        text-align: center;">Department</th>
+                                    <th style="        text-align: center;">Station</th>
+                                    <th style="        text-align: center;">Category</th>
+                                    <th style="        text-align: center;">Grade</th>
+                                    <th style="        text-align: center;">Date of Joining</th>
+                                    <th style="        text-align: center;">Date of Resign</th>
+                                    <th style="        text-align: center;">Date of Relieve</th>
+                                    <th style="        text-align: center;">Notice Period</th>
+                                    <th style="        text-align: center;">Unit of Notice Period</th>
+                                    <th style="        text-align: center;">Last Date of Working</th>
+                                    <th style="        text-align: center;">Mode of Leaving</th>
+                                    <th style="        text-align: center;">Exit interview</th>
+                                    <th style="        text-align: center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.deptName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.statName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.catName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.gradeName" />
+                                    </td>
+                                    <td colspan="9"></td>
+                                </tr>
+                                <tr dir-paginate="d in gndData|itemsPerPage:5">
+                                    <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                    <td style="        text-align: left;">{{d.empName}}</td>
+                                    <td style="        text-align: left;">{{d.deptName}}</td>
+                                    <td style="        text-align: left;">{{d.statName}}</td>
+                                    <td style="        text-align: left;">{{d.catName}}</td>
+                                    <td style="        text-align: left;">{{d.gradeName}}</td>
+                                    <td style="        text-align: center;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.resignDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.relieveDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriod}}</td>
+                                    <td style="        text-align: center;">{{d.noticePeriodUnit}}</td>
+                                    <td style="        text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                    <td style="        text-align: center;">{{d.modeOfLeaving}}</td>
+                                    <td style="        text-align: center;">
+                                        <input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled>
+                                    </td>
+                                    <td style="        text-align: center;">
+                                        <button class="btn btn-primary" id="btnDetails"
+                                                ng-show="d.noDuesDepts === null"
+                                                ng-click="PopulateData({{d.empUnqId}},false)">
+                                            <i class="fa fa-plus-square"></i>
+                                        </button>&nbsp;
+                                        <button class="btn btn-default" id="btnEditHod"
+                                                ng-show="d.noDuesDepts === null && d.deptNoDuesFlag === true && d.deptApprovalFlag === false"
+                                                ng-click="PopulateData({{d.empUnqId}},true)">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <div ng-repeat="e in d.noDuesDepts">
+                                            <button class="btn btn-default" id="btnEdit"
+                                                    ng-show="e.noDuesFlag === true"
+                                                    ng-click="PopulateData({{d.empUnqId}},true)">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="eid"></label></h3>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Particulars</td>
+                                            <td><input type="text" id="txtParticularsER" class="form-control" ng-Model="D.particulars" /></td>
+                                            <td>Remarks</td>
+                                            <td><input type="text" id="txtRemarksER" class="form-control" ng-Model="D.remarks" /></td>
+                                            <td>Amount</td>
+                                            <td><input type="number" id="txtAmtER" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D.amount" value="0" /></td>
+                                            <td><button id="btnAdd" class="btn btn-primary" ng-click="DeptData(D,false)"><i class="fa fa-plus"></i></button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="commonTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="        text-align: center;">EmpUnqId</th>
+                                                <th style="        text-align: center;">DeptID</th>
+                                                <th style="        text-align: center;">Sr</th>
+                                                <th style="        text-align: center;">Particulars</th>
+                                                <th style="        text-align: center;">Remarks</th>
+                                                <th style="        text-align: center;">Amount</th>
+                                                <th style="        text-align: center;">Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="tempRow">
+                                                <td colspan="7">No information entered.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table" style="text-align: right;">
+                                        <tr>
+                                            <td><label>Total : </label></td>
+                                            <td><input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="text-align: right;" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="footer" style="        text-align: center;">
+                                    <button type="submit" id="btnSubmit" ng-click="ChangeNoDues(false,'')" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="HRModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose1">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="heid"></label></h3>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Notice Period</td>
+                                            <td><input type="text" class="form-control" id="txtNoticePeriod" ng-model="H.noticePeriod" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notice Period Basic/CTC</td>
+                                            <td>
+                                                <select id="cmbnoticePeriodUnit" class="form-control" ng-model="H.noticePeriodUnit">
+                                                    <option id="BAS" value="BASIC">BASIC</option>
+                                                    <option id="CTC" value="CTC">CTC</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Working Date</td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="txtLastWorkingDate" ng-model="H.lastWorkingDate" data-date-format="yyyy/MM/dd"
+                                                           datepicker required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mode of Leaving</td>
+                                            <td>
+                                                <select id="cmbmModeofLeaving" class="form-control" ng-model="H.modeofLeaving">
+                                                    <option id="1" value="Resignation">Resignation</option>
+                                                    <option id="2" value="Retirement">Retirement</option>
+                                                    <option id="3" value="Transfer">Transfer</option>
+                                                    <option id="4" value="Absconding">Absconding</option>
+                                                    <option id="5" value="Termination">Termination</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Exit Interview</td>
+                                            <td><input type="checkbox" id="chkExitInterview" ng-model="H.exitInterviewFlg" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="footer" style="        text-align: center;">
+                                    <button type="submit" id="btnSubmitHR" ng-click="ChangeNoDues(false,'',H)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ConformModelEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose2">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="eid1"></label></h3>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Particulars</td>
+                                            <td><input type="text" id="txtParticularsER1" class="form-control" ng-Model="D1.particulars" /></td>
+                                            <td>Remarks</td>
+                                            <td><input type="text" id="txtRemarksER1" class="form-control" ng-Model="D1.remarks" /></td>
+                                            <td>Amount</td>
+                                            <td><input type="number" id="txtAmtER1" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D1.amount" value="0" /></td>
+                                            <td><button id="btnAdd1" class="btn btn-primary" ng-click="DeptData(D1,true)"><i class="fa fa-plus"></i></button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="commonTable1" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="        text-align: center;">EmpUnqId</th>
+                                                <th style="        text-align: center;">DeptID</th>
+                                                <th style="        text-align: center;">Sr</th>
+                                                <th style="        text-align: center;">Particulars</th>
+                                                <th style="        text-align: center;">Remarks</th>
+                                                <th style="        text-align: center;">Amount</th>
+                                                <th style="        text-align: center;">Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="tempRow"></tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table" style="text-align: right;">
+                                        <tr>
+                                            <td><label>Total : </label></td>
+                                            <td><input type="text" id="txtTotal1" class="form-control" value="0" disabled="disabled" style="text-align: right;" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="footer" style="        text-align: center;">
+                                    <button type="submit" id="btnSubmit1" ng-click="ChangeNoDues(true,'')" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="HRModelEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose3">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel3">No Dues Details of: </h4><h3><label id="heid1"></label></h3>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Notice Period</td>
+                                            <td><input type="number" class="form-control" id="txtNoticePeriod1" ng-model="H1.noticePeriod" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notice Period Basic/CTC</td>
+                                            <td>
+                                                <select id="cmbnoticePeriodUnit1" class="form-control" ng-model="H1.noticePeriodUnit">
+                                                    <option id="BAS" value="BAS">Basic</option>
+                                                    <option id="CTC" value="CTC">CTC</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Working Date</td>
+                                            <td>
+                                                <div class="right-inner-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <input class="form-control" type="text" id="txtLastWorkingDate1" ng-model="H1.lastWorkingDate" data-date-format="yyyy/MM/dd"
+                                                           datepicker required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mode of Leaving</td>
+                                            <td>
+                                                <select id="cmbmModeofLeaving1" class="form-control" ng-model="H1.modeofLeaving">
+                                                    <option id="1" value="Resignation">Resignation</option>
+                                                    <option id="2" value="Retirement">Retirement</option>
+                                                    <option id="3" value="Transfer">Transfer</option>
+                                                    <option id="4" value="Absconding">Absconding</option>
+                                                    <option id="5" value="Termination">Termination</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Exit Interview</td>
+                                            <td><input type="checkbox" id="chkExitInterview1" ng-model="H1.exitInterviewFlg" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="footer" style="        text-align: center;">
+                                    <button type="submit" id="btnSubmitHR1" ng-click="ChangeNoDues(true,'',H1)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

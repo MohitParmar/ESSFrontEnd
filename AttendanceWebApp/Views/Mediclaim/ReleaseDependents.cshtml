@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "ReleaseDependents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MCCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="MCController">
+    <div class="container-fluid">
+        <input type="hidden" value="MC" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Mediclaim Dependent Details</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetRelease()">
+                            <table class="table table-responsive table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="        text-align: center;">EmpUnqId</th>
+                                        <th style="        text-align: center;">Sr. No.</th>
+                                        <th style="        text-align: center;">Name of Insured</th>
+                                        <th style="        text-align: center;">Relation</th>
+                                        <th style="        text-align: center;">Date of Birth</th>
+                                        <th style="        text-align: center;">Gender</th>
+                                        <th style="        text-align: center;">Marrige Date</th>
+                                        <th style="        text-align: center;">PAN</th>
+                                        <th style="        text-align: center;">AADHAR</th>
+                                        <th style="        text-align: center;">Birth Certiificate No</th>
+                                        <th style="        text-align: center;">Remarks</th>
+                                        <th style="        text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in relData|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage" pagination-id="pg1">
+                                    <tr ng-style="(d.active == true && d.isChanged == true) && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                        (d.active == false && d.isChanged == true) && {'background-color':'#dff0d8','color':'#468847'} ||
+                                        (d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ">
+                                        <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="        text-align: center;">{{d.depSr}}</td>
+                                        <td style="        text-align: left;">{{d.depName}}</td>
+                                        <td style="        text-align: center;">{{d.relation}}</td>
+                                        <td style="        text-align: center;">{{d.birthDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="        text-align: center;">{{d.gender}}</td>
+                                        <td style="        text-align: center;">{{d.marriageDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="        text-align: center;">{{d.pan}}</td>
+                                        <td style="        text-align: center;">{{d.aadhar}}</td>
+                                        <td style="        text-align: center;">{{d.birthCertificateNo}}</td>
+                                        <td style="        text-align: center;">
+                                            <input type="text" class="form-control" id="txtRemarks"
+                                                   ng-show="(d.depSr == 0)"
+                                                   ng-model="r.Remarks" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm" id="btnApprove" ng-click="ReleaseDependents('F',{{d.empUnqId}},{{d.depSr}},r)"
+                                                    ng-show="(d.depSr == 0)">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" id="btnReject" ng-click="ReleaseDependents('R',{{d.empUnqId}},{{d.depSr}},r)"
+                                                    ng-show="(d.depSr == 0)">
+                                                <i class="fa fa-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
