@@ -18,22 +18,6 @@
                 var reqs = new XMLHttpRequest(); reqs.open('POST', '/Login/Users', true); reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-                        //var newArr = {};
-                        //var _memberId = $scope.Udata[0]["empUnqId"];
-                        //var rol = new XMLHttpRequest();
-                        //rol.open('GET', $scope._Conpath + 'Roles/GetRoleAuth?empUnqId=' + _memberId, true);
-                        //rol.setRequestHeader("Accept", "application/json");
-                        //rol.onreadystatechange = function () {
-                        //    if (rol.readyState === 4) {
-                        //        var jsonvar1 = JSON.parse(rol.responseText);
-                        //        newArr = jsonvar1;
-                        //for (var i = 0; i < newArr.length; i++) {
-                        //    rolecode = newArr[i]["menuId"];
-                        //};
-
-                        //    };
-                        //}; rol.send();
-
                         if ($scope.Udata[0]["wrkGrp"] !== "COMP" && $scope.Udata[0]["roleId"] !== 2) {
                             window.location.href = "Report/PerformanceReport";
                         } else if ($scope.Udata[0]["roleId"] === 1 || $scope.Udata[0]["roleId"] === 3) {

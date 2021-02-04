@@ -114,39 +114,18 @@
                                 </strong>
                             </a>
                             <ul class="dropdown-menu">
-                                <li id="mnuEmployeeProfile">
-                                    <a href="/Home/EmployeeProfile">Profile</a>
-                                </li>
-                                <li id="mnuPerformanceReport">
-                                    <a href="/Report/PerformanceReport">Performance Report</a>
-                                </li>
-                                <li id="mnuSSEmployee">
-                                    <a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a>
-                                </li>
-                                <li id="mnuIncomeTaxDeclaration">
-                                    <a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a>
-                                </li>
-                                <li id="mnuTDS">
-                                    <a href="~/IncomeTax/Form16">TDS Forms</a>
-                                </li>
-                                <li id="mnuNODuesStatus">
-                                    <a href="~/NoDues/NoDuesStatus">No Dues Status</a>
-                                </li>
-                                <li id="mnuAddressMaster">
-                                    <a href="/Master/AddressMaster">Address/Contact Details</a>
-                                </li>
-                                <li id="mnuuniformmaster">
-                                    <a href="/Master/UniFormMaster">Uniform Details</a>
-                                </li>
-                                <li id="mnuUpdateEmailAdd">
-                                    <a href="/Home/UpdateEmailAdd">Email ID</a>
-                                </li>
-                                <li id="mnuUserManual">
-                                    <a href="~/Master/UserManual">User Manual</a>
-                                </li>
-                                <li id="mnuChangePassword">
-                                    <a href="/Home/ChangePassword">Change Password</a>
-                                </li>
+                                <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
+                                <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
+                                <li id="mnuSSEmployee"><a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a></li>
+                                <li id="mnuMyShiftChangeReport"><a href="~/ShiftSchedule/MyShiftChangeReport">My Shift Change Report</a></li>
+                                <li id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
+                                <li id="mnuTDS"><a href="~/IncomeTax/Form16">TDS Forms</a></li>
+                                <li id="mnuNODuesStatus"><a href="~/NoDues/NoDuesStatus">No Dues Status</a></li>
+                                <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
+                                <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
+                                <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
+                                <li id="mnuUserManual"><a href="~/Master/UserManual">User Manual</a></li>
+                                <li id="mnuChangePassword"><a href="/Home/ChangePassword">Change Password</a></li>
                                 <li>@Html.ActionLink("Log Out", "UserLogin", "Login")</li>
                             </ul>
                         </li>
@@ -185,8 +164,8 @@
                                 <a href="/OD/ODApply">OD Application</a>
                             </li>
                             @*<li hidden="hidden" id="mnuLDLeaveApplication">
-                    <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
-                </li>*@
+                                    <a href="/LeaveApp/LDLeaveApply">Covid 19 Leave Application</a>
+                                </li>*@
                             <li id="mnuCOffApplication">
                                 <a href="#" onclick="COFF()">COFF Application</a>
                             </li>
@@ -371,6 +350,18 @@
                             <li hidden="hidden" id="mnuSSUpdate">
                                 <a href="~/ShiftSchedule/SSUpdate"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Change</a>
                             </li>
+                            <li id="mnuShiftChange">
+                                <a href="~/ShiftSchedule/ShiftChange">Back Date Shift Change</a>
+                            </li>
+                            <li id="mnuReleaseShiftChange">
+                                <a href="~/ShiftSchedule/ReleaseShiftChange">Release Shift Change</a>
+                            </li>
+                            <li id="mnuShiftChangePosting">
+                                <a href="~/ShiftSchedule/ShiftChangePosting">Shift Change Post</a>
+                            </li>
+                            <li id="mnuShiftChangeReportSupervisor">
+                                <a href="~/ShiftSchedule/ShiftChangeReportSupervisor">Shift Change Report Supervisor</a>
+                            </li>
                             <li hidden="hidden" id="mnuSSRelease">
                                 <a href="/ShiftSchedule/SSRelease">Shift Schedule Release</a>
                             </li>
@@ -379,6 +370,12 @@
                             </li>
                             <li hidden="hidden" id="mnuSSHRRPT">
                                 <a href="/ShiftSchedule/SSHRReport">Shift Schedule HR Report</a>
+                            </li>
+                            <li id="mnuShiftChangeReportHR">
+                                <a href="~/ShiftSchedule/ShiftChangeReportHR">Shift Change Report HR</a>
+                            </li>
+                            <li id="mnuShiftChangeUpload">
+                                <a href="~/ShiftSchedule/ShiftChangeUploadTemplate">Shift Change Upload Template</a>
                             </li>
                             <li hidden="hidden" id="mnuSSOpenMonth">
                                 <a href="/ShiftSchedule/SSOpenMonth">Shift Schedule Open Month</a>
@@ -425,6 +422,7 @@
                             <li hidden="hidden" id="mnuNoduesReleaser"><a href="/NoDues/NoDuesRelease">No Dues Release</a></li>
                             <li hidden="hidden" id="mnuNoduesReport"><a href="/NoDues/NoDuesReportHR">No Dues Report</a></li>
                             <li hidden="hidden" id="mnuNODuesReleaseUH"><a href="~/NoDues/NoDuesReleaseUH">No Dues Release Unit Head</a></li>
+                            <li hidden="hidden" id="mnuNODuesStatusReport"><a href="~/NoDues/NoDuesStatusReport">No Dues Status Report</a></li>
                         </ul>
                     </li>
                     <li id="mnuPayslip">

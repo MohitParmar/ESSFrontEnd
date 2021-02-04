@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Shift Change Posting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="SS" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending Leave Application List</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetShiftChangeList(3)">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Request Date</th>
+                                            <th>SAPID</th>
+                                            <th>Employee Name</th>
+                                            <th>Create Date</th>
+                                            <th>Created By</th>
+                                            <th>Reject Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in sclData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                        <tr>
+                                            <td>{{d.requestDate| date:'dd/MM/yyyy'}}</td>
+                                            <td>{{d.empUnqId}}</td>
+                                            <td>{{d.empName}}</td>
+                                            <td>{{d.addDt| date:'dd/MM/yyyy'}}</td>
+                                            <td>{{d.addUser}} - {{d.addUserName}}</td>
+                                            <td><input id="txtRemarks" class="form-control" ng-model="s.remarks" /></td>
+                                            <td>
+                                                <div class="btn btn-group" style="text-align:center;">
+                                                    <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.requestId}})"><i class="fa fa-info"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSubmit" ng-click="PostRequest({{d.requestId}},'F',s)"><i class="fa fa-check"></i></button>
+                                                    <button class="btn btn-danger" id="btnRemove" ng-click="PostRequest({{d.requestId}},'R',s)"><i class="fa fa-remove"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Popup Model For Approve/Reject Leave Application  *@
+            <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="        width:fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Shift Change Details</h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">SAPID</th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                                <th style="text-align:center;">Sr</th>
+                                                <th style="text-align:center;">From Date</th>
+                                                <th style="text-align:center;">To Date</th>
+                                                <th style="text-align:center;">Shift Code</th>
+                                                <th style="text-align:center;">Reason</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="scd in scDetails|itemsPerPage:10">
+                                            <tr>
+                                                <td>{{scd.empUnqId}}</td>
+                                                <td>{{scd.empName}}</td>
+                                                <td>{{scd.sr}}</td>
+                                                <td>{{scd.fromDt| date:'dd/MM/yyyy'}}</td>
+                                                <td>{{scd.toDt| date:'dd/MM/yyyy'}}</td>
+                                                <td>{{scd.shiftCode}}</td>
+                                                <td>{{scd.reason}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

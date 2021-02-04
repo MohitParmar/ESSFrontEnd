@@ -21,7 +21,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 var json = JSON.parse(req.responseText);
                 $scope.configdata = json; $scope.$digest(); $('#hidactualFlag').val($scope.configdata.actualFlag); $('#hidyearMonth').val($scope.configdata.yearMonth);
                 $('#hidcloseFlag').val($scope.configdata.closeFlag); var clsflg = $scope.configdata.closeFlag; var str = $scope.configdata.yearMonth.toString();
-                var res = str.substring(0, 4); var res2 = str.substring(4, 6); $('#lblyearmonth1').text(res + "-" + res2); $('#lblyearmonth3').text(res + "-" + res2);
+                var res = str.substring(0, 4); var res2 = str.substring(4, 6);
+                $('#lblyearmonth1').text(res + "-" + res2); $('#lblyearmonth3').text(res + "-" + res2);
                 $('#lblyearmonth4').text(res + "-" + res2); $('#lblyearmonth5').text(res + "-" + res2); $('#lblyearmonth6').text(res + "-" + res2);
                 $('#lblyearmonth4_2').text(res + "-" + res2); $('#lblyearmonth5_2').text(res + "-" + res2); $('#lblyearmonth6_2').text(res + "-" + res2);
                 var ecode = $('#eCode').val() || 0; if (clsflg === true) { if (ecode === 0) { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); }; };
@@ -236,27 +237,13 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                         ulipDetails = $scope.taxdata[d].ulipDetails;
                         sukanyaDetails = $scope.taxdata[d].sukanyaDetails;
                         if (taxdeclarationactualflag) {
-                            if (ppfDetails.length > 0) {
-                                $('#tot_a_ppf').val($scope.taxdata[d].totalPpfAmt);
-                            };
-                            if (bankDeposits.length > 0) {
-                                $('#tot_a_fd').val($scope.taxdata[d].totalBankDepositAmount);
-                            };
-                            if (insuranceDetails.length > 0) {
-                                $('#tot_a_premium').val($scope.taxdata[d].totalInsurancePremium);
-                            };
-                            if (nscDetails.length > 0) {
-                                $('#tot_a_nsc').val($scope.taxdata[d].totalNscAmount);
-                            };
-                            if (mutualFundDetails.length > 0) {
-                                $('#tot_a_mfund').val($scope.taxdata[d].totalMutualFund);
-                            };
-                            if (ulipDetails.length > 0) {
-                                $('#tot_a_ulip').val($scope.taxdata[d].totalUlip);
-                            };
-                            if (sukanyaDetails.length > 0) {
-                                $('#tot_a_ssAmt').val($scope.taxdata[d].totalSukanya);
-                            };
+                            if (ppfDetails.length > 0) { $('#tot_a_ppf').val($scope.taxdata[d].totalPpfAmt); };
+                            if (bankDeposits.length > 0) { $('#tot_a_fd').val($scope.taxdata[d].totalBankDepositAmount); };
+                            if (insuranceDetails.length > 0) { $('#tot_a_premium').val($scope.taxdata[d].totalInsurancePremium); };
+                            if (nscDetails.length > 0) { $('#tot_a_nsc').val($scope.taxdata[d].totalNscAmount); };
+                            if (mutualFundDetails.length > 0) { $('#tot_a_mfund').val($scope.taxdata[d].totalMutualFund); };
+                            if (ulipDetails.length > 0) { $('#tot_a_ulip').val($scope.taxdata[d].totalUlip); };
+                            if (sukanyaDetails.length > 0) { $('#tot_a_ssAmt').val($scope.taxdata[d].totalSukanya); };
                             $('#a_houseloan').val($scope.taxdata[d].houseLoanPrincipal);
                             $('#a_houseloan2').val($scope.taxdata[d].houseLoanPrincipal2);
                             $('#a_childfees1').val($scope.taxdata[d].tuitionFeeChild1);
@@ -307,27 +294,13 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
 
                             $('#txt_addofproperty').val($scope.taxdata[d].propertyAddress); $('#txt_addofproperty2').val($scope.taxdata[d].propertyAddress2);
                         } else {
-                            if (ppfDetails.length > 0) {
-                                $('#tot_p_ppf').val($scope.taxdata[d].totalPpfAmt);
-                            };
-                            if (bankDeposits.length > 0) {
-                                $('#tot_p_fd').val($scope.taxdata[d].totalBankDepositAmount);
-                            };
-                            if (insuranceDetails.length > 0) {
-                                $('#tot_p_premium').val($scope.taxdata[d].totalInsurancePremium);
-                            };
-                            if (nscDetails.length > 0) {
-                                $('#tot_p_nsc').val($scope.taxdata[d].totalNscAmount);
-                            };
-                            if (mutualFundDetails.length > 0) {
-                                $('#tot_p_mfund').val($scope.taxdata[d].totalMutualFund);
-                            };
-                            if (ulipDetails.length > 0) {
-                                $('#tot_p_ulip').val($scope.taxdata[d].totalUlip);
-                            };
-                            if (sukanyaDetails.length > 0) {
-                                $('#tot_p_ssAmt').val($scope.taxdata[d].totalSukanya);
-                            };
+                            if (ppfDetails.length > 0) { $('#tot_p_ppf').val($scope.taxdata[d].totalPpfAmt); };
+                            if (bankDeposits.length > 0) { $('#tot_p_fd').val($scope.taxdata[d].totalBankDepositAmount); };
+                            if (insuranceDetails.length > 0) { $('#tot_p_premium').val($scope.taxdata[d].totalInsurancePremium); };
+                            if (nscDetails.length > 0) { $('#tot_p_nsc').val($scope.taxdata[d].totalNscAmount); };
+                            if (mutualFundDetails.length > 0) { $('#tot_p_mfund').val($scope.taxdata[d].totalMutualFund); };
+                            if (ulipDetails.length > 0) { $('#tot_p_ulip').val($scope.taxdata[d].totalUlip); };
+                            if (sukanyaDetails.length > 0) { $('#tot_p_ssAmt').val($scope.taxdata[d].totalSukanya); };
                             $('#p_houseloan').val($scope.taxdata[d].houseLoanPrincipal);
                             $('#p_houseloan2').val($scope.taxdata[d].houseLoanPrincipal2);
 
@@ -1137,6 +1110,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                                 $('#txt_jointownername').val($scope.taxdata[d].jointOwnerName); $('#txt_jointownername2').val($scope.taxdata[d].jointOwnerName2);
                                 $('#txt_jointownerrelationship').val($scope.taxdata[d].jointOwnerRelation); $('#txt_jointownerrelationship2').val($scope.taxdata[d].jointOwnerRelation2);
                                 $('#txt_jointownershare').val($scope.taxdata[d].jointOwnerShare); $('#txt_jointownershare2').val($scope.taxdata[d].jointOwnerShare2);
+
                                 $('#rentalincome').val($scope.taxdata[d].rentalIncomePerMonth); $('#rentalincome2').val($scope.taxdata[d].rentalIncomePerMonth2);
                                 $('#muntax').val($scope.taxdata[d].municipalTax); $('#muntax2').val($scope.taxdata[d].municipalTax2);
 
@@ -1197,15 +1171,15 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
     };
     $scope.calPPF = function () {
         var PPF = storeTblValues(); function storeTblValues() {
-            var PPF = new Array(); $('#aliasTable4 tr').each(function(row, tr) {
-                 PPF[row] = { "ppf1": $(tr).find('td:eq(0)').text(), "ppf1": $(tr).find('td:eq(1)').text(), "p_ppf": $(tr).find('td:eq(2)').text(), "a_ppf": $(tr).find('td:eq(3)').text() };
+            var PPF = new Array(); $('#aliasTable4 tr').each(function (row, tr) {
+                PPF[row] = { "ppf1": $(tr).find('td:eq(0)').text(), "ppf1": $(tr).find('td:eq(1)').text(), "p_ppf": $(tr).find('td:eq(2)').text(), "a_ppf": $(tr).find('td:eq(3)').text() };
             }); PPF.shift(); return PPF;
         }; var p_ppfcount = 0; var a_ppfcount = 0; var act = $('#hidactualFlag').val();
         if (act === "true") {
-             for (var i = 0; i < PPF.length; i++) {
-                  a_ppfcount += parseInt(PPF[i]["a_ppf"]) || 0; 
-                  document.getElementById('tot_a_ppf').value = a_ppfcount || 0;
-             };
+            for (var i = 0; i < PPF.length; i++) {
+                a_ppfcount += parseInt(PPF[i]["a_ppf"]) || 0;
+                document.getElementById('tot_a_ppf').value = a_ppfcount || 0;
+            };
         }
         else { for (var i = 0; i < PPF.length; i++) { p_ppfcount += parseInt(PPF[i]["p_ppf"]) || 0; document.getElementById('tot_p_ppf').value = p_ppfcount || 0; }; };
         $scope.Total80c();
@@ -1446,7 +1420,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + er + "</strong></div>"; $("#MessageBox").show();
             };
         }; tax.send(TableData);
-    };             //Submit Method For User
+    };            //Submit Method For User
     $scope.UpdateDetailsFin = function () {
         var ecode = $('#eCode').val() || 0; if (ecode === 0) { alert("Records not Updated"); document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record not Updated.</strong></div>"; $('#MessageBox').show(); return false; };
         var act = $('#hidactualFlag').val();            //true=Actual and false=Provisional

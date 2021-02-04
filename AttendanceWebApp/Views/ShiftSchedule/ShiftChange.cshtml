@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "Shift Change Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox"></div>
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-init="GetOpenMonth()" id="CurOpenMonth" class="table-responsive"></div>
+            </div>
+            <div class="col-sm-8">
+                <input type="hidden" value="SS" id="releaseGroupCode" />
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Back Date Shift Schedule Change</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:right;"><label>Employee Code : </label></td>
+                                        <td><input type="text" class="form-control" id="txtEmpCode" ng-change="GetEmpInfo()" ng-model="SC.empUnqId" /></td>
+                                        <td colspan="2"><label id="lblEmpName"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;"><label>From Date : </label></td>
+                                        <td style="text-align:center;"><label>To Date : </label></td>
+                                        <td style="text-align:center;"><label>Shift : </label></td>
+                                        <td style="text-align:center;">Reason</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="FromDt" ng-model="SC.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="ToDt" ng-model="SC.ToDt" data-date-format="yyyy/MM/dd"
+                                                       ng-change="ToValidate()"
+                                                       datepicker>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select id="cmbShift" class="form-control" ng-model="SC.ShiftCode">
+                                                <option value="GN">GN</option>
+                                                <option value="GI">GI</option>
+                                                <option value="AA">AA</option>
+                                                <option value="BB">BB</option>
+                                                <option value="CC">CC</option>
+                                                <option value="DD">DD</option>
+                                                <option value="DI">DI</option>
+                                                <option value="NN">NN</option>
+                                                <option value="NI">NI</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="SC.Reason" id="txtReason" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">Remarks</td>
+                                        <td colspan="2"><input type="text" class="form-control" ng-model="SC.Remarks" id="txtRemarks" /></td>
+                                        <td style="text-align:right;">
+                                            <button class="btn btn-primary" id="btnAdd" ng-click="AddtoList(SC)">
+                                                <i class="fa fa-plus-square"></i>&nbsp;
+                                                Add to List
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table id="aliasTable" data-show-filter="true" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">EmpUnqid</th>
+                                        <th style="text-align:center;">Sr</th>
+                                        <th style="text-align:center;">From Date</th>
+                                        <th style="text-align:center;">To Date</th>
+                                        <th style="text-align:center;">Shift Code</th>
+                                        <th style="text-align:center;">Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tempRow">
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="btn btn-group" style="text-align:center;">
+                            <input type="reset" class="btn btn-default" id="btnReset" value="Reset" />
+                            <button type="submit" class="btn btn-success" id="btnSubmit" ng-click="CreateShiftChange()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="table-responsive">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Shift Timings</strong></div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Shift Name
+                                        </th>
+                                        <th>
+                                            Shift Type
+                                        </th>
+                                        <th>
+                                            Shift Timing
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>GENERAL Shift</td>
+                                        <td>GN</td>
+                                        <td>09:00 TO 18:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GI Shift</td>
+                                        <td>GI</td>
+                                        <td>08:00 TO 17:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AA Shift</td>
+                                        <td>AA</td>
+                                        <td>06:00 TO 14:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BB Shift</td>
+                                        <td>BB</td>
+                                        <td>14:00 TO 22:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CC Shift</td>
+                                        <td>CC</td>
+                                        <td>22:00 TO 06:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DAY Shift</td>
+                                        <td>DD</td>
+                                        <td>08:00 TO 20:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DAY I Shift</td>
+                                        <td>DI</td>
+                                        <td>07:00 TO 19:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NIGHT Shift</td>
+                                        <td>NN</td>
+                                        <td>20:00 TO 08:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NIGHT I Shift</td>
+                                        <td>NI</td>
+                                        <td>19:00 TO 07:00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

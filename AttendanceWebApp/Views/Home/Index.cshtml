@@ -135,9 +135,9 @@
                                                             ng-click="CancelLeave({{ld.yearMonth}},{{ld.leaveAppId}})">
                                                         <i class="fa fa-remove fa-lg"></i>
                                                     </button>
+                                                    @* && ld.releaseStatusCode == 'F'  *@
                                                     <button type="button" id="btnPrintPreview" class="btn btn-primary"
-                                                            ng-show="ld.releaseGroupCode == 'OD' && ld.releaseStatusCode == 'F' &&
-                                                            (ld.cancelled == false && ld.parentId == 0)"
+                                                            ng-show="ld.releaseGroupCode == 'OD' && (ld.cancelled == false && ld.parentId == 0)"
                                                             ng-click="PopupPreview(ld)">
                                                         <i class="fa fa-print fa-lg"></i>
                                                     </button>

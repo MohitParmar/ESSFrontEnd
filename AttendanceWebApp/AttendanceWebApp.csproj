@@ -778,6 +778,14 @@
     <Content Include="Views\ShiftSchedule\SSEmployee.cshtml" />
     <Content Include="Views\Mediclaim\ReleaseDependents.cshtml" />
     <Content Include="Views\ShiftSchedule\SSOpenMonth.cshtml" />
+    <Content Include="Views\NoDues\NoDuesStatusReport.cshtml" />
+    <Content Include="Views\ShiftSchedule\ShiftChange.cshtml" />
+    <Content Include="Views\ShiftSchedule\ReleaseShiftChange.cshtml" />
+    <Content Include="Views\ShiftSchedule\ShiftChangePosting.cshtml" />
+    <Content Include="Views\ShiftSchedule\ShiftChangeReportHR.cshtml" />
+    <Content Include="Views\ShiftSchedule\ShiftChangeReportSupervisor.cshtml" />
+    <Content Include="Views\ShiftSchedule\MyShiftChangeReport.cshtml" />
+    <Content Include="Views\ShiftSchedule\ShiftChangeUploadTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

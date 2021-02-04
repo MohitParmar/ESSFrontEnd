@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Shift Change Upload Template";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/SSCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="ShiftScheduleCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="SS" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Shift Change List</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('HR_ShiftChange_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Shift Change Report
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-init="GetShiftChangeList(5)">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">empUnqId</th>
+                                            <th style="text-align:center;">sanDate</th>
+                                            <th style="text-align:center;">inTime</th>
+                                            <th style="text-align:center;">outTime</th>
+                                            <th style="text-align:center;">shiftCode</th>
+                                            <th style="text-align:center;">tpaHours</th>
+                                            <th style="text-align:center;">reason</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in sclData|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" pagination-id="pg_1">
+                                        <tr>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:center;">{{d.sanDate}}</td>
+                                            <td style="text-align:center;">{{d.inTime}}</td>
+                                            <td style="text-align:center;">{{d.outTime}}</td>
+                                            <td style="text-align:center;">{{d.shiftCode}}</td>
+                                            <td style="text-align:center;">{{d.tpaHours}}</td>
+                                            <td style="text-align:center;">{{d.reason}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

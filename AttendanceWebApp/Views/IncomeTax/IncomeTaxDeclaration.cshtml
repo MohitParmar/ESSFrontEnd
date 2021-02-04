@@ -18,9 +18,7 @@
     function printData() { var divToPrint = document.getElementById("printTable"); newWin = window.open(""); newWin.document.write(divToPrint.outerHTML); newWin.print(); };
 </script>
 <script type="text/javascript">
-    $(window).on('load', function () {
-        $('#ConformModel').modal('show');
-    });
+    $(window).on('load', function () { $('#ConformModel').modal('show'); });
 </script>
 <style type="text/css">
     .ng-table-pager {
@@ -107,6 +105,12 @@
         transition: max-height 0.2s ease-out;
     }
 </style>
+
+<script>
+    function onfocus() {
+        $('.nav-tabs a:first').tab('show');
+    });
+</script>
 <div ng-app="myApp" ng-controller="IncomeTaxController">
     <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -121,9 +125,7 @@
                             <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
                                 <tbody>
                                     <tr>
-                                        <th>
-                                            <h4>Select Tax Regime <text style="color:#f44336;font-weight:bolder"> * </text> </h4>
-                                        </th>
+                                        <th><h4>Select Tax Regime <text style="color:#f44336;font-weight:bolder"> * </text> </h4></th>
                                         <td>
                                             <select id="cmb_taxRegime1" class="form-control" ng-model="new.test1" ng-change="ChangeTaxRegimefromPOPUP()" required>
                                                 <option value="X">---Select---</option>
@@ -142,11 +144,7 @@
                                             <p>For Information Only : Click on <a href="https://www.incometaxindiaefiling.gov.in/Tax_Calculator/index.html?lang=eng" target="_blank">Income Tax Calculator</a> for Tax Calculation</p>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td style="text-align:center;" colspan="2">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="btnClose">OK</button>
-                                        </td>
-                                    </tr>
+                                    <tr><td style="text-align:center;" colspan="2"><button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="btnClose">OK</button></td></tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -161,22 +159,16 @@
         <input type="hidden" value="" id="hidcloseFlag" />
         <input type="hidden" value="" id="hidCompanyaccoFlag" />
         <div id="MessageBox" class="table-responsive"></div>
-        <div style="text-align:center;">
-            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
-        </div>
+        <div style="text-align:center;"><img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv"></div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <strong>INCOME TAX DECLARATION</strong>
-                    </div>
+                    <div class="panel-heading"><strong>INCOME TAX DECLARATION</strong></div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
                                 <tr>
-                                    <th colspan="2">
-                                        <h4>Select Tax Regime <text style="color:#f44336;font-weight:bolder"> * </text> </h4>
-                                    </th>
+                                    <th colspan="2"><h4>Select Tax Regime <text style="color:#f44336;font-weight:bolder"> * </text> </h4></th>
                                     <td colspan="2">
                                         <select id="cmb_taxRegime" class="form-control" ng-model="new.test" ng-change="ChangeTaxRegimefromtbl()" required>
                                             <option value="X" selected="selected">---Select---</option>
@@ -188,83 +180,46 @@
                             </table>
                         </div>
                         <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a data-toggle="tab" href="#home">Summary</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu1">General Information</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu2">PART : A</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu3">PART : B</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu4">PART : C</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu5">PART : D</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu6">PART : E</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu7">PART : F</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#menu8">PART : G</a>
-                            </li>
+                            <li class="active"><a data-toggle="tab" href="#home">Summary</a></li>
+                            <li><a data-toggle="tab" href="#menu1">General Information</a></li>
+                            <li><a data-toggle="tab" href="#menu2">PART : A</a></li>
+                            <li><a data-toggle="tab" href="#menu3">PART : B</a></li>
+                            <li><a data-toggle="tab" href="#menu4">PART : C</a></li>
+                            <li><a data-toggle="tab" href="#menu5">PART : D</a></li>
+                            <li><a data-toggle="tab" href="#menu6">PART : E</a></li>
+                            <li><a data-toggle="tab" href="#menu7">PART : F</a></li>
+                            <li><a data-toggle="tab" href="#menu8">PART : G</a></li>
                         </ul>
                         <div class="tab-content table-responsive" id="maindiv">
                             <div ng-init="GetActualInfo()" hidden="hidden"></div>
                             @*<div ng-init="GetTaxDeclaration()" hidden="hidden"></div>*@
                             @* Instructions *@
                             <div id="home" class="tab-pane active">
-                                <div dir-paginate="t in taxdata|itemsPerPage:5" id="homenext">
+                                <div dir-paginate="t in taxdata|itemsPerPage:5" id="homenext" class="table-responsive">
                                     @*<h3 style="text-align:center;">Summary of Your Income Tax Declaration</h3>*@
-                                    <table class="table table-responsive table-bordered table-striped table-hover table-condensed" id="printTable"
-                                           border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif" ng-iF="t.actualFlag">
+                                    <table class="table table-condensed" id="printTable" border="1" style="border-collapse: collapse;font-family: Calibri;font-size: 14px;"
+                                           ng-iF="t.actualFlag">
+                                        @*class="table table-responsive table-bordered table-striped table-hover table-condensed"
+                                            border="1" style="border-collapse:collapse;font-family:Arial, Helvetica, sans-serif"*@
                                         @* ng-iF="t.actualFlag" *@
-                                        <thead>
-                                            <tr>
-                                                <th colspan="2" style="text-align:center;">
-                                                    <h1>Actual Income Tax Declaration</h1>
-                                                </th>
-                                            </tr>
-                                        </thead>
+                                        <thead><tr><th colspan="2" style="text-align:center;"><h1>Actual Income Tax Declaration</h1></th></tr></thead>
                                         <tbody>
                                             <tr>
-                                                <th style="text-align:center;">
-                                                    <p>
-                                                        <b>Description</b>
-                                                    </p>
-                                                </th>
-                                                <th style="text-align:center;">
-                                                    <p>
-                                                        <b>Provisional Amount</b>
-                                                    </p>
-                                                </th>
+                                                <th style="text-align:center;"><p><b>Description</b></p></th>
+                                                <th style="text-align:center;"><p><b>Actual Amount</b></p></th>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
-                                                </td>
-                                                <td style="text-align:right;">
-                                                    <strong>Mobile No. : <label id="lblMono"></label></strong>
-                                                </td>
+                                                <td><strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong></td>
+                                                <td style="text-align:right;"><strong>Mobile No. : <label id="lblMono"></label></strong></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <b>Rent Paid</b>
-                                                </td>
-                                                <td style="text-align:right;background-color:yellow;">
-                                                    <b>{{t.totalRentPaid| number : 2}}</b>
-                                                </td>
+                                                <td><b>Rent Paid</b></td>
+                                                <td style="text-align:right;background-color:yellow;"><b>{{t.totalRentPaid| number : 2}}</b></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:8%;text-align:center;">April</th>
@@ -301,33 +256,22 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Landlord Name</label>
-                                                </td>
-                                                <td style="text-align:left;">
-                                                    {{t.landLordName}}
-                                                </td>
+                                                <td><label>Landlord Name</label></td>
+                                                <td style="text-align:left;">{{t.landLordName}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Landlord PAN</label>
-                                                </td>
-                                                <td style="text-align:left;">
-                                                    {{t.landLordPan}}
-                                                </td>
+                                                <td><label>Landlord PAN</label></td>
+                                                <td style="text-align:left;">{{t.landLordPan}}</td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Public Provident Fund</b>
-                                                </td>
+                                                <td><b>Public Provident Fund</b></td>
                                                 <td style="text-align:right;">{{t.totalPpfAmt| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:214px;text-align:center;">PPF Account No.</th>
@@ -345,18 +289,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Tax Saver Bank Deposit (FD)</b>
-                                                </td>
+                                                <td><b>Tax Saver Bank Deposit (FD)</b></td>
                                                 <td style="text-align:right;">{{t.totalBankDepositAmount| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:214px;text-align:center;">Bank Account No</th>
@@ -374,18 +315,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Insurance Premium</b>
-                                                </td>
+                                                <td><b>Insurance Premium</b></td>
                                                 <td style="text-align:right;">{{t.totalInsurancePremium| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">Policy No</th>
@@ -409,20 +347,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>NSC</b>
-                                                </td>
-                                                <td style="text-align:right;">
-                                                    {{t.totalNscAmount| number : 2}}
-                                                </td>
+                                                <td><b>NSC</b></td>
+                                                <td style="text-align:right;">{{t.totalNscAmount| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:27%;text-align:center;">Nsc Number</th>
@@ -442,18 +375,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Mutual Fund</b>
-                                                </td>
+                                                <td><b>Mutual Fund</b></td>
                                                 <td style="text-align:right;">{{t.totalMutualFund| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:214px;text-align:center;">MutualFund Name</th>
@@ -471,18 +401,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>ULIP</b>
-                                                </td>
+                                                <td><b>ULIP</b></td>
                                                 <td style="text-align:right;">{{t.totalUlip| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:214px;text-align:center;">Ulip No</th>
@@ -500,18 +427,15 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Sukanya Samridhi</b>
-                                                </td>
+                                                <td><b>Sukanya Samridhi</b></td>
                                                 <td style="text-align:right;">{{t.totalSukanya| number : 2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <table class="table table-bordered table-responsive" border="1" style="border-collapse:collapse;width:100%">
+                                                    @*<table class="table table-bordered table-responsive" border="1" style="border-collapse:collapse;width:100%">*@
+                                                    <table class="table" border="1" style="border-collapse: collapse;width: 100%;font-size: 14px;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:214px;text-align:center;">Sukanya Account No.</th>
@@ -529,34 +453,22 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>First Housing Loan Principal Amount</b>
-                                                </td>
+                                                <td><b>First Housing Loan Principal Amount</b></td>
                                                 <td style="text-align:right;">{{t.houseLoanPrincipal| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <b>Second Housing Loan Principal Amount</b>
-                                                </td>
+                                                <td><b>Second Housing Loan Principal Amount</b></td>
                                                 <td style="text-align: right;">{{t.houseLoanPrincipal2| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <b>Tution Fees</b>
-                                                </td>
+                                                <td><b>Tution Fees</b></td>
                                                 <td style="text-align:right;">{{t.tuitionFeeChild1+t.tuitionFeeChild2| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <th style="text-align:center;">
-                                                    <label>Child Name</label>
-                                                </th>
-                                                <th style="text-align:center;">
-                                                    <label>Tution Fees</label>
-                                                </th>
+                                                <th style="text-align:center;"><label>Child Name</label></th>
+                                                <th style="text-align:center;"><label>Tution Fees</label></th>
                                             </tr>
                                             <tr>
                                                 <td>{{t.child1Name}}</td>
@@ -566,13 +478,9 @@
                                                 <td>{{t.child2Name}}</td>
                                                 <td style="text-align:right;">{{t.tuitionFeeChild2| number : 2}}</td>
                                             </tr>
+                                            <tr><td colspan="2"><br /></td></tr>
                                             <tr>
-                                                <td colspan="2"><br /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Other Investment</b>
-                                                </td>
+                                                <td><b>Other Investment</b></td>
                                                 <td style="text-align:right;">{{t.others1Amount+t.others2Amount| number : 2}}</td>
                                             </tr>
                                             <tr>
@@ -584,53 +492,37 @@
                                                 <td style="text-align:right;">{{t.others2Amount| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <b>Total Investment u/s 80C</b>
-                                                </td>
+                                                <td><b>Total Investment u/s 80C</b></td>
                                                 <td style="text-align:right;background-color:yellow;">
                                                     <b>{{t.totalPpfAmt+t.totalBankDepositAmount+t.totalInsurancePremium+t.totalNscAmount+t.totalMutualFund+t.totalUlip+t.totalSukanya+t.houseLoanPrincipal+t.houseLoanPrincipal2+t.tuitionFeeChild1+t.tuitionFeeChild2+t.others1Amount+t.others2Amount| number : 2}}</b>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Mediclaim u/s 80D</label>
-                                                </td>
+                                                <td><label>Mediclaim u/s 80D</label></td>
                                                 <td style="text-align:right;">{{t.medicalPremiumSelf+t.medicalPremiumParents+t.medicalPreventiveHealthCheckup| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Educational Loan Interest u/s 80E</label>
-                                                </td>
+                                                <td><label>Educational Loan Interest u/s 80E</label></td>
                                                 <td style="text-align:right;">{{t.educationLoanInterest| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Physical Disability u/s 80U</label>
-                                                </td>
+                                                <td><label>Physical Disability u/s 80U</label></td>
                                                 <td style="text-align:right;">{{t.physicalDisability| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Severe Disability u/s 80U</label>
-                                                </td>
+                                                <td><label>Severe Disability u/s 80U</label></td>
                                                 <td style="text-align:right;">{{t.severeDisability| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>NPS</label>
-                                                </td>
+                                                <td><label>NPS</label></td>
                                                 <td style="text-align:right;">{{t.nationalPensionScheme| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>First Housing Loan Interest</label>
-                                                </td>
+                                                <td><label>First Housing Loan Interest</label></td>
                                                 <td style="text-align:right;">{{t.interestOnLoan| number : 2}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <label>Second Housing Loan Interest</label>
-                                                </td>
+                                                <td><label>Second Housing Loan Interest</label></td>
                                                 <td style="text-align: right;">{{t.interestOnLoan2| number : 2}}</td>
                                             </tr>
                                             <tr>
@@ -651,16 +543,8 @@
                                                     </p>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label>Signature:</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label>Date:</label>
-                                                </td>
-                                            </tr>
+                                            <tr><td colspan="2"><label>Signature:</label></td></tr>
+                                            <tr><td colspan="2"><label>Date:</label></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -669,9 +553,7 @@
                                         I hereby declare that the following Particulars of my personal savings Other than Provident Fund may please be considered for the purpose of Income Tax Deduction at source from my salaries for the financial year
                                         <script>document.write(new Date().getFullYear() + "-" + (new Date().getFullYear() + 1).toString().substr(-2));</script>
                                     </p>*@
-                                <div style="float:right;">
-                                    <a class="btn btn-info btnNext" id="homenext">Next</a>
-                                </div>
+                                <div style="float:right;"><a class="btn btn-info btnNext" id="homenext">Next</a></div>
                             </div>
                             @* General Personal Information *@
                             <div id="menu1" class="tab-pane">
@@ -684,74 +566,34 @@
                                     <table class="table table-bordered table-condensed table-hover table-striped table-responsive" dir-paginate="d in UserInfo|itemsPerPage:5">
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <p>Name : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.empName}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>Employee ID : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.empUnqId}}</p>
-                                                </td>
+                                                <td><p>Name : </p></td>
+                                                <td><p>{{d.empName}}</p></td>
+                                                <td><p>Employee ID : </p></td>
+                                                <td><p>{{d.empUnqId}}</p></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <p>PAN No. : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.idPrf2No}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>Grade : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.gradeName}}</p>
-                                                </td>
+                                                <td><p>PAN No. : </p></td>
+                                                <td><p>{{d.idPrf2No}}</p></td>
+                                                <td><p>Grade : </p></td>
+                                                <td><p>{{d.gradeName}}</p></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <p>Contact No. :</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.contactNo}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>Designation : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.desgName}}</p>
-                                                </td>
+                                                <td><p>Contact No. :</p></td>
+                                                <td><p>{{d.contactNo}}</p></td>
+                                                <td><p>Designation : </p></td>
+                                                <td><p>{{d.desgName}}</p></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <p>DOJ : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.joinDt | date:'dd/MM/yyyy'}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>Location : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.unitName}}</p>
-                                                </td>
+                                                <td><p>DOJ : </p></td>
+                                                <td><p>{{d.joinDt | date:'dd/MM/yyyy'}}</p></td>
+                                                <td><p>Location : </p></td>
+                                                <td><p>{{d.unitName}}</p></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <p>Permanent Address : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.perAdd1}} {{d.perAdd2}} {{d.perCity}} {{d.perState}} {{d.perPin}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>Email : </p>
-                                                </td>
-                                                <td>
-                                                    <p>{{d.email}}</p>
-                                                </td>
+                                                <td><p>Permanent Address : </p></td>
+                                                <td><p>{{d.perAdd1}} {{d.perAdd2}} {{d.perCity}} {{d.perState}} {{d.perPin}}</p></td>
+                                                <td><p>Email : </p></td>
+                                                <td><p>{{d.email}}</p></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4">
@@ -766,12 +608,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div style="float:left;">
-                                    <a class="btn btn-warning btnPrevious">&laquo; Previous</a>
-                                </div>
-                                <div style="float:right;">
-                                    <a class="btn btn-info btnNext">Next &raquo;</a>
-                                </div>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">&laquo; Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next &raquo;</a></div>
                             </div>
                             @* PART : A *@
                             <div id="menu2" class="tab-pane fade">
@@ -786,12 +624,8 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td rowspan="3" style="text-align:center;">
-                                                    <p>1</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <p>(IF the rent amount changes during the financial year please specify the amount and the period separately)(Submission of copies of rent receipts, L&L Agreement  etc are essential for considering the exemption)</p>
-                                                </td>
+                                                <td rowspan="3" style="text-align:center;"><p>1</p></td>
+                                                <td colspan="2"><p>(IF the rent amount changes during the financial year please specify the amount and the period separately)(Submission of copies of rent receipts, L&L Agreement  etc are essential for considering the exemption)</p></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
@@ -815,134 +649,59 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>
-                                                                    <p>Provisional</p>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm1" placeholder="0" ng-model="New.p_rentpm1" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm2" placeholder="0" ng-model="New.p_rentpm2" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm3" placeholder="0" ng-model="New.p_rentpm3" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm4" placeholder="0" ng-model="New.p_rentpm4" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm5" placeholder="0" ng-model="New.p_rentpm5" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm6" placeholder="0" ng-model="New.p_rentpm6" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm7" placeholder="0" ng-model="New.p_rentpm7" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm8" placeholder="0" ng-model="New.p_rentpm8" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm9" placeholder="0" ng-model="New.p_rentpm9" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm10" placeholder="0" ng-model="New.p_rentpm10" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm11" placeholder="0" ng-model="New.p_rentpm11" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="p_rentpm12" placeholder="0" ng-model="New.p_rentpm12" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
+                                                                <td><p>Provisional</p></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm1" placeholder="0" ng-model="New.p_rentpm1" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm2" placeholder="0" ng-model="New.p_rentpm2" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm3" placeholder="0" ng-model="New.p_rentpm3" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm4" placeholder="0" ng-model="New.p_rentpm4" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm5" placeholder="0" ng-model="New.p_rentpm5" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm6" placeholder="0" ng-model="New.p_rentpm6" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm7" placeholder="0" ng-model="New.p_rentpm7" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm8" placeholder="0" ng-model="New.p_rentpm8" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm9" placeholder="0" ng-model="New.p_rentpm9" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm10" placeholder="0" ng-model="New.p_rentpm10" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm11" placeholder="0" ng-model="New.p_rentpm11" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="p_rentpm12" placeholder="0" ng-model="New.p_rentpm12" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>
-                                                                    <p>Actual</p>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm1" placeholder="0" ng-model="New.a_rentpm1" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm2" placeholder="0" ng-model="New.a_rentpm2" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm3" placeholder="0" ng-model="New.a_rentpm3" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm4" placeholder="0" ng-model="New.a_rentpm4" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm5" placeholder="0" ng-model="New.a_rentpm5" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm6" placeholder="0" ng-model="New.a_rentpm6" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm7" placeholder="0" ng-model="New.a_rentpm7" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm8" placeholder="0" ng-model="New.a_rentpm8" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm9" placeholder="0" ng-model="New.a_rentpm9" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm10" placeholder="0" ng-model="New.a_rentpm10" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm11" placeholder="0" ng-model="New.a_rentpm11" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" id="a_rentpm12" placeholder="0" ng-model="New.a_rentpm12" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                                                </td>
+                                                                <td><p>Actual</p></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm1" placeholder="0" ng-model="New.a_rentpm1" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm2" placeholder="0" ng-model="New.a_rentpm2" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm3" placeholder="0" ng-model="New.a_rentpm3" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm4" placeholder="0" ng-model="New.a_rentpm4" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm5" placeholder="0" ng-model="New.a_rentpm5" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm6" placeholder="0" ng-model="New.a_rentpm6" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm7" placeholder="0" ng-model="New.a_rentpm7" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm8" placeholder="0" ng-model="New.a_rentpm8" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm9" placeholder="0" ng-model="New.a_rentpm9" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm10" placeholder="0" ng-model="New.a_rentpm10" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm11" placeholder="0" ng-model="New.a_rentpm11" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
+                                                                <td><input type="text" class="form-control" id="a_rentpm12" placeholder="0" ng-model="New.a_rentpm12" ng-change="calcRent()" style="text-align:right;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" /></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:right;">
-                                                    <p>Total</p>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="renttotal" value="0" style="text-align:right;" disabled />
-                                                </td>
+                                                <td style="text-align:right;"><p>Total</p></td>
+                                                <td><input type="text" class="form-control" id="renttotal" value="0" style="text-align:right;" disabled /></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;">
-                                                    <p>2</p>
-                                                </td>
-                                                <td colspan="3">
-                                                    <p>Complete Address of Rented house :</p>
-                                                    <input type="text" class="form-control" id="presentAddress" />
-                                                </td>
+                                                <td style="text-align:center;"><p>2</p></td>
+                                                <td colspan="3"><p>Complete Address of Rented house :</p><input type="text" class="form-control" id="presentAddress" /></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;">
-                                                    <p>3</p>
-                                                </td>
-                                                <td>
-                                                    <p>Name of Landlord</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="landlord" />
-                                                </td>
+                                                <td style="text-align:center;"><p>3</p></td>
+                                                <td><p>Name of Landlord</p></td>
+                                                <td colspan="2"><input type="text" class="form-control" id="landlord" /></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;">
-                                                    <p>4</p>
-                                                </td>
-                                                <td>
-                                                    <p>PAN of Landlord is mandatory (if rent is more than Rs. 8333/- P.M.)</p>
-                                                </td>
-                                                <td colspan="2">
-                                                    <input type="text" class="form-control" id="rentalpan" />
-                                                </td>
+                                                <td style="text-align:center;"><p>4</p></td>
+                                                <td><p>PAN of Landlord is mandatory (if rent is more than Rs. 8333/- P.M.)</p></td>
+                                                <td colspan="2"><input type="text" class="form-control" id="rentalpan" /></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;">
-                                                    <p>5</p>
-                                                </td>
+                                                <td style="text-align:center;"><p>5</p></td>
                                                 <td colspan="2">
                                                     <p>If rent paid amount is greater than Rs.3000/- but less than or equal to Rs.4000/- per month = Rent Receipt required.</p>
                                                     <p>If rent paid amount is greater than Rs.4000/- per month = Rent Agreement and Rent Receipt required.</p><br>
@@ -951,12 +710,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div style="float:left;">
-                                    <a class="btn btn-warning btnPrevious">Previous</a>
-                                </div>
-                                <div style="float:right;">
-                                    <a class="btn btn-info btnNext">Next</a>
-                                </div>
+                                <div style="float:left;"><a class="btn btn-warning btnPrevious">Previous</a></div>
+                                <div style="float:right;"><a class="btn btn-info btnNext">Next</a></div>
                             </div>
                             @* PART : B *@
                             <div id="menu3" class="tab-pane fade">
@@ -1940,7 +1695,7 @@
                                 </div>
                             </div>
                             @* PART : E *@
-                            <div id="menu6" class="tab-pane fade">
+                            <div id="menu6" class="tab-pane fade" onclick="onfocus()">
                                 <h3>Exemptions under Section 24</h3>
                                 <ul class="nav nav-tabs">
                                     <li class="active">
@@ -2524,7 +2279,7 @@
                         <br />
                         <div style="float:right;">
                             <button type="submit" id="btnsave" class="btn btn-success" ng-click="AddDetails()"><i class="fa fa-save"></i> Submit</button>
-                            <button type="submit" id="btnPrint" class="btn" onclick="printData()" disabled><i class="fa fa-print"></i> Print Preview</button>
+                            <button type="submit" id="btnPrint" class="btn" onclick="printData()"><i class="fa fa-print"></i> Print Preview</button>
                         </div>
                     </div>
                 </div>
