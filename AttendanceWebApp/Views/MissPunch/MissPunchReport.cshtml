@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "MissPunchReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay); $('#ToDt').val(lastDay);
+    }
+</script>
+
+<div ng-app="myApp" ng-controller="MissPunchController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending For Release</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetMissedPunch(New)">
+                                            <i class="fa fa-search"></i>Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" ng-init="GetMissedPunch()">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">App. Date</th>
+                                        <th style="text-align:center;">Status</th>
+                                        <th style="text-align:center;">Emp. Code</th>
+                                        <th style="text-align:center;">Emp. Name</th>
+                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">Remarks</th>
+                                        <th style="text-align:center;">In Time</th>
+                                        <th style="text-align:center;">Out Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in mpaData|itemsPerPage:10">
+                                    <tr>
+                                        <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="        text-align: center;"
+                                            ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="        text-align: center;">{{d.empName}}</td>
+                                        <td style="        text-align: left;">{{d.reason}}</td>
+                                        <td style="        text-align: left;">{{d.remarks}}</td>
+                                        <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

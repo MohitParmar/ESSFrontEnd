@@ -20,10 +20,11 @@
                             <div style="text-align: center;">
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                             </div>
-                            <table class="table table-bordered" >
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center;">SAPID</th>
+                                        <th style="text-align: center;">EMPLOYEE NAME</th>
                                         <th style="text-align: center;">Section Head/HOD</th>
                                         <th style="text-align: center;">FINANCE & ACCOUNT</th>
                                         <th style="text-align: center;">Stores</th>
@@ -40,11 +41,13 @@
                                         <th style="text-align: center;">School</th>
                                         <th style="text-align: center;">ER Office</th>
                                         <th style="text-align: center;">Unit Head</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="s in statusData|itemsPerPage:50">
                                     <tr>
                                         <td style="text-align:center;">{{s.empUnqId}}</td>
+                                        <td style="text-align:left;">{{s.empName}}</td>
                                         <td style="text-align:center;"
                                             ng-style="s.hod===true && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     s.hod===false && {'background-color':'#f2dede','color':'#b94a48'}">
@@ -110,9 +113,207 @@
                                                     s.unitHead===false && {'background-color':'#f2dede','color':'#b94a48'}">
                                             <input type="checkbox" ng-checked="{{s.unitHead}}" disabled>
                                         </td>
+                                        <td>
+                                            <button class="btn btn-info" id="btnDetails" ng-click="InReleaseView({{s.empUnqId}})">
+                                                <i class="fa fa-info"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="previewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Preview: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" id="maindiv">
+                                    <table class="table table-condensed" ng-repeat="e in empArr1"
+                                           border="1"
+                                           style="border-collapse: collapse;
+                                                  font-family: Arial, Helvetica, sans-serif;
+                                                  font-size: 14px;
+                                                  width: 793px;">
+                                        <tr>
+                                            <td colspan="5" style="        text-align: center;">
+                                                <h3 style="margin-top:5px;margin-bottom:5px;">JINDAL SAW LTD. (IPU)</h3>
+                                                <h4 style="margin-top:5px;margin-bottom:5px;">
+                                                    <u>NO DUES CERTIFICATE</u>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Location/Unit: {{e.unitName}}</td>
+                                            <td style="text-align: right;">Date: {{e.noDuesStartDate| date:'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr style="height:30px;">
+                                            <td><b>Name: {{e.empName}}</b></td>
+                                            <td><b>SAP.Code: {{e.empUnqId}}</b></td>
+                                            <td style="text-align: right;"><b>Mobile No.: <label id="lblMobileNo"></label></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation : {{e.desgName}}</td>
+                                            <td>Grade : {{e.gradeName}}</td>
+                                            <td style="text-align: right;">Dept. & Station: {{e.statName}}</td>
+                                        </tr>
+                                        <tr style="height:30px;">
+                                            <td><b>Date of Joining: {{e.joinDate| date:'dd/MM/yyyy'}}</b></td>
+                                            <td><b>Date of Resignation: {{e.resignDate| date:'dd/MM/yyyy'}}</b></td>
+                                            <td style="text-align: right;"><b>Date of Relieving/Transfer: {{e.relieveDate| date:'dd/MM/yyyy'}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p align="justify">
+                                                    I/We certify that the outstanding/No dues against Mr./Ms. <u><b>{{e.empName}}</b></u> is/are mentioned
+                                                    hereunder. In so far I/we concerned we have no objection to his/her release from the Company on the date
+                                                    indicated above by getting the items or by adjusting its value from him.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <table class="table table-bordered" border="1"
+                                                       style="border-collapse: collapse;width: 100%;font-size: 14px;">
+                                                    <tr>
+                                                        <td style="text-align: center;"><b>Sr. No.</b></td>
+                                                        <td style="text-align: center;"><b>Department</b></td>
+                                                        <th>
+                                                            <table class="table" border="0" style="border-collapse: collapse;width: 100%;font-size: 14px;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th style="text-align: Left;width: 25%;">Particulars</th>
+                                                                        <th style="text-align: Left;width: 25%;">Remarks</th>
+                                                                        <th style="text-align: Left;width: 11%;">Amount</th>
+                                                                        <th style="text-align: Left;width: 25%;">Release By</th>
+                                                                        <th style="text-align: center;width: 11%;">Release Date</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </th>
+                                                    </tr>
+                                                    <tr style="height:30px;">
+                                                        <td style="text-align: center;">1</td>
+                                                        <td style="text-transform: uppercase;text-align: left;">{{e.statName}}</td>
+                                                        <td>
+                                                            <table class="table table-bordered" border="1" style="border-collapse: collapse;font-size: 13px;width: 100%;height:100%;">
+                                                                <tbody ng-repeat="r in e.noDuesReleaseStatus">
+                                                                    <tr style="height:30px;">
+                                                                        <td style="text-transform: uppercase;text-align: left;width: 164px;">{{e.deptParticulars}}</td>
+                                                                        <td style="text-transform: uppercase;text-align: left;width: 164px;">{{e.deptRemarks}}</td>
+                                                                        <td style="text-align: center;width: 71px;">{{e.deptAmount| number : 2}}</td>
+                                                                        <td style="text-transform: uppercase;text-align: left;width: 163px;">{{r.releaserName}}</td>
+                                                                        <td style="text-align: center;width: 71px;">{{r.releaseDate| date:'dd/MM/yyyy'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tbody ng-repeat="n in noDuesDepts1">
+                                                        <tr style="height:30px;">
+                                                            <td style="text-align: center;">{{n.no}}</td>
+                                                            <td style="text-transform: uppercase;text-align: left;">{{n.deptName}}</td>
+                                                            <td>
+                                                                <table class="table table-bordered" border="1" style="border-collapse: collapse;font-size: 13px;width: 100%;height:100%;">
+                                                                    <tbody ng-repeat="h in n.noDuesDeptDetails">
+                                                                        <tr style="height:30px;">
+                                                                            <td style="text-transform: uppercase;text-align: left;width: 164px;">{{h.particulars}}</td>
+                                                                            <td style="text-transform: uppercase;text-align: left;width: 164px;">{{h.remarks}}</td>
+                                                                            <td style="text-align: center;width: 71px;">{{h.amount| number : 2}}</td>
+                                                                            <td style="text-transform: uppercase;text-align: left;width: 163px;">{{n.approvedByName}}</td>
+                                                                            <td style="text-align: center;width: 71px;">{{n.approvalDate| date:'dd/MM/yyyy'}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tr style="height:30px;">
+                                                        <td colspan="2"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="        text-align: center;">16</td>
+                                                        <td style="        text-align: left;">HR Office</td>
+                                                        <td>
+                                                            <table class="table table-bordered" border="1" style="border-collapse: collapse;font-size: 14px;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th style="text-align: center;">Notice Period</th>
+                                                                        <th style="text-align: center;">Notice Period Basic / CTC</th>
+                                                                        <th style="text-align: center;">Last Working Date</th>
+                                                                        <th style="text-align: center;">Mode of Leaving</th>
+                                                                        <th style="text-align: center;">Exit Interview</th>
+                                                                        <th style="text-align: center;">Hr Approved By</th>
+                                                                        <th style="text-align: center;">Hr Approved Date</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="text-align: center;text-transform: uppercase;">{{e.noticePeriod}}</td>
+                                                                        <td style="text-align: center;text-transform: uppercase;">{{e.noticePeriodUnit}}</td>
+                                                                        <td style="text-align: center;">{{e.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                                                        <td style="text-align: center;text-transform: uppercase;">{{e.modeOfLeaving}}</td>
+                                                                        <td style="text-align: center;"><input type="checkbox" ng-checked="{{e.exitInterviewFlag}}" disabled></td>
+                                                                        <td style="text-align: center;text-transform: uppercase;">{{e.hrApprovedByName}}</td>
+                                                                        <td style="text-align: center;">{{e.hrApprovalDate| date:'dd/MM/yyyy'}}</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height:30px;">
+                                                        <td colspan="2"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p>
+                                                    I,
+                                                    <u><b> {{e.empName}} </b></u>, certify that having voluntarily resigned/Transferred to other location, I have handed over and accounted for all the Company’s moneys/properties including
+                                                    intellectual properties in whatever form i.e. whether in documentary or Pen drive, CDs, DVDs etc. to the concerned HOD/Person. I have neither retained any such property nor
+                                                    shall put to use/misuse any such property/asset of the Company for making any personal gain either individually or in combination with other/competitors of the Company. Any
+                                                    violation of this undertaking shall render me liable to legal action at the option of the Company.
+                                                </p>
+                                                <p>
+                                                    I confirm that I am responsible for all acts under my domain during my tenure of service.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height:30px;"><b>Date: </b></td>
+                                            <td><b>Signature of Employee</b></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                *For absconded case<br />
+                                                **Serial No 13 is applicable only for employees who works at Pragpar Site.<br />
+                                                ***In case of LD Division
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Unit Head/</b>
+                                                <br />
+                                                <b>Sr.VP-OPTN.(SAW PIPE DIVN.)***</b>
+                                            </td>
+                                            <td>
+                                                <b>Approved</b>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

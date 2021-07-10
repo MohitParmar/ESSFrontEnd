@@ -1,0 +1,142 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+@{string sMainPath = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["path"]);}
+<head>
+    <title>Miss Punch OUT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="~/ESS_Images/ess-logo-login.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap-3.3.7.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
+    <script src="~/Content/Jquery 3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="~/Scripts/Angular/angular.min.js"></script>
+    <script src="~/Scripts/Angular/angular-resource.js"></script>
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/Jquery/jquery-ui.js"></script>
+    <script>var _ConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]';</script>
+    <script>var _URLHostName = '@System.Web.Configuration.WebConfigurationManager.AppSettings["URLHostName"]';</script>
+    <script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.min.js"></script>
+    <script src="~/Scripts/Module/ng-table.src.js"></script>
+    <script src="~/Scripts/Module/ng-tags-input.js"></script>
+    <script src="~/Scripts/Module/app.js"></script>
+    <link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />
+    <script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
+    <script src="~/Content/DirPAgination/dirPagination.js"></script>
+    <style type="text/css">
+        .Requed {
+            color: red;
+            font-size: 20px;
+        }
+
+        .activediv {
+            display: inline;
+        }
+
+        .deactivediv {
+            display: none;
+        }
+
+        #Home-Index #topBar {
+            display: none;
+        }
+
+        .ng-table-pager {
+            display: none;
+        }
+
+        .TextBoxStyle {
+            height: 25px;
+        }
+
+        .AddNew {
+            float: right;
+            position: relative;
+        }
+
+        .right-inner-addon {
+            position: relative;
+        }
+
+            .right-inner-addon input {
+                padding-right: 30px;
+            }
+
+            .right-inner-addon i {
+                position: absolute;
+                right: 0px;
+                padding: 10px 12px;
+                pointer-events: none;
+            }
+    </style>
+</head>
+<body style="        background-color: white;">
+    <input type="hidden" value="@Session["EmpUnqId"]" id="myEmpUnqId" />
+    <div class="main">
+        <div class="main-inner">
+            <div ng-app="myApp" ng-controller="MissPunchController">
+                <input type="hidden" value="LA" id="releaseGroupCode" />
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong>Miss Punch Out List</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="MissPunchInfo()">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="        text-align: center;" ng-click="sort('empUnqId')">
+                                            Emp. Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('empName')">
+                                            Emp. Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;">In Time</th>
+                                        <th style="        text-align: center;">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empName" />
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in inData|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
+                                        <td style="        text-align: center;font-size: large;">{{d.EmpUnqId}}</td>
+                                        <td style="        text-align: left;font-size: large;">{{d.EmpName}}</td>
+                                        <td style="        text-align: left;font-size: large;">{{d.InTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: center;">
+                                            <button class="btn btn-danger" style="width: 75px;" id="btnOut" ng-click='MissPunchOut({{d.Id}},"O",{{d.EmpUnqId}})'>
+                                                Out
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "DeptLeaveReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
+<script src="~/Content/ng-grid-2.0.14.debug.js"></script>
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+
+    .mainImaage {
+        display: block;
+        width: 100%;
+        height: 50%;
+        padding-bottom: 5%;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay);
+        $('#ToDt').val(lastDay);
+    }
+</script>
+<div ng-app="myApp" ng-controller="LeaveReportCntrloller">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Posted Leave Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('Leave_Report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-responsive table-condensed">
+                            <tr>
+                                <td>
+                                    <label>Select From Date : </label>
+                                </td>
+                                <td>
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                    </div>
+                                </td>
+                                <td>
+                                    <label>Select To Date : </label>
+                                </td>
+                                <td>
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()" datepicker>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetDeptLeaveInfo(New)">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="table-responsive">
+                            <div ng-init="GetDeptLeaveInfo()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="aliasTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No.</th>
+                                                <th style="text-align:center;width: 60px;">App. Id</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">App. Date</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Status</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Details</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Rel. Remarks</th>
+                                                <th style="text-align:center;padding:3px;width:56px;">Post. Date</th>
+                                                <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
+                                                    Employee Code
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                                <th style="text-align:center;">Station</th>
+                                                <th style="text-align:center;">Leave Reason</th>
+                                                <th style="text-align:center;">Sr No.</th>
+                                                <th style="text-align:center;">Leave Type</th>
+                                                <th style="text-align:center;">From Date</th>
+                                                <th style="text-align:center;">To Date</th>
+                                                <th style="text-align:center;">Days</th>
+                                                <th style="text-align:center;">Half Day</th>
+                                                <th style="text-align:center;">Is Posted</th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.releaseStatusCode" />
+                                                </td>
+                                                <td colspan="3"></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.empUnqId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.statName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.remarks" />
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.leaveTypeCode" />
+                                                </td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in pdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
+                                                ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                                <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                                <td style="text-align:center;">{{d.leaveAppId}}</td>
+                                                <td style="text-align:center;padding:3px;" id="adddDt">{{d.addDt | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;padding:3px;" id="releaseStatusCode">{{d.releaseStatusCode}}</td>
+                                                <td style="text-align:left;padding:3px;" id="releaseDate">{{d.finalReleaser}}<br />{{d.releaserName}} <br /> {{d.releaseDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:left;padding:3px;" id="releasermks">{{d.releaserRemarks}}</td>
+                                                <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label></td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:left;">{{d.statName}}</td>
+                                                <td style="text-align:left;">{{d.remarks}} - {{d.additionalRemarks}}</td>
+                                                <td style="text-align:center;">{{d.leaveAppItem}}</td>
+                                                <td style="text-align:center;">{{d.leaveTypeCode}}</td>
+                                                <td style="text-align:center;">{{d.fromDt | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.toDt | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.totalDays}}</td>
+                                                <td style="text-align:center;">
+                                                    <input type="checkbox" ng-checked="{{d.halfDayFlag}}" disabled="disabled">
+                                                </td>
+                                                <td style="text-align:center;">{{d.isPosted}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note For Leave Group : LA - Leave Application</strong>
+                        <br />
+                        <strong>Note For Is Posted : N - Not Posted, F - Fully Posted</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "ReleaseMissPunchApplication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="MissPunchController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending For Release</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div style="        text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div class="table-responsive" ng-init="GetPendingRelease()">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">App. Date</th>
+                                        <th style="text-align:center;">Status</th>
+                                        <th style="text-align:center;">Emp. Code</th>
+                                        <th style="text-align:center;">Emp. Name</th>
+                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">Remarks</th>
+                                        <th style="text-align:center;">In Time</th>
+                                        <th style="text-align:center;">Out Time</th>
+                                        <th style="text-align:center;">Remarks</th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in msData|itemsPerPage:10">
+                                    <tr>
+                                        <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="        text-align: center;"
+                                            ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="        text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="        text-align: center;">{{d.empName}}</td>
+                                        <td style="        text-align: left;">{{d.reason}}</td>
+                                        <td style="        text-align: left;">{{d.remarks}}</td>
+                                        <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: center;"><input id="txtRemarks" type="text" class="form-control" placeholder="Remarks" ng-model="N.Remarks" /></td>
+                                        <td style="        text-align: center;">
+                                            <div class="btn btn-group-sm">
+                                                <button class="btn btn-success" id="btnOK" ng-click="ReleaseMissPunch('F',{{d.id}},N)"><i class="fa fa-check"></i></button>
+                                                <button class="btn btn-danger" id="btnOK" ng-click="ReleaseMissPunch('R',{{d.id}},N)"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "MissPunchHR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="MissPunchController">
+    <div class="container-fluid">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Miss Punch Application</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="input-group form">
+                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                                <span class="input-group-btn">
+                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <table class="table" id="tbl_empdtl">
+                                                <tr dir-paginate="e in empdata|itemsPerPage:5">
+                                                    <td style="text-align:center;">
+                                                        Emp.Name :
+                                                        <label>{{e.empName}}</label>
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        Station :
+                                                        <label>{{e.statName}}</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Select Punch Type:</td>
+                                        <td>
+                                            <select class="form-control" id="cmbIOflag" ng-model="N.IO" required>
+                                                <option value="I">IN</option>
+                                                <option value="O">OUT</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Select Reason:
+                                        </td>
+                                        <td>
+                                            <select class="form-control" id="cmbReason" ng-model="N.Reason" required>
+                                                <option class="1">Card Lost</option>
+                                                <option class="2">Card Lock</option>
+                                                <option class="3">Card Not Working</option>
+                                                <option class="4">Forget Punch</option>
+                                                <option class="5">Machine Not Working</option>
+                                                <option class="6">Visit to OHC</option>
+                                                <option class="7">New Joinee</option>
+                                                <option class="8">Other Reason</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Remarks (if any):
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txtRemarks" class="form-control" ng-model="N.Remarks" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button class="btn btn-success" type="submit" id="btnSubmit" ng-click="CreateMissPunch(N,true)"><i class="fa fa-save"></i>  Submit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

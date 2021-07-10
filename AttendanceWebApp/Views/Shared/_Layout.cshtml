@@ -116,8 +116,9 @@
                             <ul class="dropdown-menu">
                                 <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
                                 <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
+                                <li id="mnuPayslip"><a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i>&nbsp;Payslip</a></li>
                                 <li id="mnuSSEmployee"><a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a></li>
-                                <li id="mnuMyShiftChangeReport"><a href="~/ShiftSchedule/MyShiftChangeReport">My Shift Change Report</a></li>
+                                @*<li id="mnuMyShiftChangeReport"><a href="~/ShiftSchedule/MyShiftChangeReport">My Shift Change Report</a></li>*@
                                 <li id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
                                 <li id="mnuTDS"><a href="~/IncomeTax/Form16">TDS Forms</a></li>
                                 <li id="mnuNODuesStatus"><a href="~/NoDues/NoDuesStatus">No Dues Status</a></li>
@@ -225,32 +226,32 @@
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuGPAdvice">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bookmark-o"></i><span>GP Advice</span></a>
-                        <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuGPAdviceGenerate">
-                                <a href="/GatePassAdvice/GenerateGPAdvice">New GP Advice</a>
-                            </li>
-                            <li hidden="hidden" id="mnuGPAdviceList">
-                                <a href="/GatePassAdvice/GetGPAdviceList">GP Advice List</a>
-                            </li>
-                            <li hidden="hidden" id="mnuGPAdviceRelease">
-                                <a href="~/GatePassAdvice/ReleaseGPAdvice">Release GP Advice</a>
-                            </li>
-                            <li hidden="hidden" id="mnuGPAdviceReport">
-                                <a href="~/GatePassAdvice/GPAdviceReport">GP Advice Report</a>
-                            </li>
-                            <li hidden="hidden" id="mnuMasterUpload">
-                                <a href="~/GatePassAdvice/MasterUpload">Master Upload</a>
-                            </li>
-                            <li hidden="hidden" id="mnuGPAdvicePost">
-                                <a href="~/GatePassAdvice/POSTGPAdvice">Post GP Advice</a>
-                            </li>
-                            <li hidden="hidden" id="mnuPostedGPAdviceReport">
-                                <a href="~/GatePassAdvice/PostedGPAdviceReport">Posted GP Advice Report</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @*<li hidden="hidden" class="dropdown" id="mnuGPAdvice">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bookmark-o"></i><span>GP Advice</span></a>
+                            <ul class="dropdown-menu">
+                                <li hidden="hidden" id="mnuGPAdviceGenerate">
+                                    <a href="/GatePassAdvice/GenerateGPAdvice">New GP Advice</a>
+                                </li>
+                                <li hidden="hidden" id="mnuGPAdviceList">
+                                    <a href="/GatePassAdvice/GetGPAdviceList">GP Advice List</a>
+                                </li>
+                                <li hidden="hidden" id="mnuGPAdviceRelease">
+                                    <a href="~/GatePassAdvice/ReleaseGPAdvice">Release GP Advice</a>
+                                </li>
+                                <li hidden="hidden" id="mnuGPAdviceReport">
+                                    <a href="~/GatePassAdvice/GPAdviceReport">GP Advice Report</a>
+                                </li>
+                                <li hidden="hidden" id="mnuMasterUpload">
+                                    <a href="~/GatePassAdvice/MasterUpload">Master Upload</a>
+                                </li>
+                                <li hidden="hidden" id="mnuGPAdvicePost">
+                                    <a href="~/GatePassAdvice/POSTGPAdvice">Post GP Advice</a>
+                                </li>
+                                <li hidden="hidden" id="mnuPostedGPAdviceReport">
+                                    <a href="~/GatePassAdvice/PostedGPAdviceReport">Posted GP Advice Report</a>
+                                </li>
+                            </ul>
+                        </li>*@
                     <li hidden="hidden" class="dropdown" id="mnuReport">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-th-list"></i><span>Report</span></a>
                         <ul class="dropdown-menu">
@@ -259,6 +260,9 @@
                             </li>
                             <li hidden="hidden" id="mnuLeaveReport">
                                 <a href="/Report/LeaveReport">Leave Report</a>
+                            </li>
+                            <li id="mnuDeptLeaveReport">
+                                <a href="/Report/DeptLeaveReport">Dept Leave Report</a>
                             </li>
                             <li hidden="hidden" id="mnuITDReport">
                                 <a href="/IncomeTax/ITDeclarationReport">Income Tax Declaration Report</a>
@@ -327,20 +331,20 @@
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuReimbursement">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-money"></i><span>Reimbursement</span></a>
-                        <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuConveyance">
-                                <a href="~/Reimbursement/Conveyance_Form">Conveyance</a>
-                            </li>
-                            <li hidden="hidden" id="mnuReimbursementRelease">
-                                <a href="~/Reimbursement/ReimbursementRelease">Release Reimbursement</a>
-                            </li>
-                            <li hidden="hidden" id="mnuReimbursementReport">
-                                <a href="~/Reimbursement/ReimbursementReport">Reimbursement Report</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @*<li hidden="hidden" class="dropdown" id="mnuReimbursement">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-money"></i><span>Reimbursement</span></a>
+                            <ul class="dropdown-menu">
+                                <li hidden="hidden" id="mnuConveyance">
+                                    <a href="~/Reimbursement/Conveyance_Form">Conveyance</a>
+                                </li>
+                                <li hidden="hidden" id="mnuReimbursementRelease">
+                                    <a href="~/Reimbursement/ReimbursementRelease">Release Reimbursement</a>
+                                </li>
+                                <li hidden="hidden" id="mnuReimbursementReport">
+                                    <a href="~/Reimbursement/ReimbursementReport">Reimbursement Report</a>
+                                </li>
+                            </ul>
+                        </li>*@
                     <li hidden="hidden" class="dropdown" id="mnuSSMaster">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Shift Schedule</span></a>
                         <ul class="dropdown-menu">
@@ -350,16 +354,20 @@
                             <li hidden="hidden" id="mnuSSUpdate">
                                 <a href="~/ShiftSchedule/SSUpdate"><i class="fa fa-download"></i>&nbsp;<i class="fa fa-upload"></i><span></span>&nbsp;Shift Schedule Change</a>
                             </li>
-                            <li id="mnuShiftChange">
+                            @* Back Date Shift Change *@
+                            <li hidden="hidden" id="mnuShiftChange">
                                 <a href="~/ShiftSchedule/ShiftChange">Back Date Shift Change</a>
                             </li>
-                            <li id="mnuReleaseShiftChange">
+                            @* Back Date Shift Change Release *@
+                            <li hidden="hidden" id="mnuReleaseShiftChange">
                                 <a href="~/ShiftSchedule/ReleaseShiftChange">Release Shift Change</a>
                             </li>
-                            <li id="mnuShiftChangePosting">
+                            @* Back Date Shift Change Posting *@
+                            <li hidden="hidden" id="mnuShiftChangePosting">
                                 <a href="~/ShiftSchedule/ShiftChangePosting">Shift Change Post</a>
                             </li>
-                            <li id="mnuShiftChangeReportSupervisor">
+                            @* Back Date Shift Change Report Supervisor*@
+                            <li hidden="hidden" id="mnuShiftChangeReportSupervisor">
                                 <a href="~/ShiftSchedule/ShiftChangeReportSupervisor">Shift Change Report Supervisor</a>
                             </li>
                             <li hidden="hidden" id="mnuSSRelease">
@@ -371,10 +379,12 @@
                             <li hidden="hidden" id="mnuSSHRRPT">
                                 <a href="/ShiftSchedule/SSHRReport">Shift Schedule HR Report</a>
                             </li>
-                            <li id="mnuShiftChangeReportHR">
+                            @* Back Date Shift Change Report HR*@
+                            <li hidden="hidden" id="mnuShiftChangeReportHR">
                                 <a href="~/ShiftSchedule/ShiftChangeReportHR">Shift Change Report HR</a>
                             </li>
-                            <li id="mnuShiftChangeUpload">
+                            @* Back Date Shift Change Upload *@
+                            <li hidden="hidden" id="mnuShiftChangeUpload">
                                 <a href="~/ShiftSchedule/ShiftChangeUploadTemplate">Shift Change Upload Template</a>
                             </li>
                             <li hidden="hidden" id="mnuSSOpenMonth">
@@ -382,36 +392,36 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuMediclaim" hidden>
+                    <li class="dropdown" id="mnuMediclaim">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-hospital-o"></i><span>Mediclaim</span></a>
                         <ul class="dropdown-menu">
-                            <li id="mnuMediclaimDetails" hidden>
+                            <li id="mnuMediclaimDetails">
                                 <a href="~/Mediclaim/NameAddition">Mediclaim Detail</a>
                             </li>
-                            <li id="mnuDependentDetails" hidden>
+                            <li id="mnuDependentDetails">
                                 <a href="~/Mediclaim/DependentDetails">Dependent Details</a>
                             </li>
-                            <li id="mnuDependentRelease" hidden>
+                            <li id="mnuDependentRelease">
                                 <a href="~/Mediclaim/ReleaseDependents">Release Dependents</a>
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuMedicalFitness">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-medkit"></i><span>Medical Fitness</span></a>
-                        <ul class="dropdown-menu">
-                            <li hidden="hidden" id="mnuMedicalFitnessForm">
-                                <a href="/MedicalFitness/MedicalFit">Fitness Form</a>
-                            </li>
-                            <li hidden="hidden" id="mnuMedicalFitnessReport">
-                                <a href="/MedicalFitness/MedicalFitReport">Fitness Report</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @*<li hidden="hidden" class="dropdown" id="mnuMedicalFitness">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-medkit"></i><span>Medical Fitness</span></a>
+                            <ul class="dropdown-menu">
+                                <li hidden="hidden" id="mnuMedicalFitnessForm">
+                                    <a href="/MedicalFitness/MedicalFit">Fitness Form</a>
+                                </li>
+                                <li hidden="hidden" id="mnuMedicalFitnessReport">
+                                    <a href="/MedicalFitness/MedicalFitReport">Fitness Report</a>
+                                </li>
+                            </ul>
+                        </li>*@
                     <li hidden="hidden" class="dropdown" id="mnuNodUes">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-universal-access"></i><span>No Dues</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuNoDuesMaster"><a href="/NoDues/NoDuesMaster">No Dues Master</a></li>
-                            <li hidden="hidden" class="dropdown-submenu" id="mnuNoduesSectionHeadHOD">
+                            <li class="dropdown-submenu" id="mnuNoduesSectionHeadHOD">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Section Head / HOD&nbsp;<b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li id="mnuNoDuesDeptCreater"><a href="/NoDues/NoDuesAddUser?flg=false">No Dues Entry</a></li>
@@ -422,11 +432,30 @@
                             <li hidden="hidden" id="mnuNoduesReleaser"><a href="/NoDues/NoDuesRelease">No Dues Release</a></li>
                             <li hidden="hidden" id="mnuNoduesReport"><a href="/NoDues/NoDuesReportHR">No Dues Report</a></li>
                             <li hidden="hidden" id="mnuNODuesReleaseUH"><a href="~/NoDues/NoDuesReleaseUH">No Dues Release Unit Head</a></li>
-                            <li hidden="hidden" id="mnuNODuesStatusReport"><a href="~/NoDues/NoDuesStatusReport">No Dues Status Report</a></li>
+                            <li id="mnuNODuesStatusReport"><a href="~/NoDues/NoDuesStatusReport">No Dues Status Report</a></li>
                         </ul>
                     </li>
-                    <li id="mnuPayslip">
-                        <a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i><span>Payslip</span></a>
+                    <li class="dropdown" id="mnuExitProcess">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-universal-access"></i><span>Exit Process</span></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuExitProcess"><a href="~/ExitProcess/UserExitProcess">Exit Process</a></li>
+                            <li id="mnuEmpResignation"><a href="~/ExitProcess/UserExitProcessReport">Emp. Resignation</a></li>
+                            <li id="mnuExitProcessRelease"><a href="~/ExitProcess/ExitProcessRelease">Exit Process Release</a></li>
+                            <li id="mnuExitProcessReleaseHR"><a href="~/ExitProcess/ExitProcessReleaseHR">Exit Process Release HR</a></li>
+                            <li id="mnuResignationreport"><a href="~/ExitProcess/ExitProcessReport">Exit Process Report</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="msnuMissPunch">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-medkit"></i><span>Miss Punch</span></a>
+                        <ul class="dropdown-menu">
+                            <li id="mnuCreateMissPunch"><a href="/MissPunch/CreateMissPunchApplication">Miss Punch Generate - Sec</a></li>
+                            <li id="mnuCreateMissPunchHR"><a href="/MissPunch/MissPunchHR">Miss Punch Generate - HR</a></li>
+                            <li id="mnuReleaseMissPunch"><a href="/MissPunch/ReleaseMissPunchApplication">Miss Punch Release</a></li>
+                            <li id="mnuReleaserMissPunchReport"><a href="/MissPunch/MissPunchReleaserReport">Miss Punch Report - Releaser</a></li>
+                            <li id="mnuMissPunchReport"><a href="/MissPunch/MissPunchReport">Miss Punch Report - HR</a></li>
+                            <li id="mnuEmpReportMissPunch"><a href="/MissPunch/EmpMissPunchReport">Miss Punch Report - Emp</a></li>
+                            <li id="mnuMissPunchOut"><a href="/MissPunch/MissPunchOut">Miss Punch Out</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

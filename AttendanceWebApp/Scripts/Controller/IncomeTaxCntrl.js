@@ -87,6 +87,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         };
     };
     $scope.GetTaxDeclaration = function () {
+        var ecode = $('#eCode').val() || 0;
         var act = $('#hidactualFlag').val();
         var YearMonth = $('#hidyearMonth').val();
         $scope.EnableCntrl(act);
@@ -96,7 +97,6 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
         var Uperdata2;
         var xy = {};
         var xhr = new XMLHttpRequest();
-        var ecode = $('#eCode').val() || 0;
         if (ecode === 0) {
             xhr.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + $('#myEmpUnqId').val(), true);
         } else {
@@ -225,8 +225,10 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 var json = JSON.parse(xhr1.responseText);
                 $scope.taxdata = json;
                 $scope.$digest();
+                var lockEntry = false;
                 if ($scope.taxdata.length > 0) {
                     for (var d = 0; d < $scope.taxdata.length; d++) {
+                        debugger;
                         var taxdeclarationactualflag = $scope.taxdata[d].actualFlag;
                         rentDetails = $scope.taxdata[d].rentDetails;
                         ppfDetails = $scope.taxdata[d].ppfDetails;
@@ -1120,9 +1122,17 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             }
                         }
                         rentDetails = ""; ppfDetails = ""; bankDeposits = ""; insuranceDetails = ""; nscDetails = ""; mutualFundDetails = ""; ulipDetails = ""; sukanyaDetails = "";
+                        lockEntry = $scope.taxdata[d].lockEntry;
                     }; $scope.Total80c();
+                } else {
+                    document.getElementById("cmb_taxRegime").disabled = false;   //Page Combo Box
                 };
-                var lockEntry = $scope.taxdata[d].lockEntry; if (ecode === 0 && lockEntry === true && act === "false") { document.getElementById("btnsave").disabled = true; $("#maindiv *").attr("readonly", "readonly").off('click'); $("#cmb_taxRegime1").attr("disabled", "disabled").off('click'); $("#cmb_taxRegime").attr("disabled", "disabled").off('click'); };
+                if (ecode === 0 && lockEntry === true && act === "false") {
+                    document.getElementById("btnsave").disabled = true;
+                    $("#maindiv *").attr("readonly", "readonly").off('click');
+                    $("#cmb_taxRegime1").attr("disabled", "disabled").off('click');
+                    $("#cmb_taxRegime").attr("disabled", "disabled").off('click');
+                };
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         };

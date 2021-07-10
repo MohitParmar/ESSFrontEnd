@@ -1,0 +1,341 @@
+﻿@{
+    ViewBag.Title = "ExitProcessReleaseHR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/EmpExitProcessCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="EmpExitProcessController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>List of Pending Resignations</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div ng-init="GetResignationHr()">
+                                <div class="table-responsive">
+                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Sr. No.</th>
+                                                <th style="text-align:center;" ng-click="sort('applicationDate')">
+                                                    App. Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='applicationDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                                    Release Status
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                    Employee Code
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                                <th style="text-align:center;">Mode of Apply</th>
+                                                <th style="text-align:center;">Reason</th>
+                                                <th style="text-align:center;">Other</th>
+                                                <th style="text-align:center;">Relieve Date</th>
+                                                <th style="text-align:center;">Resign Text</th>
+                                                <th style="text-align:center;">Further Release Status</th>
+                                                <th style="text-align:center;">Further Releaser</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                                <td colspan="8"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="d in rhrData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                                            <tr>
+                                                <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                                <td style="text-align:center;">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;" ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                    {{d.releaseStatusCode}}
+                                                </td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;" ng-repeat="e in d.employee track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
+                                                <td style="text-align:center;">{{d.mode}}</td>
+                                                <td style="text-align:left;">{{d.reason}}</td>
+                                                <td style="text-align:left;">{{d.reasonOther}}</td>
+                                                <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:left;">{{d.resignText}}</td>
+                                                <td style="text-align:left;" ng-style="
+                                                    d.furtherReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'}">
+                                                    {{d.furtherReleaseStatusCode}}
+                                                </td>
+                                                <td style="text-align:left;">{{d.furtherReleaserName}}</td>
+                                                <td style="text-align:center;width:130px;">
+                                                    <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.empUnqId}},'{{d.mode}}')"><i class="fa fa-info"></i></button>
+                                                    <button class="btn btn-success" id="btnPost" ng-click="HrRelease({{d.id}},{{d.empUnqId}})"><i class="fa fa-check"></i></button>
+                                                    <button class="btn btn-default" id="btnAddReleaser" ng-click="ReleaserPopUp({{d.id}})"><i class="fa fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ReleaserModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnCloseRel">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Add Further Releaser: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <input type="hidden" id="hidId" value="" />
+                                    <form role="form" name="ReleaserForm" novalidate>
+                                        <table id="myTable" class="table table-responsive table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group form">
+                                                            <input type="text" class="form-control" id="eCode" name="eCode" placeholder="Search Employee Code" ng-model="E.empUnqId">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
+                                                                <button class="btn btn-primary" type="button" id="btnSave" style="text-align:right;"
+                                                                        ng-click="FurtherRelease('I',E.empUnqId)">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <table class="table table-bordered" id="tbl_empdtl">
+                                                            <tr dir-paginate="d in empdata|itemsPerPage:5">
+                                                                <th>Employee Code</th>
+                                                                <td>{{d.empUnqId}}</td>
+                                                                <th>Employee Name</th>
+                                                                <td>{{d.empName}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="manualModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: 793px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnCloseMnl">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Resignation Preview: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div id="divManual" class="table-responsive" ng-repeat="e in resData">
+                                    <div style="text-align:right;" class="form-group row">
+                                        <div class="col-sm-12">DATE : {{e.applicationDate | date:'dd/MM/yyyy'}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                <b>From :</b>
+                                                <br />
+                                                Name: {{e.empName}}
+                                                <br />
+                                                Designation/Grade: {{e.desgName}} / {{e.gradeName}}
+                                                <br />
+                                                Department/Station: {{e.statName}}
+                                                <br />
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                <b>To:</b>
+                                                <br />Head HR & ER
+                                                <br />Jindal SAW Ltd-IPU
+                                                <br />Village: Samaghogha
+                                                <br />Pragpar-Mandvi Road
+                                                <br />Dist. Kutch, Gujarat-370 415
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;" class="form-group row">
+                                        <div class="col-sm-12">
+                                            <b>Through: Section Head/HOD</b>
+                                            <br />
+                                            <b>Sub: Resignation from services of the Company</b>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">Resignation Text : <br />{{e.resignText}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">Reason : {{e.reason}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">Other : {{e.reasonOther}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Relieve Date : {{e.relieveDate | date:'dd/MM/yyyy'}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Yours Sincerely,
+                                            <br />
+                                            <b>Name <u>{{e.empName}}</u></b>
+                                            <br />
+                                            <b>SAP ID <u>{{e.empUnqId}}</u></b>
+                                            <br />
+                                            <p>(As this resignation letter is self-generated by the employee personally through his secured ESS Portal, a physical signature is not required).</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="templateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnCloseTmp">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Resignation Preview: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div id="divTemplate" class="table-responsive" ng-repeat="e in resData">
+                                    <div style="text-align:right;" class="form-group row">
+                                        <div class="col-sm-12">
+                                            DATE :
+                                            <label>
+                                                {{e.applicationDate | date:'dd/MM/yyyy'}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label>From :</label><br />
+                                            Name: {{e.empName}}<br />
+                                            Designation/Grade: {{e.desgName}} / {{e.gradeName}}<br />
+                                            Department/Station: {{e.statName}}<br />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label>To:</label>
+                                            <p>
+                                                Head HR & ER
+                                                <br />Jindal SAW Ltd-IPU
+                                                <br />Village: Samaghogha
+                                                <br />Pragpar-Mandvi Road
+                                                <br />Dist. Kutch, Gujarat-370 415
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;" class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label>Through: Section Head/HOD</label><br />
+                                            <label>Sub: Resignation from services of the Company</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Dear Sir,
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <b>I <u>{{e.empName}}</u></b> (SAP ID <u>{{e.empUnqId}}</u>) is working this company since <u>{{e.joinDate | date:'dd/MM/yyyy'}}</u>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            I would like to inform you that I am resigning from services of this company due to/for {{e.reason}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Other {{e.reasonOther}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Effective from today (i.e <u>{{e.applicationDate | date:'dd/MM/yyyy'}}</u>) and request you to relieve me on {{e.relieveDate | date:'dd/MM/yyyy'}}<br />
+                                            I have taken this decision on my own with a lot of thought.<br />
+                                            It has been a great pleasure for me to be a part of this organization and I have learned a lot during my
+                                            association with this Company.  I have genuinely enjoyed my time with this Organization.<br />
+                                            I would like to take the opportunity to thank you all for having me as a part of your team. I wish the Company
+                                            all the best in the future.<br />
+                                            Request you to please accept my resignation and relieve me on {{e.relieveDate | date:'dd/MM/yyyy'}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            Yours Sincerely,<br />
+                                            <b>Name <u>{{e.empName}}</u></b><br />
+                                            <b>SAP ID <u>{{e.empUnqId}}</u></b><br />
+                                            <p>(As this resignation letter is self-generated by the employee personally through his secured ESS Portal, a physical signature is not required).</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

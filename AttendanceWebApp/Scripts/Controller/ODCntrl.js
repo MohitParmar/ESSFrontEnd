@@ -64,6 +64,7 @@ app.controller("ODController", function ($scope, $http) {
             TotalDays = $("#TotalDays").val());
         var jsonObj = {}, TableData = storeTblValues();
         TableData = JSON.stringify(TableData);
+        debugger;
         var xhr = new XMLHttpRequest(); xhr.open("POST", $scope._Conpath + "LeaveApplication/CreateLeaveApplication", !0), xhr.setRequestHeader("Content-type", "application/json"), xhr.onreadystatechange = function () {
             if (4 === xhr.readyState && 201 === xhr.status) {
                 document.getElementById("btnPrint").disabled = !1;

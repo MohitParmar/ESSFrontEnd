@@ -49,61 +49,58 @@
                             <div style="text-align:center;">
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                             </div>
-                            <div ng-init="GetGPLists()">
-                                <div class="table-responsive">
-                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align:center;">GP Date</th>
-                                                <th style="text-align:center;">Employee Code</th>
-                                                <th style="text-align:center;" ng-click="sort('empName')">
-                                                    Employee Name
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;">Station</th>
-                                                <th style="text-align:center;">Purpose</th>
-                                                <th style="text-align:center;">Mode</th>
-                                                <th style="text-align:center;">Place of Visit</th>
-                                                <th style="text-align:center;width: 100px;">Action</th>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" />
-                                                </td>
-                                                <td colspan="2"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
-                                                ng-show="d.gatePassStatus === 'N'">
-                                                <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
-                                                <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td style="text-align:left;">{{d.empName}}</td>
-                                                <td style="text-align:left;">{{d.statName}}</td>
-                                                <td style="text-align:left;">{{d.reason}}</td>
-                                                <td style="text-align:center;">{{d.modeName}}</td>
-                                                <td style="text-align:left;">{{d.placeOfVisit}}</td>
-                                                <td style="text-align:center;">
-                                                    <button class="btn btn-success" id="btnApprove" value="Approve" ng-click="UpdateGPStatus('F',{{d.id}})"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="UpdateGPStatus('R',{{d.id}})"><i class="fa fa-remove"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                                </div>
+                            <div ng-init="GetGPLists()" class="table-responsive">
+                                <table class="table table-hover table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">GP Date</th>
+                                            <th style="text-align:center;">Employee Code</th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Station</th>
+                                            <th style="text-align:center;">Purpose</th>
+                                            <th style="text-align:center;">Mode</th>
+                                            <th style="text-align:center;">Place of Visit</th>
+                                            <th style="text-align:center;width: 100px;">Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" />
+                                            </td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in relalldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50"
+                                            ng-show="d.gatePassStatus === 'N'">
+                                            <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;">{{d.empName}}</td>
+                                            <td style="text-align:left;">{{d.statName}}</td>
+                                            <td style="text-align:left;">{{d.reason}}</td>
+                                            <td style="text-align:center;">{{d.modeName}}</td>
+                                            <td style="text-align:left;">{{d.placeOfVisit}}</td>
+                                            <td style="text-align:center;">
+                                                <button class="btn btn-success" id="btnApprove" value="Approve" ng-click="UpdateGPStatus('F',{{d.id}})"><i class="fa fa-check"></i></button>
+                                                <button class="btn btn-danger" id="btnReject" value="Reject" ng-click="UpdateGPStatus('R',{{d.id}})"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

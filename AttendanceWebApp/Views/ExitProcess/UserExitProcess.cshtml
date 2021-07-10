@@ -1,0 +1,235 @@
+﻿@{
+    ViewBag.Title = "UserExitProcess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/EmpExitProcessCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script>
+    $(window).on('load', function () {
+        $("#divTemplate").hide();
+        $("#divManual").hide();
+    });
+</script>
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp">
+    <div ng-controller="EmpExitProcessController">
+        <div class="container-fluid">
+            <input type="hidden" value="ND" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div ng-init="GetReleaseStrategy()">
+                        <table class="table table-responsive" style="text-align:center;">
+                            <tr>
+                                <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                    <b> Releaser  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Exit Process</strong>
+                        </div>
+                        <div class="panel-body" style="overflow:auto;">
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Mode of Apply: </label></div>
+                                <div class="col-sm-10">
+                                    <select class="dropdown-toggle form-control" style="width:200px;" id="cmbMode" ng-model="N.Mode" ng-change="setMode()">
+                                        <option value="M">Manual</option>
+                                        <option value="T">Template</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="divManual" class="table-responsive">
+                                <form class="form-group" id="frmManual">
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            Enter Resignation Text :
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <textarea class="form-control" id="txtResignationText" ng-model="N.ResignText"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <label>Select Reason : </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" id="cmbReasonManual" ng-model="N.ReasonManual" ng-change="setOtherReason(N.ReasonManual)">
+                                                <option>Personal Reason</option>
+                                                <option>Medical Ground</option>
+                                                <option>Family Problem</option>
+                                                <option>Industry Preference</option>
+                                                <option>Location Preference</option>
+                                                <option>Higher Education</option>
+                                                <option>Better Prospects</option>
+                                                <option>Going Abroad</option>
+                                                <option>Career Growth</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">Other : </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="txtReasonOtherManual" ng-model="N.ReasonOtherManual" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            Relieve Date :
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input class="form-control" type="date" id="relieveDateManual" ng-model="N.RelieveDateManual" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="table-responsive" dir-paginate="d in Udata|itemsPerPage:5" id="divTemplate">
+                                <div style="text-align:right;" class="form-group row">
+                                    <div class="col-sm-12">
+                                        DATE :
+                                        <label>
+                                            <script language="javascript">n = new Date(); y = n.getFullYear(); m = n.getMonth() + 1; d = n.getDate(); document.write(d + "/" + m + "/" + y);</script>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>From :</label><br />
+                                        Name: {{d.empName}}<br />
+                                        Designation/Grade: {{d.desgName}} / {{d.gradeName}}<br />
+                                        Department/Station: {{d.statName}}<br />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>To:</label>
+                                        <p>
+                                            Head HR & ER
+                                            <br />Jindal SAW Ltd-IPU
+                                            <br />Village: Samaghogha
+                                            <br />Pragpar-Mandvi Road
+                                            <br />Dist. Kutch, Gujarat-370 415
+                                        </p>
+                                    </div>
+                                </div>
+                                <div style="text-align:center;" class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Through: Section Head/HOD</label><br />
+                                        <label>Sub: Resignation from services of the Company</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        Dear Sir,
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <b>I <u>{{d.empName}}</u></b> (SAP ID <u>{{d.empUnqId}}</u>) is working this company since <u>{{d.joinDt | date:'dd/MM/yyyy'}}</u>
+                                        <label id="lblJoinDate"></label>
+                                    </div>
+                                </div>
+                                <form class="form-group" id="frmTemplate">
+                                    <div class="form-group row">
+                                        <div class="col-sm-5">
+                                            <p>I would like to inform you that I am resigning from services of this company due to/for</p>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" id="cmbReason" ng-model="N.Reason" ng-change="setOtherReason(N.Reason)">
+                                                <option>Personal Reason</option>
+                                                <option>Medical Ground</option>
+                                                <option>Family Problem</option>
+                                                <option>Industry Preference</option>
+                                                <option>Location Preference</option>
+                                                <option>Higher Education</option>
+                                                <option>Better Prospects</option>
+                                                <option>Going Abroad</option>
+                                                <option>Career Growth</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">Other</div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="txtReasonOther" ng-model="N.ReasonOther" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-5">
+                                            Effective from today
+                                            (i.e
+                                            <label>
+                                                <u>
+                                                    <script language="javascript">n = new Date(); y = n.getFullYear(); m = n.getMonth() + 1; d = n.getDate(); document.write(d + "/" + m + "/" + y);</script>
+                                                </u>
+                                            </label>
+                                            )
+                                            and request you to relieve me on
+                                        </div>
+                                        <div class="col-sm-2"><u><input class="form-control" type="date" id="relieveDate" ng-model="N.RelieveDate" ng-change="setRelieveDate()" /></u></div>
+                                    </div>
+                                </form>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        I have taken this decision on my own with a lot of thought.<br />
+                                        It has been a great pleasure for me to be a part of this organization and I have learned a lot during my
+                                        association with this Company.  I have genuinely enjoyed my time with this Organization.<br />
+                                        I would like to take the opportunity to thank you all for having me as a part of your team. I wish the Company
+                                        all the best in the future.
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        Request you to please accept my resignation and relieve me on
+                                        <label id="lblReleiveDate"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        Yours Sincerely,<br />
+                                        <b>Name <u>{{d.empName}}</u></b><br />
+                                        <b>SAP ID <u>{{d.empUnqId}}</u></b><br />
+                                        <p>(As this resignation letter is self-generated by the employee personally through his secured ESS Portal, a physical signature is not required).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer" style="text-align:center;">
+                            <button class="btn btn-success" id="btnOK" ng-click="ExitProcessGenerate(N)"><i class="fa fa-save"></i> Submit</button>
+                            <button class="btn btn-default" id="btnReset" ng-click="ResetView()"><i class="fa fa-refresh"></i> Reset</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

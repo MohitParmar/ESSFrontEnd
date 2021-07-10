@@ -20,7 +20,7 @@
                             <div style="text-align: center;">
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                             </div>
-                            <table class="table table-bordered" dir-paginate="s in statusData|itemsPerPage:5">
+                            <table class="table table-bordered" ng-repeat="s in sEmpData">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center;" ng-show="s.hod == false">Section Head/HOD</th>

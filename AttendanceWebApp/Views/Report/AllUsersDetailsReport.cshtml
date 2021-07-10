@@ -10,6 +10,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <strong>All Employee Details</strong>
@@ -24,14 +25,15 @@
                             <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                         </div>
                         <div ng-init="GetEmployeeList()">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="overflow-x">
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th colspan="10" style="text-align:center;">
+
+                                            <th colspan="11" style="text-align:center;">
                                                 <h4>JOB Profile Details</h4>
                                             </th>
-                                            <th colspan="15" style="text-align:center;">
+                                            <th colspan="17" style="text-align:center;">
                                                 <h4>Present Address</h4>
                                             </th>
                                             <th colspan="10" style="text-align:center;">
@@ -41,6 +43,7 @@
                                         </tr>
                                         <tr>
                                             @* Profile Details *@
+                                            <th>Action</th>
                                             <th>Sr. No.</th>
                                             <th style="text-align:center;" ng-click="sort('SAPID')">
                                                 Employee Code
@@ -77,6 +80,17 @@
                                             <th style="text-align:center;" ng-click="sort('DesgName')">
                                                 Desg
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='DesgName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            @* HR Use *@
+                                            <th style="text-align:center;" ng-click="sort('VillageOrCity')">
+                                                VILLAGE or CITY
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='VillageOrCity'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('SocietyOrLocationOrArea')">
+                                                SOCIETY or LOCATION or AREA
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='SocietyOrLocationOrArea'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             @* Present Address Details *@
@@ -151,7 +165,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <td></td>
+                                            <td colspan="2"></td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.SAPID" style="margin:0;padding:1px;" />
                                             </td>
@@ -176,6 +190,12 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" ng-model="search.DesgName" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.VillageOrCity" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="search.SocietyOrLocationOrArea" style="margin:0;padding:1px;" />
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -228,7 +248,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                        <tr dir-paginate="d in alldata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                            <td><button id="btnPopup" class="btn btn-primary" ng-click="Popup({{d.SAPID}})"><i class="fa fa-edit"></i></button></td>
                                             <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                             <td style="text-align:center">{{d.SAPID}}</td>
                                             <td style="text-align:left">{{d.EmpName}}</td>
@@ -239,6 +260,8 @@
                                             <td style="text-align:left">{{d.StatName}}</td>
                                             <td style="text-align:left">{{d.CatName}}</td>
                                             <td style="text-align:left">{{d.DesgName}}</td>
+                                            <td style="text-align:left">{{d.VillageOrCity}}</td>
+                                            <td style="text-align:left">{{d.SocietyOrLocationOrArea}}</td>
                                             <td style="text-align:left">{{d.FullAddress}}</td>
                                             <td style="text-align:left">{{d.PresentHouseNumber}}</td>
                                             <td style="text-align:left">{{d.PresentSocietyName}}</td>
@@ -275,6 +298,154 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="addressModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    @*style="        width: fit-content;"*@
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Present Address Update: </h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <form role="form" name="AddressForm" novalidate>
+                                    <div ng-init="GetPresentAddress()"></div>
+                                    <input id="hidCounter" type="hidden" value="" />
+                                    <input id="hidEmpid" type="hidden" value="" />
+                                    <table id="myTable" class="table table-responsive table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label>Plot/House/Flat/Room No.</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtHouseNumber" name="HouseNumber" required>
+                                                </td>
+                                                <td>
+                                                    <label>Nearest Police Station</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtPoliceStation" name="Plcsta" required disabled>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Name of Society/Building</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtSocietyName" name="SocietyName" required>
+                                                </td>
+                                                <td>
+                                                    <label>Personal E-mail Id</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="email" id="txtemailid" name="emailid"
+                                                           onchange="validateEmail()" placeholder="ex: abc@xyz.com">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Name of Area/Location</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtAreaName" name="AreaName" required>
+                                                </td>
+                                                <td>
+                                                    <label>Mobile No.</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtphoneno" name="phoneno"
+                                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                           required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Nearest Landmark</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtLandMark" name="LandMark" required>
+                                                </td>
+                                                <td>
+                                                    <label>Alternate Mobile No.</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtresno" name="resno"
+                                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Village/City </label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtPreCity" name="PreCity" required>
+                                                </td>
+                                                <td>
+                                                    <label>HR: Village/City </label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="hrCity" name="City" ng-model="hr.vilCity">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Taluka</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtTehsil" name="Tehsil" required>
+                                                </td>
+                                                <td>
+                                                    <label>HR: Society/Location/Area </label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="hrSociety" name="Society" ng-model="hr.socLoc">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>District</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtdist" name="dist" value="KUTCH">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>State</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="txtstate" name="State" value="GUJARAT">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>PinCode</label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="text-transform: uppercase;" type="text" id="pincode" name="pincode"
+                                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                           onchange="validatePin()" required>
+                                                </td>
+                                                <td colspan="2">
+                                                    <span class="input-group-btn float-right">
+                                                        <button id="btnSave" type="button" class="btn btn-success btn-custom" style="text-align:right;"
+                                                                value="Submit Presenrt Address" name="Save" ng-click="HRUpdateAddress()">
+                                                            <i class="fa fa-save"></i> Submit Address Details
+                                                        </button>
+                                                        <input id="BtnCancel" type="reset" class="btn btn-default" value="Reload" ng-click="ResetView()" />
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+

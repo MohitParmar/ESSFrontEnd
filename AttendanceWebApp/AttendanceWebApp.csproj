@@ -266,6 +266,7 @@
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomErrorController.cs" />
+    <Compile Include="Controllers\ExitProcessController.cs" />
     <Compile Include="Controllers\GatePassAdviceController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\MedicalFitnessController.cs" />
     <Compile Include="Controllers\MediclaimController.cs" />
+    <Compile Include="Controllers\MissPunchController.cs" />
     <Compile Include="Controllers\NoDuesController.cs" />
     <Compile Include="Controllers\ODController.cs" />
     <Compile Include="Controllers\ReleaseLeaveController.cs" />
@@ -478,6 +480,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
     <Content Include="Scripts\Controller\default.js" />
+    <Content Include="Scripts\Controller\EmpExitProcessCntrl.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
     <Content Include="Scripts\Controller\Form16Cntrl.js" />
@@ -524,6 +527,7 @@
     <Content Include="Scripts\Controller\MasterCntrl.js" />
     <Content Include="Scripts\Controller\MCCntrl.js" />
     <Content Include="Scripts\Controller\MedicalFitnessCntrl.js" />
+    <Content Include="Scripts\Controller\MissPunchCntrl.js" />
     <Content Include="Scripts\Controller\NoDuesCntrl.js" />
     <Content Include="Scripts\Controller\ODCntrl.js" />
     <Content Include="Scripts\Controller\OpenMonthCntrl.js" />
@@ -786,6 +790,19 @@
     <Content Include="Views\ShiftSchedule\ShiftChangeReportSupervisor.cshtml" />
     <Content Include="Views\ShiftSchedule\MyShiftChangeReport.cshtml" />
     <Content Include="Views\ShiftSchedule\ShiftChangeUploadTemplate.cshtml" />
+    <Content Include="Views\ExitProcess\UserExitProcess.cshtml" />
+    <Content Include="Views\ExitProcess\ExitProcessRelease.cshtml" />
+    <Content Include="Views\ExitProcess\ExitProcessReport.cshtml" />
+    <Content Include="Views\ExitProcess\UserExitProcessReport.cshtml" />
+    <Content Include="Views\Report\DeptLeaveReport.cshtml" />
+    <Content Include="Views\ExitProcess\ExitProcessReleaseHR.cshtml" />
+    <Content Include="Views\MissPunch\CreateMissPunchApplication.cshtml" />
+    <Content Include="Views\MissPunch\ReleaseMissPunchApplication.cshtml" />
+    <Content Include="Views\MissPunch\MissPunchReport.cshtml" />
+    <Content Include="Views\MissPunch\EmpMissPunchReport.cshtml" />
+    <Content Include="Views\MissPunch\MissPunchOut.cshtml" />
+    <Content Include="Views\MissPunch\MissPunchHR.cshtml" />
+    <Content Include="Views\MissPunch\MissPunchReleaserReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

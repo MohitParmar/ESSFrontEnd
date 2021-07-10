@@ -176,5 +176,17 @@ namespace AttendanceWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        public ActionResult DeptLeaveReport()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }
