@@ -8,18 +8,6 @@ namespace AttendanceWebApp.Controllers
 {
     public class MissPunchController : Controller
     {
-        // GET: MissPunch
-        public ActionResult CreateMissPunchApplication()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
         public ActionResult ReleaseMissPunchApplication()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)

@@ -796,7 +796,6 @@
     <Content Include="Views\ExitProcess\UserExitProcessReport.cshtml" />
     <Content Include="Views\Report\DeptLeaveReport.cshtml" />
     <Content Include="Views\ExitProcess\ExitProcessReleaseHR.cshtml" />
-    <Content Include="Views\MissPunch\CreateMissPunchApplication.cshtml" />
     <Content Include="Views\MissPunch\ReleaseMissPunchApplication.cshtml" />
     <Content Include="Views\MissPunch\MissPunchReport.cshtml" />
     <Content Include="Views\MissPunch\EmpMissPunchReport.cshtml" />

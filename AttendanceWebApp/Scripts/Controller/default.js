@@ -6,7 +6,9 @@
         var rel = new XMLHttpRequest(); rel.open("GET", conpath + "Roles/GetRoleAuth?empUnqId=" + _memberId, true);
         rel.setRequestHeader("Accept", "application/json"); rel.onreadystatechange = function () {
             if (4 === rel.readyState) {
-                var jsonvar1 = JSON.parse(rel.responseText); newArr = jsonvar1; for (var i = 0; i < newArr.length; i++) document.getElementById(newArr[i].menuId).hidden = !1;
+                var jsonvar1 = JSON.parse(rel.responseText); newArr = jsonvar1;
+                for (var i = 0; i < newArr.length; i++)
+                    document.getElementById(newArr[i].menuId).hidden = !1;
                 if (_memberId === "103244" || _memberId === "112213" || _memberId === "103608" || _memberId === "104019") {
                     $("#mnuDeptLeaveReport").show();
                 } else { $("#mnuDeptLeaveReport").hide(); };

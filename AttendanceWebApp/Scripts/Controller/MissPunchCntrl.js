@@ -60,10 +60,11 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         var IO = ""; if ((typeof (entity.IO) !== "undefined")) { IO = entity.IO; } else { IO = ""; };
         jsonObj = {}; jsonObj.Id = 0; jsonObj.AddDate = now; jsonObj.EmpUnqId = e_Code; jsonObj.Reason = entity.Reason; jsonObj.Remarks = entity.Remarks;
         jsonObj.ReleaseStrategy = e_Code; jsonObj.ReleaseStatusCode = "N";
+        var tm = ""; if (typeof (entity.time) === "undefined") { tm = now; } else { tm = entity.time; };
         if (IO !== "") {
-            if (IO === "I") { jsonObj.InTime = now; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null; }
-            else if (IO === "O") { jsonObj.InTime = null; jsonObj.InTimeUser = null; jsonObj.OutTime = now; jsonObj.OutTimeUser = $("#myEmpUnqId").val(); }
-        } else { jsonObj.InTime = now; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null; };
+            if (IO === "I") { jsonObj.InTime = tm; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null; }
+            else if (IO === "O") { jsonObj.InTime = null; jsonObj.InTimeUser = null; jsonObj.OutTime = tm; jsonObj.OutTimeUser = $("#myEmpUnqId").val(); }
+        } else { jsonObj.InTime = tm; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null; };
         jsonObj.PostingFlag = false; jsonObj.MissedPunchReleaseStatus = null; jsonObj = JSON.stringify(jsonObj);
         var xhr = new XMLHttpRequest(); xhr.open('POST', $scope._Conpath + 'MissedPunch/CreateMissedPunch', true); xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
@@ -93,8 +94,8 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                 debugger;
                 var json = JSON.parse(mpr.responseText); rlsarr = json; $scope.msData = json;
                 for (var i = 0; i < $scope.msData.length; i++) {
-                    var emp = $scope.msData[i].employee.empName;
-                    $scope.msData[i]["empName"] = emp;
+                    var emp = $scope.msData[i].employee.empName; $scope.msData[i]["empName"] = emp;
+                    var yCount = $scope.msData[i].employee.yearlyCount | 0; $scope.msData[i]["yearlyCount"] = yCount;
                 }
                 $scope.$digest();
             };
@@ -254,8 +255,9 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; xhr6.send();
     }
     $scope.MissPunchOut = function (id, io) {
+        var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var out = new XMLHttpRequest();
-        out.open('PUT', $scope._Conpath + 'MissedPunch/UpdateTime?id=' + id + "&inOut=" + io + "&empUnqId=" + $('#myEmpUnqId').val(), true);
+        out.open('PUT', $scope._Conpath + 'MissedPunch/UpdateTime?id=' + id + "&inOut=" + io + "&empUnqId=" + $('#myEmpUnqId').val() + "&punchTime=" + now, true);
         out.setRequestHeader("Content-type", "application/json");
         out.onreadystatechange = function () {
             if (out.readyState === 4 && out.status === 200) {

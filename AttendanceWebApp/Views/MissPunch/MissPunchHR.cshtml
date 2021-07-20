@@ -37,47 +37,58 @@
         <input type="hidden" value="LA" id="releaseGroupCode" />
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Miss Punch Application</strong>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-condensed">
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <div class="input-group form">
-                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
-                                                <span class="input-group-btn">
-                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
-                                                        <i class="fa fa-search"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <table class="table" id="tbl_empdtl">
-                                                <tr dir-paginate="e in empdata|itemsPerPage:5">
-                                                    <td style="text-align:center;">
-                                                        Emp.Name :
-                                                        <label>{{e.empName}}</label>
-                                                    </td>
-                                                    <td style="text-align:center;">
-                                                        Station :
-                                                        <label>{{e.statName}}</label>
-                                                    </td>
-                                                </tr>
+                                        <td colspan="2">
+                                            <table class="table table-hover table-condensed">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group form">
+                                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <table class="table" id="tbl_empdtl">
+                                                                <tbody dir-paginate="e in empdata|itemsPerPage:5">
+                                                                    <tr>
+                                                                        <td style="text-align:left;">
+                                                                            <label>Emp.Name : {{e.empName}}</label>
+                                                                        </td>
+                                                                        <td style="text-align:left;">
+                                                                            <label>Station : {{e.statName}}</label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="text-align:left;">
+                                                                            <label>Designation : {{e.desgName}}</label>
+                                                                        </td>
+                                                                        <td style="text-align:left;">
+                                                                            <label>D.O.J. : {{e.joinDate|date:"dd/MM/yyyy"}}</label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
                                     <tr>
                                         <td>Select Punch Type:</td>
                                         <td>
@@ -85,6 +96,15 @@
                                                 <option value="I">IN</option>
                                                 <option value="O">OUT</option>
                                             </select>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Select Date Time (Optional)
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="datetime-local" id="time" ng-model="N.time" placeholder="Select Date Time" required>
                                         </td>
                                     </tr>
                                     <tr>

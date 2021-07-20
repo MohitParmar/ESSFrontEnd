@@ -88,18 +88,76 @@
                             <table class="table table-bordered table-responsive">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;">App. Date</th>
-                                        <th style="text-align:center;">Status</th>
-                                        <th style="text-align:center;">Emp. Code</th>
-                                        <th style="text-align:center;">Emp. Name</th>
-                                        <th style="text-align:center;">Reason</th>
-                                        <th style="text-align:center;">Remarks</th>
-                                        <th style="text-align:center;">In Time</th>
-                                        <th style="text-align:center;">Out Time</th>
+                                        <th style="        text-align: center;">Sr. No.</th>
+                                        <th style="        text-align: center;" ng-click="sort('addDate')">
+                                            App. Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('releaseStatusCode')">
+                                            Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('empUnqId')">
+                                            Emp. Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('empName')">
+                                            Emp. Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('reason')">
+                                            Reason
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='reason'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('remarks')">
+                                            Remarks
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='remarks'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('inTime')">
+                                            In Time
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='inTime'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('outTime')">
+                                            Out Time
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='outTime'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td style="        text-align: center;">
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.releaseStatusCode" />
+                                        </td>
+                                        <td style="        text-align: center;">
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td style="        text-align: center;">
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.empName" />
+                                        </td>
+                                        <td style="        text-align: center;">
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.reason" />
+                                        </td>
+                                        <td style="        text-align: center;">
+                                            <input class="form-control" style="        margin: 0;
+        padding: 1px;" type="text" ng-model="search.remarks" />
+                                        </td>
+                                        <td colspan="2"></td>
                                     </tr>
                                 </thead>
-                                <tbody dir-paginate="d in rptData|itemsPerPage:10">
+                                <tbody dir-paginate="d in rptData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
                                     <tr>
+                                        <td style="        text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
                                         <td style="        text-align: center;"
                                             ng-style="
@@ -109,7 +167,7 @@
                                             {{d.releaseStatusCode}}
                                         </td>
                                         <td style="        text-align: center;">{{d.empUnqId}}</td>
-                                        <td style="        text-align: center;">{{d.empName}}</td>
+                                        <td style="        text-align: left;">{{d.empName}}</td>
                                         <td style="        text-align: left;">{{d.reason}}</td>
                                         <td style="        text-align: left;">{{d.remarks}}</td>
                                         <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
@@ -117,6 +175,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                         </div>
                     </div>
                 </div>
