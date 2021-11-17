@@ -4,9 +4,11 @@
     var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
     $(document).ready(function () {
         "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
-    }), $scope.ResetView = function () {
+    });
+    $scope.ResetView = function () {
         window.location.reload(!0);
-    }, jQuery.support.cors = !0, $scope.GetEmpInfo = function () {
+    }; jQuery.support.cors = !0;
+    $scope.GetEmpInfo = function () {
         $("#tbl_empdtl").show();
         var e_Code = $("#eCode").val();
         if ("" === e_Code) return document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Employee Code First.. </strong></div>",
@@ -28,9 +30,11 @@
                 } else 200 !== emp.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>",
                     $("#MessageBox").show());
             }, emp.send();
-    }, $scope.PopulateData = function () {
+    };
+    $scope.PopulateData = function () {
         $("#ConformModel").modal("show");
-    }, $scope.GetReleaserInfo = function () {
+    };
+    $scope.GetReleaserInfo = function () {
         $("#tbl_rlsdtl").show();
         var rls_Code = $("#Rel_Empid").val();
         if ("" === rls_Code) return document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Releaser Employee Code.. </strong></div>",
@@ -40,15 +44,19 @@
             rls.setRequestHeader("Accept", "application/json"), rls.onreadystatechange = function () {
                 if (4 === rls.readyState) for (var json2 = JSON.parse(rls.responseText), arr = json2, myArray = [], i = 0; i < arr.length; i++) {
                     var str = arr[i].releaseCode, n = str.includes("GP_");
-                    if (n === !1 && 6 === str.length) {
-                        myArray.push([]), myArray[0].releaseCode = arr[i].releaseCode, myArray[0].empUnqId = arr[i].empUnqId,
-                            myArray[0].empName = arr[i].empName, $scope.rdata = myArray, $scope.$digest();
+                    if (n === !1 && 6 === str.length && str === rls_Code) {
+                        myArray.push([]),
+                            myArray[0].releaseCode = arr[i].releaseCode,
+                            myArray[0].empUnqId = arr[i].empUnqId,
+                            myArray[0].empName = arr[i].empName,
+                            $scope.rdata = myArray, $scope.$digest();
                         break;
                     }
                 } else 200 !== rls.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>",
                     $("#MessageBox").show());
             }, rls.send();
-    }, $scope.AddReleaser = function (data) {
+    };
+    $scope.AddReleaser = function (data) {
         var tables = document.getElementById("aliasTable"), rowCounts = tables.rows.length;
         if ($scope.rdata.length > 0) for (var rls = $scope.rdata, rlscode = data, rls_Code = $("#Rel_Empid").val(), i = 0; i <= rls.length; i++) {
             var r_code = rls[i].releaseCode, r_empid = rls[i].empUnqId;
@@ -58,10 +66,12 @@
                     void $("#tbl_rlsdtl").find("tr:not(:first)").remove();
             }
         }
-    }, $scope.RemoveReleaser = function () {
+    };
+    $scope.RemoveReleaser = function () {
         var index = $scope.rlsdata.releaseStrategyLevels.indexOf($scope.rlsdata.releaseStrategyLevels.releaseStrategyLevel);
         $scope.rlsdata.releaseStrategyLevels.splice(index, 1);
-    }, $scope.CreateReleaseStrategy = function () {
+    };
+    $scope.CreateReleaseStrategy = function () {
         function storeTblValues() {
             var TableData = new Array();
             return $("#aliasTable tr").each(function (row, tr) {

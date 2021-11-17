@@ -49,7 +49,12 @@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Pending For Release</strong>
+                        <strong>In/Out Release Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('InOutInfo_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -94,6 +99,11 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='addDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:center;" ng-click="sort('relDate')">
+                                            Release Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='relDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                         <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
                                             Status
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
@@ -131,7 +141,7 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"></td>
+                                        <td colspan="3"></td>
                                         <td style="text-align:center;">
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" />
                                         </td>
@@ -154,6 +164,7 @@
                                     <tr>
                                         <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="        text-align: center;">{{d.relDate|date:"dd/MM/yyyy"}}</td>
                                         <td style="        text-align: center;"
                                             ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||

@@ -98,9 +98,35 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         };
     };
     $scope.ExitProcessGenerate = function (entity) {
+        if ((typeof (entity) === "undefined") || (typeof (entity.Mode) === "undefined")) {
+            document.getElementById("MessageBox").innerHTML =
+                "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                "<strong>Please fill all details..</strong></div>";
+            $('#MessageBox').show();
+            return false;
+        }
+        var mode = entity.Mode;
+        if (mode === "M") {
+            if ((typeof (entity.ReasonManual) === "undefined") || (typeof (entity.RelieveDateManual) === "undefined") ||
+                (typeof (entity.ResignText) === "undefined")) {
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Please fill all details.</strong></div>";
+                $('#MessageBox').show();
+                return false;
+            }
+        }
+        if (mode === "T") {
+            if ((typeof (entity.Reason) === "undefined") || (typeof (entity.RelieveDate) === "undefined")) {
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Please fill all details.</strong></div>";
+                $('#MessageBox').show();
+                return false;
+            }
+        }
         document.getElementById("btnOK").disabled = true;
         var d = new Date(); var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
-        var mode = entity.Mode;
         var reason = "", reasonOther = "", relieveDate, resignationText = "";
         jsonObj = {};
         jsonObj.EmpUnqId = $("#myEmpUnqId").val();
@@ -124,7 +150,6 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                debugger;
                 //Auto Mail Sending
                 var json = JSON.parse(xhr.responseText);
                 var maildata = [];
@@ -203,7 +228,16 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         xhr2.setRequestHeader("Content-type", "application/json");
         xhr2.onreadystatechange = function () {
             if (xhr2.readyState === 4 && xhr2.status === 200) {
-                debugger;
+                if (releaseStatusCode === 'F') {
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                        "<strong>Approved Sucesfully.. </strong></div>"; $('#MessageBox').show();
+                };
+                if (releaseStatusCode === 'R') {
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                        "<strong>Rejected Sucesfully.. </strong></div>"; $('#MessageBox').show();
+                };
                 //Auto Mail Sending
                 var empcode = $('#myEmpUnqId').val();
                 var ind = 0;
@@ -223,72 +257,67 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                 else if (rls_final === true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=HR&empUnqId=" + relsauth, true); }
                 rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
                 //Auto Mail End
-                if (releaseStatusCode === 'F') {
-                    document.getElementById("MessageBox").innerHTML =
-                        "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                        "<strong>Approved Sucesfully.. </strong></div>";
-                };
-                if (releaseStatusCode === 'R') {
-                    document.getElementById("MessageBox").innerHTML =
-                        "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                        "<strong>Rejected Sucesfully.. </strong></div>";
-                }; $('#MessageBox').show();
                 $scope.GetExitProcessList();
             } else {
                 if (releaseStatusCode === 'F') {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                        "<strong>Not Approved .. </strong></div>";
+                        "<strong>Not Approved .. </strong></div>"; $('#MessageBox').show();
                 };
                 if (releaseStatusCode === 'R') {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                        "<strong>Not Rejected .. </strong></div>";
-                }; $('#MessageBox').show();
+                        "<strong>Not Rejected .. </strong></div>"; $('#MessageBox').show();
+                };
                 $scope.GetExitProcessList();
             };
         }; xhr2.send(jsonObj);
     };      //Update Release Status Approve / Reject
     $scope.GetEmpResignation = function (eid) {
         var ecode;
-        if ((typeof (eid) === "undefined")) {
-            ecode = $("#myEmpUnqId").val();
-        } else {
-            ecode = eid;
-        }
+        if ((typeof (eid) === "undefined")) { ecode = $("#myEmpUnqId").val(); } else { ecode = eid; }
         res = new XMLHttpRequest;
         res.open("GET", $scope._Conpath + "EmpSeparation/GetResignation?empunqid=" + ecode, !0);
         res.setRequestHeader("Accept", "application/json");
         res.onreadystatechange = function () {
             if (4 === res.readyState) {
                 var json = JSON.parse(res.responseText);
-                var arr = new Array(); arr[0] = json;
+                var arr = new Array(); arr = json;
                 var cnt = 0, myArray = [];
                 for (var i = 0; i < arr.length; i++) {
                     var emp = new Array();
                     emp = arr[i].employee;
-                    myArray.push([]);
-                    myArray[cnt].id = arr[i].id;
-                    myArray[cnt].empUnqId = arr[i].empUnqId;
-                    myArray[cnt].applicationDate = arr[i].applicationDate;
-                    myArray[cnt].mode = arr[i].mode;
-                    myArray[cnt].reason = arr[i].reason;
-                    myArray[cnt].reasonOther = arr[i].reasonOther;
-                    myArray[cnt].relieveDate = arr[i].relieveDate;
-                    myArray[cnt].resignText = arr[i].resignText;
-                    myArray[cnt].releaseStatusCode = arr[i].releaseStatusCode;
-                    myArray[cnt].releaseStatus = arr[i].releaseStatus;
-                    myArray[cnt].statusHr = arr[i].statusHr;
-                    myArray[cnt].empName = emp.empName;
-                    myArray[cnt].deptName = emp.deptName;
-                    myArray[cnt].statName = emp.statName;
-                    myArray[cnt].gradeName = emp.gradeName;
-                    myArray[cnt].desgName = emp.desgName;
-                    myArray[cnt].joinDate = emp.joinDate;
-                    cnt++;
+                    var s = arr[i].releaseStatusCode;
+                    if (s !== "R") {
+                        myArray.push([]);
+                        myArray[cnt].id = arr[i].id;
+                        myArray[cnt].empUnqId = arr[i].empUnqId;
+                        myArray[cnt].applicationDate = arr[i].applicationDate;
+                        myArray[cnt].mode = arr[i].mode;
+                        myArray[cnt].reason = arr[i].reason;
+                        myArray[cnt].reasonOther = arr[i].reasonOther;
+                        myArray[cnt].relieveDate = arr[i].relieveDate;
+                        myArray[cnt].resignText = arr[i].resignText;
+                        myArray[cnt].releaseStatusCode = arr[i].releaseStatusCode;
+                        myArray[cnt].releaseStatus = arr[i].releaseStatus;
+                        myArray[cnt].statusHr = arr[i].statusHr;
+                        myArray[cnt].empName = emp.empName;
+                        myArray[cnt].deptName = emp.deptName;
+                        myArray[cnt].statName = emp.statName;
+                        myArray[cnt].gradeName = emp.gradeName;
+                        myArray[cnt].desgName = emp.desgName;
+                        myArray[cnt].joinDate = emp.joinDate;
+                        myArray[cnt].applReleaseStatus = arr[i].applReleaseStatus;
+                        myArray[cnt].furtherReleaser = arr[i].furtherReleaser;
+                        myArray[cnt].furtherReleaserName = arr[i].furtherReleaserName;
+                        myArray[cnt].furtherReleaseStatusCode = arr[i].furtherReleaseStatusCode;
+                        myArray[cnt].furtherReleaseDate = arr[i].furtherReleaseDate;
+                        cnt++;
+                    }
+
                 }
                 $scope.resData = myArray;
-                $("#hidMode").val(myArray[0].mode);
+                //$("#hidMode").val(myArray[0].mode);
                 $scope.$digest();
             };
         }; res.send();
@@ -310,15 +339,21 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
             return false;
         };
         rsg = new XMLHttpRequest;
-        rsg.open("GET", $scope._Conpath + "EmpSeparation/Getrsgignation?fromDt=" + FromDate + "&toDt=" + ToDate, true);
+        rsg.open("GET", $scope._Conpath + "EmpSeparation/GetResignations?fromDt=" + FromDate + "&toDt=" + ToDate, true);
         rsg.setRequestHeader("Accept", "application/json");
         rsg.onreadystatechange = function () {
-            if (4 === rsg.readyState) {
+            if (4 === rsg.readyState && rsg.status === 200) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
-
                 var json = JSON.parse(rsg.responseText);
                 $scope.rsgData = json;
                 $scope.$digest();
+            } else if (rsg.status === 400 || rsg.status === 403 || rsg.status === 404 || rsg.status === 408 || rsg.status === 500) {
+                $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+                var str = rsg.responseText.replace("[", '').replace("]", '').toString(); var fields = str.split(','); var er = "";
+                for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
+                    "</strong></div>"; $('#MessageBox').show();
             };
         }; rsg.send();
     };
@@ -334,10 +369,15 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
             };
         }; rhr.send();
     };
-    $scope.PopUpData = function () { var mode = $("#hidMode").val(); if (mode === "M") { $("#manualModel").modal("show"); }; if (mode === "T") { $("#templateModel").modal("show"); }; };
-    $scope.PopulateData = function (empid, mode) { if (mode === "M") { $("#manualModel").modal("show"); }; if (mode === "T") { $("#templateModel").modal("show"); }; $scope.GetEmpResignation(empid); };
-    $scope.HrRelease = function (id, empUnqID) {
-        var xhr3 = new XMLHttpRequest(); xhr3.open("PUT", $scope._Conpath + "EmpSeparation/HrRelease?id=" + id + "&empUnqId=" + empUnqID, true);
+    $scope.PopUpData = function (mode, id) {
+        var mode = mode; if (mode === "M") { $("#manualModel").modal("show"); }; if (mode === "T") { $("#templateModel").modal("show"); };
+    };
+    $scope.PopulateData = function (empid, mode) {
+        if (mode === "M") { $("#manualModel").modal("show"); }; if (mode === "T") { $("#templateModel").modal("show"); };
+        $scope.GetEmpResignation(empid);
+    };
+    $scope.HrRelease = function (id) {
+        var xhr3 = new XMLHttpRequest(); xhr3.open("PUT", $scope._Conpath + "EmpSeparation/HrRelease?id=" + id + "&empUnqId=" + $("#myEmpUnqId").val(), true);
         xhr3.setRequestHeader("Content-type", "application/json"); xhr3.onreadystatechange = function () {
             if (xhr3.readyState === 4 && xhr3.status === 200) {
                 $scope.GetResignationHr();

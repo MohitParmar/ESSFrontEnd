@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "MissPunchHR";
+    ViewBag.Title = "In/Out Punch Entry";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -62,26 +62,53 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <table class="table" id="tbl_empdtl">
-                                                                <tbody dir-paginate="e in empdata|itemsPerPage:5">
+                                                            <table>
+                                                                <tbody>
                                                                     <tr>
-                                                                        <td style="text-align:left;">
-                                                                            <label>Emp.Name : {{e.empName}}</label>
-                                                                        </td>
-                                                                        <td style="text-align:left;">
-                                                                            <label>Station : {{e.statName}}</label>
+                                                                        <td>
+                                                                            <table class="table-condensed" id="tbl_empdtl">
+                                                                                <tbody dir-paginate="e in empdata|itemsPerPage:1">
+                                                                                    <tr>
+                                                                                        <td style="text-align:left;">
+                                                                                            <label>Emp.Name : {{e.empName}}</label>
+                                                                                        </td>
+                                                                                        <td style="text-align:left;">
+                                                                                            <label>Station : {{e.statName}}</label>
+                                                                                        </td>
+                                                                                        <td style="text-align:left;">
+                                                                                            <label>Designation : {{e.desgName}}</label>
+                                                                                        </td>
+                                                                                        <td style="text-align:left;">
+                                                                                            <label>D.O.J. : {{e.joinDate|date:"dd/MM/yyyy"}}</label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style="text-align:left;">
-                                                                            <label>Designation : {{e.desgName}}</label>
-                                                                        </td>
-                                                                        <td style="text-align:left;">
-                                                                            <label>D.O.J. : {{e.joinDate|date:"dd/MM/yyyy"}}</label>
+                                                                        <td colspan="2">
+                                                                            <table class="table-condensed" id="tbl_empblkdtl">
+                                                                                <tbody dir-paginate="d in blockData|itemsPerPage:1" style="color:red;">
+                                                                                    <tr>
+                                                                                        <td style="text-align: left;">
+                                                                                            <label class="text-uppercase">Punching Blocked : </label>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="checkbox" ng-checked="{{d.punchingBlocked}}" disabled="disabled">
+                                                                                        </td>
+                                                                                        <td style="text-align: left;">
+                                                                                            <label class="text-uppercase">Block Date : {{d.blockDt| date:'dd/MM/yyyy HH:mm'}}</label>
+                                                                                        </td>
+                                                                                        <td style="text-align: left;">
+                                                                                            <label class="text-uppercase">Block Remark : {{d.blockRemark}}</label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
-
                                                             </table>
                                                         </td>
                                                     </tr>
@@ -104,7 +131,8 @@
                                             Select Date Time (Optional)
                                         </td>
                                         <td>
-                                            <input class="form-control" type="datetime-local" id="time" ng-model="N.time" placeholder="Select Date Time" required>
+                                            <input class="form-control" type="datetime-local" id="time" ng-model="N.time" placeholder="Select Date Time" ng-change="ToValidate(N)"
+                                                   required>
                                         </td>
                                     </tr>
                                     <tr>
@@ -113,14 +141,15 @@
                                         </td>
                                         <td>
                                             <select class="form-control" id="cmbReason" ng-model="N.Reason" required>
-                                                <option class="1">Card Lost</option>
-                                                <option class="2">Card Lock</option>
-                                                <option class="3">Card Not Working</option>
-                                                <option class="4">Forget Punch</option>
-                                                <option class="5">Machine Not Working</option>
-                                                <option class="6">Visit to OHC</option>
-                                                <option class="7">New Joinee</option>
-                                                <option class="8">Other Reason</option>
+                                                <option value="Card Lost">Card Lost</option>
+                                                <option value="Card Not Working">Card Not Working</option>
+                                                <option value="Forget Card">Forget Card</option>
+                                                <option value="Forget to Punch/Mis Punch">Forget to Punch/Mis Punch</option>
+                                                <option value="Machine Not Working">Machine Not Working</option>
+                                                <option value="Visit to OHC">Visit to OHC</option>
+                                                <option value="New Joinee">New Joinee</option>
+                                                <option value="Company Accomodation">Company Accomodation</option>
+                                                <option value="Other">Other</option>
                                             </select>
                                         </td>
                                     </tr>

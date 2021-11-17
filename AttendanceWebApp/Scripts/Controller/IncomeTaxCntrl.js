@@ -228,7 +228,6 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                 var lockEntry = false;
                 if ($scope.taxdata.length > 0) {
                     for (var d = 0; d < $scope.taxdata.length; d++) {
-                        debugger;
                         var taxdeclarationactualflag = $scope.taxdata[d].actualFlag;
                         rentDetails = $scope.taxdata[d].rentDetails;
                         ppfDetails = $scope.taxdata[d].ppfDetails;
@@ -1596,7 +1595,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                         dtEnd = new Date(dtEnd); dtEnd = dtEnd.getDate() + '.' + (dtEnd.getMonth() + 1) + '.' + dtEnd.getFullYear();
                         for (var i = 0; i < it.length; i++) {
                             myArray.push([]);
-                            myArray[i]["Actual"] = it[i].actualFlag; myArray[i]["TaxRegime"] = it[i].taxRegime; myArray[i]["SapID"] = it[i].sapId;
+                            myArray[i]["Actual"] = it[i].actualFlag; myArray[i]["TaxRegime"] = it[i].taxRegime; myArray[i]["SapID"] = it[i].empUnqId;
                             myArray[i]["Name"] = it[i].empName; myArray[i]["StartDate"] = dtStart; myArray[i]["EndDate"] = dtEnd;
                             //LIC
                             myArray[i]["LIC_Code"] = it[i].insCode; myArray[i]["LIC_Pro"] = it[i].insPro; myArray[i]["LIC_Act"] = it[i].insAct;
@@ -1622,24 +1621,24 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             myArray[i]["TermDeposit_Code"] = it[i].termDepoCode; myArray[i]["TermDeposit_Pro"] = it[i].termDepoPro; myArray[i]["TermDeposit_Act"] = it[i].termDepoAct;
                             myArray[i]["b_1"] = "";
                             //Calculation of 80 c for finance Personal Use
-                            myArray[i]["CodeNo"] = it[i].sapId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0;
+                            myArray[i]["CodeNo"] = it[i].empUnqId; myArray[i]["EmpName"] = it[i].empName; myArray[i]["Total80C"] = it[i].total80C; myArray[i]["Provisional"] = 0;
                             myArray[i]["Total"] = 0; myArray[i]["Diff"] = 0; myArray[i]["b_2"] = "";
                             //80CCF& 80d 
-                            myArray[i]["SapId_2"] = it[i].sapId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf;
+                            myArray[i]["SapId_2"] = it[i].empUnqId; myArray[i]["LongTermMutualFund"] = it[i].longTermMf;
                             myArray[i]["RajivGandhiEquity"] = it[i].rajivGandhiEquity; myArray[i]["MedicalPremiumSelf"] = it[i].medicalPremiumSelf;
                             myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents;
                             myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup;
                             myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability;
                             myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = "";
                             //Int on House Loan 
-                            myArray[i]["SapId_3"] = it[i].sapId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd;
+                            myArray[i]["SapId_3"] = it[i].empUnqId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd;
                             myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["InterestPreConstruction"] = it[i].interestPreConstruction;
                             myArray[i]["NationalRent"] = it[i].rentReceived; myArray[i]["Net"] = "";
                             var bname = it[i].bankName; if (bname === null) { myArray[i]["BankName"] = ""; } else { myArray[i]["BankName"] = it[i].bankName.replace(/(\r\n|\n|\r)/gm, ""); };
                             var bpan = it[i].bankPan; if (bpan === null) { myArray[i]["PANNO"] = ""; } else { myArray[i]["PANNO"] = it[i].bankPan; };
                             if (myArray[i]["PANNO"] === "") { myArray[i]["Others"] = ""; } else { myArray[i]["Others"] = "(c)"; }; myArray[i]["b_4"] = "";
                             //Int on House Loan 2
-                            myArray[i]["SapId_4"] = it[i].sapId; myArray[i]["StartDate_3"] = dtStart; myArray[i]["EndDate_3"] = dtEnd;
+                            myArray[i]["SapId_4"] = it[i].empUnqId; myArray[i]["StartDate_3"] = dtStart; myArray[i]["EndDate_3"] = dtEnd;
                             myArray[i]["InterestOnLoan2"] = it[i].interestOnLoan2; myArray[i]["InterestPreConstruction2"] = it[i].interestPreConstruction2;
                             myArray[i]["NationalRent2"] = it[i].rentReceived2; myArray[i]["Net2"] = "";
                             var bname2 = it[i].bankName2; if (bname2 === null) { myArray[i]["BankName2"] = ""; } else { myArray[i]["BankName2"] = it[i].bankName2.replace(/(\r\n|\n|\r)/gm, ""); };
@@ -1647,7 +1646,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             if (myArray[i]["PANNO2"] === "") { myArray[i]["Others2"] = ""; } else { myArray[i]["Others2"] = "(c)"; };
                             myArray[i]["b_5"] = "";
                             //HRA
-                            myArray[i]["SapId_1"] = it[i].sapId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd;
+                            myArray[i]["SapId_1"] = it[i].empUnqId; myArray[i]["StartDate_1"] = dtStart; myArray[i]["EndDate_1"] = dtEnd;
                             myArray[i]["Acco_Type"] = it[i].accomodationType; myArray[i]["CityCategory"] = "";
                             if ($scope.configdata.actualFlag === "true" || $scope.configdata.actualFlag === true) {
                                 myArray[i]["RentPerMonth"] = it[i].rentPaidAprilAct; myArray[i]["RentPaid"] = it[i].rentPaidAct;
@@ -1655,7 +1654,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             myArray[i]["HRA_Exempted"] = "X"; myArray[i]["LandLordName"] = it[i].landLordName; myArray[i]["LandLordPan"] = it[i].landLordPan;
                             myArray[i]["LockEntry"] = it[i].lockEntry;
                         };
-                        $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'sapId'); $scope.ITDInfo = $scope.itddata; $scope.$digest();
+                        $scope.itddata = myArray; $scope.itddata = $filter('orderBy')($scope.itddata, 'empUnqId'); $scope.ITDInfo = $scope.itddata; $scope.$digest();
                         $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                     };
                 }; itd.send();

@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "SanctionTPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/TPACntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="TPAController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>Sanction TPA Employees List:</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>
+                                                Select Date Range to Sanction TPA:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>
+                                                From Date:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="fromDt" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>
+                                                To Date:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="toDt" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button id="btnSearch" class="btn btn-primary form-control" ng-click="GetPostTpa()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tblTPAData">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Date</th>
+                                                <th style="text-align:center;">Emp. Code</th>
+                                                <th style="text-align:left;">Emp. Name</th>
+                                                <th style="text-align:center;">Shift</th>
+                                                <th style="text-align:right;">Required Hours</th>
+                                                <th style="text-align:left;">Pre Approved Justification</th>
+                                                <th style="text-align:left;">Attend Shift</th>
+                                                <th style="text-align:center;">Work Hours</th>
+                                                <th style="text-align:left;">IN</th>
+                                                <th style="text-align:left;">OUT</th>
+                                                <th style="text-align:left;">Calc. TPA Hours</th>
+                                                <th style="text-align:left;">Sanction TPA</th>
+                                                <th style="text-align:left;">Justification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="d in gptData">
+                                            <tr>
+                                                <td style="text-align:center;">{{d.tpaDate|date:'yyyy/MM/dd'}}</td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:center;">{{d.tpaShiftCode}}</td>
+                                                <td style="text-align:right;">{{d.requiredHours}}</td>
+                                                <td style="text-align:left;">{{d.preJustification}}</td>
+                                                <td style="text-align:center;">{{d.actShiftCode}}</td>
+                                                <td style="text-align:center;">{{d.wrkHours}}</td>
+                                                <td style="text-align:left;">{{d.consIn|date:'dd/MM/yyyy HH:mm'}}</td>
+                                                <td style="text-align:left;">{{d.consOut|date:'dd/MM/yyyy HH:mm'}}</td>
+                                                <td style="text-align:left;">{{d.calcOverTime}}</td>
+                                                <td style="text-align:left;">
+                                                    <input type="number" class="form-control" id="txtSanctionTPA" value="{{d.calcOverTime}}" />
+                                                </td>
+                                                <td style="text-align:left;"><input type="text" class="form-control" id="txtPostJustification" /></td>
+                                                <td hidden="hidden">{{d.id}}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="15">
+                                                    <button type="submit" id="btnOK" class="btn btn-success" ng-click="SanctionTpa()"><i class="fa fa-save"></i> Save & Submit</button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

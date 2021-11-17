@@ -8,10 +8,37 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
     $scope.EmpeMail = function (data) { var xhr3 = new XMLHttpRequest; xhr3.open("POST", $scope._Conpath + "Employee/updateemail?empunqid=" + $("#myEmpUnqId").val() + "&email=" + data.eMailID, !0), xhr3.setRequestHeader("Content-type", "application/json"), xhr3.onreadystatechange = function () { 4 === xhr3.readyState && 200 === xhr3.status ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Email ID Saved Sucesfully..</strong></div>", $("#MessageBox").show(), document.getElementById("eMailID").value = "", $("#tbl_empdtl").hide(), $scope.GetUserInfo()) : (400 === xhr3.status || 500 === xhr3.status) && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Emails ID Not Saved..</strong></div>", $("#MessageBox").show(), document.getElementById("eMailID").value = "", $("#tbl_empdtl").hide()) }, xhr3.send() };
     $scope.GetUserInfo = function () {
         var e_Code = $("#eCode").val(), xhr = new XMLHttpRequest;
-        "" !== e_Code && "undefined" != typeof e_Code ? xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + e_Code, !0) : xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0), xhr.setRequestHeader("Accept", "application/json"), xhr.onreadystatechange = function () { if (4 === xhr.readyState) { var json = JSON.parse(xhr.responseText); $scope.Udata = json, $scope.$digest(), "" !== e_Code && "undefined" != typeof e_Code && ($scope.GetUserPerasonalInfo(), $scope.GetUserFamInfo()) } }, xhr.send()
+        "" !== e_Code && "undefined" != typeof e_Code ?
+            xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + e_Code, !0) :
+            xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0), xhr.setRequestHeader("Accept", "application/json"), xhr.onreadystatechange = function () {
+                if (4 === xhr.readyState) {
+                    var json = JSON.parse(xhr.responseText);
+                    $scope.Udata = json, $scope.$digest(), "" !== e_Code && "undefined" != typeof e_Code && ($scope.GetUserPerasonalInfo(), $scope.GetUserFamInfo())
+                }
+            }; xhr.send();
     };
-    $scope.GetUserPerasonalInfo = function () { var e_Code = $("#eCode").val(), per = new XMLHttpRequest; "" !== e_Code && "undefined" != typeof e_Code ? per.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + e_Code + "&mode=1", !0) : per.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + $("#myEmpUnqId").val() + "&mode=1", !0), per.setRequestHeader("Accept", "application/json"), per.onreadystatechange = function () { if (4 === per.readyState) { var json = JSON.parse(per.responseText); $scope.Uperdata = json, $scope.$digest() } }, per.send() };
-    $scope.GetUserFamInfo = function () { var e_Code = $("#eCode").val(), fam = new XMLHttpRequest; "" !== e_Code && "undefined" != typeof e_Code ? fam.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + e_Code + "&mode=3", !0) : fam.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + $("#myEmpUnqId").val() + "&mode=3", !0), fam.setRequestHeader("Accept", "application/json"), fam.onreadystatechange = function () { if (4 === fam.readyState) { var jsonfam = JSON.parse(fam.responseText); $scope.Ufamdata = jsonfam, $scope.$digest() } }, fam.send() };
+    $scope.GetUserPerasonalInfo = function () {
+        var e_Code = $("#eCode").val(), per = new XMLHttpRequest;
+        "" !== e_Code && "undefined" != typeof e_Code ?
+            per.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + e_Code + "&mode=1", !0) :
+            per.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + $("#myEmpUnqId").val() + "&mode=1", !0),
+            per.setRequestHeader("Accept", "application/json"), per.onreadystatechange = function () {
+                if (4 === per.readyState) {
+                    var json = JSON.parse(per.responseText); $scope.Uperdata = json, $scope.$digest()
+                }
+            }, per.send();
+    };
+    $scope.GetUserFamInfo = function () {
+        var e_Code = $("#eCode").val(), fam = new XMLHttpRequest;
+        "" !== e_Code && "undefined" != typeof e_Code ?
+            fam.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + e_Code + "&mode=3", !0) :
+            fam.open("GET", $scope._Conpath + "Employee/GetEmpDetails?empunqid=" + $("#myEmpUnqId").val() + "&mode=3", !0),
+            fam.setRequestHeader("Accept", "application/json"), fam.onreadystatechange = function () {
+                if (4 === fam.readyState) {
+                    var jsonfam = JSON.parse(fam.responseText); $scope.Ufamdata = jsonfam, $scope.$digest()
+                }
+            }, fam.send();
+    };
     $scope.GetEmpInfo = function () {
         $("#tbl_empdtl").show();
         var e_Code = $("#eCode").val();

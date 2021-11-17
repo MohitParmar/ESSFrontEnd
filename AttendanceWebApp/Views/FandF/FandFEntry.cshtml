@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "FandFEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/FandFCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp">
+    <div ng-controller="FullandFinalController">
+        <div class="container-fluid">
+            <input type="hidden" value="ND" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Full and Final : Entry</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Employee Code:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="eCode" ng-model="N.empUnqId" ng-change="GetFandF(N.empUnqId)" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" id="empName" style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Designation:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="designation" style="text-transform: uppercase;" disabled />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Station:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="station" style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Joining Date:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="joinDate" style="text-transform: uppercase;" disabled />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Relieving Date:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="relieveDate" style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Reason for Leave:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="mode" style="text-transform: uppercase;" disabled />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Gratuity:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="gratuity" style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Document No.:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="documentNo" ng-model="N.documentNo" style="text-transform: uppercase;" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Recovery Amount:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="recoveryAmount" ng-model="N.recoveryAmount"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Cash Deposited:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" id="cashDeposited" ng-model="N.cashDeposited" style="text-transform: uppercase;" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Deposit Date:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="date" id="depositDate" ng-model="N.depositDate" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Remarks:</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" id="remarks" ng-model="N.remarks" style="text-transform: uppercase;" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button type="submit" id="btnSubmit" ng-click="UpdateFandF(N)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Update</button>
+                                    <button type="reset" id="btnReset" ng-click="ResetView()" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp; Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

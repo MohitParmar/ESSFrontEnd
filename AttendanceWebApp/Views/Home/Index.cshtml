@@ -24,7 +24,7 @@
             var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
             var sPass = "@Session["Pass"].ToString()";
             var sWrkgrp = "@Session["WrkGrp"]";
-            if (sEmpUnqId === sPass && sWrkgrp === "COMP") { $('#myModal').modal('show'); };
+            if (sEmpUnqId === sPass && (sWrkgrp === "COMP" || sWrkgrp === "OUTSOURCE" )) { $('#myModal').modal('show'); };
         });
 </script>
 <script>

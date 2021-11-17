@@ -6,6 +6,6 @@ namespace AttendanceWebApp.Controllers
     {
         public ActionResult AuthorizationError() => View();
 
-        public ActionResult UnderMaintainance => View();
+        public ActionResult UnderMaintainance() => View();
     }
 }

@@ -72,36 +72,19 @@
                                     <th style="        text-align: center;">Last Date of Working</th>
                                     <th style="        text-align: center;">Mode of Leaving</th>
                                     <th style="        text-align: center;">Exit interview</th>
+                                    <th style="        text-align: center;">Remarks</th>
                                     <th style="        text-align: center;">Action</th>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.empUnqId" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.empName" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.deptName" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.statName" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.catName" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.gradeName" />
-                                    </td>
-                                    <td colspan="9"></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.empUnqId" /></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.empName" /></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.deptName" /></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.statName" /></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.catName" /></td>
+                                    <td><input class="form-control" style="        margin: 0;padding: 1px;" type="text" ng-model="search.gradeName" /></td>
+                                    <td colspan="10"></td>
                                 </tr>
-                                <tr dir-paginate="d in gndData|itemsPerPage:5">
+                                <tr dir-paginate="d in gndData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
                                     <td style="        text-align: center;">{{d.empUnqId}}</td>
                                     <td style="        text-align: left;">{{d.empName}}</td>
                                     <td style="        text-align: left;">{{d.deptName}}</td>
@@ -115,20 +98,19 @@
                                     <td style="        text-align: center;">{{d.noticePeriodUnit}}</td>
                                     <td style="        text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
                                     <td style="        text-align: center;">{{d.modeOfLeaving}}</td>
-                                    <td style="        text-align: center;">
-                                        <input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled>
-                                    </td>
-                                    <td style="        text-align: center;
-        width: 105px;">
+                                    <td style="        text-align: center;"><input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled></td>
+                                    <td style="        text-align: center;"><input class="form-control" type="text" id="Remarks" ng-model="N.Remarks"></td>
+                                    <td style="        text-align: center;width: 105px;">
                                         <button class="btn btn-info" id="btnDetails" ng-click="PopulateData({{d.empUnqId}},false)">
                                             <i class="fa fa-info-circle"></i>
                                         </button>
-                                        <button class="btn btn-success" id="btnApprove" ng-click="ChangeNoDues(false,'',{{d.empUnqId}})">
+                                        <button class="btn btn-success" id="btnApprove" ng-click="ChangeNoDues(false,'',{{d.empUnqId}},N)">
                                             <i class="fa fa-check"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                         </div>
                     </div>
                 </div>
@@ -160,14 +142,6 @@
                                             <td><input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="        text-align: right;" /></td>
                                         </tr>
                                     </table>
-                                    @*<table id="itTable" class="table table-bordered" aria-hidden="True">
-                                        <tr>
-                                            <th style="text-align: center;">Type</th>
-                                            <th style="text-align: center;">Product</th>
-                                            <th style="text-align: center;">Name</th>
-                                            <th style="text-align: center;">Cost</th>
-                                        </tr>
-                                    </table>*@
                                 </div>
                             </div>
                         </div>

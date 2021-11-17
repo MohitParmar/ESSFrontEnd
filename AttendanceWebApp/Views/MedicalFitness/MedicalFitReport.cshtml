@@ -135,6 +135,11 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='Desg'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align: center;" ng-click="sort('Grade')">
+                                            Grade
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Grade'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                         <th style="text-align: center;" ng-click="sort('CardBlockedOn')">
                                             Card Blocked On
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='CardBlockedOn'"
@@ -171,6 +176,7 @@
                                         <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Stat" /></td>
                                         <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Cat" /></td>
                                         <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Desg" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Grade" /></td>
                                         <td></td>
                                         <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.CardBlockedDays" /></td>
                                         <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.CardBlockedReason" /></td>
@@ -189,6 +195,7 @@
                                         <td style="text-align: left;">{{d.Stat}}</td>
                                         <td style="text-align: left;">{{d.Cat}}</td>
                                         <td style="text-align: left;">{{d.Desg}}</td>
+                                        <td style="text-align: left;">{{d.Grade}}</td>
                                         <td style="text-align: center;">{{d.CardBlockedOn | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align: right;">{{d.CardBlockedDays}}</td>
                                         <td style="text-align: left;">{{d.CardBlockedReason}}</td>

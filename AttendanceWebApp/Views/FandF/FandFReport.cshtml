@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "FandFReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Controller/FandFCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<script>
+    window.onload = function () { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); } if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); } $('#FromDt').val(firstDay); $('#ToDt').val(lastDay); }
+</script>
+
+<div ng-app="myApp">
+    <div ng-controller="FullandFinalController">
+        <div class="container-fluid">
+            <input type="hidden" value="ND" id="releaseGroupCode" />
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Full and Final</strong>
+                            <div style="float:right;">
+                                <a style="float: right;" href="#" ng-click="exportAllData('FullandFinal')">
+                                    <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label>Select From Date : </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd"
+                                               datepicker>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Select To Date : </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" ng-change="ToValidate()"
+                                               datepicker>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="FandFReport(New)">
+                                        <i class="fa fa-search"></i>
+                                        &nbsp;Search
+                                    </button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                </div>
+                            </div>
+
+                            <div ng-init="FandFReport()" class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Sr No.</th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                                Employee Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">Designation</th>
+                                            <th style="text-align:center;">Department</th>
+                                            <th style="text-align:center;">Joining Date</th>
+                                            <th style="text-align:center;">Relieve Date</th>
+                                            <th style="text-align:center;">Reason</th>
+                                            <th style="text-align:center;">Document No</th>
+                                            <th style="text-align:center;">Recovery Amount</th>
+                                            <th style="text-align:center;">Cash Deposited</th>
+                                            <th style="text-align:center;">Deposit Date</th>
+                                            <th style="text-align:center;">Remarks</th>
+                                            <th style="text-align:center;">Gratuity</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EMP_CODE" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EMP_NAME" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DESG" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DEPT" /></td>
+                                            <td colspan="2"></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.REASON" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DOC_NO" /></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.RECOVERY_AMT" /></td>
+                                            <td colspan="3"></td>
+                                            <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.GRATUITY_ELG" /></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in fafdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;">{{d.EMP_CODE}}</td>
+                                            <td style="text-align:center;">{{d.EMP_NAME}}</td>
+                                            <td style="text-align:center;">{{d.DESG}}</td>
+                                            <td style="text-align:center;">{{d.DEPT}}</td>
+                                            <td style="text-align:center;">{{d.JOINING_DT| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.RELIEVE_DT| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.REASON}}</td>
+                                            <td style="text-align:center;">{{d.DOC_NO}}</td>
+                                            <td style="text-align:center;">{{d.RECOVERY_AMT}}</td>
+                                            <td style="text-align:center;">{{d.CASH_DEPOSIT}}</td>
+                                            <td style="text-align:center;">{{d.DEPOSIT_DT| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.REMARKS}}</td>
+                                            <td style="text-align:center;">{{d.GRATUITY_ELG}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

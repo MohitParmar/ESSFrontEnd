@@ -25,6 +25,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">App.Date</th>
+                                                <th style="text-align:center;">Status</th>
                                                 <th style="text-align:center;">SAPID</th>
                                                 <th style="text-align:center;">Emp.Name</th>
                                                 <th style="text-align:center;">Mode of Apply</th>
@@ -36,8 +37,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="d in resData|orderBy:sortKey:reverse|filter:search|itemsPerPage:1">
+                                            <tr dir-paginate="d in resData|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
                                                 <td style="text-align:center;">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;" ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                                    {{d.releaseStatusCode}}
+                                                </td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
                                                 <td style="text-align:center;">{{d.mode}}</td>
@@ -46,7 +53,9 @@
                                                 <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:left;">{{d.resignText}}</td>
                                                 <td>
-                                                    <button class="btn btn-info" id="btnInfo" ng-click="PopUpData({{d.mode}})">
+                                                    <button class="btn btn-info" id="btnInfo"
+                                                            ng-show="d.releaseStatusCode == 'F'"
+                                                            ng-click="PopUpData('{{d.mode}}',{{d.id}})">
                                                         <i class="fa fa-info"></i>
                                                     </button>
                                                 </td>

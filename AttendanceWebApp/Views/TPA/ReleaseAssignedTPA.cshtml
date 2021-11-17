@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "ReleaseAssignedTPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/TPACntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="TPAController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>TPA Employees List:</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive" ng-init="GetPreRequestedList()">
+                                    <table class="table table-bordered" id="tblTPAData">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;" ng-click="sort('tpaDate')">
+                                                    Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='tpaDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                    Emp. Code
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('empName')">
+                                                    Emp. Name
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('statName')">
+                                                    Station
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('catName')">
+                                                    Category
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('desgName')">
+                                                    Designation
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('tpaShiftCode')">
+                                                    Shift
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='tpaShiftCode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:right;" ng-click="sort('requiredHours')">
+                                                    Required Hours
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='requiredHours'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('preJustification')">
+                                                    Justification
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='preJustification'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;">Release</th>
+                                                <th style="text-align:left;">Remarks</th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empUnqId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.statName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.catName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.desgName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.tpaShiftCode" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.requiredHours" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.preJustification" />
+                                                </td>
+                                                <td colspan="3"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="d in preData|orderBy:sortKey:reverse|filter:search">
+                                            <tr>
+                                                <td style="text-align:center;">{{d.tpaDate|date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:left;">{{d.statName}}</td>
+                                                <td style="text-align:left;">{{d.catName}}</td>
+                                                <td style="text-align:left;">{{d.desgName}}</td>
+                                                <td style="text-align:center;">{{d.tpaShiftCode}}</td>
+                                                <td style="text-align:right;">{{d.requiredHours}}</td>
+                                                <td style="text-align:left;">{{d.preJustification}}</td>
+                                                <td style="text-align:center;">
+                                                    <input type="checkbox" id="chkApproved" checked />
+                                                </td>
+                                                <td style="text-align:left;">
+                                                    <input type="text" class="form-control" id="txtRemarks" />
+                                                </td>
+                                                <td hidden="hidden">{{d.id}}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="12">
+                                                    <button type="submit" id="btnOK" class="btn btn-success" ng-click="PreApproval()"><i class="fa fa-save"></i> Pre Approved</button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

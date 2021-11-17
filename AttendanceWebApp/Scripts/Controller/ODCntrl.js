@@ -57,15 +57,39 @@ app.controller("ODController", function ($scope, $http) {
                         $("#MessageBox").show(), !1) : !0);
         };
     $scope.CreateOD = function (entity) {
-        function storeTblValues() { var TableData = new Array(); return TableData[0] = { yearMonth: yearmonth, leaveAppId: 0, compCode: $("#myCompCode").val(), wrkGrp: $("#myWrkGrp").val(), leaveAppItem: "1", leaveTypeCode: "OD", fromDt: FromDateTime, toDt: ToDateTime, totalDays: TotalDays, halfdayflag: HalfDayFlag, remarks: "", placeOfVisit: entity.Place, contactAddress: entity.Details }; jsonObj.yearMonth = yearmonth, jsonObj.leaveAppId = 0, jsonObj.empUnqId = $("#myEmpUnqId").val(), jsonObj.compCode = $("#myCompCode").val(), jsonObj.wrkGrp = $("#myWrkGrp").val(), jsonObj.unitCode = $("#myUnitCode").val(), jsonObj.deptCode = $("#myDeptCode").val(), jsonObj.statCode = $("#myStatCode").val(), jsonObj.catCode = $("#myCatCode").val(), jsonObj.isHOD = $("#myIsHod").val(), jsonObj.releaseGroupCode = "OD", jsonObj.releaseStrategy = "", jsonObj.releaseStatusCode = "", jsonObj.addDt = dt, jsonObj.addUser = $("#myEmpUnqId").val(), jsonObj.clientIp = $("#myIPAddress").val(), jsonObj.updDt = dt, jsonObj.updUser = null, jsonObj.remarks = null, jsonObj.parentId = 0, jsonObj.leaveApplicationDetails = TableData, jsonObj; }
         document.getElementById("BtnSave").disabled = !0;
-        var d = new Date(), dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes(), year = d.getFullYear().toString(), month = d.getMonth() + 1, yearmonth = year + month.toString(), FromDateTime = entity.FromDt + " " + (entity.FromTm || "00:00:00"), chkTo = document.getElementById("ToDt").value, ToDateTime = chkTo + " " + (entity.ToTm || "00:00:00"), TotalDays = "", HalfDayFlag = !1;
-        $("#HalfFlag").prop("checked") === !0 ? (HalfDayFlag = !0, TotalDays = "0.5") : (HalfDayFlag = !1,
-            TotalDays = $("#TotalDays").val());
+        var d = new Date(),
+            dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes(),
+            year = d.getFullYear().toString(),
+            month = d.getMonth() + 1,
+            yearmonth = year + month.toString(),
+            FromDateTime = entity.FromDt + " " + (entity.FromTm || "00:00:00"),
+            chkTo = document.getElementById("ToDt").value,
+            ToDateTime = chkTo + " " + (entity.ToTm || "00:00:00"),
+            TotalDays = "",
+            HalfDayFlag = !1;
+        $("#HalfFlag").prop("checked") === !0 ? (HalfDayFlag = !0, TotalDays = "0.5") : (HalfDayFlag = !1, TotalDays = $("#TotalDays").val());
         var jsonObj = {}, TableData = storeTblValues();
+        function storeTblValues() {
+            var TableData = new Array();
+            TableData[0] = {
+                yearMonth: yearmonth, leaveAppId: 0, compCode: $("#myCompCode").val(), wrkGrp: $("#myWrkGrp").val(), leaveAppItem: "1", leaveTypeCode: "OD",
+                fromDt: FromDateTime, toDt: ToDateTime, totalDays: TotalDays, halfdayflag: HalfDayFlag, remarks: "", placeOfVisit: entity.Place,
+                contactAddress: entity.Details
+            };
+            jsonObj.yearMonth = yearmonth, jsonObj.leaveAppId = 0, jsonObj.empUnqId = $("#myEmpUnqId").val(), jsonObj.compCode = $("#myCompCode").val();
+            jsonObj.wrkGrp = $("#myWrkGrp").val(), jsonObj.unitCode = $("#myUnitCode").val(), jsonObj.deptCode = $("#myDeptCode").val();
+            jsonObj.statCode = $("#myStatCode").val(), jsonObj.catCode = $("#myCatCode").val(), jsonObj.isHOD = $("#myIsHod").val(), jsonObj.releaseGroupCode = "OD";
+            jsonObj.releaseStrategy = "", jsonObj.releaseStatusCode = "", jsonObj.addDt = dt, jsonObj.addUser = $("#myEmpUnqId").val();
+            jsonObj.clientIp = $("#myIPAddress").val(), jsonObj.updDt = dt, jsonObj.updUser = null, jsonObj.remarks = null, jsonObj.parentId = 0;
+            jsonObj.leaveApplicationDetails = TableData;
+            return jsonObj;
+        }
         TableData = JSON.stringify(TableData);
-        debugger;
-        var xhr = new XMLHttpRequest(); xhr.open("POST", $scope._Conpath + "LeaveApplication/CreateLeaveApplication", !0), xhr.setRequestHeader("Content-type", "application/json"), xhr.onreadystatechange = function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", $scope._Conpath + "LeaveApplication/CreateLeaveApplication", !0);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function () {
             if (4 === xhr.readyState && 201 === xhr.status) {
                 document.getElementById("btnPrint").disabled = !1;
                 var fdateval, fdate = new Date(FromDateTime); fdateval = fdate.getMonth() + 1 < "10" ? fdate.getDate() < "10" ? "0" + fdate.getDate() + "/0" + (fdate.getMonth() + 1) + "/" + fdate.getFullYear() + " " + fdate.getHours() + ":" + fdate.getMinutes() : fdate.getDate() + "/0" + (fdate.getMonth() + 1) + "/" + fdate.getFullYear() + " " + fdate.getHours() + ":" + fdate.getMinutes() : fdate.getDate() < "10" ? "0" + fdate.getDate() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getFullYear() + " " + fdate.getHours() + ":" + fdate.getMinutes() : fdate.getDate() + "/" + (fdate.getMonth() + 1) + "/" + fdate.getFullYear() + " " + fdate.getHours() + ":" + fdate.getMinutes();

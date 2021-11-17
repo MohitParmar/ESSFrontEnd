@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "AssigneTPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/TPACntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="TPAController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>Pre Assign TPA Employees List:</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <label>
+                                                Select Date to Assign a TPA:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="input-group form">
+                                                <input type="date" id="fromDt" class="form-control" ng-model="N.tpaDate" ng-change="backDateCheck()" />
+                                                <span class="input-group-btn">
+                                                    <button id="btnSearch" class="btn btn-primary form-control" ng-click="GetPreTpa(false)"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tblTPAData">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Date</th>
+                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                    Emp. Code
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('empName')">
+                                                    Emp. Name
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('statName')">
+                                                    Station
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('catName')">
+                                                    Category
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('desgName')">
+                                                    Designation
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('tpaShiftCode')">
+                                                    Shift
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='tpaShiftCode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:right;">Required Hours</th>
+                                                <th style="text-align:left;">Justification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="d in tpaData">
+                                            <tr>
+                                                <td style="text-align:center;">{{d.tpaDate|date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:left;">{{d.statName}}</td>
+                                                <td style="text-align:left;">{{d.catName}}</td>
+                                                <td style="text-align:left;">{{d.desgName}}</td>
+                                                <td style="text-align:center;">{{d.tpaShiftCode}}</td>
+                                                <td style="text-align:right;width:110px;">
+                                                    <input type="number" class="form-control" id="txtRequiredHours" style="width:90px;" maxlength="24" ng-disabled="d.id !== 0" />
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <input type="text" class="form-control" id="txtJustification" ng-disabled="d.id !== 0" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="9">
+                                                    <button type="submit" id="btnOK" class="btn btn-success" ng-click="PreTpaRequest(false)"><i class="fa fa-save"></i> Save & Submit</button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

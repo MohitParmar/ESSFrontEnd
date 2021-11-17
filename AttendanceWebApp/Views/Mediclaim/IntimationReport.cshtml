@@ -1,0 +1,225 @@
+﻿@{
+    ViewBag.Title = "IntimationReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MCCntrl.js"></script>
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay); $('#ToDt').val(lastDay);
+    }
+</script>
+<div ng-app="myApp" ng-controller="MCController">
+    <div class="container-fluid">
+        <input type="hidden" value="MC" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>List of Intimations</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('Intimations_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetIntimations(New)">
+                                            <i class="fa fa-search"></i>Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="        text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div ng-init="GetIntimations()">
+                            <div class="table-responsive">
+                                <table class="table table-responsive table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('IntimationDate')">
+                                                Intimation Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='IntimationDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('EmpCode')">
+                                                Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EmpCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('EmpName')">
+                                                Emp.Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('InsuredMobileNo')">
+                                                Insured Mobile No
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='InsuredMobileNo'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('PatientName')">
+                                                Patient Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='PatientName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('Relation')">
+                                                Relation
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='Relation'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('IntimatorEmpCode')">
+                                                Intimator Emp.Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='IntimatorEmpCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('IntimatorName')">
+                                                Intimator Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='IntimatorName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('IntimatorMobileNo')">
+                                                Intimator Mobile No
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='IntimatorMobileNo'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('AdmissionDate')">
+                                                Admission Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='AdmissionDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('DoctorName')">
+                                                Doctor Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='DoctorName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('Diagnosis')">
+                                                Diagnosis
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='Diagnosis'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('HospitalName')">
+                                                Hospital Name
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='HospitalName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('HospitalAddress')">
+                                                Hospital Address
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='HospitalAddress'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('Pin')">
+                                                Pin
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='Pin'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.EmpCode" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.EmpName" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.InsuredMobileNo" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.PatientName" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Relation" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.IntimatorEmpCode" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.IntimatorName" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.IntimatorMobileNo" /></td>
+                                            <td></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.DoctorName" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Diagnosis" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.HospitalName" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.HospitalAddress" /></td>
+                                            <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Pin" /></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in intiData|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage">
+                                        <tr>
+                                            <td style="text-align: center;">{{d.IntimationDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align: center;">{{d.EmpCode}}</td>
+                                            <td style="text-align: left;">{{d.EmpName}}</td>
+                                            <td style="text-align: center;">{{d.InsuredMobileNo}}</td>
+                                            <td style="text-align: left;">{{d.PatientName}}</td>
+                                            <td style="text-align: left;">{{d.Relation}}</td>
+                                            <td style="text-align: center;">{{d.IntimatorEmpCode}}</td>
+                                            <td style="text-align: left;">{{d.IntimatorName}}</td>
+                                            <td style="text-align: center;">{{d.IntimatorMobileNo}}</td>
+                                            <td style="text-align: center;">{{d.AdmissionDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align: left;">{{d.DoctorName}}</td>
+                                            <td style="text-align: left;">{{d.Diagnosis}}</td>
+                                            <td style="text-align: left;">{{d.HospitalName}}</td>
+                                            <td style="text-align: left;">{{d.HospitalAddress}}</td>
+                                            <td style="text-align: center;">{{d.Pin}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -47,7 +47,6 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
     };
     $scope.populateEmpUnqId;
     $scope.PopulateData = function (id, flg) {
-
         $scope.populateEmpUnqId = id;
         $("#commonTable").find("tr:not(:first)").remove(); $("#commonTable1").find("tr:not(:first)").remove();
         var dept = $("#hidDept").val(); const rls = $("#hidreleaserFlag").val();
@@ -198,7 +197,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = ""; document.getElementById("txtAmtER1").value = "0";
         }
     };
-    $scope.ChangeNoDues = function (flg, id, direct) {
+    $scope.ChangeNoDues = function (flg, id, direct, data) {
+        var rmks = ""; if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; };
         var dept = $("#hidDept").val(); var releaserFlag = $("#hidreleaserFlag").val();
         var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var jsonObj = {}; var jsonDepts = new Array(); var empUnqId;
@@ -233,7 +233,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     });
                     noDuesDeptDetails.shift();
                 }
-            } d
+            }
             if (noDuesDeptDetails.length === 0 && (dept !== "HR" && dept !== "UH")) {
                 document.getElementById("MessageBox1").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -252,12 +252,14 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             $scope.ndData;
             for (var i = 0; i < $scope.noDuesData.length; i++) { var f = parseInt($scope.noDuesData[i].empUnqId); if (f === empUnqId) { $scope.ndData = $scope.noDuesData[i]; break; } };
             jsonObj.empUnqId = empUnqId; jsonObj.joinDate = $scope.ndData.joinDate; jsonObj.resignDate = $scope.ndData.resignDate;
-            jsonObj.relieveDate = $scope.ndData.relieveDate; jsonObj.noDuesStartDate = $scope.ndData.noDuesStartDate; jsonObj.addUser = $scope.ndData.addUser;
-            jsonObj.addDate = $scope.ndData.addDate; jsonObj.closedFlag = $scope.ndData.closedFlag;
+            jsonObj.relieveDate = $scope.ndData.relieveDate; jsonObj.noDuesStartDate = $scope.ndData.noDuesStartDate;
+            jsonObj.addUser = $scope.ndData.addUser; jsonObj.addDate = $scope.ndData.addDate; jsonObj.closedFlag = $scope.ndData.closedFlag;
             if (hodRlsFLG !== null) {
                 jsonObj.deptParticulars = noDuesDeptDetails[0]["Particulars"] || ""; jsonObj.deptRemarks = noDuesDeptDetails[0]["Remarks"] || "";
                 jsonObj.deptAmount = noDuesDeptDetails[0]["Amount"] || 0;
-                if (hodRlsFLG === "false") { jsonObj.deptNoDuesFlag = true; jsonObj.deptApprovalFlag = false; jsonObj.deptAddUser = $("#myEmpUnqId").val(); jsonObj.deptAddDate = dt; }
+                if (hodRlsFLG === "false") {
+                    jsonObj.deptNoDuesFlag = true; jsonObj.deptApprovalFlag = false; jsonObj.deptAddUser = $("#myEmpUnqId").val(); jsonObj.deptAddDate = dt;
+                }
                 else {
                     jsonObj.deptNoDuesFlag = $scope.ndData.deptNoDuesFlag; jsonObj.deptApprovalFlag = true; jsonObj.deptAddUser = $scope.ndData.deptAddUser;
                     jsonObj.deptAddDate = $scope.ndData.deptAddDate;
@@ -296,6 +298,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     for (var e = 0; e < r.length; e++) {
                         //var isFinalrel = r[e].isFinalRelease; //if (isFinalrel === true) {
                         jsonObj.noDuesReleaseStatus[e].releaseAuth = $("#myEmpUnqId").val();
+                        jsonObj.noDuesReleaseStatus[e].remarks = rmks;
                         //}
                     }
                 }
@@ -304,7 +307,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             else {
                 if (releaserFlag === "true") {
                     jsonDepts[0] = {
-                        "empUnqId": empUnqId, "deptId": dept, "noDuesFlag": true, "remarks": "", "approvalFlag": true, "approvalDate": dt,
+                        "empUnqId": empUnqId, "deptId": dept, "noDuesFlag": true, "remarks": rmks, "approvalFlag": true, "approvalDate": dt,
                         "approvedBy": $("#myEmpUnqId").val(), "noDuesDeptDetails": noDuesDeptDetails
                     };
                 } else {

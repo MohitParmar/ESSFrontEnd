@@ -267,6 +267,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomErrorController.cs" />
     <Compile Include="Controllers\ExitProcessController.cs" />
+    <Compile Include="Controllers\FandFController.cs" />
     <Compile Include="Controllers\GatePassAdviceController.cs" />
     <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ShiftScheduleController.cs" />
     <Compile Include="Controllers\ReimbursementController.cs" />
+    <Compile Include="Controllers\TPAController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -483,6 +485,7 @@
     <Content Include="Scripts\Controller\EmpExitProcessCntrl.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
+    <Content Include="Scripts\Controller\FandFCntrl.js" />
     <Content Include="Scripts\Controller\Form16Cntrl.js" />
     <Content Include="Scripts\Controller\GatePassCntrl.js" />
     <Content Include="Scripts\Controller\GPAdviceCntrl.js" />
@@ -536,6 +539,7 @@
     <Content Include="Scripts\Controller\ReleaseStreategyCntrl.js" />
     <Content Include="Scripts\Controller\ShortLeaveCntrl.js" />
     <Content Include="Scripts\Controller\SSCntrl.js" />
+    <Content Include="Scripts\Controller\TPACntrl.js" />
     <Content Include="Scripts\Controller\UniformCntrl.js" />
     <Content Include="Scripts\Controller\ReimbursementCntrl.js" />
     <Content Include="Scripts\Controller\VehicaleGatePassCntrl.js" />
@@ -687,8 +691,17 @@
     <Content Include="UserManuals\images\UpdateEmailId\1 %283%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %284%29.png" />
     <Content Include="UserManuals\images\UpdateEmailId\1 %285%29.png" />
+    <Content Include="Views\GatePassAdvice\GenerateGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\GetGPAdviceList.cshtml" />
+    <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
+    <Content Include="Views\GatePassAdvice\MasterUpload.cshtml" />
+    <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
+    <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
+    <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
     <Content Include="Views\IncomeTax\IncomeTaxDeclaration.cshtml" />
     <Content Include="Views\IncomeTax\ITDeclarationReport.cshtml" />
+    <Content Include="Views\LeaveApp\LDLeaveApply.cshtml" />
+    <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -745,20 +758,11 @@
     <Content Include="Views\GatePass\VehicleGatePassInOut.cshtml" />
     <Content Include="Views\GatePass\VehicleGatePassReport.cshtml" />
     <Content Include="Views\LeaveApp\COffApplyJFL.cshtml" />
-    <Content Include="Views\LeaveApp\WOChangeBEL.cshtml" />
     <Content Include="Views\Master\SalarySlip.cshtml" />
     <Content Include="Views\Master\SalarySlipUpload.cshtml" />
     <Content Include="Views\Master\UserProfileView.cshtml" />
     <Content Include="Views\IncomeTax\Form16Upload.cshtml" />
     <Content Include="Views\IncomeTax\Form16.cshtml" />
-    <Content Include="Views\LeaveApp\LDLeaveApply.cshtml" />
-    <Content Include="Views\GatePassAdvice\GenerateGPAdvice.cshtml" />
-    <Content Include="Views\GatePassAdvice\GetGPAdviceList.cshtml" />
-    <Content Include="Views\GatePassAdvice\GPAdviceReport.cshtml" />
-    <Content Include="Views\GatePassAdvice\MasterUpload.cshtml" />
-    <Content Include="Views\GatePassAdvice\PostedGPAdviceReport.cshtml" />
-    <Content Include="Views\GatePassAdvice\POSTGPAdvice.cshtml" />
-    <Content Include="Views\GatePassAdvice\ReleaseGPAdvice.cshtml" />
     <Content Include="Views\ShiftSchedule\SSDLUP.cshtml" />
     <Content Include="Views\ShiftSchedule\SSRelease.cshtml" />
     <Content Include="Views\ShiftSchedule\SSReport.cshtml" />
@@ -802,6 +806,20 @@
     <Content Include="Views\MissPunch\MissPunchOut.cshtml" />
     <Content Include="Views\MissPunch\MissPunchHR.cshtml" />
     <Content Include="Views\MissPunch\MissPunchReleaserReport.cshtml" />
+    <Content Include="Views\Mediclaim\IntimationForm.cshtml" />
+    <Content Include="Views\Mediclaim\IntimationReport.cshtml" />
+    <Content Include="Views\Mediclaim\EmpIntimationReport.cshtml" />
+    <Content Include="Views\FandF\FandFEntry.cshtml" />
+    <Content Include="Views\FandF\FandFReport.cshtml" />
+    <Content Include="Views\Mediclaim\DependentsReports.cshtml" />
+    <Content Include="Views\Mediclaim\ManageDependentDetails.cshtml" />
+    <Content Include="Views\TPA\AssigneTPA.cshtml" />
+    <Content Include="Views\TPA\ReleaseAssignedTPA.cshtml" />
+    <Content Include="Views\TPA\SanctionTPA.cshtml" />
+    <Content Include="Views\TPA\ReleaseSanctionTPA.cshtml" />
+    <Content Include="Views\TPA\AssignTPAinDateRange.cshtml" />
+    <Content Include="Views\TPA\SanctionTPAReport.cshtml" />
+    <Content Include="Views\TPA\TPAReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

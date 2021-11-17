@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "SanctionTPAReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/TPACntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp">
+    <div ng-controller="TPAController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>Sanction TPA Report:</strong>
+                                <div style="float:right;">
+                                    <a style="float: right;" href="#" ng-click="exportAllData('Bulk Sanction Report')">
+                                        <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Bulk Sanction Report" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-1">
+                                            <label>
+                                                From Date:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="fromDt" class="form-control" required />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>
+                                                To Date:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="toDt" class="form-control" required />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button id="btnSearch" class="btn btn-primary form-control" ng-click="sanctionreport()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>EmpUnqId</th>
+                                                <th>SanDate</th>
+                                                <th>TPAHours</th>
+                                                <th>Pre Approval Justification</th>
+                                                <th>Sanction TPA Justification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="d in sanData">
+                                            <tr>
+                                                <td>{{d.empUnqId}}</td>
+                                                <td>{{d.tpaDate | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{d.sanctionTpa}}</td>
+                                                <td>{{d.preJustification}}</td>
+                                                <td>{{d.postJustification}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

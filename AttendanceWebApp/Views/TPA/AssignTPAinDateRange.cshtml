@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "AssignTPAinDateRange";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/TPACntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+    $(window).on("load", function () {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), (date.getMonth() - 1), 26);
+        var lastDay = new Date(date.getFullYear(), (date.getMonth()), 25);
+        if (firstDay.getMonth() + 1 < '10') {
+            if (firstDay.getDate() < '10') {
+                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
+            } else { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        } else {
+            if (firstDay.getDate() < '10') {
+                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
+            } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        };
+        if (lastDay.getMonth() + 1 < '10') {
+            if (lastDay.getDate() < '10') {
+                lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + '0' + lastDay.getDate();
+            } else { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        } else {
+            if (lastDay.getDate() < '10') {
+                lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + '0' + lastDay.getDate();
+            } else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        }; $("#fromDt").val(firstDay); $("#toDt").val(lastDay);
+    });
+</script>
+
+<div ng-app="myApp">
+    <div ng-controller="TPAController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="table-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <strong>Pre Assign TPA Employees List:</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Select Date Range for TPA Request:</label>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>From Date:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="fromDt" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>To Date:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="date" id="toDt" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button id="btnSearch" class="btn btn-primary form-control"
+                                                    ng-click="GetPreTpa(true)">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tblTPAData">
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <button type="submit" id="btnOK" class="btn btn-success" ng-click="PreTpaRequest(true)"><i class="fa fa-save"></i> Save & Submit</button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

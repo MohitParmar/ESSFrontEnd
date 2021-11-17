@@ -104,7 +104,7 @@
                                     </td>
                                     <td colspan="9"></td>
                                 </tr>
-                                <tr dir-paginate="d in gndData|itemsPerPage:5">
+                                <tr dir-paginate="d in gndData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
                                     <td style="        text-align: center;">{{d.empUnqId}}</td>
                                     <td style="        text-align: left;">{{d.empName}}</td>
                                     <td style="        text-align: left;">{{d.deptName}}</td>
@@ -123,7 +123,7 @@
                                     </td>
                                     <td style="        text-align: center;">
                                         <button class="btn btn-primary" id="btnDetails"
-                                                ng-show="d.noDuesDepts === null"
+                                                ng-show="d.noDuesDepts.length === 0 || d.noDuesDepts === null"
                                                 ng-click="PopulateData({{d.empUnqId}},false)">
                                             <i class="fa fa-plus-square"></i>
                                         </button>&nbsp;
@@ -142,6 +142,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                         </div>
                     </div>
                 </div>
@@ -223,6 +224,7 @@
                                                 <select id="cmbnoticePeriodUnit" class="form-control" ng-model="H.noticePeriodUnit">
                                                     <option id="BAS" value="BASIC">BASIC</option>
                                                     <option id="CTC" value="CTC">CTC</option>
+                                                    <option id="NA" value="NA">NA</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -246,6 +248,7 @@
                                                     <option id="4" value="Absconding">Absconding</option>
                                                     <option id="5" value="Termination">Termination</option>
                                                     <option id="6" value="Death">Death</option>
+                                                    <option id="7" value="Others">Others</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -338,6 +341,7 @@
                                                 <select id="cmbnoticePeriodUnit1" class="form-control" ng-model="H1.noticePeriodUnit">
                                                     <option id="BAS" value="BAS">Basic</option>
                                                     <option id="CTC" value="CTC">CTC</option>
+                                                    <option id="NA" value="NA">NA</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -361,6 +365,7 @@
                                                     <option id="4" value="Absconding">Absconding</option>
                                                     <option id="5" value="Termination">Termination</option>
                                                     <option id="6" value="Death">Death</option>
+                                                    <option id="7" value="Others">Others</option>
                                                 </select>
                                             </td>
                                         </tr>

@@ -40,10 +40,7 @@
             }
         }, empdtl.send()
     };
-    $scope.Popup = function (empunqid) {
-        $scope.GetEmpPresentAddress(empunqid);
-        $("#addressModel").modal('show');
-    };
+    $scope.Popup = function (empunqid) { $scope.GetEmpPresentAddress(empunqid); $("#addressModel").modal('show'); };
     $scope.GetEmpPresentAddress = function (empid) {
         var arr = new Array; preAdd = new XMLHttpRequest; preAdd.open("GET", $scope._Conpath + "EmpAddress/GetEmpAddress?empUnqId=" + empid, !0);
         preAdd.setRequestHeader("Accept", "application/json"); preAdd.onreadystatechange = function () {

@@ -43,7 +43,14 @@ namespace AttendanceWebApp.Controllers
         }
         public ActionResult MissPunchOut()
         {
-            return View();
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
         public ActionResult MissPunchHR()
         {

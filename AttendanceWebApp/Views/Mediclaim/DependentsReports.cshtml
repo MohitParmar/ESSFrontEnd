@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Dependents Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MCCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="MCController">
+    <div class="container-fluid">
+        <input type="hidden" value="MC" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Dependent Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('ReleasedDependents_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" ng-model="New.FromDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetReleasedDependentList(New)">
+                                            <i class="fa fa-search"></i>Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="        text-align: center;">
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="        text-align: center;" ng-click="sort('empUnqId')">
+                                            EmpUnqId
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('depName')">
+                                            Name of Insured
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='depName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('relation')">
+                                            Relation
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='relation'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('birthDate')">
+                                            Date of Birth
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='birthDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('gender')">
+                                            Gender
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gender'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('marriageDate')">
+                                            Marrige Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='marriageDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('pan')">
+                                            PAN
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='pan'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('aadhar')">
+                                            AADHAR
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='aadhar'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('birthCertificateNo')">
+                                            Birth Certiificate No
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='birthCertificateNo'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('Add_Del')">
+                                            Add/Del
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Add_Del'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;">Addition Release Date</th>
+                                        <th style="text-align: left;">Deletion Release Date</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empUnqId" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depName" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.relation" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.gender" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.pan" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.aadhar" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.birthCertificateNo" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.Add_Del" /></td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in relDepData|orderBy:sortKey:reverse|filter:search|itemsPerPage:100" current-page="currentPage" pagination-id="pg1">
+                                    <tr>
+                                        <td style="text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="text-align: left;">{{d.depName}}</td>
+                                        <td style="text-align: left;">{{d.relation}}</td>
+                                        <td style="text-align: center;">{{d.birthDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;">{{d.gender}}</td>
+                                        <td style="text-align: center;">{{d.marriageDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: left;">{{d.pan}}</td>
+                                        <td style="text-align: left;">{{d.aadhar}}</td>
+                                        <td style="text-align: left;">{{d.birthCertificateNo}}</td>
+                                        <td style="text-align: center;">{{d.Add_Del}}</td>
+                                        <td style="text-align: center;">{{d.releaseDt | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: center;">{{d.delReleaseDt | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

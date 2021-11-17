@@ -18,23 +18,32 @@
                 var reqs = new XMLHttpRequest(); reqs.open('POST', '/Login/Users', true); reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-                        if ($scope.Udata[0]["wrkGrp"] !== "COMP" && $scope.Udata[0]["roleId"] !== 2) {
+                        if (($scope.Udata[0]["wrkGrp"] !== "COMP" || $scope.Udata[0]["wrkGrp"] !== "OUTSOURCE") && $scope.Udata[0]["roleId"] !== 2) {
                             window.location.href = "Report/PerformanceReport";
                         } else if ($scope.Udata[0]["roleId"] === 1 || $scope.Udata[0]["roleId"] === 3) {
-                            window.location.href = "Master/AddressMaster";  //window.location.href = "Home/Index";
+                            window.location.href = "Home/Index";                //window.location.href = "Master/AddressMaster";
                         };
                         if ($scope.Udata[0]["roleId"] === 2 || $scope.Udata[0]["roleId"] === 6 || $scope.Udata[0]["roleId"] === 8) {
-                            window.location.href = "Master/AddressMaster";  //window.location.href = "ReleaseLeave/LeaveRelease";
+                            window.location.href = "ReleaseLeave/LeaveRelease";
                         } else if ($scope.Udata[0]["roleId"] === 5) {
                             window.location.href = "GatePass/GatePassInOut";
                         } else if ($scope.Udata[0]["roleId"] === 7) {
-                            window.location.href = "Master/AddressMaster";  //window.location.href = "GatePass/GatePassRelease";
-                        } else if ($scope.Udata[0]["wrkGrp"] === "COMP") {
-                            window.location.href = "Master/AddressMaster";  //window.location.href = "Home/Index";
+                            window.location.href = "GatePass/GatePassRelease";
+                        } else if ($scope.Udata[0]["wrkGrp"] === "COMP" || $scope.Udata[0]["wrkGrp"] === "OUTSOURCE") {
+                            window.location.href = "Home/Index";
                         };
                     };
                 }; reqs.send(jsonObj1);
-            } else if (xhr.status === 400 || xhr.status === 500) { if (xhr.status === 500) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Internal Server Error Please try after some time..</strong></div>"; } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Incorrect Password / Employee code. </strong></div>"; } $('#MessageBox').show(); document.getElementById("EmpUnqId").value = ""; document.getElementById("Pass").value = ""; };
+            } else if (xhr.status === 400 || xhr.status === 500) {
+                if (xhr.status === 500) {
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Internal Server Error Please try after some time..</strong></div>";
+                } else {
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Incorrect Password / Employee code. </strong></div>";
+                }
+                $('#MessageBox').show(); document.getElementById("EmpUnqId").value = ""; document.getElementById("Pass").value = "";
+            };
         }; xhr.send(jsonObj);
     };
     $scope.ChangePassword = function () { $('#ConformModel').modal('show'); };

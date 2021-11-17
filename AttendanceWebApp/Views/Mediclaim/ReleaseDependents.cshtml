@@ -41,46 +41,111 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <strong>Mediclaim Dependent Details</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('ReleasedDependents_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive" ng-init="GetRelease()">
                             <table class="table table-responsive table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="        text-align: center;">EmpUnqId</th>
-                                        <th style="        text-align: center;">Sr. No.</th>
-                                        <th style="        text-align: center;">Name of Insured</th>
-                                        <th style="        text-align: center;">Relation</th>
-                                        <th style="        text-align: center;">Date of Birth</th>
-                                        <th style="        text-align: center;">Gender</th>
-                                        <th style="        text-align: center;">Marrige Date</th>
-                                        <th style="        text-align: center;">PAN</th>
-                                        <th style="        text-align: center;">AADHAR</th>
-                                        <th style="        text-align: center;">Birth Certiificate No</th>
-                                        <th style="        text-align: center;">Remarks</th>
-                                        <th style="        text-align: center;">Action</th>
+                                        <th style="        text-align: center;" ng-click="sort('addDate')">
+                                            App.Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('empUnqId')">
+                                            EmpUnqId
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('depSr')">
+                                            DEPENDENT SR NO.
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='depSr'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('depName')">
+                                            Name of Insured
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='depName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('relation')">
+                                            Relation
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='relation'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('birthDate')">
+                                            Date of Birth
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='birthDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('gender')">
+                                            Gender
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gender'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: center;" ng-click="sort('marriageDate')">
+                                            Marrige Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='marriageDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('pan')">
+                                            PAN
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='pan'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('aadhar')">
+                                            AADHAR
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='aadhar'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;" ng-click="sort('birthCertificateNo')">
+                                            Birth Certiificate No
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='birthCertificateNo'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="        text-align: left;">Remarks</th>
+                                        <th style="        text-align: center;width:90px;">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.empUnqId" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depSr" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.depName" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.relation" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.gender" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.pan" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.aadhar" /></td>
+                                        <td><input class="form-control" style="margin: 0; padding: 1px;" type="text" ng-model="search.birthCertificateNo" /></td>
+                                        <td colspan="2"></td>
                                     </tr>
                                 </thead>
-                                <tbody dir-paginate="d in relData|orderBy:sortKey:reverse|filter:search|itemsPerPage:50" current-page="currentPage" pagination-id="pg1">
+                                <tbody dir-paginate="d in relData|orderBy:sortKey:reverse|filter:search|itemsPerPage:100" current-page="currentPage" pagination-id="pg1">
                                     <tr ng-style="(d.active == true && d.isChanged == true) && {'background-color':'#f2dede','color':'#b94a48'} ||
                                         (d.active == false && d.isChanged == true) && {'background-color':'#dff0d8','color':'#468847'} ||
                                         (d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ">
+                                        <td style="        text-align: center;">{{d.addDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="        text-align: center;">{{d.empUnqId}}</td>
                                         <td style="        text-align: center;">{{d.depSr}}</td>
                                         <td style="        text-align: left;">{{d.depName}}</td>
-                                        <td style="        text-align: center;">{{d.relation}}</td>
+                                        <td style="        text-align: left;">{{d.relation}}</td>
                                         <td style="        text-align: center;">{{d.birthDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="        text-align: center;">{{d.gender}}</td>
                                         <td style="        text-align: center;">{{d.marriageDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="        text-align: center;">{{d.pan}}</td>
-                                        <td style="        text-align: center;">{{d.aadhar}}</td>
-                                        <td style="        text-align: center;">{{d.birthCertificateNo}}</td>
+                                        <td style="        text-align: left;">{{d.pan}}</td>
+                                        <td style="        text-align: left;">{{d.aadhar}}</td>
+                                        <td style="        text-align: left;">{{d.birthCertificateNo}}</td>
                                         <td style="        text-align: center;">
-                                            <input type="text" class="form-control" id="txtRemarks"
+                                            <input type="text" class="form-control" id="txtRemarks" style="width:150px;"
                                                    ng-show="(d.depSr == 0)"
                                                    ng-model="r.Remarks" />
                                         </td>
-                                        <td>
+                                        <td style="        text-align: center;">
                                             <button class="btn btn-success btn-sm" id="btnApprove" ng-click="ReleaseDependents('F',{{d.empUnqId}},{{d.depSr}},r)"
                                                     ng-show="(d.depSr == 0)">
                                                 <i class="fa fa-check"></i>

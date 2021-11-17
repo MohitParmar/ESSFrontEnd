@@ -82,7 +82,7 @@
             <div ng-app="myApp" ng-controller="MissPunchController">
                 <input type="hidden" value="LA" id="releaseGroupCode" />
                 <div id="MessageBox" class="table-responsive"></div>
-                <div class="panel panel-primary">
+                <div class="panel panel-danger">
                     <div class="panel-heading">
                         <strong>Miss Punch Out List</strong>
                     </div>
@@ -91,14 +91,14 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="        text-align: center;" ng-click="sort('empUnqId')">
+                                        <th style="        text-align: center;" ng-click="sort('EmpUnqId')">
                                             Emp. Code
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpUnqId'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="        text-align: center;" ng-click="sort('empName')">
+                                        <th style="        text-align: center;" ng-click="sort('EmpName')">
                                             Emp. Name
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="        text-align: center;">In Time</th>
@@ -107,11 +107,11 @@
                                     <tr>
                                         <td>
                                             <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.empUnqId" />
+        padding: 1px;" type="text" ng-model="search.EmpUnqId" />
                                         </td>
                                         <td>
                                             <input class="form-control" style="        margin: 0;
-        padding: 1px;" type="text" ng-model="search.empName" />
+        padding: 1px;" type="text" ng-model="search.EmpName" />
                                         </td>
                                         <td></td>
                                         <td></td>

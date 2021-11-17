@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "IntimationForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/MCCntrl.js"></script>
+
+<script>
+    function validatePin() {
+        var pin = document.getElementById('pin').value; if (pin.length > 6 || pin.length < 6) {
+            alert("Please Enter Pincode in 6 Digit"); document.getElementById('pin').value = ""; document.getElementById("pin").focus();
+        };
+    }
+</script>
+
+<div ng-app="myApp" ng-controller="MCController">
+    <div class="container-fluid">
+        <input type="hidden" value="MC" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div ng-init="GetUserInfo()"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>MEDI – CLAIM  INTIMATION FORM</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Policy No.</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" value="130132128120000034" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Employee Name:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input class="form-control" type="text" id="eCode" ng-model="N.empUnqId" ng-change="GetUserInfo(N.empUnqId)" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" id="empName" style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Insured Mobile No.:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="10" placeholder="Insured Mobile No." id="insuredMobNo" ng-model="N.insuredMobNo"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Patient Name:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="patientRelation" ng-model="N.patientRelation"
+                                            ng-options="s.relation as s.depName for s in pData" ng-change="SetRelation(N.patientRelation)"></select>
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Patient Relation:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" ng-model="N.relation" id="txtRelation" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Intimator Name:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input class="form-control" type="text" id="intimatorEmpUnqId" ng-model="N.intimatorEmpUnqId" style="text-transform: uppercase;" disabled />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" maxlength="50" placeholder="Intimator Name" id="intimatorName" ng-model="N.intimatorName"
+                                           style="text-transform: uppercase;" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Intimator Mobile No.:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="10" placeholder="Intimator Mobile No." id="intimatorMobNo" ng-model="N.intimatorMobNo"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Date of Admission:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="date" id="addmissionDate" ng-model="N.addmissionDate" ng-change="ToValidate()" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Doctor Name:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="50" placeholder="Doctor Name" id="doctorName" ng-model="N.doctorName"
+                                           style="text-transform: uppercase;" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Diagnosis Details:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="255" placeholder="Dignosis Details" id="dignosisDetails" ng-model="N.dignosisDetails"
+                                           style="text-transform: uppercase;" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Hospital Name</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="50" placeholder="Hospital Name" id="hospitalName" ng-model="N.hospitalName"
+                                           style="text-transform: uppercase;" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Hospital Full Address</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="255" placeholder="Hospital Address" id="hospitalAddress" ng-model="N.hospitalAddress"
+                                           style="text-transform: uppercase;" />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Pincode</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" maxlength="6" placeholder="Pincode" id="pin" ng-model="N.pinCode"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                           onchange="validatePin()" required />
+                                </div>
+                                <label style="color:red;"><b>*</b></label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label style="        color: red;"><b>Note: </b>Intimate about hospitalization within 12 hours of admission</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button type="submit" id="btnSubmit" ng-click="CreateIntimation(N)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                    <button type="reset" id="btnReset" ng-click="ResetView()" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp; Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
