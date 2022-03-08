@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "In/Out Punch Entry";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
@@ -132,7 +132,7 @@
                                         </td>
                                         <td>
                                             <input class="form-control" type="datetime-local" id="time" ng-model="N.time" placeholder="Select Date Time" ng-change="ToValidate(N)"
-                                                   required>
+                                                   required disabled>
                                         </td>
                                     </tr>
                                     <tr>

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Leave Application";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script><script src="~/Scripts/Module/ng-table.src.js"></script><script src="~/Scripts/Module/ng-tags-input.js"></script><link href="~/Content/ng-table.css" rel="stylesheet" media="screen" /><link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />*@
 <script src="~/Scripts/Module/app.js"></script>
@@ -45,6 +45,15 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default panel-heading">
+                    <strong>
+                        <text style="color:#f44336;">
+                            Note: Please apply your Leave(s) on or before going on Leave, and in case of Sickness, immediately after resuming on duty along with Medical Certificate. The leave approval will be closed for payroll processing on 25th of every month.
+                        </text>
+                    </strong>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -99,7 +108,8 @@
                                         <label>Leave Reason : </label>
                                     </td>
                                     <td colspan="4">
-                                        <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
+                                        <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks"
+                                               style="text-transform:uppercase" required>
                                     </td>
                                 </tr>
                                 <tr>

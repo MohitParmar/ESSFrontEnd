@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Posted Leave Report";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
@@ -134,6 +134,9 @@
                                                 <th style="text-align:center;">Half Day</th>
                                                 <th style="text-align:center;">Is Posted</th>
                                                 <th style="text-align:center;">Remarks</th>
+                                                <th style="text-align:center;">COFF Mode</th>
+                                                <th style="text-align:center;">COFF Date1</th>
+                                                <th style="text-align:center;">COFF Date2</th>
                                                 <th style="text-align:center;">Action</th>
                                             </tr>
                                             <tr>
@@ -159,7 +162,11 @@
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.leaveTypeCode" />
                                                 </td>
-                                                <td colspan="7"></td>
+                                                <td colspan="6"></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.coMode" />
+                                                </td>
+                                                <td colspan="3"></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -188,6 +195,9 @@
                                                 <td>
                                                     <input type="text" id="remarks" ng-model="N.Remarks" class="form-control" placeholder="Rejection Remarks" />
                                                 </td>
+                                                <td style="text-align:center;">{{d.coMode}}</td>
+                                                <td style="text-align:center;">{{d.coDate1| date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.coDate2 | date:'dd/MM/yyyy'}}</td>
                                                 <td>
                                                     <input type="button" id="btnReject" value="Reject" class="btn btn-danger"
                                                            ng-show="d.isPosted == 'F' && d.leaveAppItem == 1" ng-click="PostLeaveReject(N,{{d.leaveAppId}},{{d.yearMonth}})" />

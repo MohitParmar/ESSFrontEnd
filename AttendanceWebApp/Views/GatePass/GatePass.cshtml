@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "New Gate Pass (Regular Employee)";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
@@ -106,7 +106,8 @@
                                                 <label>Place Of Visit</label>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" id="txtPlace" name="Place" ng-model="New.PlaceofVisit" ng-change="GetEmpInfo()" required>
+                                                <input class="form-control" type="text" id="txtPlace" name="Place" ng-model="New.PlaceofVisit" ng-change="GetEmpInfo()" 
+                                                       style="text-transform: uppercase;" required>
                                             </td>
                                         </tr>
                                         <tr>
@@ -114,7 +115,8 @@
                                                 <label>Purpose of Gate Pass</label>
                                             </td>
                                             <td colspan="3">
-                                                <input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="New.Reason" required>
+                                                <input class="form-control" type="text" id="txtPurpose" name="Purpose" ng-model="New.Reason" 
+                                                       style="text-transform: uppercase;" required>
                                             </td>
                                         </tr>
                                         <tr>

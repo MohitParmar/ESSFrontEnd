@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "SanctionTPAReport";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Scripts/Controller/TPACntrl.js"></script>
@@ -17,8 +17,12 @@
                             <div class="panel-heading">
                                 <strong>Sanction TPA Report:</strong>
                                 <div style="float:right;">
-                                    <a style="float: right;" href="#" ng-click="exportAllData('Bulk Sanction Report')">
-                                        <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Bulk Sanction Report" />
+                                    <a href="#" ng-click="exportBulkSanction_Upload('BulkSanction_Upload_')">
+                                        BulkSanction_Upload
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" ng-click="exportAllData('BulkSanction_Report_')">
+                                        Bulk Sanction Report
                                     </a>
                                 </div>
                             </div>

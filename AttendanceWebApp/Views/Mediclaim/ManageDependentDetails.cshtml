@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "Manage Dependent Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
-
 
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MCCntrl.js"></script>
@@ -45,20 +44,7 @@
             pointer-events: none;
         }
 </style>
-<script type="text/javascript">
-    function isChanged(element) {
-        var tables = document.getElementById("commonTable");
-        var tblind = element.closest("tr").rowIndex;
-        for (var i = 0, row; row = tables.rows[i]; i++) {
-            if (tblind === i) {
-                $(row).find("td:eq(10)").text(true);//ISCHANGED
-                $(row).find("td:eq(11)").text(false);//ACTIVE
-                $(row).css('background', '#f2dede');
-                $(row).css('color', '#b94a48');
-            }
-        };
-    };
-</script>
+
 <div ng-app="myApp" ng-controller="MCController">
     <div class="container-fluid">
         <input type="hidden" value="MC" id="releaseGroupCode" />
@@ -78,7 +64,7 @@
                                 <label>Employee Name:</label>
                             </div>
                             <div class="col-sm-2">
-                                <input class="form-control" type="text" id="eCode"/>
+                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
                             </div>
                             <div class="col-sm-2">
                                 <button id="btnSearch" class="btn btn-primary" ng-click="GetDependentDetails('false',N.empUnqId)"><i class="fa fa-search"></i></button>
@@ -91,6 +77,7 @@
                                     <tr>
                                         <th style="        text-align: center;">Sr No.</th>
                                         <th style="        text-align: center;">Status</th>
+                                        <th style="        text-align: center;">Remarks</th>
                                         <th style="        text-align: center;">EmpUnqId</th>
                                         <th style="        text-align: center;">Name of Insured</th>
                                         <th style="        text-align: center;">Relation</th>
@@ -108,6 +95,7 @@
                                         <td style="        text-align: center;">
                                             {{(d.active == true && d.isChanged == true) ? d.delReleaseStatusCode : d.releaseStatusCode}}
                                         </td>
+                                        <td style="        text-align: left;">{{d.remarks}}</td>
                                         <td style="        text-align: center;">{{d.empUnqId}}</td>
                                         <td style="        text-align: left;">{{d.depName}}</td>
                                         <td style="        text-align: center;">{{d.relation}}</td>
@@ -173,11 +161,10 @@
                                             </td>
                                             <td>Relation</td>
                                             <td>
-                                                <select class="form-control" ng-model="New.relation" ng-change="setRelation(New.relation)" id="cmbReleation">
+                                                <select class="form-control" ng-model="New.relation" ng-change="setGender(New.relation)" id="cmbReleation">
                                                     <option value="0">---Select---</option>
                                                     <option value="SELF">SELF</option>
-                                                    <option value="HUSBAND">HUSBAND</option>
-                                                    <option value="WIFE">WIFE</option>
+                                                    <option value="SPOUSE">SPOUSE</option>
                                                     <option value="DAUGHTER">DAUGHTER</option>
                                                     <option value="SON">SON</option>
                                                 </select>

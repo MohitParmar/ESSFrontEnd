@@ -18,6 +18,7 @@
                 $("#mnubar").hide(); $("#mnuDashboard").hide(); $("#mnuLeave").hide(); $("#mnuGatePass").hide(); $("#mnuPayslip").hide(); $("#mnuEmployeeProfile").hide();
                 $("#mnuSSEmployee").hide(); $("#mnuMyShiftChangeReport").hide(); $("#mnuIncomeTaxDeclaration").hide(); $("#mnuTDS").hide(); $("#mnuNODuesStatus").hide();
                 $("#mnuAddressMaster").hide(); $("#mnuuniformmaster").hide(); $("#mnuUpdateEmailAdd").hide(); $("#mnuUserManual").hide(); $("#mnuChangePassword").hide();
+                $("#mnuResignApplication").hide(); $("#mnuEmpResignation").hide();
             };
             if (_URLHostName !== urlhost && (_wrkgrp === "COMP" || _wrkgrp === "OUTSOURCE" || _wrkgrp === "APPRENTICE")) {
                 $("#mnuMaster").hide(), $("#mnuReport").hide(), $("#mnuUitility").hide(), $("#mnuLeavePosting").hide(), $("#mnuCreateGatePass").hide();

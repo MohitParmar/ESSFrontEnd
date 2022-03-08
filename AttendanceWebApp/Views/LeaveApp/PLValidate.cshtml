@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "PLValidate";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/Module/app.js"></script>
+<script src="~/Scripts/Controller/LeaveCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="LeaveController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>PL Validate</strong>
+                    </div>
+                    <div class="panel-body">
+                        <input id="btnActivate" type="button" class="btn btn-success" value="Activate PL Check" name="Activate PL Check" ng-click="PLValidate()" hidden="hidden" />
+                        <input id="btnDeActivate" type="button" class="btn btn-danger" value="De-Activate PL Check" name="De-Activate PL Check" ng-click="PLValidate()" hidden="hidden" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var plCheck = $("#myPlFlag").val();
+    if (plCheck === "True") {
+        $('#btnActivate').hide();
+    } else {
+        $('#btnDeActivate').hide();
+    }
+</script>

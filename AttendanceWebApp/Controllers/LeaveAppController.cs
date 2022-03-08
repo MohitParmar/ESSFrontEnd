@@ -25,6 +25,33 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //for SMG
+        public ActionResult OTCOffApplication()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        //For SMG,Nashik
+        public ActionResult COffApplication()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        //for BEL,Kapaya,kosi
         public ActionResult COffApply()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
@@ -37,6 +64,7 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        //for JFL-Tembhurani
         public ActionResult COffApplyJFL()
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null
@@ -80,19 +108,8 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        public ActionResult WOChangeBEL()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        public ActionResult LDLeaveApply()
+        //for Nashik
+        public ActionResult PLValidate()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
             {
@@ -125,3 +142,26 @@ namespace AttendanceWebApp.Controllers
         }
     }
 }
+
+//public ActionResult WOChangeBEL()
+//{
+//    if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+//    {
+//        return View();
+//    }
+//    else
+//    {
+//        return RedirectToAction("Index", "Login");
+//    }
+//}
+//public ActionResult LDLeaveApply()
+//{
+//    if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+//    {
+//        return View();
+//    }
+//    else
+//    {
+//        return RedirectToAction("Index", "Login");
+//    }
+//}

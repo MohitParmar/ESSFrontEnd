@@ -131,6 +131,11 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassNo'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;" ng-click="sort('unitName')">
+                                                Unit
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">
                                                 Emp. Code
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
@@ -153,6 +158,9 @@
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" />
                                             </td>
                                             <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.unitName" />
+                                            </td>
+                                            <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
                                             </td>
                                             <td>
@@ -167,6 +175,7 @@
                                     <tbody>
                                         <tr dir-paginate="d in outdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
                                             <td style="text-align:center;font-size:large;">{{d.gatePassNo}}</td>
+                                            <td style="text-align:center;font-size:large;">{{d.unitName}}</td>
                                             <td style="text-align:center;font-size:large;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;font-size:large;">{{d.empName}}</td>
                                             <td style="text-align:center;font-size:large;">{{d.typeofGatePass}}</td>
@@ -187,6 +196,11 @@
                                             <th style="text-align:center;" ng-click="sort('gatePassNo')">
                                                 GP No.
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='gatePassNo'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('unitName')">
+                                                Unit
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">
@@ -216,6 +230,9 @@
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gatePassNo" />
                                             </td>
                                             <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.unitName" />
+                                            </td>
+                                            <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
                                             </td>
                                             <td>
@@ -230,6 +247,7 @@
                                     <tbody>
                                         <tr dir-paginate="i in indata|orderBy:sortKey:reverse|filter:search|itemsPerPage:100">
                                             <td style="text-align:center;font-size:large;">{{i.gatePassNo}}</td>
+                                            <td style="text-align:center;font-size:large;">{{i.unitName}}</td>
                                             <td style="text-align:center;font-size:large;">{{i.empUnqId}}</td>
                                             <td style="text-align:left;font-size:large;">{{i.empName}}</td>
                                             <td style="text-align:center;font-size:large;">{{i.typeofGatePass}}</td>

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "SanctionTPA";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Scripts/Controller/TPACntrl.js"></script>
@@ -79,9 +79,9 @@
                                                 <td style="text-align:left;">{{d.consOut|date:'dd/MM/yyyy HH:mm'}}</td>
                                                 <td style="text-align:left;">{{d.calcOverTime}}</td>
                                                 <td style="text-align:left;">
-                                                    <input type="number" class="form-control" id="txtSanctionTPA" value="{{d.calcOverTime}}" />
+                                                    <input type="number" class="form-control" id="txtSanctionTPA" value="{{d.calcOverTime}}" max="24" />
                                                 </td>
-                                                <td style="text-align:left;"><input type="text" class="form-control" id="txtPostJustification" /></td>
+                                                <td style="text-align:left;"><input type="text" class="form-control" id="txtPostJustification" maxlength="255" /></td>
                                                 <td hidden="hidden">{{d.id}}</td>
                                             </tr>
                                         </tbody>

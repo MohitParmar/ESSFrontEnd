@@ -64,6 +64,18 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
+        public ActionResult ReleaseSanctionTPAHR()
+        {
+            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         public ActionResult SanctionTPAReport()
         {
             if (Session["EmpUnqId"] != null && Session["UserRole"] != null)

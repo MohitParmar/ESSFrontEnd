@@ -14,14 +14,23 @@
                 jsonObj1.UnitCode = $scope.Udata[0]["unitCode"]; jsonObj1.DeptCode = $scope.Udata[0]["deptCode"]; jsonObj1.StatCode = $scope.Udata[0]["statCode"];
                 jsonObj1.GradeCode = $scope.Udata[0]["gradeCode"]; jsonObj1.OtFlag = $scope.Udata[0]["otFlag"]; jsonObj1.CatCode = $scope.Udata[0]["catCode"];
                 jsonObj1.Location = $scope.Udata[0]["location"]; jsonObj1.RoleId = $scope.Udata[0]["roleId"]; jsonObj1.NoDuesFlag = $scope.Udata[0]["noDuesFlag"];
-                jsonObj1 = JSON.stringify(jsonObj1);
-                var reqs = new XMLHttpRequest(); reqs.open('POST', '/Login/Users', true); reqs.setRequestHeader("Content-type", "application/json");
+                jsonObj1.PLCheck = $scope.Udata[0]["plCheck"]; jsonObj1 = JSON.stringify(jsonObj1);
+                var reqs = new XMLHttpRequest(); reqs.open('POST', '/Login/Users', true);
+                reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
+                        if ($scope.Udata[0]["location"] == "NSK" && ($scope.Udata[0]["wrkGrp"] === "CONT" || $scope.Udata[0]["wrkGrp"] === "JOBWORK")) {
+                            document.getElementById("MessageBox").innerHTML =
+                                "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                                "<strong>You are not authorized to Log in.</strong></div>";
+                            document.getElementById("EmpUnqId").value = ""; document.getElementById("Pass").value = "";
+                            $('#MessageBox').show();
+                            return false;
+                        };
                         if (($scope.Udata[0]["wrkGrp"] !== "COMP" || $scope.Udata[0]["wrkGrp"] !== "OUTSOURCE") && $scope.Udata[0]["roleId"] !== 2) {
                             window.location.href = "Report/PerformanceReport";
                         } else if ($scope.Udata[0]["roleId"] === 1 || $scope.Udata[0]["roleId"] === 3) {
-                            window.location.href = "Home/Index";                //window.location.href = "Master/AddressMaster";
+                            window.location.href = "Home/Index";                  
                         };
                         if ($scope.Udata[0]["roleId"] === 2 || $scope.Udata[0]["roleId"] === 6 || $scope.Udata[0]["roleId"] === 8) {
                             window.location.href = "ReleaseLeave/LeaveRelease";
@@ -30,6 +39,7 @@
                         } else if ($scope.Udata[0]["roleId"] === 7) {
                             window.location.href = "GatePass/GatePassRelease";
                         } else if ($scope.Udata[0]["wrkGrp"] === "COMP" || $scope.Udata[0]["wrkGrp"] === "OUTSOURCE") {
+                            //window.location.href = "Vaccination/UploadVaccinationCertificate";
                             window.location.href = "Home/Index";
                         };
                     };

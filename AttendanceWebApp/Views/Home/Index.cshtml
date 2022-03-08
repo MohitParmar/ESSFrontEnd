@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -44,7 +45,7 @@
                         <div class="panel-body" style="overflow:auto;">
                             <div ng-init="GetLeaveRequestLists()">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed table-hover" id="myTable">
+                                    <table class="table table-bordered table-hover" id="myTable">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('addDt')">
@@ -150,8 +151,8 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            @*<strong>Note For Leave Group : LA - Leave Application </strong><br />*@
-                            <strong>Note For LD Leave Type : LD - Lockdown Leave</strong>
+                            <strong>Note For Leave Group : LA - Leave Application </strong>
+                            @*<strong>Note For LD Leave Type : LD - Lockdown Leave</strong><br />*@
                             <br />
                             <strong>Note For Release Status : N - Not released,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
                             <br />
@@ -170,7 +171,7 @@
                         <div class="panel-body">
                             <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                                 <div class="table-responsive">
-                                    <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">Type</th>
@@ -202,13 +203,13 @@
                         <div class="panel-body" style="overflow:auto;">
                             <div ng-init="GetPostedLeave()">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed table-hover table-striped">
+                                    <table class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;">Type</th>
+                                                <th style="text-align:center;">Leave Type</th>
                                                 <th style="text-align:center;">From Date</th>
                                                 <th style="text-align:center;">To Date</th>
-                                                <th style="text-align:center;">Days</th>
+                                                <th style="text-align:center;">Total Days</th>
                                                 <th style="text-align:center;">Half Day</th>
                                             </tr>
                                         </thead>

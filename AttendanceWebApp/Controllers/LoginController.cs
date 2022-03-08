@@ -46,6 +46,7 @@ namespace AttendanceWebApp.Controllers
                 Session["OtFlag"] = Convert.ToString(requestData.OtFlag);
                 Session["Loc"] = Convert.ToString(requestData.Location);
                 Session["NDFlag"] = Convert.ToString(requestData.NoDuesFlag);
+                Session["PlFlag"] = Convert.ToString(requestData.PLCheck);
 
                 if (requestData.WrkGrp != "COMP" && requestData.WrkGrp != "OUTSOURCE" && requestData.RoleId != "2" && requestData.RoleId != "3")
                 {

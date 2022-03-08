@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Vaccination Certificate";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/Controller/VaccinationCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="VaccinationCntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Download Vaccination Certificate</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetEmpVaccination()">
+                            <table class="table table-condensed table-responsive">
+                                <tr ng-repeat="d in evdata">
+                                    <td><b>First Dose Date:</b></td>
+                                    <td>
+                                        {{d.firstDoseDate|date:'dd/MM/yyyy'}}
+                                    </td>
+                                    <td><b>Second Dose Date:</b></td>
+                                    <td>
+                                        {{d.secondDoseDate|date:'dd/MM/yyyy'}}
+                                    </td>
+                                    <td><b>Precaution Dose Date:</b></td>
+                                    <td>
+                                        {{d.thirdDoseDate|date:'dd/MM/yyyy'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <button id="btnDownload" class="btn btn-success" ng-click="GetFile()">
+                                            <i class="fa fa-download"></i>&nbsp;Download Certificate
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><strong>Upload Vaccination Certificate</strong></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-2">Select First Dose Date</div>
+                                <div class="col-sm-3">
+                                    <input type="date" class="form-control datetimepicker-input" data-target="#dtFirstDose" id="dtFirstDose" 
+                                           ng-model="v.firstDose" ng-change="FirstDoseValidate()" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">Select Second Dose Date</div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="date" id="dtSecondDose" ng-model="v.secondDose" ng-change="Validate()" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">Select Precaution Dose Date</div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="date" id="dtPrecautionDose" ng-model="v.precautionDose" ng-change="PrecautionValidate()" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-5" style="font-size:large;color:red;">
+                                    <strong>
+                                        Note:
+                                        Upload latest vaccination certificate only (for e.g., if two doses are taken then upload certificate of 2nd dose only)
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-5">
+                                    <form enctype="multipart/form-data" id="formUpload">
+                                        <div class="input-group form">
+                                            <input type="file" id="files" name="files" class="form-control" accept=".pdf" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button" id="btnUpload" ng-click="CertificateUpload(v)">
+                                                    <i class="fa fa-upload"></i>&nbsp;Save
+                                                </button>
+                                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

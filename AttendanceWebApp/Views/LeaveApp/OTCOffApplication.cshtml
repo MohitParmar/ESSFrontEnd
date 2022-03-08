@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "OTCOffApplication";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/Module/app.js"></script>
+<script src="~/Scripts/Controller/OTCompOffCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="OTCompOffController">
+    <div class="container-fluid">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-9">
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Compensatory Off</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Overtime Date 1 <b style="color:red;">*</b></label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="coDate1" ng-model="New.coDate1" data-date-format="yyyy/MM/dd"
+                                               placeholder="Overtime Date" datepicker required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Overtime Date 2 (Optional)</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="coDate2" ng-model="New.coDate2" data-date-format="yyyy/MM/dd"
+                                               placeholder="Overtime Date" datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Compensatory Off Date <b style="color:red;">*</b></label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="coffDt" ng-model="New.coffDt" data-date-format="yyyy/MM/dd"
+                                               placeholder="Compensatory Off Date" ng-change="ToValidate()" datepicker required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Half Day (Optional)</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" id="halfFlag" ng-model="New.halfFlag" style="margin-top:0px;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Reason <b style="color:red;">*</b></label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input class="form-control" type="text" id="remarks" name="Remarks" placeholder="Reason for Compensatory Off" ng-model="New.remarks" required>
+                                </div>
+                                <div class="col-sm-2" style="text-align:center;">
+                                    <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="LeaveRequestData(New)">
+                                        <i class="fa fa-plus-circle"></i>&nbsp;Add to List
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <table id="aliasTable" class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">Compensatory Off Date</th>
+                                                <th style="text-align:center;">Half Day</th>
+                                                <th style="text-align:center;">Reason</th>
+                                                <th style="text-align:center;">Overtime Date 1</th>
+                                                <th style="text-align:center;">Overtime Date 2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="tempRow"></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="text-align:right;">
+                        <span class="input-group-btn">
+                            <button id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()">
+                                <i class="fa fa-refresh"></i>&nbsp;Reset
+                            </button>
+                            <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                    ng-click="createLeave($('#aliasTable').val())">
+                                <i class="fa fa-save"></i>&nbsp;Save
+                            </button>
+                        </span>
+                    </div>
+                    <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                        <strong><text style="color:#f44336;">Note: Compensatory Off Application will be saved and forwarded for approval only when "Save" button is pressed.</text></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

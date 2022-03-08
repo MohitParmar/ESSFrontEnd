@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "VaccinationReport";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/Controller/VaccinationCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="VaccinationCntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Vaccination Report</strong>
+                        <div style="float:right;">
+                            <a href="#" ng-click="exportAllData('Vaccination_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                Vaccination Report
+                            </a>&nbsp;&nbsp;
+                            <a href="http://172.16.12.44:8081/api/Vaccination/GetAllFiles">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i>&nbsp;Download All Certificate</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetVaccination()">
+                            <table class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Sr No.</th>
+                                        <th style="text-align:center;" ng-click="sort('EmpUnqId')">
+                                            EmpUnqId
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('EmpName')">
+                                            Emp name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('StationName')">
+                                            Station<span class="glyphicon sort-icon" ng-show="sortKey=='StationName'"
+                                                         ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('Category')">
+                                            Category<span class="glyphicon sort-icon" ng-show="sortKey=='Category'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('Designation')">
+                                            Designation
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='Designation'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('FirstDoseDate')">
+                                            First Dose
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='FirstDoseDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('SecondDoseDate')">
+                                            Second Dose
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='SecondDoseDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('PrecautionDoseDate')">
+                                            Precaution Dose
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='PrecautionDoseDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('UpdateDate')">
+                                            Update Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='UpdateDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpUnqId" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpName" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.StationName" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.Category" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.Designation" /></td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in vacData|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                    <tr>
+                                        <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align:center;">{{d.EmpUnqId}}</td>
+                                        <td style="text-align:left;">{{d.EmpName}}</td>
+                                        <td style="text-align:left;">{{d.StationName}}</td>
+                                        <td style="text-align:left;">{{d.Category}}</td>
+                                        <td style="text-align:left;">{{d.Designation}}</td>
+                                        <td style="text-align:center;">{{d.FirstDoseDate|date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.SecondDoseDate|date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.PrecautionDoseDate|date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;width:120px;">{{d.UpdateDate|date:'dd/MM/yyyy HH:mm'}}</td>
+                                        <td style="text-align:center;">
+                                            <button id="btnDownload" class="btn btn-primary" ng-click="GetFileEmpWise({{d.EmpUnqId}})">
+                                                <i class="fa fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

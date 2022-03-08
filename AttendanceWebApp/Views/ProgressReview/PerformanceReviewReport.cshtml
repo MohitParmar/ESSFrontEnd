@@ -1,0 +1,356 @@
+﻿@{
+    ViewBag.Title = "PerformanceReviewReport";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ProgressReviewCntrl.js"></script>
+<script>
+    function printData() {
+        var divToPrint = document.getElementById("divConfirmation");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        //newWin.print();
+    };
+    function printData1() {
+        var divToPrint = document.getElementById("divExtension");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+    };
+</script>
+<div ng-app="myApp" ng-controller="ProgressReviewController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Performance Reviews</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <input class="form-control" type="date" id="FromDt" ng-model="New.FromDt">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <input class="form-control" type="date" id="ToDt" ng-model="New.ToDt" ng-change="ToValidate()">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetAllReviews()">
+                                            <i class="fa fa-search"></i>
+                                            Search
+                                        </button>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            Emp.Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='('empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('empName')">
+                                            Emp Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('unitName')">
+                                            Unit
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('deptName')">
+                                            Department
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('statName')">
+                                            Station
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('catName')">
+                                            Category
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='catName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('gradeName')">
+                                            Grade
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='gradeName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('desgName')">
+                                            Designation
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='desgName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('joinDate')">
+                                            JoinDate
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='joinDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('hrReleaseDate')">
+                                            EffectiveDate
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='hrReleaseDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('recommendation')">
+                                            Confirmation Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='recommendation'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;">Remarks</th>
+                                        <th style="text-align:left;">Preview</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.unitName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.catName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gradeName" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.desgName" />
+                                        </td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in garData|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                    <tr>
+                                        <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align:center;">{{d.empUnqId}}</td>
+                                        <td style="text-align:left;">{{d.empName}}</td>
+                                        <td style="text-align:left;">{{d.unitName}}</td>
+                                        <td style="text-align:left;">{{d.deptName}}</td>
+                                        <td style="text-align:left;">{{d.statName}}</td>
+                                        <td style="text-align:left;">{{d.catName}}</td>
+                                        <td style="text-align:left;">{{d.gradeName}}</td>
+                                        <td style="text-align:left;">{{d.desgName}}</td>
+                                        <td style="text-align:left;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.hrReleaseDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.recommendation}}</td>
+                                        <td style="text-align:left;">{{d.hrRemarks}}</td>
+                                        <td>
+                                            <button class="btn btn-info" id="btnInfo"
+                                                    ng-show="d.recommendation == 'C' || d.recommendation == 'E'"
+                                                    ng-click="PopulateData({{d.empUnqId}},'{{d.recommendation}}')">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmationModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: 825px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Preview: </h4>
+                            <div style="        float: right;">
+                                <button type="submit" id="btnPrint" class="btn btn-primary" onclick="printData()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            </div>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div id="divConfirmation" class="table-responsive" ng-repeat="e in prgrvw"
+                                     style="background-image: url(../../ESS_Images/letterhead.jpg);background-size:contain; border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
+                                    <div style="padding-left: 70px; padding-right: 35px; padding-top: 150px;" class="form-group row">
+                                        <div class="col-sm-6" style="text-align: left;">
+                                            JSAW/HR/{{e.empUnqId}}/{{e.reviewDate | date:'yyyy'}}
+                                        </div>
+                                        <div class="col-sm-6" style="text-align: right;">
+                                            DATE : {{e.reviewDate | date:'dd/MM/yyyy'}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                {{e.empName}}
+                                                <br />
+                                                SAP ID: {{e.empUnqId}}
+                                                <br />
+                                                Designation: {{e.desgName}}
+                                                <br />
+                                                Dept. - Division: {{e.deptName}} - {{e.statName}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="text-align:center;">
+                                        <div class="col-sm-12">
+                                            <b><u>Confirmation Letter</u></b>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            Dear {{e.empName}},
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">
+                                                Please refer to the appointment letter dated {{e.joinDate | date:'dd/MM/yyyy'}},wherein you were appointed on probation for a period of
+                                                <b>06 Months</b> w.e.f. {{e.joinDate | date:'dd/MM/yyyy'}}.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">
+                                                Your performance during the probationary period has been evaluated and found satisfactory. Accordingly we are pleased to confirm your services with effect from
+                                                <b>{{e.reviewDate | date:'dd/MM/yyyy'}}.</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">All other terms and conditions of your appointment will remain the same as per letter of appointment dated {{e.joinDate | date:'dd/MM/yyyy'}}.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p>Hope, you will strive hard to achieve the departmental goals.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p>Wishing you a continuous growth and rewarding career with JINDAL SAW LIMITED.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p>With Best wishes</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
+                                        <div class="col-sm-12">
+                                            <p>This letter is system generated and does not require signature</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="extensionModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Preview: </h4>
+                            <div style="        float: right;">
+                                <button type="submit" id="btnPrint1" class="btn btn-primary" onclick="printData1()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            </div>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div id="divExtension" class="table-responsive" ng-repeat="e in prgrvw"
+                                     style="background-image: url(../../ESS_Images/letterhead.jpg);background-size:contain; border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
+                                    <div style="padding-left: 70px; padding-right: 35px; padding-top: 150px;" class="form-group row">
+                                        <div class="col-sm-6" style="text-align: left;">
+                                            JSAW/HR/{{e.empUnqId}}/{{e.reviewDate | date:'yyyy'}}
+                                        </div>
+                                        <div class="col-sm-6" style="text-align: right;">
+                                            DATE : {{e.reviewDate | date:'dd/MM/yyyy'}}
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                {{e.empName}}
+                                                <br />
+                                                SAP ID: {{e.empUnqId}}
+                                                <br />
+                                                Designation: {{e.desgName}}
+                                                <br />
+                                                Dept. - Division: {{e.deptName}} - {{e.statName}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group row" style="text-align:center;">
+                                        <div class="col-sm-12">
+                                            <b><u>Extension Letter</u></b>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            Dear {{e.empName}},
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">
+                                                Please refer to the appointment letter, dated: {{e.joinDate | date:'dd/MM/yyyy'}}, wherein you were appointed on probation for a period of
+                                                <b>06 Months</b> w.e.f. {{e.joinDate | date:'dd/MM/yyyy'}}.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">
+                                                During the probation period, your performance has been evaluated and found "{{e.hodRemarks}}". Therefore your probation period is extended herewith for 03 months upto {{e.reviewDate}}.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                        <div class="col-sm-12">
+                                            <p style="text-align:justify;">
+                                                You are required to put in all efforts and achieve qualitative and quantitative improvement in your performance during the extended period.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
+                                        <div class="col-sm-12">
+                                            <p>This letter is system generated and does not require signature</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

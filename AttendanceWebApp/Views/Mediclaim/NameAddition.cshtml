@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "NameAddition";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -65,6 +65,7 @@
                                     <tr>
                                         <th style="        text-align: center;">Sr No.</th>
                                         <th style="        text-align: center;">Status</th>
+                                        <th style="        text-align: left;">Remarks</th>
                                         <th style="        text-align: center;">EmpUnqId</th>
                                         <th style="        text-align: center;">Name of Insured</th>
                                         <th style="        text-align: center;">Relation</th>
@@ -78,7 +79,8 @@
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="d in depData|itemsPerPage:10">
-                                    <tr ng-style="(d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ">
+                                    <tr ng-style="(d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ||
+                                         (d.active == false) && {'background-color':'#f2dede','color':'#b94a48'}">
                                         <td style="        text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="        text-align: center;"
                                             ng-style="
@@ -86,6 +88,7 @@
                                             (d.active == true  && d.releaseStatusCode == 'F') && {'background-color':'#dff0d8','color':'#468847'}">
                                             {{(d.active == true && d.isChanged == true) ? d.delReleaseStatusCode : d.releaseStatusCode}}
                                         </td>
+                                        <td style="        text-align: left;font-weight:bold;">{{d.remarks}}</td>
                                         <td style="        text-align: center;">{{d.empUnqId}}</td>
                                         <td style="        text-align: left;">{{d.depName}}</td>
                                         <td style="        text-align: center;">{{d.relation}}</td>
@@ -157,10 +160,9 @@
                                                 </td>
                                                 <td>Relation</td>
                                                 <td>
-                                                    <select class="form-control" ng-model="New.relation" ng-change="setRelation(New.relation)" id="cmbReleation">
+                                                    <select class="form-control" ng-model="New.relation" ng-change="setGender(New.relation)" id="cmbReleation">
                                                         <option value="0">---Select---</option>
-                                                        <option value="HUSBAND">HUSBAND</option>
-                                                        <option value="WIFE">WIFE</option>
+                                                        <option value="SPOUSE">SPOUSE</option>
                                                         <option value="DAUGHTER">DAUGHTER</option>
                                                         <option value="SON">SON</option>
                                                     </select>

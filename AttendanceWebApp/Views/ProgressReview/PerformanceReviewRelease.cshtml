@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Performance Review Release";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ProgressReviewCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ProgressReviewController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Pending for Release Performance Review</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetReviews(true,false)">
+                            <table class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Emp.Code</th>
+                                        <th style="text-align:left;">Emp Name</th>
+                                        <th style="text-align:left;">Unit</th>
+                                        <th style="text-align:left;">Department</th>
+                                        <th style="text-align:left;">Station</th>
+                                        <th style="text-align:left;">Category</th>
+                                        <th style="text-align:left;">Grade</th>
+                                        <th style="text-align:left;">Designation</th>
+                                        <th style="text-align:center;">Review Quator No</th>
+                                        <th style="text-align:center;">Period From</th>
+                                        <th style="text-align:center;">Period To</th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in gprData|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                    <tr>
+                                        <td style="text-align:center;">{{d.empUnqId}}</td>
+                                        <td style="text-align:left;">{{d.empName}}</td>
+                                        <td style="text-align:left;">{{d.unitName}}</td>
+                                        <td style="text-align:left;">{{d.deptName}}</td>
+                                        <td style="text-align:left;">{{d.statName}}</td>
+                                        <td style="text-align:left;">{{d.catName}}</td>
+                                        <td style="text-align:left;">{{d.gradeName}}</td>
+                                        <td style="text-align:left;">{{d.desgName}}</td>
+                                        <td style="text-align:center;">{{d.reviewQtrNo}}</td>
+                                        <td style="text-align:center;">{{d.periodFrom|date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.periodTo|date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:Center;">
+                                            <button class="btn btn-info" id="btnPopup" ng-click="PopUp({{d.empUnqId}},false,{{d.isConfirmation}},{{d.reviewQtrNo}})"><i class="fa fa-info-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ReviewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: fit-content;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Dependent Details :</h4>
+                </div>
+                <div class="content" style="        padding: 4px 15px 15px 15px;">
+                    <div style="border-collapse: collapse;
+                                                  font-family: Arial, Helvetica, sans-serif;
+                                                  font-size: 14px;
+                                                  width: 793px;">
+
+
+                        <div class="body_panel">
+                            <div class="table-responsive">
+                                <div class="form-group-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Period From: </label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="date" class="form-control" id="txtPeriodFrom" disabled />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label>Period to: </label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="date" class="form-control" id="txtPeriodTo" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12" style="text-align:center;">
+                                            <label>Personal Details:</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Name :</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="txtEmpName" disabled />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label>SAPID :</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtSapid" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Designation/Department</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="txtDesgDept" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Date of Joining</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="txtJoiningDt" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Assignments during the quarter :</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="txtAssignments" maxlength="250" disabled></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>What do you see as Person's strength :</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="txtStrength" maxlength="250" disabled></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Area of Improvements :</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="txtImprovement" maxlength="250" disabled></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Suggestion(s) for improvement :</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="txtSuggestion" maxlength="250" disabled></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Overall Rating</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="cmbRating" ng-model="N.rating">
+                                                <option value="S">Star</option>
+                                                <option value="G">Good</option>
+                                                <option value="A">Average</option>
+                                                <option value="P">Poor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="divRecom">
+                                        <div class="col-sm-3">
+                                            <label>Recommendations :</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" id="cmbRecommendation" ng-model="N.recommendation">
+                                                <option value="C">Confirmation</option>
+                                                <option value="E">Extension</option>
+                                                <option value="T">Termination</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" id="txtRemarks" maxlength="250"  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <label>Remarks :</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="txtHodRemarks" maxlength="250" ng-model="N.hodRemarks" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success" id="btnSubmit" ng-click="SubmitReview(N,true)"><i class="fa fa-save"></i> Submit/Release</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

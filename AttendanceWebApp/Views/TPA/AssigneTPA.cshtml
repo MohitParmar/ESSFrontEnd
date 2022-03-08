@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "AssigneTPA";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Scripts/Controller/TPACntrl.js"></script>
@@ -87,10 +87,10 @@
                                                 <td style="text-align:left;">{{d.desgName}}</td>
                                                 <td style="text-align:center;">{{d.tpaShiftCode}}</td>
                                                 <td style="text-align:right;width:110px;">
-                                                    <input type="number" class="form-control" id="txtRequiredHours" style="width:90px;" maxlength="24" ng-disabled="d.id !== 0" />
+                                                    <input type="number" class="form-control" id="txtRequiredHours" style="width:90px;" max="24" ng-disabled="d.id !== 0" />
                                                 </td>
                                                 <td style="text-align:center;">
-                                                    <input type="text" class="form-control" id="txtJustification" ng-disabled="d.id !== 0" />
+                                                    <input type="text" class="form-control" id="txtJustification" ng-disabled="d.id !== 0" maxlength="255"/>
                                                 </td>
                                             </tr>
                                         </tbody>

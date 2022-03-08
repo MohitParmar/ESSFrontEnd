@@ -722,7 +722,7 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             $('#cmb_ownership').val($scope.taxdata[d].ownership); $('#cmb_ownership2').val($scope.taxdata[d].ownership2);
                             $('#txt_jointownername').val($scope.taxdata[d].jointOwnerName); $('#txt_jointownername2').val($scope.taxdata[d].jointOwnerName2);
                             $('#txt_jointownerrelationship').val($scope.taxdata[d].jointOwnerRelation); $('#txt_jointownerrelationship2').val($scope.taxdata[d].jointOwnerRelation2);
-                            $('#txt_jointownershare').val($scope.taxdata[d].jointOwnerShare); ('#txt_jointownershare2').val($scope.taxdata[d].jointOwnerShare2);
+                            $('#txt_jointownershare').val($scope.taxdata[d].jointOwnerShare); $('#txt_jointownershare2').val($scope.taxdata[d].jointOwnerShare2);
                             $('#rentalincome').val($scope.taxdata[d].rentalIncomePerMonth); $('#rentalincome2').val($scope.taxdata[d].rentalIncomePerMonth2);
                             $('#muntax').val($scope.taxdata[d].municipalTax); $('#muntax2').val($scope.taxdata[d].municipalTax2);
 

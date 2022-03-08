@@ -53,17 +53,17 @@ namespace AttendanceWebApp.Controllers
             }
         }
 
-        public ActionResult VerifyAddressHR()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
+        //public ActionResult VerifyAddressHR()
+        //{
+        //    if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+        //    {
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Login");
+        //    }
+        //}
 
         //Manage Leave Application Changes
         public ActionResult ManageLeaveMaster()

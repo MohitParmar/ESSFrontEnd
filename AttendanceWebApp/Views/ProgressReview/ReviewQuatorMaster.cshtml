@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Review Quator";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/ProgressReviewCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ProgressReviewController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Progress Review Master</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div class="input-group form">
+                                <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-condensed table-striped" dir-paginate="d in empdata|itemsPerPage:5">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="8" style="text-align: center;">
+                                            <h4>
+                                                <strong>Employee Details ({{d.empUnqId}})</strong>
+                                            </h4>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Employee Name</label></td>
+                                        <td>{{d.empName}}</td>
+                                        <td><label>Father Name</label></td>
+                                        <td>{{d.fatherName}}</td>
+                                        <td><label>Company Name</label></td>
+                                        <td>{{d.compName}}</td>
+                                        <td><label>Work Group</label></td>
+                                        <td>{{d.wrkGrpDesc}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Unit Name</label></td>
+                                        <td>{{d.unitName}}</td>
+                                        <td><label>Department Name</label></td>
+                                        <td>{{d.deptName}}</td>
+                                        <td><label>Station Name</label></td>
+                                        <td>{{d.statName}}</td>
+                                        <td><label>Category Name</label></td>
+                                        <td>{{d.catName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Employee Type Name</label></td>
+                                        <td>{{d.empTypeName}}</td>
+                                        <td><label>Grade Name</label></td>
+                                        <td>{{d.gradeName}}</td>
+                                        <td><label>Designation Name</label></td>
+                                        <td>{{d.desgName}}</td>
+                                        <td><label>Join Date</label></td>
+                                        <td>{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <hr />
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label>Review Quator : </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="txtReviewQuator" ng-model="N.reviewQuator" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" class="btn btn-success" id="btnOK" name="Submit" value="Submit" ng-click="PostReview()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

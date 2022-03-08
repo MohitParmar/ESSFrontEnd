@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "AssignTPAinDateRange";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 <script src="~/Scripts/Controller/TPACntrl.js"></script>
@@ -9,8 +9,18 @@
 <script language="JavaScript" type="text/javascript">
     $(window).on("load", function () {
         var date = new Date();
-        var firstDay = new Date(date.getFullYear(), (date.getMonth() - 1), 26);
-        var lastDay = new Date(date.getFullYear(), (date.getMonth()), 25);
+        var ndt = date.getDate();
+        var firstDay, lastDay;
+        
+        if (ndt >= "26") {
+            firstDay = new Date(date.getFullYear(), (date.getMonth()), 26);
+            lastDay = new Date(date.getFullYear(), (date.getMonth() + 1), 25);
+        } else if (ndt < "26") {
+            firstDay = new Date(date.getFullYear(), (date.getMonth() - 1), 26);
+            lastDay = new Date(date.getFullYear(), (date.getMonth()), 25);
+        }
+        //firstDay = new Date(date.getFullYear(), (date.getMonth() - 1), 26);
+        //lastDay = new Date(date.getFullYear(), (date.getMonth()), 25);
         if (firstDay.getMonth() + 1 < '10') {
             if (firstDay.getDate() < '10') {
                 firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();

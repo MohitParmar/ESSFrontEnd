@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "COffApplication";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/Module/app.js"></script>
+<script src="~/Scripts/Controller/CompOffCntrl.js"></script>
+<script src="~/Scripts/Controller/MasterCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="CompOffController">
+    <div class="container-fluid">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-init="GetRelesaseStratey()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Compensatory Off</strong>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" name="LeaveForm" novalidate style="margin-bottom:0px;">
+                            <table id="myTable" class="table table-responsive table-condensed">
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <label>Select Mode</label>
+                                    </td>
+                                    <td style="text-align:center;" colspan="2">
+                                        <label>Select Date</label>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <label>Compensatory Off Date</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="cmbCOMode" class="form-control" ng-model="New.COMODE" ng-change="checkCoff()" required>
+                                            <option>--- Select ---</option>
+                                            <option value="W" title="Weekly Off">Weekly Off</option>
+                                            <option value="H" title="Holiday">Holiday</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align:center;" colspan="2">
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="CODate1" ng-model="New.CODate1" data-date-format="yyyy/MM/dd" placeholder="Select Date"
+                                                   datepicker required>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" placeholder="Select Comp Off Date"
+                                                   ng-change="ToValidate()" datepicker required>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <label>Leave Type</label>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <label>Leave Reason</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <input class="form-control" type="text" id="txtLeaveTypeCode" name="LeaveTypeCode" value="CO" disabled="disabled">
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <input class="form-control" type="text" id="Remarks" name="Remarks" placeholder="Please Enter Leave Reason.." ng-model="New.Remarks" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;" colspan="4">
+                                        <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="LeaveRequestData(New)">
+                                            <i class="fa fa-plus-square"></i>Add to List
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Leave App Item</th>
+                                        <th style="text-align:center;">Leave Type</th>
+                                        <th style="text-align:center;">Comp Off Date</th>
+                                        <th style="text-align:center;">Days</th>
+                                        <th style="text-align:center;">Reason</th>
+                                        <th style="text-align:center;">Mode Of COFF</th>
+                                        <th style="text-align:center;">Selected Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tempRow">
+                                        <td colspan="7">No information entered.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="panel-footer" style="text-align:right;">
+                        <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
+                        <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                                ng-click="createLeave($('#aliasTable').val())">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    </div>
+                    <div class="footer-terms" style="text-align:Left;margin:5px;padding:5px;">
+                        <strong><text style="color:#f44336;">Note: Compensatory Off Application will be saved and forwarded for approval only when "Save" button is pressed.</text></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Holiday List</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
+                            <div class="table-responsive">
+                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date</th>
+                                            <th style="text-align:center;">Festival Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="hld in hlddata">
+                                            <td style="text-align:center;" data-title="'Holiday Date'" id="holidayDate">{{hld.holidayDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:Left;" data-title="'Holiday Name'" id="holidayName">{{hld.holidayName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

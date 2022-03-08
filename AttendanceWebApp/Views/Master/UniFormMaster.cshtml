@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "UniForm Master";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/UniformCntrl.js"></script>
@@ -35,7 +35,8 @@
 </style>
 <script>
     window.onload = function () {
-        var d = new Date(); var Currentyear = (d.getFullYear()); $('#txtYear').val(Currentyear); $("#test *").attr("disabled", "disabled").off('click');
+        var d = new Date(); var Currentyear = (d.getFullYear()); $('#txtYear').val(Currentyear);
+        //$("#test *").attr("disabled", "disabled").off('click');
     };
 </script>
 <div ng-app="myApp" ng-controller="UniformController">
@@ -43,7 +44,7 @@
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
             @* Add / Update Uniform Details *@
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Update Uniform Details</strong>
@@ -53,22 +54,29 @@
                             <table class="table table-bordered table-condensed">
                                 <tbody>
                                     <tr>
+                                        <td><label>Current Year:</label></td>
                                         <td>
                                             <input class="form-control" type="text" id="txtYear" name="Year" disabled="disabled">
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <label>Trouser Size</label>
                                         </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtTrouserSize" name="TrouserSize" placeholder="Trouser Size" ng-model="New.TrouserSize" required>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <label>Shirt Size</label>
                                         </td>
                                         <td>
                                             <input class="form-control" type="text" id="txtShirtSize" name="ShirtSize" placeholder="Shirt Size" ng-model="New.ShirtSize" required>
                                         </td>
-                                        <td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
                                             <span class="input-group-btn">
                                                 <button id="btnCreate" type="button" class="btn btn-primary" style="text-align:right;" value="Submit" name="Submit"
                                                         ng-click="AddUniformDetails(New)">
@@ -88,10 +96,10 @@
                 </div>
             </div>
             @* Get Uniform Details *@
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <strong>Details Of Uniform</strong>
+                        <strong>Uniform History</strong>
                     </div>
                     <div class="panel-body">
                         @*<div ng-init="GetUniformDetails()">*@

@@ -43,17 +43,17 @@ namespace AttendanceWebApp.Controllers
         }
 
         //Tax Comparison Report
-        public ActionResult TaxComparisonReport()
-        {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
+        //public ActionResult TaxComparisonReport()
+        //{
+        //    if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
+        //    {
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Login");
+        //    }
+        //}
 
         public ActionResult Form16Upload()
         {
