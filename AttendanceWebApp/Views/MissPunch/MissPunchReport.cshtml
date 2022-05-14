@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "MissPunchReport";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
@@ -90,7 +90,7 @@
                             </table>
                         </div>
                         <div class="table-responsive" ng-init="GetMissedPunch()">
-                            <table class="table table-bordered table-responsive">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;">Sr. No.</th>
@@ -129,11 +129,13 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='remarks'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:center;">In User</th>
                                         <th style="text-align:center;" ng-click="sort('inTime')">
                                             In Time
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='inTime'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:center;">Out User</th>
                                         <th style="text-align:center;" ng-click="sort('outTime')">
                                             Out Time
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='outTime'"
@@ -157,7 +159,14 @@
                                         <td style="text-align:center;">
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.remarks" />
                                         </td>
-                                        <td colspan="2"></td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.inTimeUser" />
+                                        </td>
+                                        <td></td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.outTimeUser" />
+                                        </td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="d in mpaData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
@@ -176,7 +185,9 @@
                                         <td style="        text-align: left;">{{d.empName}}</td>
                                         <td style="        text-align: left;">{{d.reason}}</td>
                                         <td style="        text-align: left;">{{d.remarks}}</td>
+                                        <td style="        text-align: left;">{{d.inTimeUser}}</td>
                                         <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: left;">{{d.outTimeUser}}</td>
                                         <td style="        text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
                                     </tr>
                                 </tbody>

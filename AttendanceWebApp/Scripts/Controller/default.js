@@ -11,6 +11,7 @@
                     document.getElementById(newArr[i].menuId).hidden = !1;
                 if (loc === "IPU") { if (_memberId === "103244" || _memberId === "112213" || _memberId === "103608" || _memberId === "104019") { $("#mnuDeptLeaveReport").show(); } else { $("#mnuDeptLeaveReport").hide(); }; };
                 var ndFLG = $("#myNDFlag").val(); if (ndFLG === "True") { $("#mnuNODuesStatus").show(); } else { $("#mnuNODuesStatus").hide(); };
+                var otFLG = $("#myOtFlag").val(); if (otFLG === "True") { $("#mnuOTCOffApplication").show(); } else { $("#mnuOTCOffApplication").hide(); };
             }
         }; rel.send();
         if ("IPU" === loc) {

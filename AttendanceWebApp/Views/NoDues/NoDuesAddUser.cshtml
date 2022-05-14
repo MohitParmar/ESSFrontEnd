@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "No Dues Details";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -152,7 +152,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="eid"></label></h3>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4>
+                            <h3>
+                                <label id="eid"></label>
+                            </h3>
                         </div>
                         <div class="content" style="        padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
@@ -160,12 +163,20 @@
                                     <table class="table">
                                         <tr>
                                             <td>Particulars</td>
-                                            <td><input type="text" id="txtParticularsER" class="form-control" ng-Model="D.particulars" /></td>
+                                            <td>
+                                                <input type="text" id="txtParticularsER" class="form-control" ng-Model="D.particulars" />
+                                            </td>
                                             <td>Remarks</td>
-                                            <td><input type="text" id="txtRemarksER" class="form-control" ng-Model="D.remarks" /></td>
+                                            <td>
+                                                <input type="text" id="txtRemarksER" class="form-control" ng-Model="D.remarks" />
+                                            </td>
                                             <td>Amount</td>
-                                            <td><input type="number" id="txtAmtER" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D.amount" value="0" /></td>
-                                            <td><button id="btnAdd" class="btn btn-primary" ng-click="DeptData(D,false)"><i class="fa fa-plus"></i></button></td>
+                                            <td>
+                                                <input type="number" id="txtAmtER" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D.amount" value="0" />
+                                            </td>
+                                            <td>
+                                                <button id="btnAdd" class="btn btn-primary" ng-click="DeptData(D,false)"><i class="fa fa-plus"></i></button>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -190,8 +201,12 @@
                                     </table>
                                     <table class="table" style="text-align: right;">
                                         <tr>
-                                            <td><label>Total : </label></td>
-                                            <td><input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="text-align: right;" /></td>
+                                            <td>
+                                                <label>Total : </label>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="text-align: right;" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -208,7 +223,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose1">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="heid"></label></h3>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4>
+                            <h3>
+                                <label id="heid"></label>
+                            </h3>
                         </div>
                         <div class="content" style="        padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
@@ -216,7 +234,9 @@
                                     <table class="table">
                                         <tr>
                                             <td>Notice Period</td>
-                                            <td><input type="text" class="form-control" id="txtNoticePeriod" ng-model="H.noticePeriod" /></td>
+                                            <td>
+                                                <input type="text" class="form-control" id="txtNoticePeriod" ng-model="H.noticePeriod" />
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Notice Period Basic/CTC</td>
@@ -249,12 +269,15 @@
                                                     <option id="5" value="Termination">Termination</option>
                                                     <option id="6" value="Death">Death</option>
                                                     <option id="7" value="Others">Others</option>
+                                                    <option id="8" value="Abandoned">Abandoned</option>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Exit Interview</td>
-                                            <td><input type="checkbox" id="chkExitInterview" ng-model="H.exitInterviewFlg" /></td>
+                                            <td>
+                                                <input type="checkbox" id="chkExitInterview" ng-model="H.exitInterviewFlg" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -271,7 +294,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose2">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4><h3><label id="eid1"></label></h3>
+                            <h4 class="modal-title" id="myModalLabel">No Dues Details of: </h4>
+                            <h3>
+                                <label id="eid1"></label>
+                            </h3>
                         </div>
                         <div class="content" style="        padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
@@ -279,12 +305,20 @@
                                     <table class="table">
                                         <tr>
                                             <td>Particulars</td>
-                                            <td><input type="text" id="txtParticularsER1" class="form-control" ng-Model="D1.particulars" /></td>
+                                            <td>
+                                                <input type="text" id="txtParticularsER1" class="form-control" ng-Model="D1.particulars" />
+                                            </td>
                                             <td>Remarks</td>
-                                            <td><input type="text" id="txtRemarksER1" class="form-control" ng-Model="D1.remarks" /></td>
+                                            <td>
+                                                <input type="text" id="txtRemarksER1" class="form-control" ng-Model="D1.remarks" />
+                                            </td>
                                             <td>Amount</td>
-                                            <td><input type="number" id="txtAmtER1" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D1.amount" value="0" /></td>
-                                            <td><button id="btnAdd1" class="btn btn-primary" ng-click="DeptData(D1,true)"><i class="fa fa-plus"></i></button></td>
+                                            <td>
+                                                <input type="number" id="txtAmtER1" class="form-control" pattern="^\d*(\.\d{0,2})?$" step=".01" ng-model="D1.amount" value="0" />
+                                            </td>
+                                            <td>
+                                                <button id="btnAdd1" class="btn btn-primary" ng-click="DeptData(D1,true)"><i class="fa fa-plus"></i></button>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -307,8 +341,12 @@
                                     </table>
                                     <table class="table" style="text-align: right;">
                                         <tr>
-                                            <td><label>Total : </label></td>
-                                            <td><input type="text" id="txtTotal1" class="form-control" value="0" disabled="disabled" style="text-align: right;" /></td>
+                                            <td>
+                                                <label>Total : </label>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtTotal1" class="form-control" value="0" disabled="disabled" style="text-align: right;" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -325,7 +363,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose3">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel3">No Dues Details of: </h4><h3><label id="heid1"></label></h3>
+                            <h4 class="modal-title" id="myModalLabel3">No Dues Details of: </h4>
+                            <h3>
+                                <label id="heid1"></label>
+                            </h3>
                         </div>
                         <div class="content" style="        padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
@@ -333,7 +374,9 @@
                                     <table class="table">
                                         <tr>
                                             <td>Notice Period</td>
-                                            <td><input type="number" class="form-control" id="txtNoticePeriod1" ng-model="H1.noticePeriod" /></td>
+                                            <td>
+                                                <input type="number" class="form-control" id="txtNoticePeriod1" ng-model="H1.noticePeriod" />
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Notice Period Basic/CTC</td>
@@ -366,17 +409,53 @@
                                                     <option id="5" value="Termination">Termination</option>
                                                     <option id="6" value="Death">Death</option>
                                                     <option id="7" value="Others">Others</option>
+                                                    <option id="8" value="Abandoned">Abandoned</option>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Exit Interview</td>
-                                            <td><input type="checkbox" id="chkExitInterview1" ng-model="H1.exitInterviewFlg" /></td>
+                                            <td>
+                                                <input type="checkbox" id="chkExitInterview1" ng-model="H1.exitInterviewFlg" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
                                 <div class="footer" style="        text-align: center;">
                                     <button type="submit" id="btnSubmitHR1" ng-click="ChangeNoDues(true,'',H1)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="SAPIDModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose4">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">SAPID Details</h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">SAP User Id</th>
+                                                <th style="text-align:center;">EmpUnqId</th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in sapData|itemsPerPage:10">
+                                                <td>{{d.sapUserId}}</td>
+                                                <td>{{d.empUnqId}}</td>
+                                                <td>{{d.empName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Leave Application";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<script src="~/Scripts/Angular/AngularJSv1.2.0-rc.3.js"></script><script src="~/Scripts/Module/ng-table.src.js"></script><script src="~/Scripts/Module/ng-tags-input.js"></script><link href="~/Content/ng-table.css" rel="stylesheet" media="screen" /><link href="~/Content/ng-table.min.css" rel="stylesheet" media="screen" />*@
 <script src="~/Scripts/Module/app.js"></script>
@@ -142,7 +142,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;">Leave App Item</th>
@@ -183,7 +183,7 @@
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
-                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Type</th>
@@ -215,7 +215,7 @@
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfOptionalholiday()">
                             <div class="table-responsive">
-                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Date</th>

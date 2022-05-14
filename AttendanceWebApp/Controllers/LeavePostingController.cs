@@ -19,14 +19,7 @@ namespace AttendanceWebApp.Controllers
         //View User Leave Applications / User Dashboard
         public ActionResult LeaveApplicationView()
         {
-            if (Session["EmpUnqId"] != null && Session["UserRole"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
     }
 }

@@ -48,16 +48,32 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
     $scope.populateEmpUnqId;
     $scope.PopulateData = function (id, flg) {
         $scope.populateEmpUnqId = id;
-        $("#commonTable").find("tr:not(:first)").remove(); $("#commonTable1").find("tr:not(:first)").remove();
-        var dept = $("#hidDept").val(); const rls = $("#hidreleaserFlag").val();
+        $("#commonTable").find("tr:not(:first)").remove();
+        $("#commonTable1").find("tr:not(:first)").remove();
+        var dept = $("#hidDept").val();
+        const rls = $("#hidreleaserFlag").val();
+        if (dept === "IT") { $scope.PopupSAPID(id); };
         if (dept === "HR" && rls === "false") {
-            if (flg === false) { document.getElementById("heid").innerHTML = id; $("#HRModel").modal("show"); }
-            else { document.getElementById("heid1").innerHTML = id; $("#HRModelEdit").modal("show"); }
+            if (flg === false) {
+                document.getElementById("heid").innerHTML = id;
+                $("#HRModel").modal("show");
+            }
+            else {
+                document.getElementById("heid1").innerHTML = id;
+                $("#HRModelEdit").modal("show");
+            }
         } else if (dept === "HR" && rls === "true") {
             document.getElementById("heid").innerHTML = id;
         } else if (dept !== "HR") {
-            if (flg === false) { document.getElementById("eid").innerHTML = id; $("#ConformModel").modal("show"); }
-            else { document.getElementById("eid1").innerHTML = id; $("#ConformModelEdit").modal("show"); }
+            if (flg === false) {
+                document.getElementById("eid").innerHTML = id;
+                $("#ConformModel").modal("show");
+                /*if (dept === "IT") { $scope.PopupSAPID(id); };*/
+            }
+            else {
+                document.getElementById("eid1").innerHTML = id;
+                $("#ConformModelEdit").modal("show");
+            }
         };
         const arr = $scope.noDuesData; let fg = new Array(); let empid; let row;
         if (flg === false) {
@@ -76,7 +92,11 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                                 "</tr>");
                             $("#commonTable").append(row);
                         } else {
-                            var noDuesDepts = new Array(); noDuesDepts = arr[i].noDuesDepts; if (noDuesDepts !== null) { fg = noDuesDepts[0].noDuesDeptDetails; };
+                            var noDuesDepts = new Array();
+                            noDuesDepts = arr[i].noDuesDepts;
+                            if (noDuesDepts !== null) {
+                                fg = noDuesDepts[0].noDuesDeptDetails;
+                            };
                             for (var k = 0; k < fg.length; k++) {
                                 row = $("<tr>" +
                                     "<td style='text-align:center;'><input type='hidden' name='AliasLastNames' value='" + fg[k].empUnqId + "'>" + fg[k].empUnqId + "</td>" +
@@ -89,8 +109,13 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                                 $("#commonTable").append(row);
                             }
                         };
-                        var nDDepts = arr[i]["noDuesDepts"]; var nDDetails = nDDepts[0]["noDuesDeptDetails"]; var Total = 0;
-                        for (var m = 0; m < nDDetails.length; m++) { Total += parseInt(nDDetails[m]["amount"]) || 0; document.getElementById("txtTotal").value = Total || 0; }
+                        var nDDepts = arr[i]["noDuesDepts"];
+                        var nDDetails = nDDepts[0]["noDuesDeptDetails"];
+                        var Total = 0;
+                        for (var m = 0; m < nDDetails.length; m++) {
+                            Total += parseInt(nDDetails[m]["amount"]) || 0;
+                            document.getElementById("txtTotal").value = Total || 0;
+                        }
                     }
                 }
             }
@@ -111,7 +136,11 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                                 "</tr>");
                             $("#commonTable1").append(row);
                         } else {
-                            var noDuesDepts = new Array(); noDuesDepts = arr[j].noDuesDepts; if (noDuesDepts !== null) { fg = noDuesDepts[0].noDuesDeptDetails; };
+                            var noDuesDepts = new Array();
+                            noDuesDepts = arr[j].noDuesDepts;
+                            if (noDuesDepts !== null) {
+                                fg = noDuesDepts[0].noDuesDeptDetails;
+                            };
                             for (var l = 0; l < fg.length; l++) {
                                 row = $("<tr>" +
                                     "<td style='text-align:center;'><input type='hidden' name='AliasLastNames' value='" + fg[l].empUnqId + "'>" + fg[l].empUnqId + "</td>" +
@@ -125,12 +154,36 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                                 $("#commonTable1").append(row);
                             }
                         };
-                        var nDDepts1 = arr[j]["noDuesDepts"]; var nDDetails1 = nDDepts1[0]["noDuesDeptDetails"]; var Total1 = 0;
-                        for (var n = 0; n < nDDetails1.length; n++) { Total1 += parseInt(nDDetails1[n]["amount"]) || 0; document.getElementById("txtTotal1").value = Total1 || 0; }
+                        var nDDepts1 = arr[j]["noDuesDepts"];
+                        var nDDetails1 = nDDepts1[0]["noDuesDeptDetails"];
+                        var Total1 = 0;
+                        for (var n = 0; n < nDDetails1.length; n++) {
+                            Total1 += parseInt(nDDetails1[n]["amount"]) || 0;
+                            document.getElementById("txtTotal1").value = Total1 || 0;
+                        }
                     }
                 }
             }
         }
+    };
+    $scope.PopupSAPID = function (eid) {
+        var empid = eid; var sap = new XMLHttpRequest; sap.open("GET", $scope._Conpath + "Employee/GetSapId", !0); sap.setRequestHeader("Accept", "application/json"); sap.onreadystatechange = function () {
+            if (4 === sap.readyState) {
+                debugger;
+                var jsonsap = JSON.parse(sap.responseText);
+                var myarray = jsonsap; var newArray = [];
+                for (var i = 0; i < myarray.length; i++) {
+                    var empcode = parseInt(myarray[i]["empUnqId"]);
+                    if (empid === empcode) {
+                        newArray.push([]);
+                        newArray[0].sapUserId = myarray[i]["sapUserId"]; newArray[0].empUnqId = myarray[i]["empUnqId"];
+                        newArray[0].empName = myarray[i]["empName"];
+                        $("#SAPIDModel").modal("show");
+                        break;
+                    };
+                }; $scope.sapData = newArray; $scope.$digest();
+            };
+        }; sap.send();
     };
     var c = 0;
     $scope.DeptData = function (data, flg) {
@@ -240,7 +293,6 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     " <strong>Please enter details of no dues and click on Plus Button and Submit to save No Dues details.</strong></div>"; $("#MessageBox1").show();
                 return false;
             }
-
             for (var n = 0; n < noDuesDeptDetails.length; n++) { noDuesDeptDetails[n]["Sr"] = n + 1; };
             empUnqId = id; if (releaserFlag === "true") { empUnqId = direct; }
             else {
@@ -251,6 +303,15 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             }
             $scope.ndData;
             for (var i = 0; i < $scope.noDuesData.length; i++) { var f = parseInt($scope.noDuesData[i].empUnqId); if (f === empUnqId) { $scope.ndData = $scope.noDuesData[i]; break; } };
+            var noduesstatus = $scope.ndData.noDuesStatus;
+            if (dept === "FIN") {
+                var itstatus = noduesstatus.it;
+                if (itstatus === false) {
+                    alert("Before IT Dept Release you can not submit finance details.");
+                    $scope.ResetView();
+                    return fasle;
+                }
+            }
             jsonObj.empUnqId = empUnqId; jsonObj.joinDate = $scope.ndData.joinDate; jsonObj.resignDate = $scope.ndData.resignDate;
             jsonObj.relieveDate = $scope.ndData.relieveDate; jsonObj.noDuesStartDate = $scope.ndData.noDuesStartDate;
             jsonObj.addUser = $scope.ndData.addUser; jsonObj.addDate = $scope.ndData.addDate; jsonObj.closedFlag = $scope.ndData.closedFlag;
@@ -291,7 +352,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                 jsonObj.hrApprovedBy = $scope.ndData.hrApprovedBy;
             }
             if (dept === "UH") { jsonObj.uhApprovalFlag = true; jsonObj.uhApprovalDate = dt; jsonObj.uhApprovedBy = $("#myEmpUnqId").val(); };
-            jsonObj.noDuesReleaseStatus = $scope.ndData.noDuesReleaseStatus; if (hodRlsFLG !== null) {
+            jsonObj.noDuesReleaseStatus = $scope.ndData.noDuesReleaseStatus;
+            if (hodRlsFLG !== null) {
                 if (hodRlsFLG === "true") {
                     var r = new Array();
                     r = $scope.ndData.noDuesReleaseStatus;

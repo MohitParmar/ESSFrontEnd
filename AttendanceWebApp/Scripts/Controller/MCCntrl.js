@@ -1,10 +1,13 @@
-﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]); app.controller("MCController", function ($scope, $http) {
+﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
+app.controller("MCController", function ($scope, $http) {
     $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
     $scope.currentPage = 1, $scope.itemsPerPage = 50; $scope.exportObj;
     $scope.ResetView = function () { window.location.reload(true) };
     var d = new Date();
     var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
     var c = 0;
+    //Remove all rows from table
+    /*$("#table_of_items tr").remove();*/
     $scope.empDetails = function () {
         var e_Code = $("#eCode").val();
         var usr = new XMLHttpRequest;
@@ -115,7 +118,11 @@
                 $scope.$digest();
                 if (mode === "false") {
                     const arr = $scope.depData;
-                    $(".tempRow").remove();
+                    var table = document.getElementById('commonTable');
+                    var rowCount = table.rows.length;
+                    for (var i = rowCount - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
                     for (let i = 0; i < arr.length; i++) {
                         var bDate = arr[i].birthDate === null ? "" : arr[i].birthDate.substring(0, arr[i].birthDate.indexOf("T"));
                         var mDate = arr[i].marriageDate === null ? "" : arr[i].marriageDate.substring(0, arr[i].marriageDate.indexOf("T"));
@@ -169,12 +176,10 @@
         $("#loading").removeClass("deactivediv");
         $("#loading").addClass("activediv");
         var rdd = new XMLHttpRequest;
-        rdd.open("GET", $scope._Conpath + "MedDependent?fromDt=" + fromDt + "&toDt=" + toDt, true)
+        rdd.open("GET", $scope._Conpath + "MedDependent?fromDt=" + fromDt + "&toDt=" + toDt, true);
         rdd.setRequestHeader("Accept", "application/json");
         rdd.onreadystatechange = function () {
             if (rdd.readyState === 4 && rdd.status === 200) {
-                $("#loading").removeClass("activediv");
-                $("#loading").addClass("deactivediv");
                 var json1 = JSON.parse(rdd.responseText);
                 $scope.relDepData = json1;
                 var f = new Array();
@@ -195,11 +200,37 @@
                         $scope.relDepData[i]["Add_Del"] = "Deletion";
                     }
                 };
-                $scope.exportObj = $scope.relDepData;
+                var arr = new Array(); arr = $scope.relDepData; var cnt = 0, myArray = [];
+                for (var i = 0; i < arr.length; i++) {
+                    myArray.push([]);
+                    myArray[cnt].empUnqId = arr[i].empUnqId;
+                    myArray[cnt].depSr = arr[i].depSr;
+                    myArray[cnt].depName = arr[i].depName;
+                    myArray[cnt].relation = arr[i].relation;
+                    var bdate = arr[i].birthDate; if (bdate === null) { myArray[cnt].birthDate = ""; } else { myArray[cnt].birthDate = arr[i].birthDate.substring(0, arr[i].birthDate.indexOf("T")); };
+                    myArray[cnt].gender = arr[i].gender;
+                    var mdate = arr[i].marriageDate; if (mdate === null) { myArray[cnt].marriageDate = ""; } else { myArray[cnt].marriageDate = arr[i].marriageDate.substring(0, arr[i].marriageDate.indexOf("T")); };
+                    var panno = arr[i].pan; if (panno === null || panno === 0 || panno === "0") { myArray[cnt].pan = ""; } else { myArray[cnt].pan = arr[i].pan; };
+                    var adhno = arr[i].aadhar; if (adhno === null || adhno === 0 || adhno === "0") { myArray[cnt].aadhar = ""; } else { myArray[cnt].pan = arr[i].aadhar; };
+                    var bcerno = arr[i].birthCertificateNo; if (bcerno === null || bcerno === 0 || bcerno === "0") { myArray[cnt].birthCertificateNo = ""; } else { myArray[cnt].birthCertificateNo = arr[i].birthCertificateNo; };
+                    var edate = arr[i].effectiveDate; if (edate === null) { myArray[cnt].effectiveDate = ""; } else { myArray[cnt].effectiveDate = arr[i].effectiveDate.substring(0, arr[i].effectiveDate.indexOf("T")); };
+                    var rStatus = arr[i].releaseStatusCode; if (rStatus === null) { myArray[cnt].releaseStatusCode = ""; } else { myArray[cnt].releaseStatusCode = arr[i].releaseStatusCode; };
+                    var reldate = arr[i].releaseDt; if (reldate === null) { myArray[cnt].releaseDt = ""; } else { myArray[cnt].releaseDt = arr[i].releaseDt.substring(0, arr[i].releaseDt.indexOf("T")); };
+                    var dStatus = arr[i].delReleaseStatusCode; if (dStatus === null) { myArray[cnt].delReleaseStatusCode = ""; } else { myArray[cnt].delReleaseStatusCode = arr[i].delReleaseStatusCode; };
+                    var deldate = arr[i].delReleaseDt; if (deldate === null) { myArray[cnt].delReleaseDt = ""; } else { myArray[cnt].delReleaseDt = arr[i].delReleaseDt.substring(0, arr[i].delReleaseDt.indexOf("T")); };
+                    myArray[cnt].remarks = arr[i].remarks;
+                    myArray[cnt].active = arr[i].active;
+                    myArray[cnt].addUser = arr[i].addUser;
+                    myArray[cnt].addDate = arr[i].addDate.substring(0, arr[i].addDate.indexOf("T"));
+                    myArray[cnt].isChanged = arr[i].isChanged;
+                    myArray[cnt].Add_Del = arr[i].Add_Del;
+                    cnt++;
+                }
+                $scope.exportObj = myArray;
                 $scope.$digest();
+                $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
             } else if (200 !== rdd.status) {
-                $("#loading").removeClass("activediv");
-                $("#loading").addClass("deactivediv");
+                $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Record Not Found.. </strong></div>";
@@ -333,7 +364,9 @@
             $("#ModelMessageBox").show();
             return false;
         };
-        if ((typeof (depData) === "undefined") || (typeof (depData.depName) === "undefined") || (typeof (depData.relation) === "undefined") ||
+        if ((typeof (depData) === "undefined") ||
+            (typeof (depData.depName) === "undefined") ||
+            (typeof (depData.relation) === "undefined") ||
             (typeof (depData.birthDate) === "undefined")) {
             document.getElementById("ModelMessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -341,7 +374,7 @@
             $("#ModelMessageBox").show();
             return false;
         };
-        var relation = "", marriageDate = "", aadhar = "", pan = "", aadhar = "", csno = "";
+        var relation = "", marriageDate = "", aadhar = "", pan = "", csno = "";
         relation = depData.relation;
         if (relation === "SPOUSE") {
             if (typeof (depData.marriageDate) === "undefined") {
@@ -358,17 +391,21 @@
                 return false;
             } else { aadhar = depData.aadhar; };
         } else { marriageDate = (typeof (depData.marriageDate) === "undefined") ? '' : depData.marriageDate; };
-        if ((typeof (depData.pan) === "undefined") || depData.pan === null) { pan = ""; } else { pan = depData.pan; };
-        if ((typeof (depData.aadhar) === "undefined") || depData.aadhar === null) { aadhar = ""; } else { aadhar = depData.aadhar; };
-        if ((typeof (depData.birthCertificateNo) === "undefined") || depData.birthCertificateNo === null) { csno = ""; }
-        else { csno = depData.birthCertificateNo; };
-        var isChanged = true;
-        var active = true;
-        c++;
+        if ((typeof (depData.pan) === "undefined") || depData.pan === null) {
+            pan = "";
+        } else { pan = depData.pan; };
+        if ((typeof (depData.aadhar) === "undefined") || depData.aadhar === null) {
+            aadhar = "";
+        } else { aadhar = depData.aadhar; };
+        if ((typeof (depData.birthCertificateNo) === "undefined") || depData.birthCertificateNo === null) {
+            csno = "";
+        } else { csno = depData.birthCertificateNo; };
+        var isChanged = true; var active = true; c++;
         if (relation === "SELF") {
+            var dpname = $("#txtdepName").val();
             row =
                 $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='srno' value='" + 0 + "'>" + 0 + "</td>" +
-                    "<td style='text-align:left;'><input type='hidden' name='name' value='" + depData.depName + "'>" + depData.depName + "</td>" +
+                    "<td style='text-align:left;'><input type='hidden' name='name' value='" + dpname + "'>" + dpname + "</td>" +
                     "<td style='text-align:left;'><input type='hidden' name='relation' value='" + relation + "'>" + relation + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='bDate' value='" + depData.birthDate + "'>" + depData.birthDate + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='gender' value='" + $("#cmbGender").val() + "'>" + $("#cmbGender").val() + "</td>" +
@@ -396,10 +433,21 @@
                     "<td style='text-align:center;' hidden><input type='hidden' name='Active' value='" + active + "'>" + active + "</td>" + "</tr>");
             $("#commonTable").append(row);
         }
+        //document.getElementById("txtremarks").value = "";
+        $("#txtdepName").val("");
+        $("#dtbirthDate").val("");
+        $("#txtbirthCertificateNo").val("");
+        $("#dtmarriageDate").val("");
+        $("#txtpan").val("");
+        $("#txtaadhar").val("");
+        $("#cmbReleation option:first").attr("selected", true);
+        $("#cmbGender option:first").attr("selected", true);
     };
     $scope.ManageDependent = function () {
-        debugger;
-        var e_Code = $("#eCode").val(); if (e_Code === "" || (typeof (e_Code) === "undefined")) { e_Code = $("#myEmpUnqId").val(); };
+        var e_Code = $("#eCode").val();
+        if (e_Code === "" || (typeof (e_Code) === "undefined")) {
+            e_Code = $("#myEmpUnqId").val();
+        };
         var TableData = storeTblValues();
         function storeTblValues() {
             var TableData = new Array();
@@ -436,12 +484,9 @@
             TableData.shift();
             return TableData;
         };
-        for (var l = 0; l < TableData.length; l++) {
-            var mDate = TableData[l].marriageDate;
-            if (mDate === "") {
-                TableData[l].marriageDate = null;
-            }
-        };
+        var depsrno = TableData[0].depSr; if (depsrno === "") { TableData.shift(); };
+        for (var m = 0; m < TableData.length; m++) { TableData[m].depSr = m; };
+        for (var l = 0; l < TableData.length; l++) { var mDate = TableData[l].marriageDate; if (mDate === "") { TableData[l].marriageDate = null; } };
         TableData = JSON.stringify(TableData);
         var ddl = new XMLHttpRequest();
         ddl.open("POST", $scope._Conpath + "MedDependent/CreateDependents", true);
@@ -455,6 +500,15 @@
                     "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     " <strong>Submit Successfully.. </strong></div>";
                 $("#MessageBox").show();
+                $("#txtdepName").val("");
+                $("#dtbirthDate").val("");
+                $("#txtbirthCertificateNo").val("");
+                $("#dtmarriageDate").val("");
+                $("#txtpan").val("");
+                $("#txtaadhar").val("");
+                $("#cmbReleation option:first").attr("selected", true);
+                $("#cmbGender option:first").attr("selected", true);
+                TableData = "";
             } else {
                 jQuery('#btnClose').click();
                 $("#commonTable").find("tr:not(:first)").remove();
@@ -468,6 +522,7 @@
         ddl.send(TableData);
     };
     $scope.RelArr;
+    //Get All Pending list for addition or deletion release required.
     $scope.GetRelease = function () {
         $("#loading").removeClass("deactivediv");
         $("#loading").addClass("activediv");
@@ -476,13 +531,38 @@
         rel.setRequestHeader("Accept", "application/json");
         rel.onreadystatechange = function () {
             if (4 === rel.readyState && rel.status === 200) {
-                $("#loading").removeClass("activediv");
-                $("#loading").addClass("deactivediv");
                 var json2 = JSON.parse(rel.responseText);
                 $scope.RelArr = json2;
                 $scope.relData = json2;
-                $scope.exportObj = $scope.relData;
+                var arr = new Array(); arr = $scope.relData; var cnt = 0, myArray = [];
+                for (var i = 0; i < arr.length; i++) {
+                    myArray.push([]);
+                    myArray[cnt].empUnqId = arr[i].empUnqId;
+                    myArray[cnt].depSr = arr[i].depSr;
+                    myArray[cnt].depName = arr[i].depName;
+                    myArray[cnt].relation = arr[i].relation;
+                    var bdate = arr[i].birthDate; if (bdate === null) { myArray[cnt].birthDate = ""; } else { myArray[cnt].birthDate = arr[i].birthDate.substring(0, arr[i].birthDate.indexOf("T")); };
+                    myArray[cnt].gender = arr[i].gender;
+                    var mdate = arr[i].marriageDate; if (mdate === null) { myArray[cnt].marriageDate = ""; } else { myArray[cnt].marriageDate = arr[i].marriageDate.substring(0, arr[i].marriageDate.indexOf("T")); };
+                    var panno = arr[i].pan; if (panno === null || panno === 0 || panno === "0") { myArray[cnt].pan = ""; } else { myArray[cnt].pan = arr[i].pan; };
+                    var adhno = arr[i].aadhar; if (adhno === null || adhno === 0 || adhno === "0") { myArray[cnt].aadhar = ""; } else { myArray[cnt].pan = arr[i].aadhar; };
+                    var bcerno = arr[i].birthCertificateNo; if (bcerno === null || bcerno === 0 || bcerno === "0") { myArray[cnt].birthCertificateNo = ""; } else { myArray[cnt].birthCertificateNo = arr[i].birthCertificateNo; };
+                    var edate = arr[i].effectiveDate; if (edate === null) { myArray[cnt].effectiveDate = ""; } else { myArray[cnt].effectiveDate = arr[i].effectiveDate.substring(0, arr[i].effectiveDate.indexOf("T")); };
+                    var rStatus = arr[i].releaseStatusCode; if (rStatus === null) { myArray[cnt].releaseStatusCode = ""; } else { myArray[cnt].releaseStatusCode = arr[i].releaseStatusCode; };
+                    var reldate = arr[i].releaseDt; if (reldate === null) { myArray[cnt].releaseDt = ""; } else { myArray[cnt].releaseDt = arr[i].releaseDt.substring(0, arr[i].releaseDt.indexOf("T")); };
+                    var dStatus = arr[i].delReleaseStatusCode; if (dStatus === null) { myArray[cnt].delReleaseStatusCode = ""; } else { myArray[cnt].delReleaseStatusCode = arr[i].delReleaseStatusCode; };
+                    var deldate = arr[i].delReleaseDt; if (deldate === null) { myArray[cnt].delReleaseDt = ""; } else { myArray[cnt].delReleaseDt = arr[i].delReleaseDt.substring(0, arr[i].delReleaseDt.indexOf("T")); };
+                    var rmks = arr[i].remarks; if (rmks === null) { myArray[cnt].remarks = ""; } else { myArray[cnt].remarks = arr[i].remarks; };
+                    myArray[cnt].active = arr[i].active;
+                    myArray[cnt].addUser = arr[i].addUser;
+                    myArray[cnt].addDate = arr[i].addDate.substring(0, arr[i].addDate.indexOf("T"));
+                    myArray[cnt].isChanged = arr[i].isChanged;
+                    cnt++;
+                };
+                $scope.exportObj = myArray;
                 $scope.$digest();
+                $("#loading").removeClass("activediv");
+                $("#loading").addClass("deactivediv");
             } else {
                 $("#loading").removeClass("activediv");
                 $("#loading").addClass("deactivediv");
@@ -643,8 +723,13 @@
     ///Intimations Start
     $scope.CreateIntimation = function (entity) {
         var err = "", empUnqId = "", insuredMobNo = "", patientName = "", relation = "", intimatorEmpUnqId = "", intimatorName = "", intimatorMobNo = "";
-        empUnqId = $("#eCode").val(); insuredMobNo = $("#insuredMobNo").val(); relation = $("#txtRelation").val(); intimatorEmpUnqId = $("#intimatorEmpUnqId").val();
-        intimatorName = $("#intimatorName").val(); intimatorMobNo = $("#intimatorMobNo").val(); patientName = $("#patientRelation option:selected").text();
+        empUnqId = $("#eCode").val();
+        insuredMobNo = $("#insuredMobNo").val();
+        relation = $("#txtRelation").val();
+        intimatorEmpUnqId = $("#intimatorEmpUnqId").val();
+        intimatorName = $("#intimatorName").val();
+        intimatorMobNo = $("#intimatorMobNo").val();
+        patientName = $("#patientRelation option:selected").text();
         if (typeof (entity) === "undefined") { err = "Please Fill all mandatory details with *" + "<br/>"; }
         else if (empUnqId === "undefined" || empUnqId === "") { err += "Please Enter Employee Code." + "<br/>"; }
         else if (insuredMobNo === "undefined" || insuredMobNo === "") { err += "Please Enter Insured Mobile Number." + "<br/>"; }
@@ -662,17 +747,27 @@
         if (firstDay.getMonth() + 1 < '10') {
             if (firstDay.getDate() < '10') {
                 firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
-            } else { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+            } else {
+                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+            }
         } else {
             if (firstDay.getDate() < '10') {
                 firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
-            } else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+            } else {
+                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+            }
         };
         dtnow = firstDay;
-        var chkFrom = $("#addmissionDate").val(); var chkTo = dtnow;
-        var date1 = new Date(chkFrom); var date2 = new Date(chkTo); var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if (diff >= 3) { err += "Please contact to HR, If intimation is late by more than two days."; document.getElementById("addmissionDate").value = ""; }
-        if (date2 < date1) { err += "Future Date not allowed."; document.getElementById("addmissionDate").value = ""; }
+        var chkFrom = $("#addmissionDate").val();
+        var chkTo = dtnow;
+        var date1 = new Date(chkFrom); var date2 = new Date(chkTo);
+        var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
+        if (diff > 3) {
+            err += "Please contact to HR, If intimation is late by more than two days."; document.getElementById("addmissionDate").value = "";
+        }
+        if (date2 < date1) {
+            err += "Future Date not allowed."; document.getElementById("addmissionDate").value = "";
+        }
 
         if (err !== "") {
             document.getElementById("MessageBox").innerHTML =

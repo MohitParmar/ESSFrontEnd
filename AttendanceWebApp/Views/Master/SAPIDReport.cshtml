@@ -1,0 +1,245 @@
+﻿@{
+    ViewBag.Title = "SAPIDReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/HomeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .mainImaage {
+        display: block;
+        width: 100%;
+        height: 50%;
+        padding-bottom: 5%;
+    }
+</style>
+
+<div ng-app="myApp">
+    <div ng-controller="HomeCntrloller">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="MessageBox" class="table-responsive"></div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <strong>SAPID Report</strong>
+                            <div style="float:right;">
+                                <a style="float: right;" href="#" ng-click="exportAllData('SAPIDReport_')">
+                                    <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-init="GetSAPID()">
+                                <div class="table-responsive">
+                                    <div style="text-align:center;">
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                    </div>
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;" ng-click="sort('sapUserId')">
+                                                    SAP User Id
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='sapUserId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('lineOfBusiness')">
+                                                    Line Of Business
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='lineOfBusiness'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                    EmpUnqId
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('userName')">
+                                                    User Name
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='userName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('deptName')">
+                                                    Dept
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('isCommon')">
+                                                    IsCommon
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='isCommon'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('isActive')">
+                                                    IsActive
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='isActive'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('validTo')">
+                                                    ValidTo
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='validTo'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('remarks')">
+                                                    Remarks
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='remarks'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('empName')">
+                                                    EmployeeName
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('active')">
+                                                    E_Active
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='active'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('compName')">
+                                                    CompanyName
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='compName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('wrkGrpDesc')">
+                                                    WorkGroup
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='wrkGrpDesc'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('unitName')">
+                                                    Unit
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='unitName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('dept')">
+                                                    Department
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='dept'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('statName')">
+                                                    Station
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('gradeName')">
+                                                    Grade
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='gradeName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('joinDate')">
+                                                    JoinDate
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='joinDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('noDuesFlag')">
+                                                    NoDuesFlag
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesFlag'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('resignDate')">
+                                                    ResignDate
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='resignDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('relieveDate')">
+                                                    RelieveDate
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='relieveDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.sapUserId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.lineOfBusiness" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.userName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.isCommon" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.isActive" />
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.remarks" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.active" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.compName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.wrkGrpDesc" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.unitName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.dept" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.gradeName" />
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.noDuesFlag" />
+                                                </td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in sapData|orderBy:sortKey:reverse|filter:search|itemsPerPage:100"
+                                                ng-style="d.isActive === true && d.active === false && d.empUnqId != '' && {'background-color':'#f2dede','color':'#b94a48'}">
+                                                <td style="text-align:center;">{{d.sapUserId}}</td>
+                                                <td style="text-align:center;">{{d.lineOfBusiness}}</td>
+                                                <td style="text-align:center;">{{d.empUnqId}}</td>
+                                                <td style="text-align:left;">{{d.userName}}</td>
+                                                <td style="text-align:left;">{{d.deptName}}</td>
+                                                <td style="text-transform:uppercase;text-align:center;">{{d.isCommon}}</td>
+                                                <td style="text-transform:uppercase;text-align:center;">{{d.isActive}}</td>
+                                                <td style="text-align:center;">{{d.validTo | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.remarks}}</td>
+                                                <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-transform:uppercase;text-align:center;">{{d.active}}</td>
+                                                <td style="text-align:left;">{{d.compName}}</td>
+                                                <td style="text-align:left;">{{d.wrkGrpDesc}}</td>
+                                                <td style="text-align:left;">{{d.unitName}}</td>
+                                                <td style="text-align:left;">{{d.dept}}</td>
+                                                <td style="text-align:left;">{{d.statName}}</td>
+                                                <td style="text-align:left;">{{d.gradeName}}</td>
+                                                <td style="text-align:center;">{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-transform:uppercase;text-align:center;">{{d.noDuesFlag}}</td>
+                                                <td style="text-align:center;">{{d.resignDate | date:'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

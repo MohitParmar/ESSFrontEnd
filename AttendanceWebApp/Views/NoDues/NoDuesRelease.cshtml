@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Release No Dues";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -142,6 +142,39 @@
                                             <td><input type="text" id="txtTotal" class="form-control" value="0" disabled="disabled" style="        text-align: right;" /></td>
                                         </tr>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="SAPIDModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose2">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">SAPID Details</h4>
+                        </div>
+                        <div class="content" style="        padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">SAP User Id</th>
+                                                <th style="text-align:center;">EmpUnqId</th>
+                                                <th style="text-align:center;">Employee Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="d in sapData|itemsPerPage:10">
+                                                <td>{{d.sapUserId}}</td>
+                                                <td>{{d.empUnqId}}</td>
+                                                <td>{{d.empName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "PerformanceReviewReport";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/ProgressReviewCntrl.js"></script>
@@ -9,10 +9,20 @@
         var divToPrint = document.getElementById("divConfirmation");
         newWin = window.open("");
         newWin.document.write(divToPrint.outerHTML);
-        //newWin.print();
     };
     function printData1() {
         var divToPrint = document.getElementById("divExtension");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+    };
+    function printData2() {
+        var divToPrint = document.getElementById("printReview");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        //newWin.print();
+    };
+    function printData3() {
+        var divToPrint = document.getElementById("printReview");
         newWin = window.open("");
         newWin.document.write(divToPrint.outerHTML);
     };
@@ -47,7 +57,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetAllReviews()">
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetAllReviews(false)">
                                             <i class="fa fa-search"></i>
                                             Search
                                         </button>
@@ -61,7 +71,7 @@
                                         <th>Sr. No.</th>
                                         <th style="text-align:center;" ng-click="sort('empUnqId')">
                                             Emp.Code
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='('empUnqId'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align:left;" ng-click="sort('empName')">
@@ -115,7 +125,7 @@
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align:left;">Remarks</th>
-                                        <th style="text-align:left;">Preview</th>
+                                        <th style="text-align:left;">Letter Preview</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -167,6 +177,16 @@
                                                     ng-click="PopulateData({{d.empUnqId}},'{{d.recommendation}}')">
                                                 <i class="fa fa-print"></i>
                                             </button>
+                                            <button class="btn btn-primary" id="btnReview"
+                                                    ng-show="d.recommendation == 'N'"
+                                                    ng-click="PopulateData({{d.empUnqId}},'{{d.recommendation}}')">
+                                                Review
+                                            </button>
+                                            <button class="btn btn-primary" id="btnConfirmation"
+                                                    ng-show="d.recommendation == 'C' || d.recommendation == 'E'"
+                                                    ng-click="PopulateData({{d.empUnqId}},'{{d.recommendation}}')">
+                                                Confirm.
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -176,6 +196,99 @@
                     </div>
                 </div>
             </div>
+            @*<div class="modal fade" id="confirmationModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="        width: 825px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Preview: </h4>
+                                <div style="        float: right;">
+                                    <button type="submit" id="btnPrint" class="btn btn-primary" onclick="printData()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                                </div>
+                            </div>
+                            <div class="content" style="        padding: 4px 15px 15px 15px;">
+                                <div class="body_panel">
+                                    <div id="divConfirmation" class="table-responsive" ng-repeat="e in prgrvw"
+                                         style="background-image: url(../../ESS_Images/letterhead.jpg);background-size:contain; border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
+                                        <div style="padding-left: 70px; padding-right: 35px; padding-top: 150px;" class="form-group row">
+                                            <div class="col-sm-6" style="text-align: left;">
+                                                JSAW/HR/{{e.empUnqId}}/{{e.reviewDate | date:'yyyy'}}
+                                            </div>
+                                            <div class="col-sm-6" style="text-align: right;">
+                                                DATE : {{e.reviewDate | date:'dd/MM/yyyy'}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p>
+                                                    {{e.empName}}
+                                                    <br />
+                                                    SAP ID: {{e.empUnqId}}
+                                                    <br />
+                                                    Designation: {{e.desgName}}
+                                                    <br />
+                                                    Dept. - Division: {{e.deptName}} - {{e.statName}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="text-align:center;">
+                                            <div class="col-sm-12">
+                                                <b><u>Confirmation Letter</u></b>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                Dear {{e.empName}},
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p style="text-align:justify;">
+                                                    Please refer to the appointment letter dated {{e.joinDate | date:'dd/MM/yyyy'}},wherein you were appointed on probation for a period of
+                                                    <b>06 Months</b> w.e.f. {{e.joinDate | date:'dd/MM/yyyy'}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p style="text-align:justify;">
+                                                    Your performance during the probationary period has been evaluated and found satisfactory. Accordingly we are pleased to confirm your services with effect from
+                                                    <b>{{e.reviewDate | date:'dd/MM/yyyy'}}.</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p style="text-align:justify;">All other terms and conditions of your appointment will remain the same as per letter of appointment dated {{e.joinDate | date:'dd/MM/yyyy'}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p>Hope, you will strive hard to achieve the departmental goals.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p>Wishing you a continuous growth and rewarding career with JINDAL SAW LIMITED.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
+                                            <div class="col-sm-12">
+                                                <p>With Best wishes</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
+                                            <div class="col-sm-12">
+                                                <p>This letter is system generated and does not require signature</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
             <div class="modal fade" id="confirmationModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" style="        width: 825px;">
                     <div class="modal-content">
@@ -189,80 +302,118 @@
                         <div class="content" style="        padding: 4px 15px 15px 15px;">
                             <div class="body_panel">
                                 <div id="divConfirmation" class="table-responsive" ng-repeat="e in prgrvw"
-                                     style="background-image: url(../../ESS_Images/letterhead.jpg);background-size:contain; border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
-                                    <div style="padding-left: 70px; padding-right: 35px; padding-top: 150px;" class="form-group row">
-                                        <div class="col-sm-6" style="text-align: left;">
-                                            JSAW/HR/{{e.empUnqId}}/{{e.reviewDate | date:'yyyy'}}
-                                        </div>
-                                        <div class="col-sm-6" style="text-align: right;">
-                                            DATE : {{e.reviewDate | date:'dd/MM/yyyy'}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p>
-                                                {{e.empName}}
+                                     style="border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
+                                    <table class="table-condensed">
+                                        <tr>
+                                            <td style="padding-left: 40px;">
+                                                <img src="~/ESS_Images/JINDALLOGO.jpg" class="img" style="float: left;
+        height: 56px;
+        width: 56px;" />
+                                            </td>
+                                            <td>
+                                                <img src="~/ESS_Images/LetterHeadHeader.jpg" class="img" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="table-condensed" style="height: 874px;width:60px;padding-left:40px;">
+                                                    <tr>
+                                                        <td style="background-color: lightgrey;"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <table class="table-condensed table-responsive" style="width:100%;">
+                                                        <tr>
+                                                            <td style="text-align:left;">
+                                                                JSAW/HR/{{e.empUnqId}}/{{e.reviewDate | date:'yyyy'}}
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                                DATE : {{e.reviewDate | date:'dd/MM/yyyy'}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                @* style="padding-left: 70px; padding-right: 35px; " *@
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p>
+                                                            {{e.empName}}
+                                                            <br />
+                                                            SAP ID: {{e.empUnqId}}
+                                                            <br />
+                                                            Designation: {{e.desgName}}
+                                                            <br />
+                                                            Dept. - Division: {{e.deptName}} - {{e.statName}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="text-align:center;">
+                                                    <div class="col-sm-12">
+                                                        <b><u>Confirmation Letter</u></b>
+                                                    </div>
+                                                </div>
                                                 <br />
-                                                SAP ID: {{e.empUnqId}}
-                                                <br />
-                                                Designation: {{e.desgName}}
-                                                <br />
-                                                Dept. - Division: {{e.deptName}} - {{e.statName}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="text-align:center;">
-                                        <div class="col-sm-12">
-                                            <b><u>Confirmation Letter</u></b>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            Dear {{e.empName}},
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p style="text-align:justify;">
-                                                Please refer to the appointment letter dated {{e.joinDate | date:'dd/MM/yyyy'}},wherein you were appointed on probation for a period of
-                                                <b>06 Months</b> w.e.f. {{e.joinDate | date:'dd/MM/yyyy'}}.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p style="text-align:justify;">
-                                                Your performance during the probationary period has been evaluated and found satisfactory. Accordingly we are pleased to confirm your services with effect from
-                                                <b>{{e.reviewDate | date:'dd/MM/yyyy'}}.</b>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p style="text-align:justify;">All other terms and conditions of your appointment will remain the same as per letter of appointment dated {{e.joinDate | date:'dd/MM/yyyy'}}.</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p>Hope, you will strive hard to achieve the departmental goals.</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p>Wishing you a continuous growth and rewarding career with JINDAL SAW LIMITED.</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="padding-left: 70px; padding-right: 35px; ">
-                                        <div class="col-sm-12">
-                                            <p>With Best wishes</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
-                                        <div class="col-sm-12">
-                                            <p>This letter is system generated and does not require signature</p>
-                                        </div>
-                                    </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        Dear {{e.empName}},
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p style="text-align:justify;">
+                                                            Please refer to the appointment letter dated {{e.joinDate | date:'dd/MM/yyyy'}},wherein you were appointed on probation for a period of
+                                                            <b>06 Months</b> w.e.f. {{e.joinDate | date:'dd/MM/yyyy'}}.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p style="text-align:justify;">
+                                                            Your performance during the probationary period has been evaluated and found satisfactory. Accordingly we are pleased to confirm your services with effect from
+                                                            <b>{{e.reviewDate | date:'dd/MM/yyyy'}}.</b>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p style="text-align:justify;">All other terms and conditions of your appointment will remain the same as per letter of appointment dated {{e.joinDate | date:'dd/MM/yyyy'}}.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p>Hope, you will strive hard to achieve the departmental goals.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p>Wishing you a continuous growth and rewarding career with JINDAL SAW LIMITED.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                    <div class="col-sm-12">
+                                                        <p>With Best wishes</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
+                                                    <div class="col-sm-12">
+                                                        <p>This letter is system generated and does not require signature</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:center;font-size:xx-small">
+                                                <p>
+                                                    Village : Samaghoga Mandvi Road, Mundra Taluka, Distt. Kutch - 370415 Phone : 91-(0) 2838 240 755 - 756, 240 773 Fax : 91-(0) 2838 240 700<br />
+                                                    Corporate Office : Jindal Centre, 12 Bhikalji Cama Place, new Delhi 110066 Phone : +91(11)26188360-74 Fax : +91(11)26170691<br />
+                                                    Regd Off. : A-1, UPSIDC Indl, Area, Nandgaon Road, Kosi Kalan , Distt. Mathura (U.P.) - 281403 Website : sawpipes.com<br />
+                                                    <b>(FORMERLY SAW PIPES LTD.)</b>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -346,6 +497,295 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="reviewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Review: </h4>
+                            <div style="        float: right;">
+                                <button type="submit" id="btnPrint1" class="btn btn-primary" onclick="printData2()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div id="maindiv" class="table-responsive"
+                                 style="border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+                                <table class="table table-condensed" ng-repeat="p in prnData" id="printReview"
+                                       style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; width: 793px;">
+                                    <tr>
+                                        <td colspan="5">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td rowspan="3" style="padding:10px;">
+                                                        <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float: left;height: 56px;width: 56px;" />
+                                                    </td>
+                                                    <td rowspan="3" style="text-align:center;padding:10px;">
+                                                        <h3>Jindal Saw Limited</h3>
+                                                        <h4>PROGRESS REVIEW REPORT OF TRAINEE</h4>
+                                                    </td>
+                                                    <td style="padding:10px;">Document No :</td>
+                                                    <td style="padding:10px;">JSAW/SMG/HR/FR-05</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:10px;">Version No :</td>
+                                                    <td style="padding:10px;">3.0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:10px;">Effective Date :</td>
+                                                    <td style="padding:10px;">01.01.2022</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px; text-align: left;">Annexure - I</td>
+                                        <td style="line-height: 40px; text-align: center;" colspan="2">(Confidential)</td>
+                                        <td style="line-height: 40px; text-align: right;"><b>For Periodical Review Only</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Period From: </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.periodFrom|date:'dd-MM-yyyy'}}</td>
+                                        <td style="line-height: 40px; width: 100px;"><b>Period To: </b></td>
+                                        <td style="line-height: 40px; width:222px;border-bottom-style: solid; border-bottom-width: thin;">{{p.periodTo|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr><td></td><td colspan="2" style="line-height: 40px; text-align: center; border-bottom-width: thin;">Personal Details</td><td></td></tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Name : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.empName}}</td>
+                                        <td style="line-height: 40px;"><b>SAP-ID : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.empUnqId}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Designation/Department : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">
+                                            {{p.desgName}} - ({{p.statName}})
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Date of Joining : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.joinDate|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px; width:235px;" colspan="4"><b>Assignments during the quarter : </b></td>
+                                        @*<td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.assignments}}</td>*@
+                                    </tr>
+                                    @*<tr><td style="height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="4"></td></tr>
+                                        <tr><td style="height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="4"></td></tr>*@
+                                    <tr>
+                                        <td colspan="4">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; height:120px; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td style="vertical-align: top; text-align:left; padding:10px;">{{p.assignments}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;" colspan="2"><b>What do you see as Person's Strength</b></td>
+                                        <td style="line-height: 40px;" colspan="2"><b>Area of Improvements</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; height:161px; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td style="vertical-align: top; text-align:left; padding:10px; width:50%; ">{{p.strength}}</td>
+                                                    <td style="vertical-align: top; text-align: left; padding: 10px; width: 50%; ">{{p.improvements}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        @*<td style="line-height: 40px; border-style: solid; border-width: thin; width: 50%;" colspan="2">{{p.strength}}</td>
+                                            <td style="line-height: 40px; border-style: solid; border-width: thin; width: 50%;" colspan="2">{{p.improvements}}</td>*@
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Suggestion(s) for improvement : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.suggestions}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Overall Rating : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.rating}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="line-height: 40px;" colspan="3">Star/Good/Average/Poor</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Recommendation:</b></td>
+                                        <td style="line-height: 40px;" colspan="3"><b>*Confirmation / Extension / Termination</b></td>
+                                    </tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr>
+                                        <td colspan="2">Section Incharge</td>
+                                        <td colspan="2">HOD</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Name : {{p.addEmpName}}</td>
+                                        <td colspan="2">Name : {{p.releaseEmpName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Date : {{p.addDt|date:'dd-MM-yyyy'}}</td>
+                                        <td colspan="2">Date : {{p.releaseDate|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align:center;">This letter is system generated and does not require signature</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="        width: fit-content;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmation: </h4>
+                            <div style="        float: right;">
+                                <button type="submit" id="btnPrint3" class="btn btn-primary" onclick="printData3()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div id="maindiv" class="table-responsive"
+                                 style="border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+                                <table class="table table-condensed" ng-repeat="p in prnData" id="printConfirm"
+                                       style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; width: 793px;">
+                                    <tr>
+                                        <td colspan="5">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td rowspan="3" style="padding:10px;">
+                                                        <img src="~/ESS_Images/JINDALLOGO.jpg" class="img-thumbnail" style="float: left;height: 56px;width: 56px;" />
+                                                    </td>
+                                                    <td rowspan="3" style="text-align:center;padding:10px;">
+                                                        <h3>Jindal Saw Limited</h3>
+                                                        <h4>PROGRESS REVIEW REPORT OF PROBATIONER</h4>
+                                                    </td>
+                                                    <td style="padding:10px;">Document No :</td>
+                                                    <td style="padding:10px;">JSAW/SMG/HR/FR-05</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:10px;">Version No :</td>
+                                                    <td style="padding:10px;">3.0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:10px;">Effective Date :</td>
+                                                    <td style="padding:10px;">01.01.2022</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px; text-align: left;">Annexure - I</td>
+                                        <td style="line-height: 40px; text-align: center;" colspan="2">( Confidential )</td>
+                                        <td style="line-height: 40px; text-align: right;"><b>For Confirmation/Extension</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Period From: </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.periodFrom|date:'dd-MM-yyyy'}}</td>
+                                        <td style="line-height: 40px; width: 100px;"><b>Period To: </b></td>
+                                        <td style="line-height: 40px; width:222px;border-bottom-style: solid; border-bottom-width: thin;">{{p.periodTo|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr><td></td><td colspan="2" style="line-height: 40px; text-align: center; border-bottom-width: thin;">Personal Details</td><td></td></tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Name : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.empName}}</td>
+                                        <td style="line-height: 40px;"><b>SAP-ID : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin;">{{p.empUnqId}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Designation/Department : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">
+                                            {{p.desgName}} - ({{p.statName}})
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Date of Joining : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.joinDate|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px; width:235px;" colspan="4"><b>Assignments during the quarter : </b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; height:120px; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td style="vertical-align: top; text-align:left; padding:10px;">{{p.assignments}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;" colspan="2"><b>What do you see as Person's Strength</b></td>
+                                        <td style="line-height: 40px;" colspan="2"><b>Area of Improvements</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table class="table-condensed table-responsive" border="1"
+                                                   style="border-collapse: collapse; height:161px; width: 100%; border-bottom-style: solid; border-bottom-width: thin;">
+                                                <tr>
+                                                    <td style="vertical-align: top; text-align:left; padding:10px; width:50%; ">{{p.strength}}</td>
+                                                    <td style="vertical-align: top; text-align: left; padding: 10px; width: 50%; ">{{p.improvements}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Suggestion(s) for improvement : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.suggestions}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Overall Rating : </b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.rating}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="line-height: 40px;" colspan="3"><b>Star / Good / Average / Poor</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 40px;"><b>Recommendation:</b></td>
+                                        <td style="line-height: 40px; border-bottom-style: solid; border-bottom-width: thin; " colspan="3">{{p.recommendation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="line-height: 40px;" colspan="3"><b>*Confirmation / Extension / Termination</b></td>
+                                    </tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr>
+                                        <td colspan="2">Section Incharge</td>
+                                        <td colspan="2">HOD</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Name : {{p.addEmpName}}</td>
+                                        <td colspan="2">Name : {{p.releaseEmpName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Date : {{p.addDt|date:'dd-MM-yyyy'}}</td>
+                                        <td colspan="2">Date : {{p.releaseDate|date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr><td style="line-height: 40px;" colspan="4"></td></tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align:center;">This letter is system generated and does not require signature</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Gate Pass Release";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
@@ -50,7 +50,7 @@
                                 <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                             </div>
                             <div ng-init="GetGPLists()" class="table-responsive">
-                                <table class="table table-hover table-bordered table-condensed">
+                                <table class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">GP Date</th>

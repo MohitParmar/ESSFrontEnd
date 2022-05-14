@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "New Gate Pass (Regular Employee)";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
@@ -140,7 +140,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                                <table id="aliasTable" data-show-filter="true" class="data-table table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Gate Pass Item</th>
@@ -189,7 +189,7 @@
                         <div class="panel-body">
                             <div ng-controller="MasterCntrloller" ng-init="GetLeave()">
                                 <div class="table-responsive">
-                                    <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">Type</th>
@@ -221,7 +221,7 @@
                         <div class="panel-body">
                             <div ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                                 <div class="table-responsive">
-                                    <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">Date</th>

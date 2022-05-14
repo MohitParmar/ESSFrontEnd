@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Employee List";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/Controller/EmpListCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -15,7 +15,7 @@
                     <div class="panel-body">
                         <div ng-init="GetReleaseStrategy()">
                             <div class="table-responsive">
-                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <table data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;" ng-click="sort('empUnqId')">

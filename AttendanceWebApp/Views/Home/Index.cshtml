@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -125,8 +125,8 @@
                                                     <table class="table table-condensed table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
                                                         <tr ng-repeat="m in ld.leaveApplicationDetails">
                                                             <td style="padding-left:2px;padding-right:2px;width:30px;">{{m.coMode}}</td>
-                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
-                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' && m.coMode == 'E' && m.halfDayFlag == false">{{m.coDate2| date:'dd/MM/yy'}}</td>
+                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' || m.leaveTypeCode == 'OC'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                            <td style="padding-left:2px;padding-right:2px;width:54px;" ng-show="m.leaveTypeCode == 'CO' || m.leaveTypeCode == 'OC' && m.coMode == 'E' && m.halfDayFlag == false">{{m.coDate2| date:'dd/MM/yy'}}</td>
                                                         </tr>
                                                     </table>
                                                 </td>

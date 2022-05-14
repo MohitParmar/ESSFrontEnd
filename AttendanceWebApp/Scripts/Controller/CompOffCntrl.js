@@ -254,7 +254,7 @@
             jsonObj.clientIp = $('#myIPAddress').val();
             jsonObj.updDt = dt;
             jsonObj.updUser = null;
-            jsonObj.remarks = null;
+            jsonObj.remarks = 'CO_';
             jsonObj.parentId = 0;
             jsonObj.leaveApplicationDetails = TableData;
             return jsonObj;

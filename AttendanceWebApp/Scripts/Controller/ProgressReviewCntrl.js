@@ -243,15 +243,13 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
             };
         }; spr.send(jsonObj);
     };
-    $scope.garData; $scope.GetAllReviews = function () {
+    $scope.garData; $scope.GetAllReviews = function (pendingFlg) {
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var fromDt, toDt;
-        //fromDt = $("#FromDt").val();
-        //toDt = $("#ToDt").val();
-        fromDt = '2021-01-01';
-        toDt = '2022-03-01';
+        fromDt = $("#FromDt").val();
+        toDt = $("#ToDt").val();
         var gar = new XMLHttpRequest();
-        gar.open("GET", $scope._Conpath + "ProgressReview/GetAllReviews?fromDate=" + fromDt + "&toDate=" + toDt + "&pendingOnly=" + false, true);
+        gar.open("GET", $scope._Conpath + "ProgressReview/GetAllReviews?fromDate=" + fromDt + "&toDate=" + toDt + "&pendingOnly=" + pendingFlg, true);
         gar.setRequestHeader("Accept", "application/json");
         gar.onreadystatechange = function () {
             if (4 === gar.readyState) {
@@ -282,16 +280,24 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                     myArray[i].rating = arr[i].rating;
                     myArray[i].remarks = arr[i].remarks;
                     myArray[i].recommendation = arr[i].recommendation;
+
                     myArray[i].addDt = arr[i].addDt;
                     myArray[i].addReleaseCode = arr[i].addReleaseCode;
                     myArray[i].addUser = arr[i].addUser;
+                    myArray[i].addEmpName = arr[i].addEmpName;
+                    myArray[i].addReleaseStatusCode = arr[i].addReleaseStatusCode;
+
                     myArray[i].releaseGroupCode = arr[i].releaseGroupCode;
                     myArray[i].releaseStrategy = arr[i].releaseStrategy;
+
                     myArray[i].releaseCode = arr[i].releaseCode;
+                    myArray[i].releaseEmpName = arr[i].releaseEmpName;
                     myArray[i].releaseDate = arr[i].releaseDate;
                     myArray[i].releaseStatusCode = arr[i].releaseStatusCode;
                     myArray[i].hodRemarks = arr[i].hodRemarks;
+
                     myArray[i].hrUser = arr[i].hrUser;
+                    myArray[i].hrEmpName = arr[i].hrEmpName;
                     myArray[i].hrReleaseDate = arr[i].hrReleaseDate;
                     myArray[i].hrReleaseStatusCode = arr[i].hrReleaseStatusCode;
                     myArray[i].hrRemarks = arr[i].hrRemarks;
@@ -306,18 +312,57 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
         }; gar.send();
     };
     $scope.PopulateData = function (empid, recommendation) {
-        if (recommendation === "C") { $("#confirmationModel").modal("show"); }; if (recommendation === "E") { $("#extensionModel").modal("show"); };
-        $scope.GetLetter(empid);
+        if (recommendation === "N") {
+            $scope.GetPrint(empid);
+            $("#reviewModel").modal("show");
+        } else {
+            $scope.GetLetter(empid);
+            if (recommendation === "C") { $("#confirmationModel").modal("show"); };
+            if (recommendation === "E") { $("#extensionModel").modal("show"); };
+        }
     };
-    $scope.GetLetter = function (empid) {
-        debugger;
+    //fv
+    $scope.GetPrint = function (empid) {
         var arr = new Array();
         arr = $scope.garData;
         var cnt = 0;
         myArray = [];
         for (var i = 0; i < arr.length; i++) {
-            var emp = new Array();
-            if (empid === parseInt(arr[i].empUnqId) && arr[i].recommendation === "C") {
+            if (empid === parseInt(arr[i].empUnqId) && (arr[i].recommendation === "N")) {
+                myArray.push([]);
+                myArray[cnt].empUnqId = arr[i].empUnqId;
+                myArray[cnt].empName = arr[i].empName;
+                myArray[cnt].deptName = arr[i].deptName;
+                myArray[cnt].statName = arr[i].statName;
+                myArray[cnt].desgName = arr[i].desgName;
+                myArray[cnt].gradeName = arr[i].gradeName;
+                myArray[cnt].joinDate = arr[i].joinDate;
+                myArray[cnt].reviewDate = arr[i].reviewDate;
+                myArray[cnt].recommendation = arr[i].recommendation;
+                myArray[cnt].hodRemarks = arr[i].hodRemarks;
+                myArray[cnt].periodFrom = arr[i].periodFrom;
+                myArray[cnt].periodTo = arr[i].periodTo;
+                myArray[cnt].assignments = arr[i].assignments;
+                myArray[cnt].strength = arr[i].strength;
+                myArray[cnt].improvements = arr[i].improvements;
+                myArray[cnt].suggestions = arr[i].suggestions;
+                myArray[cnt].rating = arr[i].rating;
+                myArray[cnt].addDt = arr[i].addDt;
+                myArray[cnt].addEmpName = arr[i].addEmpName;
+                myArray[cnt].releaseDate = arr[i].releaseDate;
+                myArray[cnt].releaseEmpName = arr[i].releaseEmpName;
+                cnt++;
+            };
+        };
+        $scope.prnData = myArray;
+    };
+    $scope.GetLetter = function (empid) {
+        var arr = new Array();
+        arr = $scope.garData;
+        var cnt = 0;
+        myArray = [];
+        for (var i = 0; i < arr.length; i++) {
+            if (empid === parseInt(arr[i].empUnqId) && (arr[i].recommendation === "C" || arr[i].recommendation === "E")) {
                 myArray.push([]);
                 myArray[cnt].empUnqId = arr[i].empUnqId;
                 myArray[cnt].empName = arr[i].empName;
@@ -332,7 +377,7 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                 cnt++;
             };
         };
-        $scope.prgrvw = myArray; $scope.$digest();
+        $scope.prgrvw = myArray;
     };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
     $scope.exportAllData = function (name) { setTimeout(function () { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = name + d; $scope.JSONToCSVConvertor($scope.exportObj, FileName, !0), $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv") }, 100) };

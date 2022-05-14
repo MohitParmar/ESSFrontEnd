@@ -36,6 +36,7 @@
     //Get Applied Comp Off Leave Requests & Validate
     $scope.LeaveRequestData = function (entity) {
         document.getElementById("BtnCreate").disabled = true;
+        document.getElementById("BtnSave").disabled = true;
         $scope.ToValidate();
         var chk = false;
         if ((typeof (entity) === "undefined") ||
@@ -148,6 +149,7 @@
                 document.getElementById("coffDt").value = "";
                 $('#halfFlag').prop('checked', false);
                 document.getElementById("remarks").value = "";
+                document.getElementById("BtnCreate").disabled = false;
             }
             else if (xhr1.status === 400 || xhr1.status === 404 || xhr1.status === 500) {
                 if (chk === false) {
@@ -172,11 +174,13 @@
                 document.getElementById("coffDt").value = "";
                 $('#halfFlag').prop('checked', false);
                 document.getElementById("remarks").value = "";
+                document.getElementById("BtnCreate").disabled = false;
             };
         }; xhr1.send(TableData);
     };
     //Create New Comp Off Application
     $scope.createLeave = function () {
+        document.getElementById("BtnCreate").disabled = true;
         var d = new Date();
         var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var year = d.getFullYear().toString();
@@ -205,6 +209,10 @@
                 }
             });
             TableData.shift();
+            if (TableData.length < 0) {
+                alert("COff Item not inserted. please try again");
+                return false;
+            }
             jsonObj.yearMonth = yearmonth;
             jsonObj.leaveAppId = 0;
             jsonObj.empUnqId = $('#myEmpUnqId').val();
@@ -223,12 +231,14 @@
             jsonObj.clientIp = $('#myIPAddress').val();
             jsonObj.updDt = dt;
             jsonObj.updUser = null;
-            jsonObj.remarks = null;
+            jsonObj.remarks = 'OC_';
             jsonObj.parentId = 0;
             jsonObj.leaveApplicationDetails = TableData;
             return jsonObj;
         };
-        TableData = JSON.stringify(TableData);
+        if (TableData.leaveApplicationDetails.length > 0) {
+            TableData = JSON.stringify(TableData);
+        } else { alert("plase try after some time."); return false; };
         var xhr = new XMLHttpRequest();
         xhr.open('POST', $scope._Conpath + 'LeaveApplication/CreateLeaveApplication', true);
         xhr.setRequestHeader("Content-type", "application/json");
@@ -244,7 +254,7 @@
                 document.getElementById("coffDt").value = "";
                 $('#halfFlag').prop('checked', false);
                 document.getElementById("remarks").value = "";
-                document.getElementById("BtnCreate").disabled = true;
+                document.getElementById("BtnCreate").disabled = false;
             } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404 || xhr.status === 408 || xhr.status === 500) {
                 var str = xhr.responseText.replace("[", '').replace("]", '').toString();
                 var fields = str.split(',');

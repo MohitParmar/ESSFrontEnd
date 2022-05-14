@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <button class="btn btn-lg btn-warning" style="width:100px;" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
+                        <button class="btn btn-lg btn-danger" style="width:100px;" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
                         <button class="btn btn-lg btn-success" style="width:100px;" id="btnIN" ng-click="LoadData('IN')">IN</button>
                         <div style="text-align:center;margin:0px;padding:0px;">
                             <h3 style="margin-top:5px;margin-bottom:5px;">
@@ -180,7 +180,7 @@
                                             <td style="text-align:left;font-size:large;">{{d.empName}}</td>
                                             <td style="text-align:center;font-size:large;">{{d.typeofGatePass}}</td>
                                             <td style="text-align:center;">
-                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnOut" name="btnInOut" value="OUT" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
+                                                <input type="button" class="btn btn-lg btn-danger" style="width:75px;" id="btnOut" name="btnInOut" value="OUT" ng-click='GateINOUT("{{d.barCode}}","{{d.empUnqId}}","{{d.empName}}")' />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -253,7 +253,7 @@
                                             <td style="text-align:center;font-size:large;">{{i.typeofGatePass}}</td>
                                             <td style="text-align:center;font-size:large;">{{i.gateOutDateTimeORG | date:'dd/MM/yy hh:mm'}}</td>
                                             <td style="text-align:center;">
-                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnIn" name="btnInOut" value="IN" ng-click='GateINOUT("{{i.barCode}}","{{i.empUnqId}}","{{i.empName}}")' />
+                                                <input type="button" class="btn btn-lg btn-success" style="width:75px;" id="btnIn" name="btnInOut" value="IN" ng-click='GateINOUT("{{i.barCode}}","{{i.empUnqId}}","{{i.empName}}")' />
                                             </td>
                                         </tr>
                                     </tbody>

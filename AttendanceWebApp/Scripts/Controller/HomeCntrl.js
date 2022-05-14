@@ -129,6 +129,43 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         var tdateval, tdate = new Date(oddtl.toDt); tdateval = tdate.getMonth() + 1 < "10" ? tdate.getDate() < "10" ? "0" + tdate.getDate() + "/0" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() + "/0" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() < "10" ? "0" + tdate.getDate() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes();
         $("#lblFromDate").text(fdateval), $("#lblToDate").text(tdateval), $("#lblPlaceOfVisit").text(oddtl.placeOfVisit), $("#lblContactDetails").text(oddtl.contactAddress), $('#previewModel').modal("show");
     };
+    $scope.exportObj; $scope.GetSAPID = function () {
+        $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
+        var sap = new XMLHttpRequest;
+        sap.open("GET", $scope._Conpath + "Employee/GetSapId", !0);
+        sap.setRequestHeader("Accept", "application/json");
+        sap.onreadystatechange = function () {
+            if (4 === sap.readyState) {
+                var jsonsap = JSON.parse(sap.responseText);
+                $scope.sapData = jsonsap;
+                $scope.exportObj = jsonsap;
+                $scope.curPage = 0;
+                $scope.pageSize = 10;
+                $scope.$digest();
+                $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+            } else if (200 !== sap.status) {
+                $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Record Not Found.. </strong></div>";
+                $("#MessageBox").show();
+            };
+        };
+        sap.send();
+    };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
+    $scope.exportAllData = function (name) {
+        setTimeout(function () {
+            $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
+            var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            var FileName = name + d;
+            $scope.JSONToCSVConvertor($scope.exportObj, FileName, !0);
+            $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+        }, 100);
+    };
+    $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {
+        var arrData = "object" != typeof JSONData ? JSON.parse(JSONData) : JSONData, CSV = ""; if (CSV += ReportTitle + "\r\n\n", ShowLabel) { var row = ""; for (var index in arrData[0]) row += index + ","; row = row.slice(0, -1), CSV += row + "\r\n" } for (var i = 0; i < arrData.length; i++) {
+            var row = ""; for (var index in arrData[i]) row += '"' + arrData[i][index] + '",'; row.slice(0, row.length - 1), CSV += row + "\r\n"
+        } if ("" === CSV) return void alert("Invalid data"); var fileName = ""; fileName += ReportTitle.replace(/ /g, "_"); var uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a"); link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link)
+    };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Manage Release Streategy";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/Scripts/Module/app.js"></script>
@@ -30,7 +30,7 @@
                                             <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetReleaserInfo()"><i class="fa fa-search"></i></button>
                                         </span>
                                     </div>
-                                    <table class="table table-bordered table-condensed table-striped table-hover" id="tbl_rlsdtl">
+                                    <table class="table table-condensed" id="tbl_rlsdtl">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">
@@ -108,7 +108,7 @@
                                         </table>
                                     </td>
                                     <td>
-                                        <table class="table table-bordered">
+                                        <table class="table table-condensed">
                                             <tbody>
                                                 <tr ng-repeat="d in empdata">
                                                     <th>
@@ -125,7 +125,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <table id="aliasTable" data-show-filter="true" class="data-table table table-hover table-bordered table-condensed table-striped">
+                            <table id="aliasTable" data-show-filter="true" class="data-table table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;">Release Strategy</th>

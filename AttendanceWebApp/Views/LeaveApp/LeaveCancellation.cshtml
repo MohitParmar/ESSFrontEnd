@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Short Leave Cancellation";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/Controller/ShortLeaveCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -223,7 +223,7 @@
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
                             <div class="table-responsive">
-                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Type</th>
@@ -255,7 +255,7 @@
                     <div class="panel-body">
                         <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="ListOfholiday()">
                             <div class="table-responsive">
-                                <table id="tbl" data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Date</th>

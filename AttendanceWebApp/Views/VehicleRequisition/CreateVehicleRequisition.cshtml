@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "CreateVehicleRequisition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/TripBooking.js"></script>
+
+<div ng-app="myApp" ng-controller="TripController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div ng-init="GetUserInfo()"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Vehicle Booking</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Trip Date:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="date" id="tripDate" ng-model="N.tripDate" ng-change="ToValidate()" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Slot</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="cmbSlot" ng-model="N.slot" ng-change="GetReqOnDate()">
+                                        <option value="1">Morning</option>
+                                        <option value="2">Evening</option>
+                                        <option value="3">Night</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @*<div class="form-group row">
+                                    <div class="col-sm-3">
+                                        <label>PickupTime</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="time" id="txtpickupTime" ng-model="N.pickupTime" />
+                                    </div>
+                                </div>*@
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Pickup Location</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="txtpickupLocation" ng-model="N.pickupLocation" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Drop Location</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="txtdropLocation" ng-model="N.dropLocation" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Others</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="txtremarks" ng-model="N.remarks" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button type="submit" id="btnSubmit" ng-click="TripBooking(N)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                    <button type="reset" id="btnReset" ng-click="ResetView()" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp; Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "Manage Dependent Details";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MCCntrl.js"></script>
 <script type="text/javascript">
@@ -44,7 +43,6 @@
             pointer-events: none;
         }
 </style>
-
 <div ng-app="myApp" ng-controller="MCController">
     <div class="container-fluid">
         <input type="hidden" value="MC" id="releaseGroupCode" />
@@ -67,7 +65,7 @@
                                 <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
                             </div>
                             <div class="col-sm-2">
-                                <button id="btnSearch" class="btn btn-primary" ng-click="GetDependentDetails('false',N.empUnqId)"><i class="fa fa-search"></i></button>
+                                <button id="btnSearch" class="btn btn-primary" ng-click="GetDependentDetails('false')"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                         <br />
@@ -90,7 +88,8 @@
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="d in depData|itemsPerPage:10">
-                                    <tr ng-style="(d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ">
+                                    <tr ng-style="(d.depSr == 0) && {'background-color':'#F8EFBA','color':'black'} ||
+                                         (d.active == false) && {'background-color':'#f2dede','color':'#b94a48'}">
                                         <td style="        text-align: center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
                                         <td style="        text-align: center;">
                                             {{(d.active == true && d.isChanged == true) ? d.delReleaseStatusCode : d.releaseStatusCode}}

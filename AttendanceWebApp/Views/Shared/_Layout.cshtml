@@ -78,7 +78,7 @@
             if (foo === "NSK") { $('#footext').text("JINDAL SAW LTD. (NSK) -"); $('#headtext').text("Employee Self Service Portal - Jindal SAW Ltd"); };
         });
         @* Get IP Address *@
-        $(document).ready(function ubsrt() { window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { }; pc.createDataChannel(""); pc.createOffer(pc.setLocalDescription.bind(pc), noop); pc.onicecandidate = function (ice) { if (!ice || !ice.candidate || !ice.candidate.candidate) { return; }; var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1]; $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop; }; });
+        //$(document).ready(function ubsrt() { window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { }; pc.createDataChannel(""); pc.createOffer(pc.setLocalDescription.bind(pc), noop); pc.onicecandidate = function (ice) { if (!ice || !ice.candidate || !ice.candidate.candidate) { return; }; var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1]; $('#ipAdd').text(myIP); $('#myIPAddress').val(myIP); pc.onicecandidate = noop; }; });
     </script>
     <script>
         @*function AutoSync(data) {var xhr = new XMLHttpRequest(); xhr.open('GET', '@System.Web.Configuration.WebConfigurationManager.AppSettings["ConPath"]' + 'Sync/SyncDb?location=' + data, true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4 && xhr.status === 200) { alert(xhr.responseText); } }; xhr.send();};        function COFF() {            var _grade = "@Session["GradeCode"]"; var _tpaFlag = "@Session["OtFlag"]"; var loc = "@Session["LOC"]";            if (loc === "IPU" || loc === "NKP" || loc === "KJSAW") {                if ((_grade < 015 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };            } else if (loc === "BEL") {                if ((_grade < 009 || _grade === "098") || _tpaFlag === "True") { alert("You are not eligible to get COFF as Per Policy."); } else { window.location.href = "/LeaveApp/COffApply"; };            };        };*@
@@ -151,18 +151,18 @@
                                 </strong>
                             </a>
                             <ul class="dropdown-menu">
-                                <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile">Profile</a></li>
-                                <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport">Performance Report</a></li>
-                                <li hidden="hidden" id="mnuEmpReportMissPunch"><a href="/MissPunch/EmpMissPunchReport">In/Out Punch Report</a></li>
+                                <li id="mnuEmployeeProfile"><a href="/Home/EmployeeProfile"><i class="fa fa-male"></i>&nbsp;Profile</a></li>
+                                <li id="mnuPerformanceReport"><a href="/Report/PerformanceReport"><i class="fa fa-id-card"></i>&nbsp;Performance Report</a></li>
+                                <li id="mnuEmpReportMissPunch"><a href="/MissPunch/EmpMissPunchReport"><i class="fa fa-id-card"></i>&nbsp;In/Out Punch Report</a></li>
                                 <li id="mnuPayslip"><a href="~/Master/SalarySlip"><i class="fa fa-rupee"></i>&nbsp;Payslip</a></li>
-                                <li id="mnuVaccCerti"><a href="~/Vaccination/UploadVaccinationCertificate">Vaccination</a></li>
-                                <li hidden="hidden" id="mnuSSEmployee"><a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a></li>
+                                <li id="mnuVaccCerti"><a href="~/Vaccination/UploadVaccinationCertificate"><i class="fa fa-thermometer-empty"></i>&nbsp;Vaccination</a></li>
+                                <li id="mnuSSEmployee"><a href="/ShiftSchedule/SSEmployee">My Shift Schedule</a></li>
                                 @*<li id="mnuMyShiftChangeReport"><a href="~/ShiftSchedule/MyShiftChangeReport">My Shift Change Report</a></li>*@
                                 <li id="mnuIncomeTaxDeclaration"><a href="/IncomeTax/IncomeTaxDeclaration">Income Tax Declaration</a></li>
                                 <li id="mnuTDS"><a href="~/IncomeTax/Form16">TDS Forms</a></li>
                                 <li id="mnuResignApplication"><a href="~/ExitProcess/UserExitProcess">Resignation Application</a></li>
                                 <li id="mnuEmpResignation"><a href="~/ExitProcess/UserExitProcessReport">Emp. Resignation</a></li>
-                                <li hidden="hidden" id="mnuNODuesStatus"><a href="~/NoDues/NoDuesStatus">No Dues Status</a></li>
+                                <li id="mnuNODuesStatus"><a href="~/NoDues/NoDuesStatus">No Dues Status</a></li>
                                 <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
                                 <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
@@ -188,6 +188,7 @@
                             <li id="mnuLeaveApplication"><a href="/LeaveApp/LeaveApply">Leave Application</a></li>
                             <li id="mnuODApplication"><a href="/OD/ODApply">OD Application</a></li>
                             <li id="mnuCOffApplication"><a href="#" onclick="COFF()">COFF Application</a></li>
+                            <li id="mnuOTCOffApplication"><a href="/LeaveApp/OTCOffApplication">Apply OT COFF</a></li>
                             <li class="dropdown-submenu" id="mnuLeaveCancellation">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -246,6 +247,7 @@
                             <li hidden="hidden" id="mnuOpenMonth"><a href="/Home/OpenMonth">Change Open Month</a></li>
                             <li hidden="hidden" id="mnuResetPass"><a href="/Home/ResetPassword">Reset Password</a></li>
                             <li hidden="hidden" id="mnuManageLeave"><a href="~/Master/ManageLeaveMaster">Manage Leave</a></li>
+                            <li hidden="hidden" id="mnuSAPIDReport"><a href="~/Master/SAPIDReport">SAPID Report</a></li>
                             <li hidden="hidden" id="mnuPayslipUpload"><a href="~/Master/SalarySlipUpload">Payslip Upload</a></li>
                             <li hidden="hidden" id="mnuTDSUpload"><a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a></li>
                             <li hidden="hidden" id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Strategy Master</a></li>
@@ -327,29 +329,38 @@
                             </li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuTPA">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-id-card-o"></i><span>TPA</span></a>
+                    <li class="dropdown" id="mnuVehicleRequisition">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-car fa-3x"></i><span>Vehicle Requisition</span></a>
                         <ul class="dropdown-menu">
-                            <li hidden="hidden" class="dropdown-submenu" id="mnuPreApprovalTPA">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Pre Approve TPA <b class="fa fa-caret-right"></b></span></a>
-                                <ul class="dropdown-menu">
-                                    <li hidden="hidden" id="mnuPreAssigneTPA"><a href="/TPA/AssigneTPA">Entry of Daily OT Hours</a></li>
-                                    <li hidden="hidden" id="mnuPreAssigneTPADateRange"><a href="/TPA/AssignTPAinDateRange">Entry of Monthly OT Hours</a></li>
-                                    <li id="mnuTPAPreApproved"><a href="/TPA/ReleaseAssignedTPA">Release Daily/Monthly OT Hours</a></li>
-                                </ul>
-                            </li>
-                            <li hidden="hidden" class="dropdown-submenu" id="mnuPostApprovalTPA">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Sanction Actual TPA <b class="fa fa-caret-right"></b></span></a>
-                                <ul class="dropdown-menu">
-                                    <li hidden="hidden" id="mnuSanctionTPA"><a href="/TPA/SanctionTPA">Entry of Actual OT Hours</a></li>
-                                    <li hidden="hidden" id="mnuTPAPostApproved"><a href="/TPA/ReleaseSanctionTPA">Release Actual OT Hours</a></li>
-                                </ul>
-                            </li>
-                            <li hidden="hidden" id="mnuPostHR"><a href="/TPA/ReleaseSanctionTPAHR">Release Actual TPA Hours ~ HR</a></li>
-                            <li hidden="hidden" id="mnuSanctionReport"><a href="/TPA/SanctionTPAReport">Bulk Sanction Report</a></li>
-                            <li hidden="hidden" id="mnuTPAReport"><a href="/TPA/TPAReport">TPA Report</a></li>
+                            <li id="mnutripBooking"><a href="/VehicleRequisition/CreateVehicleRequisition">Vehicle Booking</a></li>
+                            <li id="mnutripReleaseHOD"><a href="/VehicleRequisition/HODRelease">HOD Release</a></li>
+                            <li id="mnutripReleaseAdmin"><a href="/VehicleRequisition/AdminRelease">Admin Release</a></li>
+                            <li id="mnuVehicleRequisitionReport"><a href="/VehicleRequisition/VehicleRequisitionReport">Vehicle Requisition Report</a></li>
                         </ul>
                     </li>
+                    @*<li hidden="hidden" class="dropdown" id="mnuTPA">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-id-card-o"></i><span>TPA</span></a>
+                            <ul class="dropdown-menu">
+                                <li hidden="hidden" class="dropdown-submenu" id="mnuPreApprovalTPA">
+                                    <a href="#" class="test" data-toggle="dropdown"><span>Pre Approve TPA <b class="fa fa-caret-right"></b></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li hidden="hidden" id="mnuPreAssigneTPA"><a href="/TPA/AssigneTPA">Entry of Daily OT Hours</a></li>
+                                        <li hidden="hidden" id="mnuPreAssigneTPADateRange"><a href="/TPA/AssignTPAinDateRange">Entry of Monthly OT Hours</a></li>
+                                        <li id="mnuTPAPreApproved"><a href="/TPA/ReleaseAssignedTPA">Release Daily/Monthly OT Hours</a></li>
+                                    </ul>
+                                </li>
+                                <li hidden="hidden" class="dropdown-submenu" id="mnuPostApprovalTPA">
+                                    <a href="#" class="test" data-toggle="dropdown"><span>Sanction Actual TPA <b class="fa fa-caret-right"></b></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li hidden="hidden" id="mnuSanctionTPA"><a href="/TPA/SanctionTPA">Entry of Actual OT Hours</a></li>
+                                        <li hidden="hidden" id="mnuTPAPostApproved"><a href="/TPA/ReleaseSanctionTPA">Release Actual OT Hours</a></li>
+                                    </ul>
+                                </li>
+                                <li hidden="hidden" id="mnuPostHR"><a href="/TPA/ReleaseSanctionTPAHR">Release Actual TPA Hours ~ HR</a></li>
+                                <li hidden="hidden" id="mnuSanctionReport"><a href="/TPA/SanctionTPAReport">Bulk Sanction Report</a></li>
+                                <li hidden="hidden" id="mnuTPAReport"><a href="/TPA/TPAReport">TPA Report</a></li>
+                            </ul>
+                        </li>*@
                     <li class="dropdown" id="mnuProgressReview">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Progress Review</span></a>
                         <ul class="dropdown-menu">
@@ -358,6 +369,7 @@
                             <li id="mnuReviewRelease"><a href="/ProgressReview/PerformanceReviewRelease">Review Release</a></li>
                             <li id="mnuReviewReleaseHR"><a href="/ProgressReview/PerformanceReviewHRRelease">HR Release</a></li>
                             <li id="mnuReviewReport"><a href="/ProgressReview/PerformanceReviewReport">Performance Review Report</a></li>
+                            <li id="mnuReviewStatusReport"><a href="/ProgressReview/PerformanceStatusReport">Performance Status Report</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -54,7 +54,7 @@
             jsonObj.wrkGrp = $("#myWrkGrp").val(), jsonObj.unitCode = $("#myUnitCode").val(), jsonObj.deptCode = $("#myDeptCode").val();
             jsonObj.statCode = $("#myStatCode").val(), jsonObj.catCode = $("#myCatCode").val(), jsonObj.isHOD = $("#myIsHod").val(), jsonObj.releaseGroupCode = "OD";
             jsonObj.releaseStrategy = "", jsonObj.releaseStatusCode = "", jsonObj.addDt = dt, jsonObj.addUser = $("#myEmpUnqId").val();
-            jsonObj.clientIp = $("#myIPAddress").val(), jsonObj.updDt = dt, jsonObj.updUser = null, jsonObj.remarks = null, jsonObj.parentId = 0;
+            jsonObj.clientIp = $("#myIPAddress").val(), jsonObj.updDt = dt, jsonObj.updUser = null, jsonObj.remarks = 'OD_', jsonObj.parentId = 0;
             jsonObj.leaveApplicationDetails = TableData;
             return jsonObj;
         }

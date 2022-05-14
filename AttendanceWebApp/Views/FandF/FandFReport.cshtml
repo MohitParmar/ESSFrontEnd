@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "FandFReport";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/Controller/FandFCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
@@ -83,18 +83,18 @@
                             </div>
 
                             <div ng-init="FandFReport()" class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-condend table-striped">
                                     <thead>
                                         <tr>
                                             <th style="text-align:center;">Sr No.</th>
-                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            <th style="text-align:center;" ng-click="sort('EMP_CODE')">
                                                 Employee Code
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EMP_CODE'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;" ng-click="sort('empName')">
+                                            <th style="text-align:center;" ng-click="sort('EMP_NAME')">
                                                 Employee Name
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='EMP_NAME'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Designation</th>

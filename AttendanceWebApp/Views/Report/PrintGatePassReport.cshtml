@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Gate Pass List";
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/GatePassCntrl.js"></script>
@@ -76,7 +76,7 @@
                             </table>
                         </div>
                         <div ng-init="GetUserGatePassInfo()">
-                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="tbl_print">
+                            <table data-show-filter="true" class="table table-condensed table-striped" id="tbl_print">
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;">GP Date</th>

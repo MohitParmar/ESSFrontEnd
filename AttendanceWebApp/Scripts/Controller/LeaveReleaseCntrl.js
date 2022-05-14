@@ -30,7 +30,31 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     //Auto Mail End
                     document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Approved Sucesfully.. </strong></div>";
                     ///Auto Leave Post
-                    var loc = $('#myLoc').val(); var cancelled = leaveheaderarr.cancelled; var parentid = leaveheaderarr.parentId; if (rls_final === true && (loc === "IPU" || loc === "NKP")) { var slflg = false; var TableData = storeTblValues(); var ldata = new Array(); TableData = JSON.stringify(TableData); function storeTblValues() { var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) { TableData[row] = { "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(), "LeaveTypeCode": $(tr).find('td:eq(3)').text() } }); var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) { var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"]; if (appid == rlsappid) { if (appleavetype === "SL" || appleavetype === "OD" || appleavetype === "LD" || parentid !== 0 || cancelled === true) { slflg = true; return false; }; tbl[count] = { "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val() }; count++; }; }; ldata = tbl; return tbl; }; if (slflg === false) { var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true); pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData); }; };
+                    var loc = $('#myLoc').val(); var cancelled = leaveheaderarr.cancelled; var parentid = leaveheaderarr.parentId;
+                    if (rls_final === true && (loc === "IPU" || loc === "NKP")) {
+                        var slflg = false; var TableData = storeTblValues(); var ldata = new Array();
+                        TableData = JSON.stringify(TableData); function storeTblValues() {
+                            var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) {
+                                TableData[row] = {
+                                    "LeaveAppId": $(tr).find('td:eq(0)').text(), "LeaveAppItem": $(tr).find('td:eq(2)').text(),
+                                    "LeaveTypeCode": $(tr).find('td:eq(3)').text()
+                                }
+                            }); var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
+                                var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
+                                if (appid == rlsappid) {
+                                    if (appleavetype === "SL" || appleavetype === "CO" || appleavetype === "OC" || appleavetype === "OD" || appleavetype === "LD" || parentid !== 0 || cancelled === true) {
+                                        slflg = true; return false;
+                                    };
+                                    tbl[count] = {
+                                        "YearMonth": dataarr.yearMonth, "LeaveAppId": rlsappid, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "F", "UserId": $('#myEmpUnqId').val()
+                                    }; count++;
+                                };
+                            }; ldata = tbl; return tbl;
+                        }; if (slflg === false) {
+                            var pst = new XMLHttpRequest(); pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
+                            pst.setRequestHeader("Content-type", "application/json"); pst.onreadystatechange = function () { if (pst.readyState === 4 && pst.status === 200) { TableData = ""; }; }; pst.send(TableData);
+                        };
+                    };
                 }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Rejected Sucesfully.. </strong></div>"; }; $('#MessageBox').show();
             } else { jQuery('#btnClose').click(); if (releaseStatusCode === 'F') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Not Approved .. </strong></div>"; }; if (releaseStatusCode === 'R') { document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Leave Application Not Rejected .. </strong></div>"; }; $('#MessageBox').show(); }; $scope.GetLeaveRequestLists();
         }; xhr2.send(jsonObj);

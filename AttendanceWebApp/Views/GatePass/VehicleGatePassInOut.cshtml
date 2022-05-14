@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <button class="btn btn-lg btn-warning" style="width:100px;" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
+                        <button class="btn btn-lg btn-danger" style="width:100px;" id="btnOUT" ng-click="LoadData('OUT')">OUT</button>
                         <button class="btn btn-lg btn-success" style="width:100px;" id="btnIN" ng-click="LoadData('IN')">IN</button>
                         <div style="text-align:center;margin:0px;padding:0px;">
                             <h3 style="margin-top:5px;margin-bottom:5px;">
@@ -135,7 +135,7 @@
                                             <td style="font-size:large;">{{d.DriverName}}</td>
                                             <td style="font-size:large;">{{d.PlaceToVisit}}</td>
                                             <td style="text-align:center;">
-                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnOut" name="btnOut" value="OUT"
+                                                <input type="button" class="btn btn-lg btn-danger" style="width:75px;" id="btnOut" name="btnOut" value="OUT"
                                                        ng-click='VehicleGateINOUT("{{d.LogID}}","O")' />
                                             </td>
                                         </tr>
@@ -182,7 +182,7 @@
                                             <td style="font-size:large;">{{i.PlaceToVisit}}</td>
                                             <td style="font-size:large;text-align:center;">{{i.Outtime |date:"dd/MM/yyyy"}}</td>
                                             <td style="text-align:center;">
-                                                <input type="button" class="btn btn-lg btn-primary" style="width:75px;" id="btnIN" name="btnIN" value="IN"
+                                                <input type="button" class="btn btn-lg btn-success" style="width:75px;" id="btnIN" name="btnIN" value="IN"
                                                        ng-click='VehicleGateINOUT("{{i.LogID}}","I")' />
                                             </td>
                                         </tr>
