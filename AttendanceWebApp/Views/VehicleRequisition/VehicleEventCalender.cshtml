@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "VehicleEventCalender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link data-require="bootstrap-css" data-semver="2.3.2" rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+<link href="~/Content/FullCalender/FullCalendar.css" rel="stylesheet" />
+<script data-require="jquery" data-semver="1.11.0" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script data-require="jqueryui" data-semver="1.9.2" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script>
+<script data-require="bootstrap" data-semver="3.3.6" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="~/Content/FullCalender/moment.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+<script src="~/Content/FullCalender/FullCalendar.js"></script>
+<script src="~/Content/FullCalender/ui-calendar.js"></script>
+<link href="~/Content/FullCalender/datetimepicker.css" rel="stylesheet" />
+<script src="~/Content/FullCalender/datetimepicker.js"></script>
+<script src="~/Scripts/Controller/VehicleReqEvents.js"></script>
+
+<div ng-app="myApp" ng-controller="EventController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Vehicle Bookings</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>From Date : </label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="date" id="fromDt" ng-model="New.FromDt">
+                                    <td>
+                                        <label>To Date : </label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="date" id="toDt" ng-model="New.ToDt">
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetVehicleReq()">
+                                            <i class="fa fa-search"></i>
+                                            Search
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="form-group">
+                                <div class="form-group-row">
+                                    <div class="col-sm-1">
+                                        <button type="button" ng-click="renderCalender()" class="btn btn-default">Render</button>
+                                    </div>
+                                </div>
+                                <div class="form-group-row">
+                                    <div class="col-sm-12">
+                                        <div id="calendar" ui-calendar="calendarConfig" ng-model="eventSources" calendar="myCalendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

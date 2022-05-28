@@ -32,6 +32,13 @@
                 alert("Please Enter Valid date for Overtime Date 2"); return false;
             };
         }
+        if (coDate1 === coDate2) {
+            alert("Please Enter Valid dates");
+            $("#coDate1").val("");
+            $("#coDate2").val("");
+            $("#coffDt").val("");
+            return false;
+        }
     }; //Date Validation
     //Get Applied Comp Off Leave Requests & Validate
     $scope.LeaveRequestData = function (entity) {

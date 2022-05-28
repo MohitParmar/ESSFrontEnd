@@ -53,112 +53,155 @@
                             <table data-show-filter="true" class="table table-striped table-condensed">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;" ng-click="sort('addDt')">
+                                        <th style="text-align:center;" ng-click="sort('AddDt')">
                                             App.Date
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='AddDt'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                        <th style="text-align:center;" ng-click="sort('EmpUnqId')">
                                             SAPID
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpUnqId'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;" ng-click="sort('empName')">
+                                        <th style="text-align:left;" ng-click="sort('EmpName')">
                                             Employee Name
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;" ng-click="sort('bookingDate')">
+                                        <th style="text-align:center;" ng-click="sort('BookingDate')">
                                             Booking Date
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='bookingDate'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='BookingDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;" ng-click="sort('bookingSlot')">
+                                        <th style="text-align:left;" ng-click="sort('BookingSlot')">
                                             Booking Slot
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='bookingSlot'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='BookingSlot'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align:left;">Booking Status</th>
-                                        <th style="text-align:left;" ng-click="sort('pickupLocation')">
+                                        <th style="text-align:left;" ng-click="sort('PickupTime')">
+                                            Pickup Time
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='PickupTime'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('PickupLocation')">
                                             Pickup Location
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='pickupLocation'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='PickupLocation'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;" ng-click="sort('dropLocation')">
+                                        <th style="text-align:left;" ng-click="sort('DropLocation')">
                                             Drop Location
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='dropLocation'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='DropLocation'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:left;">No. Of Passengers</th>
                                         <th style="text-align:left;">Others</th>
-                                        <th style="text-align:left;" ng-click="sort('releaseAuth')">
+                                        <th style="text-align:left;" ng-click="sort('ReleaseAuth')">
                                             Released by
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseAuth'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='ReleaseAuth'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;" ng-click="sort('releaseDate')">
+                                        <th style="text-align:center;" ng-click="sort('ReleaseDate')">
                                             Release Date
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseDate'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='ReleaseDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;" ng-click="sort('adminUser')">
+                                        <th style="text-align:center;">HOD Release Status</th>
+                                        <th style="text-align:left;" ng-click="sort('AdminUser')">
                                             Admin User
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='adminUser'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='AdminUser'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;" ng-click="sort('adminReleaseDate')">
+                                        <th style="text-align:center;" ng-click="sort('AdminReleaseDate')">
                                             Admin Release Date
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='adminReleaseDate'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='AdminReleaseDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:center;">Admin Release Status</th>
                                         <th style="text-align:left;">Rejection Remarks</th>
                                         <th style="text-align:center;">Action</th>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpUnqId" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpName" />
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.bookingSlot" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.BookingSlot" />
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PickupLocation" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DropLocation" />
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseAuth" />
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.pickupLocation" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseStatusCode" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.dropLocation" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.AdminUser" />
                                         </td>
                                         <td></td>
-                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseAuth" /></td>
-                                        <td></td>
-                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.adminUser" /></td>
-                                        <td colspan="3"></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.AdminReleaseStatusCode" />
+                                        </td>
+                                        <td colspan="2"></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="d in allData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
                                         current-page="currentPage">
-                                        <td style="text-align:center;">{{d.addDt | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:center;">{{d.empUnqId}}</td>
-                                        <td style="text-align:left;">{{d.empName}}</td>
-                                        <td style="text-align:center;">{{d.bookingDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:center;">{{d.bookingSlot}}</td>
-                                        <td style="text-align:center;"><input type="checkbox" id="sts" ng-checked="{{d.bookingStatus}}" disabled /></td>
-                                        <td style="text-align:left;">{{d.pickupLocation}}</td>
-                                        <td style="text-align:left;">{{d.dropLocation}}</td>
-                                        <td style="text-align:left;">{{d.remarks}}</td>
-                                        <td style="text-align:left;">{{d.releaseAuth}}</td>
-                                        <td style="text-align:center;">{{d.releaseDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:left;">{{d.adminUser}}</td>
-                                        <td style="text-align:center;">{{d.adminReleaseDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:left;"><input id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks" /></td>
+                                        <td style="text-align:center;">{{d.AddDt | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.EmpUnqId}}</td>
+                                        <td style="text-align:left;">{{d.EmpName}}</td>
+                                        <td style="text-align:center;">{{d.BookingDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{d.BookingSlot}}</td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" id="sts" ng-checked="{{d.BookingStatus}}" disabled />
+                                        </td>
+                                        <td style="text-align:left;">{{d.PickupTime | date:'HH:mm'}}</td>
+                                        <td style="text-align:left;">{{d.PickupLocation}}</td>
+                                        <td style="text-align:left;">{{d.DropLocation}}</td>
+                                        <td style="text-align:left;">{{d.NumberOfPass}}</td>
+                                        <td style="text-align:left;">{{d.Remarks}}</td>
+                                        <td style="text-align:left;">{{d.ReleaseAuth}}</td>
+                                        <td style="text-align:center;">{{d.ReleaseDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;"
+                                            ng-style="d.ReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                            		  d.ReleaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
+                                            {{d.ReleaseStatusCode}}
+                                        </td>
+                                        <td style="text-align:left;">{{d.AdminUser}}</td>
+                                        <td style="text-align:center;">{{d.AdminReleaseDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;"
+                                            ng-style="d.AdminReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                            		  d.AdminReleaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
+                                            {{d.AdminReleaseStatusCode}}
+                                        </td>
+                                        <td style="text-align:left;">
+                                            <input id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks"
+                                                   ng-if="d.BookingStatus === true" />
+                                        </td>
                                         <td style="text-align:left;">
                                             <div class="input-group-btn">
-                                                <button class="btn btn-danger" id="btnReject" ng-click="ReleaseReq({{d.empUnqId}},{{d.reqId}},true,'R',N,true)"> <i class="fa fa-remove"></i></button>
+                                                <button class="btn btn-danger"
+                                                        id="btnReject"
+                                                        ng-if="d.BookingStatus === true"
+                                                        ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',N,true)">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>

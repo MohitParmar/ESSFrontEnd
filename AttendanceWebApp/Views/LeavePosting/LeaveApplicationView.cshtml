@@ -111,7 +111,7 @@
                                         <td>
                                             <table>
                                                 <tr ng-repeat="a in d.applReleaseStatus">
-                                                    <td ng-if="a.releaseStatusCode === 'I' || a.releaseStatusCode === 'R'" style="width: 85px; font-size: x-small;">
+                                                    <td ng-if="a.releaseStatusCode === 'I' || a.releaseStatusCode === 'R' && ld.remarks !== 'Cancelled by Self.'" style="width: 85px; font-size: x-small;">
                                                         {{a.releaseStrategyLevel}} - {{a.releaserName}} - {{a.releaseDate | date:'dd/MM/yyyy'}}
                                                     </td>
                                                 </tr>

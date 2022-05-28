@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <!-- <link data-require="fullcalendar@1.6.1" data-semver="1.6.1" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.1/fullcalendar.min.css" /> -->
+    <link data-require="bootstrap-css@*" data-semver="2.3.2" rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+    <link rel="stylesheet" href="FullCalendar.css" />
+    <script data-require="jquery@*" data-semver="1.11.0" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script data-require="jqueryui@*" data-semver="1.9.2" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.3.6" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="moment.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script src="FullCalendar.js"></script>
+    <!-- <script data-require="fullcalendar@1.6.1" data-semver="1.6.1" src="cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script> -->
+    <script src="ui-calendar.js"></script>
+    <link rel="stylesheet" href="datetimepicker.css" />
+    <script src="datetimepicker.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-app="ExampleApp">
+    <div ng-controller="ExampleController">
+      <div>
+      Event Title:
+
+              <input type="text" ng-model="event.Title" />
+      </div>
+      <div>
+      Start Date Time:
+              <div class="dropdown">
+          <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+            <div class="input-group">
+              <input type="text" class="form-control" data-ng-model="event.startDate" />
+              <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </span>
+            </div>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="event.startDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"></datetimepicker>
+          </ul>
+        </div>
+      </div>
+      <div>
+
+
+      End Date Time:
+              <div class="dropdown">
+          <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#" href="#">
+            <div class="input-group">
+              <input type="text" class="form-control" data-ng-model="event.endDate" />
+              <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </span>
+            </div>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="event.endDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }"></datetimepicker>
+          </ul>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" ng-click="addEvent()">
+      Add Event
+    </button>
+      <button type="button" class="btn btn-primary" ng-click="showCal()">
+      {{ showIt ? 'hide' : 'show'}} Calendar
+    </button>
+      <button type="button" ng-click="renderCalender()" class="btn btn-default"> Render </button>
+      <div ng-show="showIt">
+        <div id="calendar" ui-calendar="calendarConfig" ng-model="eventSources" calendar="myCalendar"></div>
+      </div>
+    </div>
+  </body>
+
+</html>

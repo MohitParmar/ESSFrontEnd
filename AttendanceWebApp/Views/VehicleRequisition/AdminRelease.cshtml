@@ -20,22 +20,23 @@
                             <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                        <th style="text-align:center;" ng-click="sort('EmpUnqId')">
                                             SAPID
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpUnqId'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;" ng-click="sort('empName')">
+                                        <th style="text-align:left;" ng-click="sort('EmpName')">
                                             Employee Name
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;" ng-click="sort('bookingDate')">
+                                        <th style="text-align:center;" ng-click="sort('BookingDate')">
                                             Booking Date
-                                            <span class="glyphicon sort-icon" ng-show="sortKey=='bookingDate'"
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='BookingDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align:left;">Booking Slot</th>
+                                        <th style="text-align:left;">Pickup Time</th>
                                         <th style="text-align:left;">Pickup Location</th>
                                         <th style="text-align:left;">Drop Location</th>
                                         <th style="text-align:left;">Others</th>
@@ -44,18 +45,19 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpUnqId" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpName" />
                                         </td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.pickupLocation" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PickupLocation" />
                                         </td>
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.dropLocation" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DropLocation" />
                                         </td>
                                         <td colspan="3"></td>
                                     </tr>
@@ -63,18 +65,19 @@
                                 <tbody>
                                     <tr dir-paginate="d in tripData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
                                         current-page="currentPage">
-                                        <td style="text-align:center;">{{d.empUnqId}}</td>
-                                        <td style="text-align:left;">{{d.empName}}</td>
-                                        <td style="text-align:center;">{{d.bookingDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:left;">{{d.bookingSlot}}</td>
-                                        <td style="text-align:left;">{{d.pickupLocation}}</td>
-                                        <td style="text-align:left;">{{d.dropLocation}}</td>
-                                        <td style="text-align:left;">{{d.remarks}}</td>
+                                        <td style="text-align:center;">{{d.EmpUnqId}}</td>
+                                        <td style="text-align:left;">{{d.EmpName}}</td>
+                                        <td style="text-align:center;">{{d.BookingDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.BookingSlot}}</td>
+                                        <td style="text-align:left;">{{d.PickupTime | date:'HH:mm'}}</td>
+                                        <td style="text-align:left;">{{d.PickupLocation}}</td>
+                                        <td style="text-align:left;">{{d.DropLocation}}</td>
+                                        <td style="text-align:left;">{{d.Remarks}}</td>
                                         <td style="text-align:left;"><input id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks" /></td>
                                         <td style="text-align:left;">
                                             <div class="input-group-btn">
-                                                <button class="btn btn-success" id="btnApprove" ng-click="ReleaseReq({{d.empUnqId}},{{d.reqId}},true,'F',N,false)"><i class="fa fa-check"></i></button>
-                                                <button class="btn btn-danger" id="btnReject" ng-click="ReleaseReq({{d.empUnqId}},{{d.reqId}},true,'R',N,false)"> <i class="fa fa-remove"></i></button>
+                                                <button class="btn btn-success" id="btnApprove" ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'F',N,false)"><i class="fa fa-check"></i></button>
+                                                <button class="btn btn-danger" id="btnReject" ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',N,false)"> <i class="fa fa-remove"></i></button>
                                             </div>
                                         </td>
                                     </tr>

@@ -105,12 +105,12 @@ app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
                             if (codt1 !== null && codt1 !== '') {
                                 myArray[cnt].coDate1 = leaveApplicationDetails[l].coDate1.substring(0, leaveApplicationDetails[l].coDate1.indexOf("T"));
                             } else { myArray[cnt].coDate1 = ""; };
-                            if (location === "JFL") {
-                                var codt2 = leaveApplicationDetails[l].coDate2;
-                                if (codt2 !== null && codt2 !== '') {
-                                    myArray[cnt].coDate2 = leaveApplicationDetails[l].coDate2.substring(0, leaveApplicationDetails[l].coDate2.indexOf("T"));
-                                } else { myArray[cnt].coDate2 = ""; };
-                            } else { myArray[cnt].coDate2 = ""; }
+                            /*if (location === "JFL") {*/
+                            var codt2 = leaveApplicationDetails[l].coDate2;
+                            if (codt2 !== null && codt2 !== '') {
+                                myArray[cnt].coDate2 = leaveApplicationDetails[l].coDate2.substring(0, leaveApplicationDetails[l].coDate2.indexOf("T"));
+                            } else { myArray[cnt].coDate2 = ""; };
+                            /*} else { myArray[cnt].coDate2 = ""; }*/
                         } else { myArray[cnt].coMode = ""; myArray[cnt].coDate1 = ""; myArray[cnt].coDate2 = ""; }
                         cnt++;
                     }; leaveApplicationDetails = "";

@@ -90,7 +90,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
     };
     //Create Trip
     $scope.TripBooking = function (data) {
-        /*document.getElementById("btnSubmit").disabled = true;*/
+        document.getElementById("btnSubmit").disabled = true;
         var jsonObj = {};
         jsonObj.EmpUnqId = $("#myEmpUnqId").val();
         jsonObj.ReqDate = dt;
@@ -101,10 +101,14 @@ app.controller("TripController", function ($scope, $http, $filter) {
         vhr.setRequestHeader("Accept", "application/json");
         vhr.onreadystatechange = function () {
             if (vhr.readyState === 4 && vhr.status === 200) {
-                jsonObj.PickupTime = dt;
-                jsonObj.PickupLocation = data.pickupLocation; jsonObj.DropLocation = data.dropLocation;
-                jsonObj.Remarks = data.remarks; jsonObj.AddDt = dt;
-                jsonObj.AddUser = $("#myEmpUnqId").val(); jsonObj = JSON.stringify(jsonObj);
+                jsonObj.PickupTime = data.pickupTime;
+                jsonObj.PickupLocation = data.pickupLocation;
+                jsonObj.DropLocation = data.dropLocation;
+                jsonObj.Remarks = data.remarks;
+                jsonObj.NumberOfPass = data.numberOfPass;
+                jsonObj.AddDt = dt;
+                jsonObj.AddUser = $("#myEmpUnqId").val();
+                jsonObj = JSON.stringify(jsonObj);
                 var gtd = new XMLHttpRequest;
                 gtd.open("POST", $scope._Conpath + "VehicleReq/CreateReq", true);
                 gtd.setRequestHeader("Content-Type", "application/json");
@@ -117,11 +121,16 @@ app.controller("TripController", function ($scope, $http, $filter) {
                         document.getElementById("txtpickupLocation").value = "";
                         document.getElementById("txtdropLocation").value = "";
                         document.getElementById("txtremarks").value = "";
+                        document.getElementById("txtpickupTime").value = "";
+                        document.getElementById("txtnumberOfPass").value = "";
                     } else {
-                        document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Not Submited.. </strong></div>"; $("#MessageBox").show();
-                    }
-                };
-                gtd.send(jsonObj);
+                        document.getElementById("MessageBox").innerHTML =
+                            "<div class='alert alert-warning alert-dismissable'>" +
+                            "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                            "<strong>Not Submited.. </strong></div>";
+                        $("#MessageBox").show();
+                    };
+                }; gtd.send(jsonObj);
             } else if (vhr.status === 400 || vhr.status === 403 || vhr.status === 404 || vhr.status === 408 || vhr.status === 500) {
                 var str =
                     vhr.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
@@ -134,10 +143,11 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 document.getElementById("txtdropLocation").value = "";
                 document.getElementById("txtremarks").value = "";
                 $("#cmbSlot option:first").attr("selected", true);
+                document.getElementById("txtpickupTime").value = "";
+                document.getElementById("txtnumberOfPass").value = "";
                 document.getElementById("btnSubmit").disabled = false;
             };
-        };
-        vhr.send();
+        }; vhr.send();
     };
     //Get pending req for release 
     $scope.GetReqForRel = function (isAdmin) {
@@ -152,36 +162,36 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 for (var i = 0; i < arr.length; i++) {
                     myArray.push([]);
                     var slot = arr[i].bookingSlot;
-                    if (1 == parseInt(slot)) { myArray[i].bookingSlot = "Morning"; };
-                    if (2 == parseInt(slot)) { myArray[i].bookingSlot = "Evening"; };
-                    if (3 == parseInt(slot)) { myArray[i].bookingSlot = "Night"; };
-                    myArray[i].reqId = arr[i].reqId;
-                    myArray[i].empUnqId = arr[i].empUnqId;
-                    myArray[i].empName = "Mohit Parmar";
-                    myArray[i].reqDate = arr[i].reqDate;
-                    myArray[i].bookingDate = arr[i].bookingDate;
-                    myArray[i].pickupTime = arr[i].pickupTime;
-                    myArray[i].pickupLocation = arr[i].pickupLocation;
-                    myArray[i].dropLocation = arr[i].dropLocation;
-                    myArray[i].remarks = arr[i].remarks;
-                    myArray[i].addDt = arr[i].addDt.substring(0, arr[i].addDt.indexOf("T"));
-                    myArray[i].addUser = arr[i].addUser;
-                    myArray[i].releaseGroupCode = arr[i].releaseGroupCode;
-                    myArray[i].releaseStrategy = arr[i].releaseStrategy;
-                    myArray[i].releaseCode = arr[i].releaseCode;
-                    myArray[i].releaseStatusCode = arr[i].releaseStatusCode;
-                    myArray[i].releaseRemarks = arr[i].releaseRemarks;
-                    myArray[i].releaseAuth = arr[i].releaseAuth;
-                    myArray[i].releaseDate = arr[i].releaseDate;
-                    myArray[i].adminReleaseStatusCode = arr[i].adminReleaseStatusCode;
-                    myArray[i].adminUser = arr[i].adminUser;
-                    myArray[i].adminReleaseDate = arr[i].adminReleaseDate;
-                    myArray[i].adminReleaseRemarks = arr[i].adminReleaseRemarks;
+                    if (1 == parseInt(slot)) { myArray[i].BookingSlot = "Morning"; };
+                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Evening"; };
+                    if (3 == parseInt(slot)) { myArray[i].BookingSlot = "Night"; };
+                    myArray[i].ReqId = arr[i].reqId;
+                    myArray[i].EmpUnqId = arr[i].empUnqId;
+                    myArray[i].EmpName = arr[i].empName;
+                    myArray[i].ReqDate = arr[i].reqDate;
+                    myArray[i].BookingDate = arr[i].bookingDate;
+                    myArray[i].PickupTime = arr[i].pickupTime;
+                    myArray[i].PickupLocation = arr[i].pickupLocation;
+                    myArray[i].DropLocation = arr[i].dropLocation;
+                    myArray[i].Remarks = arr[i].remarks;
+                    myArray[i].NumberOfPass = arr[i].numberOfPass;
+                    myArray[i].AddDt = arr[i].addDt.substring(0, arr[i].addDt.indexOf("T"));
+                    myArray[i].AddUser = arr[i].addUser;
+                    myArray[i].ReleaseGroupCode = arr[i].releaseGroupCode;
+                    myArray[i].ReleaseStrategy = arr[i].releaseStrategy;
+                    myArray[i].ReleaseCode = arr[i].releaseCode;
+                    myArray[i].ReleaseStatusCode = arr[i].releaseStatusCode;
+                    myArray[i].ReleaseRemarks = arr[i].releaseRemarks;
+                    myArray[i].ReleaseAuth = arr[i].releaseAuth;
+                    myArray[i].ReleaseDate = arr[i].releaseDate;
+                    myArray[i].AdminReleaseStatusCode = arr[i].adminReleaseStatusCode;
+                    myArray[i].AdminUser = arr[i].adminUser;
+                    myArray[i].AdminReleaseDate = arr[i].adminReleaseDate;
+                    myArray[i].AdminReleaseRemarks = arr[i].adminReleaseRemarks;
                 };
                 $scope.tripData = myArray; $scope.$digest();
                 $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
-            }
-            else if (gtd.status === 400 || gtd.status === 403 || gtd.status === 404 || gtd.status === 408 || gtd.status === 500) {
+            } else if (gtd.status === 400 || gtd.status === 403 || gtd.status === 404 || gtd.status === 408 || gtd.status === 500) {
                 $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
                 var str =
                     gtd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
@@ -222,16 +232,23 @@ app.controller("TripController", function ($scope, $http, $filter) {
         rel.setRequestHeader("Content-Type", "application/json");
         rel.onreadystatechange = function () {
             if (rel.readyState === 4 && rel.status === 200) {
-                document.getElementById("MessageBox").innerHTML =
-                    "<div class='alert alert-success alert-dismissable'>" +
-                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                    " <strong>Release Successfully.. </strong></div>";
-                $("#MessageBox").show();
-                if (flg === true) {
+                if (flg === true || flg === "true") {
                     var index = $scope.allData.findIndex(function (item, i) { return item.reqId === reqId });
                     $scope.allData.splice(index, 1); $scope.$digest();
-                } else { $scope.GetReqForRel(isAdm); }
-            } else if (rel.status === 400 || rel.status === 403 || rel.status === 404 || rel.status === 408 || rel.status === 500) {
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-success alert-dismissable'>" +
+                        "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                        "<strong>Cancelled Successfully.. </strong></div>";
+                } else {
+                    var index = $scope.tripData.findIndex(function (item, i) { return item.reqId === reqId });
+                    $scope.tripData.splice(index, 1); $scope.$digest();
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-success alert-dismissable'>" +
+                        "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                        "<strong>Approve/Rejected Successfully.. </strong></div>";
+                }
+                $("#MessageBox").show();
+            } else if (rel.readyState === 4 && rel.status === 400 || rel.status === 403 || rel.status === 404 || rel.status === 408 || rel.status === 500) {
                 var str =
                     rel.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
                 var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
@@ -244,7 +261,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
         };
         rel.send(jsonObj);
     };
-    //Get all vehicel req in date range
+    //Get all vehicle requisition in date range
     $scope.GetVehicleReq = function () {
         var all = new XMLHttpRequest;
         all.open("GET", $scope._Conpath + "VehicleReq/GetVehicleReq?fromDt=" + $("#fromDt").val() + "&toDt=" + $("#toDt").val(), true);
@@ -252,18 +269,71 @@ app.controller("TripController", function ($scope, $http, $filter) {
         all.onreadystatechange = function () {
             if (all.readyState === 4 && all.status === 200) {
                 var json = JSON.parse(all.responseText);
+                var myArray = []; var arr = new Array(); arr = json;
+                for (var i = 0; i < arr.length; i++) {
+                    myArray.push([]);
+                    myArray[i].ReqId = arr[i].reqId;
+                    myArray[i].EmpUnqId = arr[i].empUnqId;
+                    myArray[i].EmpName = arr[i].empName;
+                    myArray[i].DeptName = arr[i].deptName;
+                    myArray[i].StatName = arr[i].statName;
+                    myArray[i].CatName = arr[i].catName;
+                    myArray[i].GradeName = arr[i].gradeName;
+                    myArray[i].BookingDate = arr[i].bookingDate.substring(0, arr[i].bookingDate.indexOf("T"));
+                    var slot = arr[i].bookingSlot;
+                    if (1 == parseInt(slot)) { myArray[i].BookingSlot = "Morning"; };
+                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Evening"; };
+                    if (3 == parseInt(slot)) { myArray[i].BookingSlot = "Night"; };
+                    myArray[i].BookingStatus = arr[i].bookingStatus;
+                    myArray[i].NumberOfPass = arr[i].numberOfPass;
+                    myArray[i].PickupTime = arr[i].pickupTime;
+                    myArray[i].PickupLocation = arr[i].pickupLocation;
+                    myArray[i].DropLocation = arr[i].dropLocation;
+                    myArray[i].Remarks = arr[i].remarks;
+                    myArray[i].AddDt = arr[i].addDt.substring(0, arr[i].addDt.indexOf("T"));
+                    myArray[i].AddUser = arr[i].addUser;
+                    myArray[i].ReleaseAuth = arr[i].releaseAuth;
+                    myArray[i].ReleaseStatusCode = arr[i].releaseStatusCode;
+                    myArray[i].ReleaseDate = arr[i].releaseDate.substring(0, arr[i].releaseDate.indexOf("T"));;
+                    myArray[i].ReleaseRemarks = arr[i].releaseRemarks;
+                    myArray[i].AdminUser = arr[i].adminUser;
+                    myArray[i].AdminReleaseStatusCode = arr[i].adminReleaseStatusCode;
+                    myArray[i].AdminReleaseDate = arr[i].adminReleaseDate.substring(0, arr[i].adminReleaseDate.indexOf("T"));;
+                    myArray[i].AdminReleaseRemarks = arr[i].adminReleaseRemarks;
+                };
+                $scope.allData = myArray;
+                $scope.exportObj = $scope.allData;
+                $scope.$digest();
+            };
+        }; all.send();
+    };
+    //Get Employee vehicle requisition in date range
+    $scope.GetByEmpVehicleReq = function () {
+        var evr = new XMLHttpRequest;
+        evr.open("GET", $scope._Conpath + "VehicleReq/GetByEmployee?empUnqId=" + $("#myEmpUnqId").val() +
+            "&fromDt=" + $("#fromDt").val() + "&toDt=" + $("#toDt").val(), true);
+        evr.setRequestHeader("Accept", "application/json");
+        evr.onreadystatechange = function () {
+            if (evr.readyState === 4 && evr.status === 200) {
+                var json = JSON.parse(evr.responseText);
                 var arr = new Array(); arr = json;
                 for (var i = 0; i < arr.length; i++) {
                     var slot = arr[i].bookingSlot;
-                    if (1 == parseInt(slot)) { arr[i].bookingSlot = "Morning"; };
-                    if (2 == parseInt(slot)) { arr[i].bookingSlot = "Evening"; };
-                    if (3 == parseInt(slot)) { arr[i].bookingSlot = "Night"; };
-                };
-                $scope.allData = arr;
-                $scope.$digest();
+                    if (1 == parseInt(slot)) { arr[i].t_bookingSlot = "Morning"; };
+                    if (2 == parseInt(slot)) { arr[i].t_bookingSlot = "Evening"; };
+                    if (3 == parseInt(slot)) { arr[i].t_bookingSlot = "Night"; };
+                }; $scope.evrData = arr; $scope.$digest();
+            } else if (evr.readyState === 4 && evr.status === 400 || evr.status === 403 || evr.status === 404 || evr.status === 408 || evr.status === 500) {
+                var str =
+                    evr.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
+                var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-danger alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
+                    "</strong></div>";
+                $('#MessageBox').show();
             };
-        };
-        all.send();
+        }; evr.send();
     };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
     $scope.exportAllData = function (name) {

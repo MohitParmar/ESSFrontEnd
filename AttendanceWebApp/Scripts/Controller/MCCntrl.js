@@ -160,7 +160,8 @@ app.controller("MCController", function ($scope, $http) {
                                 "<td style='text-align:center;' hidden><input type='hidden' name='Active' value='" + arr[i].active + "'>" + arr[i].active + "</td>" +
                                 "</tr>");
                         };
-                        $("#commonTable").append(row); c = i;
+                        $("#commonTable").append(row);
+                        c = i;
                     }
                 }
             } else if (200 !== emp.status) {
@@ -355,6 +356,7 @@ app.controller("MCController", function ($scope, $http) {
         }
     };
     $scope.AddtoListDependentDetails = function (depData) {
+        debugger;
         var table = document.getElementById("commonTable");
         var rowCount = table.rows.length;
         if ((rowCount - 1) === 4) {
@@ -383,26 +385,40 @@ app.controller("MCController", function ($scope, $http) {
                     "<strong>Marriage Date is Mandatory</strong></div>";
                 $("#ModelMessageBox").show();
                 return false;
-            } else { marriageDate = depData.marriageDate; };
+            } else {
+                marriageDate = depData.marriageDate;
+            };
             if (typeof (depData.aadhar) === "undefined") {
                 document.getElementById("ModelMessageBox").innerHTML =
                     "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Aadhar Number is Mandatory.</strong></div>"; $("#ModelMessageBox").show();
                 return false;
-            } else { aadhar = depData.aadhar; };
-        } else { marriageDate = (typeof (depData.marriageDate) === "undefined") ? '' : depData.marriageDate; };
+            } else {
+                aadhar = depData.aadhar;
+            };
+        } else {
+            marriageDate = (typeof (depData.marriageDate) === "undefined") ? '' : depData.marriageDate;
+        };
         if ((typeof (depData.pan) === "undefined") || depData.pan === null) {
             pan = "";
-        } else { pan = depData.pan; };
+        } else {
+            pan = depData.pan;
+        };
         if ((typeof (depData.aadhar) === "undefined") || depData.aadhar === null) {
             aadhar = "";
-        } else { aadhar = depData.aadhar; };
+        } else {
+            aadhar = depData.aadhar;
+        };
         if ((typeof (depData.birthCertificateNo) === "undefined") || depData.birthCertificateNo === null) {
             csno = "";
-        } else { csno = depData.birthCertificateNo; };
-        var isChanged = true; var active = true; c++;
+        } else {
+            csno = depData.birthCertificateNo;
+        };
+        var dpname = $("#txtdepName").val();
+        var isChanged = true;
+        var active = true;
+        c++;
         if (relation === "SELF") {
-            var dpname = $("#txtdepName").val();
             row =
                 $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='srno' value='" + 0 + "'>" + 0 + "</td>" +
                     "<td style='text-align:left;'><input type='hidden' name='name' value='" + dpname + "'>" + dpname + "</td>" +
@@ -420,7 +436,7 @@ app.controller("MCController", function ($scope, $http) {
         } else {
             row =
                 $("<tr>" + "<td style='text-align:center;'><input type='hidden' name='srno' value='" + c + "'>" + c + "</td>" +
-                    "<td style='text-align:left;'><input type='hidden' name='name' value='" + depData.depName + "'>" + depData.depName + "</td>" +
+                    "<td style='text-align:left;'><input type='hidden' name='name' value='" + dpname + "'>" + dpname + "</td>" +
                     "<td style='text-align:left;'><input type='hidden' name='relation' value='" + relation + "'>" + relation + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='bDate' value='" + depData.birthDate + "'>" + depData.birthDate + "</td>" +
                     "<td style='text-align:center;'><input type='hidden' name='gender' value='" + $("#cmbGender").val() + "'>" + $("#cmbGender").val() + "</td>" +
@@ -484,17 +500,31 @@ app.controller("MCController", function ($scope, $http) {
             TableData.shift();
             return TableData;
         };
-        var depsrno = TableData[0].depSr; if (depsrno === "") { TableData.shift(); };
-        for (var m = 0; m < TableData.length; m++) { TableData[m].depSr = m; };
-        for (var l = 0; l < TableData.length; l++) { var mDate = TableData[l].marriageDate; if (mDate === "") { TableData[l].marriageDate = null; } };
+
+        var depsrno = TableData[0].depSr;
+        if (depsrno === "") {
+            TableData.shift();
+        };
+
+        //for (var m = 0; m < TableData.length; m++) {
+        //    TableData[m].depSr = m;
+        //};
+
+        for (var l = 0; l < TableData.length; l++) {
+            var mDate = TableData[l].marriageDate;
+            if (mDate === "") {
+                TableData[l].marriageDate = null;
+            }
+        };
+
         TableData = JSON.stringify(TableData);
+
         var ddl = new XMLHttpRequest();
         ddl.open("POST", $scope._Conpath + "MedDependent/CreateDependents", true);
         ddl.setRequestHeader("Content-type", "application/json");
         ddl.onreadystatechange = function () {
             if (ddl.readyState === 4 && ddl.status === 200) {
                 jQuery('#btnClose').click();
-                $("#commonTable").find("tr:not(:first)").remove();
                 $scope.GetDependentDetails('false');
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -508,11 +538,12 @@ app.controller("MCController", function ($scope, $http) {
                 $("#txtaadhar").val("");
                 $("#cmbReleation option:first").attr("selected", true);
                 $("#cmbGender option:first").attr("selected", true);
+                $("#commonTable").find("tr:not(:first)").remove();
                 TableData = "";
             } else {
                 jQuery('#btnClose').click();
-                $("#commonTable").find("tr:not(:first)").remove();
-                $scope.GetDependentDetails('false');
+                /*$("#commonTable").find("tr:not(:first)").remove();*/
+                //$scope.GetDependentDetails('false');
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     " <strong>Not Submited.. </strong></div>";

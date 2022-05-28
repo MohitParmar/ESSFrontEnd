@@ -251,19 +251,36 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
         }
     };
     $scope.ChangeNoDues = function (flg, id, direct, data) {
-        var rmks = ""; if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; };
-        var dept = $("#hidDept").val(); var releaserFlag = $("#hidreleaserFlag").val();
-        var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
-        var jsonObj = {}; var jsonDepts = new Array(); var empUnqId;
-        var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
+        var rmks = "";
+        if ((typeof (data) === "undefined")) {
+            rmks = "";
+        } else {
+            rmks = data.Remarks;
+        };
+        var dept = $("#hidDept").val();
+        var releaserFlag = $("#hidreleaserFlag").val();
+        var d = new Date();
+        var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
+        var jsonObj = {};
+        var jsonDepts = new Array();
+        var empUnqId;
+        var TableData = storeTblValues();
         function storeTblValues() {
             var noDuesDeptDetails = new Array();
             if (releaserFlag === "true" || hodRlsFLG !== null && flg === false) {
                 $('#commonTable tr').each(function (row, tr) {
                     noDuesDeptDetails[row] = {
-                        "EmpUnqId": $(tr).find('td:eq(0)').text(), "DeptId": $(tr).find('td:eq(1)').text(), "Sr": $(tr).find('td:eq(2)').text(),
-                        "Particulars": $(tr).find('td:eq(3)').text(), "Remarks": $(tr).find('td:eq(4)').text(), "Amount": $(tr).find('td:eq(5)').text(),
-                        "AddUser": $("#myEmpUnqId").val(), "AddDate": dt, "ApprovalFlag": true, "ApprovalDate": dt, "ApprovedBy": $("#myEmpUnqId").val()
+                        "EmpUnqId": $(tr).find('td:eq(0)').text(),
+                        "DeptId": $(tr).find('td:eq(1)').text(),
+                        "Sr": $(tr).find('td:eq(2)').text(),
+                        "Particulars": $(tr).find('td:eq(3)').text(),
+                        "Remarks": $(tr).find('td:eq(4)').text(),
+                        "Amount": $(tr).find('td:eq(5)').text(),
+                        "AddUser": $("#myEmpUnqId").val(),
+                        "AddDate": dt,
+                        "ApprovalFlag": true,
+                        "ApprovalDate": dt,
+                        "ApprovedBy": $("#myEmpUnqId").val()
                     }
                 });
                 noDuesDeptDetails.shift();
@@ -271,17 +288,33 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                 if ((typeof (direct) === "undefined") && flg === false) {
                     $('#commonTable tr').each(function (row, tr) {
                         noDuesDeptDetails[row] = {
-                            "EmpUnqId": $(tr).find('td:eq(0)').text(), "DeptId": $(tr).find('td:eq(1)').text(), "Sr": $(tr).find('td:eq(2)').text(),
-                            "Particulars": $(tr).find('td:eq(3)').text(), "Remarks": $(tr).find('td:eq(4)').text(), "Amount": $(tr).find('td:eq(5)').text(),
-                            "AddUser": $("#myEmpUnqId").val(), "AddDate": dt, "ApprovalFlag": false, "ApprovalDate": null, "ApprovedBy": $("#myEmpUnqId").val()
+                            "EmpUnqId": $(tr).find('td:eq(0)').text(),
+                            "DeptId": $(tr).find('td:eq(1)').text(),
+                            "Sr": $(tr).find('td:eq(2)').text(),
+                            "Particulars": $(tr).find('td:eq(3)').text(),
+                            "Remarks": $(tr).find('td:eq(4)').text(),
+                            "Amount": $(tr).find('td:eq(5)').text(),
+                            "AddUser": $("#myEmpUnqId").val(),
+                            "AddDate": dt,
+                            "ApprovalFlag": false,
+                            "ApprovalDate": null,
+                            "ApprovedBy": $("#myEmpUnqId").val()
                         }
                     }); noDuesDeptDetails.shift();
                 } else if ((typeof (direct) === "undefined") && flg === true) {
                     $('#commonTable1 tr').each(function (row, tr) {
                         noDuesDeptDetails[row] = {
-                            "EmpUnqId": $(tr).find('td:eq(0)').text(), "DeptId": $(tr).find('td:eq(1)').text(), "Sr": $(tr).find('td:eq(2)').text(),
-                            "Particulars": $(tr).find('td:eq(3)').text(), "Remarks": $(tr).find('td:eq(4)').text(), "Amount": $(tr).find('td:eq(5)').text(),
-                            "AddUser": $("#myEmpUnqId").val(), "AddDate": dt, "ApprovalFlag": false, "ApprovalDate": null, "ApprovedBy": $("#myEmpUnqId").val()
+                            "EmpUnqId": $(tr).find('td:eq(0)').text(),
+                            "DeptId": $(tr).find('td:eq(1)').text(),
+                            "Sr": $(tr).find('td:eq(2)').text(),
+                            "Particulars": $(tr).find('td:eq(3)').text(),
+                            "Remarks": $(tr).find('td:eq(4)').text(),
+                            "Amount": $(tr).find('td:eq(5)').text(),
+                            "AddUser": $("#myEmpUnqId").val(),
+                            "AddDate": dt,
+                            "ApprovalFlag": false,
+                            "ApprovalDate": null,
+                            "ApprovedBy": $("#myEmpUnqId").val()
                         }
                     });
                     noDuesDeptDetails.shift();
@@ -293,16 +326,38 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     " <strong>Please enter details of no dues and click on Plus Button and Submit to save No Dues details.</strong></div>"; $("#MessageBox1").show();
                 return false;
             }
-            for (var n = 0; n < noDuesDeptDetails.length; n++) { noDuesDeptDetails[n]["Sr"] = n + 1; };
-            empUnqId = id; if (releaserFlag === "true") { empUnqId = direct; }
+            for (var n = 0; n < noDuesDeptDetails.length; n++) {
+                noDuesDeptDetails[n]["Sr"] = n + 1;
+            };
+            empUnqId = id;
+            if (releaserFlag === "true") {
+                empUnqId = direct;
+            }
             else {
                 if (id === "NaN" || id === "") {
-                    if (dept === "HR") { if (flg === false) { empUnqId = parseInt(document.getElementById("heid").innerHTML); } else { empUnqId = parseInt(document.getElementById("heid1").innerHTML); } }
-                    else { if (flg === false) { empUnqId = parseInt(document.getElementById("eid").innerHTML); } else { empUnqId = parseInt(document.getElementById("eid1").innerHTML); } };
+                    if (dept === "HR") {
+                        if (flg === false) {
+                            empUnqId = parseInt(document.getElementById("heid").innerHTML);
+                        } else {
+                            empUnqId = parseInt(document.getElementById("heid1").innerHTML);
+                        }
+                    } else {
+                        if (flg === false) {
+                            empUnqId = parseInt(document.getElementById("eid").innerHTML);
+                        } else {
+                            empUnqId = parseInt(document.getElementById("eid1").innerHTML);
+                        }
+                    };
                 }
             }
             $scope.ndData;
-            for (var i = 0; i < $scope.noDuesData.length; i++) { var f = parseInt($scope.noDuesData[i].empUnqId); if (f === empUnqId) { $scope.ndData = $scope.noDuesData[i]; break; } };
+            for (var i = 0; i < $scope.noDuesData.length; i++) {
+                var f = parseInt($scope.noDuesData[i].empUnqId);
+                if (f === empUnqId) {
+                    $scope.ndData = $scope.noDuesData[i];
+                    break;
+                }
+            };
             var noduesstatus = $scope.ndData.noDuesStatus;
             if (dept === "FIN") {
                 var itstatus = noduesstatus.it;
@@ -316,22 +371,24 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             jsonObj.relieveDate = $scope.ndData.relieveDate; jsonObj.noDuesStartDate = $scope.ndData.noDuesStartDate;
             jsonObj.addUser = $scope.ndData.addUser; jsonObj.addDate = $scope.ndData.addDate; jsonObj.closedFlag = $scope.ndData.closedFlag;
             if (hodRlsFLG !== null) {
-                jsonObj.deptParticulars = noDuesDeptDetails[0]["Particulars"] || ""; jsonObj.deptRemarks = noDuesDeptDetails[0]["Remarks"] || "";
+                jsonObj.deptParticulars = noDuesDeptDetails[0]["Particulars"] || "";
+                jsonObj.deptRemarks = noDuesDeptDetails[0]["Remarks"] || "";
                 jsonObj.deptAmount = noDuesDeptDetails[0]["Amount"] || 0;
                 if (hodRlsFLG === "false") {
-                    jsonObj.deptNoDuesFlag = true; jsonObj.deptApprovalFlag = false; jsonObj.deptAddUser = $("#myEmpUnqId").val(); jsonObj.deptAddDate = dt;
-                }
-                else {
-                    jsonObj.deptNoDuesFlag = $scope.ndData.deptNoDuesFlag; jsonObj.deptApprovalFlag = true; jsonObj.deptAddUser = $scope.ndData.deptAddUser;
-                    jsonObj.deptAddDate = $scope.ndData.deptAddDate;
+                    jsonObj.deptNoDuesFlag = true; jsonObj.deptApprovalFlag = false; jsonObj.deptAddUser = $("#myEmpUnqId").val();
+                    jsonObj.deptAddDate = dt;
+                } else {
+                    jsonObj.deptNoDuesFlag = $scope.ndData.deptNoDuesFlag; jsonObj.deptApprovalFlag = true;
+                    jsonObj.deptAddUser = $scope.ndData.deptAddUser; jsonObj.deptAddDate = $scope.ndData.deptAddDate;
                 }
             } else {
-                jsonObj.deptParticulars = $scope.ndData.deptParticulars; jsonObj.deptRemarks = $scope.ndData.deptRemarks; jsonObj.deptAmount = $scope.ndData.deptAmount;
-                jsonObj.deptNoDuesFlag = $scope.ndData.deptNoDuesFlag; jsonObj.deptApprovalFlag = $scope.ndData.deptApprovalFlag;
-                jsonObj.deptAddUser = $scope.ndData.deptAddUser; jsonObj.deptAddDate = $scope.ndData.deptAddDate;
+                jsonObj.deptParticulars = $scope.ndData.deptParticulars; jsonObj.deptRemarks = $scope.ndData.deptRemarks;
+                jsonObj.deptAmount = $scope.ndData.deptAmount; jsonObj.deptNoDuesFlag = $scope.ndData.deptNoDuesFlag;
+                jsonObj.deptApprovalFlag = $scope.ndData.deptApprovalFlag; jsonObj.deptAddUser = $scope.ndData.deptAddUser;
+                jsonObj.deptAddDate = $scope.ndData.deptAddDate;
             }
-            jsonObj.empName = $scope.ndData.empName; jsonObj.deptName = $scope.ndData.deptName; jsonObj.statName = $scope.ndData.statName;
-            jsonObj.catName = $scope.ndData.catName; jsonObj.gradeName = $scope.ndData.gradeName;
+            jsonObj.empName = $scope.ndData.empName; jsonObj.deptName = $scope.ndData.deptName;
+            jsonObj.statName = $scope.ndData.statName; jsonObj.catName = $scope.ndData.catName; jsonObj.gradeName = $scope.ndData.gradeName;
             if (dept === "HR") {
                 if (releaserFlag === "true") {
                     jsonObj.noticePeriod = $scope.ndData.noticePeriod; jsonObj.noticePeriodUnit = $scope.ndData.noticePeriodUnit;
@@ -351,7 +408,9 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                 jsonObj.hrApprovalFlag = $scope.ndData.hrApprovalFlag; jsonObj.hrApprovalDate = $scope.ndData.hrApprovalDate;
                 jsonObj.hrApprovedBy = $scope.ndData.hrApprovedBy;
             }
-            if (dept === "UH") { jsonObj.uhApprovalFlag = true; jsonObj.uhApprovalDate = dt; jsonObj.uhApprovedBy = $("#myEmpUnqId").val(); };
+            if (dept === "UH") {
+                jsonObj.uhApprovalFlag = true; jsonObj.uhApprovalDate = dt; jsonObj.uhApprovedBy = $("#myEmpUnqId").val();
+            };
             jsonObj.noDuesReleaseStatus = $scope.ndData.noDuesReleaseStatus;
             if (hodRlsFLG !== null) {
                 if (hodRlsFLG === "true") {
@@ -365,7 +424,9 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     }
                 }
             }
-            if (hodRlsFLG !== null || dept === "HR" || dept === "UH") { jsonObj.noDuesDepts = null; }
+            if (hodRlsFLG !== null || dept === "HR" || dept === "UH") {
+                jsonObj.noDuesDepts = null;
+            }
             else {
                 if (releaserFlag === "true") {
                     jsonDepts[0] = {
@@ -377,39 +438,70 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                         "empUnqId": empUnqId, "deptId": dept, "noDuesFlag": true, "remarks": "", "approvalFlag": false, "approvalDate": null,
                         "approvedBy": null, "noDuesDeptDetails": noDuesDeptDetails
                     };
-                }
-                jsonObj.noDuesDepts = jsonDepts;
-            }
-            return jsonObj;
+                }; jsonObj.noDuesDepts = jsonDepts;
+            }; return jsonObj;
         };
+        TableData = JSON.stringify(TableData);
         var nds = new XMLHttpRequest();
-        if (hodRlsFLG !== null) { nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + hodRlsFLG + "&dept=HOD", true); }
-        else { nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + releaserFlag + "&dept=" + dept, true); }
-        nds.setRequestHeader("Content-type", "application/json"); nds.onreadystatechange = function () {
+        if (hodRlsFLG !== null) {
+            nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + hodRlsFLG + "&dept=HOD", true);
+        } else {
+            nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + releaserFlag + "&dept=" + dept, true);
+        }; nds.setRequestHeader("Content-type", "application/json"); nds.onreadystatechange = function () {
             if (nds.readyState === 4 && nds.status === 200) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Submit Successfully.. </strong></div>"; $("#MessageBox").show();
                 if (dept === "UH") { jQuery("#btnClose").click(); $scope.GetNoDuesUH(); } else {
                     if (hodRlsFLG !== null) {
                         //Auto Mail Sending
-                        if (releaserFlag === "true") { var rlsmail = new XMLHttpRequest(); rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailNoDues?releaseGroupCode=ND&empUnqId=" + empUnqId + "&dept=aam", true); rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send(); };
+                        if (releaserFlag === "true") {
+                            var rlsmail = new XMLHttpRequest();
+                            rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailNoDues?releaseGroupCode=ND&empUnqId=" +
+                                empUnqId + "&dept=aam", true);
+                            rlsmail.setRequestHeader("Content-type", "application/json");
+                            rlsmail.send();
+                        };
                         //Auto Mail End
-                        if (flg === false) { jQuery('#btnClose').click(); $("#commonTable").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER").value = ""; document.getElementById("txtRemarksER").value = ""; document.getElementById("txtAmtER").value = "0"; }
-                        else { jQuery('#btnClose2').click(); $("#commonTable1").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = ""; document.getElementById("txtAmtER1").value = "0"; };
-                        $scope.GetNoDues("HOD", releaserFlag);
+                        if (flg === false) {
+                            jQuery('#btnClose').click(); $("#commonTable").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER").value = ""; document.getElementById("txtRemarksER").value = ""; document.getElementById("txtAmtER").value = "0";
+                        } else {
+                            jQuery('#btnClose2').click(); $("#commonTable1").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = ""; document.getElementById("txtAmtER1").value = "0";
+                        }; $scope.GetNoDues("HOD", releaserFlag);
                     } else {
-                        if (flg === false) { jQuery('#btnClose').click(); $("#commonTable").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER").value = ""; document.getElementById("txtRemarksER").value = ""; document.getElementById("txtAmtER").value = "0"; if (dept === "HR") { jQuery('#btnClose1').click(); }; }
-                        else { jQuery('#btnClose2').click(); $("#commonTable1").find("tr:not(:first)").remove(); document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = ""; document.getElementById("txtAmtER1").value = "0"; if (dept === "HR") { jQuery('#btnClose3').click(); }; };
+                        if (flg === false) {
+                            jQuery('#btnClose').click(); $("#commonTable").find("tr:not(:first)").remove();
+                            document.getElementById("txtParticularsER").value = ""; document.getElementById("txtRemarksER").value = "";
+                            document.getElementById("txtAmtER").value = "0";
+                            if (dept === "HR") {
+                                jQuery('#btnClose1').click();
+                            };
+                        } else {
+                            jQuery('#btnClose2').click(); $("#commonTable1").find("tr:not(:first)").remove();
+                            document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = "";
+                            document.getElementById("txtAmtER1").value = "0";
+                            if (dept === "HR") {
+                                jQuery('#btnClose3').click();
+                            };
+                        };
                         $scope.GetNoDues(dept, releaserFlag);
                     };
                 }
             } else {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Not Submited.. </strong></div>"; $("#MessageBox").show();
                 if (hodRlsFLG !== null) {
-                    if (flg === false) { jQuery('#btnClose').click(); } else { jQuery('#btnClose2').click(); }; $scope.GetNoDues("HOD", releaserFlag);
+                    if (flg === false) {
+                        jQuery('#btnClose').click();
+                    } else {
+                        jQuery('#btnClose2').click();
+                    }; $scope.GetNoDues("HOD", releaserFlag);
                 }
                 else {
-                    if (flg === false) { jQuery('#btnClose').click(); if (dept === "HR") { jQuery('#btnClose1').click(); }; }
-                    else { jQuery('#btnClose2').click(); if (dept === "HR") { jQuery('#btnClose3').click(); }; }; $scope.GetNoDues(dept, releaserFlag);
+                    if (flg === false) {
+                        jQuery('#btnClose').click();
+                        if (dept === "HR") { jQuery('#btnClose1').click(); };
+                    } else {
+                        jQuery('#btnClose2').click();
+                        if (dept === "HR") { jQuery('#btnClose3').click(); };
+                    }; $scope.GetNoDues(dept, releaserFlag);
                 };
             };
         }; nds.send(TableData);
