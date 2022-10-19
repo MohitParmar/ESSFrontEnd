@@ -1434,7 +1434,8 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
             };
             return jsonObj;
         };
-        var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true); tax.setRequestHeader('Content-type', 'application/json'); tax.onreadystatechange = function () {
+        var tax = new XMLHttpRequest(); tax.open('POST', $scope._Conpath + 'TaxDeclaration/CreateTaxDeclaration', true);
+        tax.setRequestHeader('Content-type', 'application/json'); tax.onreadystatechange = function () {
             if (tax.readyState === 4 && tax.status === 200) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Your Tax Declaration Details Saved Successfully.</strong></div>"; $('#MessageBox').show(); alert("Your Tax Declaration Details Saved Successfully."); $scope.ResetView(); }
             else if (tax.status === 400 || tax.status === 403 || tax.status === 404 || tax.status === 408 || tax.status === 500) {
                 var str = tax.responseText.replace("[", "").replace("]", "").toString(); var fields = str.split(","); var er = "";

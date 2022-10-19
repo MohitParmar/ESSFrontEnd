@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "EmpAttendanceCorrection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="MissPunchController">
+    <div class="container-fluid">
+        <input type="hidden" value="LA" id="releaseGroupCode" />
+        <div id="InfoMessageBox"></div>
+        <div id="MessageBox"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-init="GetRelesaseStrategy()">
+                    <table class="table table-responsive" style="text-align:center;">
+                        <tr>
+                            <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
+                                <b> Releasear  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Attendance Correction</strong>
+                    </div>
+                    <div class="panel-body" ng-init="initload()">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Select Punch Type:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="cmbIOflag" ng-model="N.IO" required>
+                                        <option value="I">IN</option>
+                                        <option value="O">OUT</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Select Date:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="date" id="time" ng-model="N.time"
+                                           placeholder="Select Date" ng-change="GetTripodPunch(N)" required>
+                                    <input class="form-control" type="datetime-local" id="punchTime" ng-model="N.punchTime"
+                                           placeholder="Select Date Time" ng-change="ToValidate(N)" required>
+                                </div>
+                                <div class="col-sm-6">
+                                    <table class="table table-condensed" id="tblAttd">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>IN Punch</th>
+                                                <th>OUT Punch</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="pd in prdata">
+                                                <td>{{pd.attdDate|date:"dd/MM/yyyy"}}</td>
+                                                <td>{{pd.consIn|date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                                                <td>{{pd.consOut|date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group row" id="divPunchTbl">
+                                <div class="col-sm-6">
+                                    <label>Selected Punch is :</label>
+                                    <h2>
+                                        <label id="lblSelPunch" style="background-color:yellow;color:red;font-weight:bolder;"></label>
+                                    </h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    <table class="table table-condensed" id="tblTripod">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Select the tripod punch to be considered</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Punch Date Time</th>
+                                                <th>IN / OUT</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tp in gtpData">
+                                                <td>{{tp.punchDate|date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                                                <td>{{tp.ioFlag === 'I' ? 'In' : 'Out'}}</td>
+                                                <td>
+                                                    <button id="btnSelect" class="btn btn-primary" ng-click="SelectPunchTime('{{tp.punchDate}}','{{tp.ioFlag}}')">Select</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Resaon for Attendance Punch:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="cmbReason" ng-model="N.Reason" required>
+                                        <option value="Forget to punch">Forget to punch</option>
+                                        <option value="Punched but not accepted by M/C">Punched but not accepted by M/C</option>
+                                        <option value="Error in the Punching Card">Error in the Punching Card</option>
+                                        <option value="M/c is not working">M/c is not working</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6" style="text-align:right;">
+                                    <button class="btn btn-Reset" type="reset" id="btnReset" ng-click="ResetView()"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+                                    <button class="btn btn-success" type="submit" id="btnSubmit" ng-click="CreateAttdCorrEntry(N)"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

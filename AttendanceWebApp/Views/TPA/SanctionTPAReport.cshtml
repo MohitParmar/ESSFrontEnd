@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SanctionTPAReport";
+    ViewBag.Title = "Sanction Over Time Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>Sanction TPA Report:</strong>
+                                <strong>Sanction Over Time Report:</strong>
                                 <div style="float:right;">
                                     <a href="#" ng-click="exportBulkSanction_Upload('BulkSanction_Upload_')">
                                         BulkSanction_Upload
@@ -59,9 +59,9 @@
                                             <tr>
                                                 <th>EmpUnqId</th>
                                                 <th>SanDate</th>
-                                                <th>TPAHours</th>
+                                                <th>OT Hours</th>
                                                 <th>Pre Approval Justification</th>
-                                                <th>Sanction TPA Justification</th>
+                                                <th>Sanction OT Justification</th>
                                             </tr>
                                         </thead>
                                         <tbody ng-repeat="d in sanData">

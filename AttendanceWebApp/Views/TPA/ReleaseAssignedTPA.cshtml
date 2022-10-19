@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ReleaseAssignedTPA";
+    ViewBag.Title = "Release Assigned Over Time";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,9 +15,12 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>TPA Employees List:</strong>
+                                <strong>Over Time Employees List:</strong>
                             </div>
                             <div class="panel-body">
+                                <div style="text-align:center;">
+                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                </div>
                                 <div class="table-responsive" ng-init="GetPreRequestedList()">
                                     <table class="table table-bordered" id="tblTPAData">
                                         <thead>

@@ -64,8 +64,41 @@
                     </div>
                 </div>
             </div>
-            @* Create / Update Release Strategies *@
-            <div class="col-sm-12">
+            <div class="col-sm-3">
+                @* Create / Update Release Strategies *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Bulk Upload for LA,OD,SS,ND</strong></div>
+                    <div class="panel-body">
+                        <div class="input-group form">
+                            <input type="file" id="files" name="files" class="form-control" accept=".csv" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="buttonUpload" ng-click="UploadTemplate(false)">
+                                    <i class="fa fa-upload"></i>&nbsp;Upload
+                                </button>
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><span style="color:Red;">Note : Please do not remove any columns from downloaded template while uploading.</span></div>
+                </div>
+                @* Create / Update Gate pass Release Strategies *@
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Bulk Upload for Gate Pass</strong></div>
+                    <div class="panel-body">
+                        <div class="input-group form">
+                            <input type="file" id="filesGP" name="files" class="form-control" accept=".csv" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="buttonUploadGP" ng-click="UploadTemplate(true)">
+                                    <i class="fa fa-upload"></i>&nbsp;Upload
+                                </button>
+                                <img id="loadingGP" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><span style="color:Red;">Note : Please do not remove any columns from downloaded template while uploading.</span></div>
+                </div>
+            </div>
+            <div class="col-sm-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Create / Update Release Strategy</strong>
@@ -140,7 +173,7 @@
                                         <td style="text-align:center;">{{rls.releaseStrategy}}</td>
                                         <td style="text-align:center;">{{rls.releaseStrategyLevel}}</td>
                                         <td style="text-align:center;">{{rls.releaseCode}}</td>
-                                        <td style="text-align:center;">{{rls.empName}}</td>
+                                        <td style="text-align:left;">{{rls.empName}}</td>
                                         <td style="text-align:center;" ng-if="$last == true">
                                             <button type="submit" id="btnSearch" class="btn btn-danger" value="delete" name="delete" ng-click="RemoveReleaser()">
                                                 <i class="fa fa-remove"></i>

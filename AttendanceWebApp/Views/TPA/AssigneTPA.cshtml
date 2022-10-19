@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "AssigneTPA";
+    ViewBag.Title = "Assign Over Time";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,14 +15,14 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>Pre Assign TPA Employees List:</strong>
+                                <strong>Pre Assign OT Employees List:</strong>
                             </div>
                             <div class="panel-body">
                                 <div class="form-group-sm">
                                     <div class="form-group row">
                                         <div class="col-sm-2">
                                             <label>
-                                                Select Date to Assign a TPA:
+                                                Select Date to Assign a OT:
                                             </label>
                                         </div>
                                         <div class="col-sm-2">
@@ -98,6 +98,7 @@
                                             <tr>
                                                 <td colspan="9">
                                                     <button type="submit" id="btnOK" class="btn btn-success" ng-click="PreTpaRequest(false)"><i class="fa fa-save"></i> Save & Submit</button>
+                                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                                 </td>
                                             </tr>
                                         </tfoot>

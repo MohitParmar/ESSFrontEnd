@@ -11,85 +11,103 @@ app.controller("TripController", function ($scope, $http, $filter) {
     var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
     //To validate a booking date under 90 days or not booked in previous days.
     $scope.ToValidate = function () {
-        var now = new Date();
-        var dtnow = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
-        var firstDay = now;
+        debugger;
+        var now = new Date(); var dtnow = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); var firstDay = now;
         if (firstDay.getMonth() + 1 < '10') {
-            if (firstDay.getDate() < '10') {
-                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
-            } else {
-                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
-            }
+            if (firstDay.getDate() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate(); }
+            else { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         } else {
-            if (firstDay.getDate() < '10') {
-                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
-            } else {
-                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
-            }
+            if (firstDay.getDate() < '10') { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate(); }
+            else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
         };
         dtnow = firstDay;
-        var chkFrom = $("#tripDate").val();
-        var chkTo = dtnow;
+        var chkFrom = $("#tripDate").val(); var chkTo = dtnow;
         if (chkFrom === "") {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                "<strong>Please Select Admission Date...</strong></div>";
-            $('#MessageBox').show();
-            document.getElementById("addmissionDate").value = "";
-            return false;
+                "<strong>Please select booking Date...</strong></div>"; $('#MessageBox').show();
+            document.getElementById("tripDate").value = ""; return false;
         };
-        var date1 = new Date(chkFrom);
-        var date2 = new Date(chkTo);
-        var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
+        var date1 = new Date(chkFrom); var date2 = new Date(chkTo); var diff = ((date2 - date1) / (1000 * 60 * 60 * 24) * -1) + 1;
         if (diff > 91) {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                "<strong>Please Enter date under 90 days.</strong></div>";
-            $('#MessageBox').show();
-            document.getElementById("tripDate").value = "";
-            return false;
+                "<strong>Please Enter date under 90 days.</strong></div>"; $('#MessageBox').show();
+            document.getElementById("tripDate").value = ""; return false;
         }
         if (date1 < date2) {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                "<strong>Please enter valid date.</strong></div>";
-            $('#MessageBox').show();
-            document.getElementById("tripDate").value = "";
-            return false;
+                "<strong>Please enter valid date.</strong></div>"; $('#MessageBox').show();
+            document.getElementById("tripDate").value = ""; return false;
         }
+    };
+    //Before 24 hours only
+    $scope.tValidate = function () {
+        var bdate = $("#tripDate").val(); var ptime = $("#txtpickupTime").val(); var pickupdatetime = bdate + " " + ptime; pickupdatetime = new Date(pickupdatetime);
+        var now = new Date(); var dtnow = new Date(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+        var diff = Math.abs(dtnow - pickupdatetime) / 36e5; diff = parseInt(diff);
+        if (diff <= 24) { $scope.ResetView(); alert("Booking not allowed before 24 hours."); };
+        // Slot 1 : Morning (00:00 to 08:59) | Slot 2 : Day (09:00 to 17:59) | Slot 3 : Night (18:00 to 23:59)
+        var slot = $("#cmbSlot").val();
+        if (slot === "1" || slot === 1) {
+            var s1_startTime = "00:00"; var s1_endTime = "08:59";
+            if (ptime > s1_startTime && ptime < s1_endTime) { return; } else {
+                alert("As per selected pickup time wrong slot selected");
+                $("#cmbSlot option:first").attr("selected", true);
+                document.getElementById("txtpickupTime").value = "";
+            }
+        } else if (slot === "2" || slot === 2) {
+            var s2_startTime = "09:00"; var s1_endTime = "17:59";
+            if (ptime > s2_startTime && ptime < s2_endTime) { return; } else {
+                alert("As per selected pickup time wrong slot selected");
+                $("#cmbSlot option:first").attr("selected", true);
+                document.getElementById("txtpickupTime").value = "";
+            }
+        } else if (slot === "3" || slot === 3) {
+            var s3_startTime = "18:00"; var s1_endTime = "23:59";
+            if (ptime > s3_startTime && ptime < s3_endTime) { return; } else {
+                alert("As per selected pickup time wrong slot selected");
+                $("#cmbSlot option:first").attr("selected", true);
+                document.getElementById("txtpickupTime").value = "";
+            }
+        };
     };
     //validate on selected date or slot.
     $scope.GetReqOnDate = function () {
-        var trpdate = $("#tripDate").val();
-        var slot = $("#cmbSlot").val();
+        var trpdate = $("#tripDate").val(); var slot = $("#cmbSlot").val();
         var grd = new XMLHttpRequest;
         grd.open("GET", $scope._Conpath + "VehicleReq/GetReqOnDate?date=" + trpdate + "&slot=" + slot, true);
         grd.setRequestHeader("Accept", "application/json");
         grd.onreadystatechange = function () {
-            if (grd.readyState === 4 && grd.status === 200) { debugger; }
-            else if (grd.status === 400 || grd.status === 403 || grd.status === 404 || grd.status === 408 || grd.status === 500) {
-                debugger;
-                var str =
-                    grd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
-                var fields = str.split(',');
-                var er = "";
-                for (var i = 0; i < fields.length; i++) {
-                    er = er + fields[i] + "<br/>";
+            if (grd.readyState === 4 && grd.status === 200) { }
+            else {
+                if (grd.status === 400 || grd.status === 403 || grd.status === 404 || grd.status === 408 || grd.status === 500) {
+                    debugger;
+                    var str =
+                        grd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
+                    var fields = str.split(',');
+                    var er = "";
+                    for (var i = 0; i < fields.length; i++) {
+                        er = er + fields[i] + "<br/>";
+                    };
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
+                        "</strong></div>"; $('#MessageBox').show();
+                    document.getElementById("tripDate").value = "";
+                    $("#cmbSlot option:first").attr("selected", true);
+                    document.getElementById("txtpickupTime").value = "";
+                    document.getElementById("txtpickupLocation").value = "";
+                    document.getElementById("txtdropLocation").value = "";
+                    document.getElementById("txtremarks").value = "";
                 };
-                document.getElementById("MessageBox").innerHTML =
-                    "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
-                    "</strong></div>"; $('#MessageBox').show();
-                document.getElementById("tripDate").value = "";
-                $("#cmbSlot option:first").attr("selected", true);
-                document.getElementById("txtpickupLocation").value = "";
-                document.getElementById("txtdropLocation").value = "";
-                document.getElementById("txtremarks").value = "";
             };
         };
         grd.send();
     };
     //Create Trip
     $scope.TripBooking = function (data) {
+        debugger;
         document.getElementById("btnSubmit").disabled = true;
         var jsonObj = {};
         jsonObj.EmpUnqId = $("#myEmpUnqId").val();
@@ -101,6 +119,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
         vhr.setRequestHeader("Accept", "application/json");
         vhr.onreadystatechange = function () {
             if (vhr.readyState === 4 && vhr.status === 200) {
+                debugger;
                 jsonObj.PickupTime = data.pickupTime;
                 jsonObj.PickupLocation = data.pickupLocation;
                 jsonObj.DropLocation = data.dropLocation;
@@ -113,6 +132,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 gtd.open("POST", $scope._Conpath + "VehicleReq/CreateReq", true);
                 gtd.setRequestHeader("Content-Type", "application/json");
                 gtd.onreadystatechange = function () {
+                    debugger;
                     if (gtd.readyState === 4 && gtd.status === 200) {
                         document.getElementById("btnSubmit").disabled = false;
                         document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Submit Successfully.. </strong></div>"; $("#MessageBox").show();
@@ -123,15 +143,36 @@ app.controller("TripController", function ($scope, $http, $filter) {
                         document.getElementById("txtremarks").value = "";
                         document.getElementById("txtpickupTime").value = "";
                         document.getElementById("txtnumberOfPass").value = "";
-                    } else {
+                        ////Auto Mail Sending
+                        //var gCode = $("#myGradeCode").val();
+                        //var json = JSON.parse(gtd.responseText); var maildata = []; maildata = json;
+                        //var rlsmail = new XMLHttpRequest();
+                        //if (gCode > '010') {
+                        //    rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMailVehReq?reqId=' + maildata.reqId +
+                        //        "&flag=true", true);
+                        //}
+                        //else {
+                        //    rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMailVehReq?reqId=' + maildata.reqId +
+                        //        "&flag=false", true);
+                        //}
+                        //rlsmail.setRequestHeader("Content-type", "application/json");
+                        //rlsmail.send();
+                        ////Auto Mail End
+                    } else if (gtd.status === 400 || gtd.status === 403 || gtd.status === 404 || gtd.status === 408 || gtd.status === 500) {
+                        debugger;
+                        var str =
+                            gtd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
+                        var fields = str.split(',');
+                        var er = "";
+                        for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
                         document.getElementById("MessageBox").innerHTML =
-                            "<div class='alert alert-warning alert-dismissable'>" +
-                            "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                            "<strong>Not Submited.. </strong></div>";
-                        $("#MessageBox").show();
+                            "<div class='alert alert-danger alert-dismissable'>" +
+                            "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
+                            "</strong></div>"; $('#MessageBox').show();
                     };
                 }; gtd.send(jsonObj);
             } else if (vhr.status === 400 || vhr.status === 403 || vhr.status === 404 || vhr.status === 408 || vhr.status === 500) {
+                debugger;
                 var str =
                     vhr.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
                 var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
@@ -163,7 +204,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     myArray.push([]);
                     var slot = arr[i].bookingSlot;
                     if (1 == parseInt(slot)) { myArray[i].BookingSlot = "Morning"; };
-                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Evening"; };
+                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Day"; };
                     if (3 == parseInt(slot)) { myArray[i].BookingSlot = "Night"; };
                     myArray[i].ReqId = arr[i].reqId;
                     myArray[i].EmpUnqId = arr[i].empUnqId;
@@ -205,6 +246,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
     };
     //Release Requisition Approve/Reject
     $scope.ReleaseReq = function (empid, reqId, isAdm, status, obj, flg) {
+        debugger;
         var rmks = "";
         if (status === "R") {
             if ((typeof (obj) === "undefined") || (typeof (obj.Remarks) === "undefined")) {
@@ -232,6 +274,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
         rel.setRequestHeader("Content-Type", "application/json");
         rel.onreadystatechange = function () {
             if (rel.readyState === 4 && rel.status === 200) {
+                debugger;
                 if (flg === true || flg === "true") {
                     var index = $scope.allData.findIndex(function (item, i) { return item.reqId === reqId });
                     $scope.allData.splice(index, 1); $scope.$digest();
@@ -240,8 +283,17 @@ app.controller("TripController", function ($scope, $http, $filter) {
                         "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                         "<strong>Cancelled Successfully.. </strong></div>";
                 } else {
+                    if (isAdm === false && status === "F") {
+                        //Auto Mail Sending
+                        var rlsmail = new XMLHttpRequest();
+                        rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMailVehReq?reqId=' + reqId + "&flag=false", true);
+                        rlsmail.setRequestHeader("Content-type", "application/json");
+                        rlsmail.send();
+                        //Auto Mail End
+                    }
                     var index = $scope.tripData.findIndex(function (item, i) { return item.reqId === reqId });
                     $scope.tripData.splice(index, 1); $scope.$digest();
+
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-success alert-dismissable'>" +
                         "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -263,6 +315,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
     };
     //Get all vehicle requisition in date range
     $scope.GetVehicleReq = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var all = new XMLHttpRequest;
         all.open("GET", $scope._Conpath + "VehicleReq/GetVehicleReq?fromDt=" + $("#fromDt").val() + "&toDt=" + $("#toDt").val(), true);
         all.setRequestHeader("Accept", "application/json");
@@ -282,7 +335,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     myArray[i].BookingDate = arr[i].bookingDate.substring(0, arr[i].bookingDate.indexOf("T"));
                     var slot = arr[i].bookingSlot;
                     if (1 == parseInt(slot)) { myArray[i].BookingSlot = "Morning"; };
-                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Evening"; };
+                    if (2 == parseInt(slot)) { myArray[i].BookingSlot = "Day"; };
                     if (3 == parseInt(slot)) { myArray[i].BookingSlot = "Night"; };
                     myArray[i].BookingStatus = arr[i].bookingStatus;
                     myArray[i].NumberOfPass = arr[i].numberOfPass;
@@ -294,21 +347,27 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     myArray[i].AddUser = arr[i].addUser;
                     myArray[i].ReleaseAuth = arr[i].releaseAuth;
                     myArray[i].ReleaseStatusCode = arr[i].releaseStatusCode;
-                    myArray[i].ReleaseDate = arr[i].releaseDate.substring(0, arr[i].releaseDate.indexOf("T"));;
+                    var relDt = arr[i].releaseDate;
+                    if (relDt != null || relDt !== "") { myArray[i].ReleaseDate = ''; }
+                    else { myArray[i].ReleaseDate = arr[i].releaseDate.substring(0, arr[i].releaseDate.indexOf("T")); };
                     myArray[i].ReleaseRemarks = arr[i].releaseRemarks;
                     myArray[i].AdminUser = arr[i].adminUser;
                     myArray[i].AdminReleaseStatusCode = arr[i].adminReleaseStatusCode;
-                    myArray[i].AdminReleaseDate = arr[i].adminReleaseDate.substring(0, arr[i].adminReleaseDate.indexOf("T"));;
+                    var admReldt = arr[i].adminReleaseDate;
+                    if (admReldt == null || admReldt == "") { myArray[i].AdminReleaseDate = ''; }
+                    else { myArray[i].AdminReleaseDate = arr[i].adminReleaseDate.substring(0, arr[i].adminReleaseDate.indexOf("T")); };
                     myArray[i].AdminReleaseRemarks = arr[i].adminReleaseRemarks;
                 };
-                $scope.allData = myArray;
+                $scope.allData = myArray; $scope.allData = $filter('orderBy')($scope.allData, 'BookingDate');
                 $scope.exportObj = $scope.allData;
                 $scope.$digest();
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; all.send();
     };
     //Get Employee vehicle requisition in date range
     $scope.GetByEmpVehicleReq = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var evr = new XMLHttpRequest;
         evr.open("GET", $scope._Conpath + "VehicleReq/GetByEmployee?empUnqId=" + $("#myEmpUnqId").val() +
             "&fromDt=" + $("#fromDt").val() + "&toDt=" + $("#toDt").val(), true);
@@ -320,9 +379,10 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 for (var i = 0; i < arr.length; i++) {
                     var slot = arr[i].bookingSlot;
                     if (1 == parseInt(slot)) { arr[i].t_bookingSlot = "Morning"; };
-                    if (2 == parseInt(slot)) { arr[i].t_bookingSlot = "Evening"; };
+                    if (2 == parseInt(slot)) { arr[i].t_bookingSlot = "Day"; };
                     if (3 == parseInt(slot)) { arr[i].t_bookingSlot = "Night"; };
                 }; $scope.evrData = arr; $scope.$digest();
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             } else if (evr.readyState === 4 && evr.status === 400 || evr.status === 403 || evr.status === 404 || evr.status === 408 || evr.status === 500) {
                 var str =
                     evr.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
@@ -332,6 +392,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
                     "</strong></div>";
                 $('#MessageBox').show();
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; evr.send();
     };

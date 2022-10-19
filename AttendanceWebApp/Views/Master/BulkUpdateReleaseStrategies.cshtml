@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Bulk Upload Release Strategies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Module/app.js"></script>
+<script src="~/Scripts/Controller/ReleaseStreategyCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="ReleaseStreategyCntrloller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            @* Bulk Create / Update Release Strategies *@
+            <div class="col-sm-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Bulk Upload</strong></div>
+                    <div class="panel-body">
+                        <div class="input-group form">
+                            <input type="file" id="files" name="files" class="form-control" accept=".csv" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="buttonUpload" ng-click="UploadTemplate()">
+                                    <i class="fa fa-upload"></i>&nbsp;Upload
+                                </button>
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><span style="color:Red;">Note : Please do not remove any columns from downloaded template while uploading.</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -62,7 +62,8 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="patientRelation" ng-model="N.patientRelation"
-                                            ng-options="s.relation as s.depName for s in pData" ng-change="SetRelation(N.patientRelation)"></select>
+                                            ng-options="s.depName as s.depName for s in pData" 
+                                            ng-change="SetRelation(N.patientRelation)"></select>
                                 </div>
                                 <label style="color:red;"><b>*</b></label>
                             </div>

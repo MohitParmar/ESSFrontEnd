@@ -85,7 +85,7 @@
                             </table>
                         </div>
                         <div class="table-responsive" ng-init="GetEmployeeMissedPunch()">
-                            <table class="table table-bordered table-responsive">
+                            <table class="table table-condensed table-responsive">
                                 <thead>
                                     <tr>
                                         <th style="text-align:center;">Sr. No.</th>
@@ -119,6 +119,21 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='outTime'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
+                                        <th style="text-align:center;" ng-click="sort('punchType')">
+                                            Punch Type
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='punchType'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('inOutFlag')">
+                                            In/Out
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='inOutFlag'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('attdPunchTime')">
+                                            Attendance Punch
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='attdPunchTime'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
@@ -132,6 +147,13 @@
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.remarks" />
                                         </td>
                                         <td colspan="2"></td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.punchType" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.inOutFlag" />
+                                        </td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody dir-paginate="d in emrData|itemsPerPage:10">
@@ -149,6 +171,9 @@
                                         <td style="        text-align: left;">{{d.remarks}}</td>
                                         <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
                                         <td style="        text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="        text-align: center;">{{d.punchType === 'A' ? 'Attendance' : 'In/Out'}}</td>
+                                        <td style="        text-align: center;">{{d.inOutFlag === 'I' ? 'In' : 'Out'}}</td>
+                                        <td style="        text-align: center;">{{d.attdPunchTime|date:"dd/MM/yyyy HH:mm"}}</td>
                                     </tr>
                                 </tbody>
                             </table>

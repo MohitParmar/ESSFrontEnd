@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Address Proof Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/AddressProffCntrl.js"></script>
+<script>
+    /*For Letter Print*/
+    function printData() {
+        var divToPrint = document.getElementById("divPresentAddress");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+    };
+</script>
+<div ng-app="myApp" ng-controller="AddressProffController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong>Address Proof Request</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <label>Purpose of Address Proof Request</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <select class="form-control" ng-model="n.purpose" id="cmbPurpose" ng-change="enabledOther(n.purpose)">
+                                        <option value="BANKING">Banking</option>
+                                        <option value="LOAN">Loan (Personal/Home/Car/Education Loan)</option>
+                                        <option value="BIKE RIGISTRATION">Bike Registration in RTO</option>
+                                        <option value="BSNL CONNECTION">BSNL BroadBand Connection</option>
+                                        <option value="CASTE CERTIFICATE">Caste Certificate</option>
+                                        <option value="VEHICLE TRANSFER">Vehicle Transfer</option>
+                                        <option value="KYC">KYC</option>
+                                        <option value="OTHERS">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="n.others" id="others" maxlength="250" disabled placeholder="Others" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button id="btnSubmit" class="btn btn-primary" ng-click="CreateRequest(n)"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Address Proof</strong>
+                    </div>
+                    <div class="panel-body" ng-init="GetEmpAddProof()">
+                        <table data-show-filter="true" class="table table-hover table-bordered table-condensed" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">Sr No.</th>
+                                    <th style="text-align:center;" ng-click="sort('applicationDate')">
+                                        App. Date
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='applicationDate'"
+                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                        Employee Code
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th style="text-align:center;" ng-click="sort('purpose')">
+                                        Purpose
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='purpose'"
+                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input class="form-control" type="text" ng-model="search.empUnqId" style="margin:0;padding:1px;" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="text" ng-model="search.purpose" style="margin:0;padding:1px;" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody dir-paginate="d in eapData|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage" pagination-id="pg1">
+                                <tr>
+                                    <td style="text-align:center;width:30px;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                    <td style="text-align:center;" id="adddDt">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align:center;" id="empUnqId">{{d.empUnqId}}</td>
+                                    <td style="text-align:left;" id="purpose">{{d.purpose}}</td>
+                                    <td style="text-align: center; ">
+                                        <button class="btn btn-info" id="btnInfo" value="Details" ng-click="PopulateData(d)" title="Details"><i class="fa fa-info fa-lg"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ConformModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="        width: 825px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Preview of Present Address Proof</h4>
+                    <div style="        float: right;">
+                        <button type="submit" id="btnPrint" class="btn btn-primary" onclick="printData()"><i class="fa fa-print"></i>&nbsp;Print</button>
+                    </div>
+                </div>
+                <div class="content" style="padding: 4px 15px 15px 15px;">
+                    <div class="body_panel">
+                        <div class="table-responsive">
+                            <div id="divPresentAddress" class="table-responsive" ng-repeat="pa in preadddata"
+                                 style="border-collapse: collapse; font-family: Arial; font-size: large; width: 793px;">
+                                <table class="table-condensed">
+                                    <tr>
+                                        <td style="padding-left: 40px;">
+                                            <img src="~/ESS_Images/JINDALLOGO.jpg" class="img" style="float: left; height: 56px; width: 56px;" />
+                                        </td>
+                                        <td>
+                                            <img src="~/ESS_Images/LetterHeadHeader.jpg" class="img" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table class="table-condensed" style="height: 874px;width:60px;padding-left:40px;">
+                                                <tr>
+                                                    <td style="background-color: lightgrey;"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; padding-top:0px;">
+                                                <table class="table-condensed table-responsive" style="width:100%;">
+                                                    <tr>
+                                                        <td style="text-align:left;">
+                                                            Ref.:JSAW/{{pa.applicationDate|date:'yyyy'}}/{{pa.SAPID}}/{{pa.id}}.
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                            Date:&nbsp;{{pa.applicationDate|date:'dd.MM.yyyy'}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <br />
+                                            <br />
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                <div class="col-sm-12" style="text-align:center;">
+                                                    <u>
+                                                        <b>
+                                                            To whomsoever it may concern
+                                                        </b>
+                                                    </u>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                <div class="col-sm-12">
+                                                    <p style="text-align:justify;">
+                                                        This is to certify that Mr./Ms. {{pa.EMPNAME}}, SAPID {{pa.SAPID}}, is working with our
+                                                        organization since {{pa.JoinDate|date:'dd/MM/yyyy'}} as {{pa.Designation}}.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                <div class="col-sm-12">
+                                                    <p style="text-align:justify;">As per records, his/her present residential address is as follows :</p>
+                                                    <br />{{pa.EMPNAME}}<br />
+                                                    @*{{pa.FullAddress}}*@
+                                                    {{pa.PresentHouseNumber}} {{pa.PresentSocietyName}} <br />
+                                                    {{pa.PresentAreaName}} {{pa.PresentLandMark}}<br />
+                                                    {{pa.PresentCity}} {{pa.PresentTehsil}}<br />
+                                                    {{pa.PresentDistrict}} {{pa.PresentState}} {{pa.PresentPinCode}}.<br />
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                <div class="col-sm-12">
+                                                    <p style="text-align:justify;">This certificate is being generated on his/her request for submitting the same for {{pa.purpose}}.</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="padding-left: 30px; padding-right: 35px; ">
+                                                <div class="col-sm-12">
+                                                    <p style="text-align:justify;">
+                                                        The sole purpose of this letter is for address proof for the above
+                                                        mentioned purpose only. The company or its officials shall not be
+                                                        responsible or liable for any misuse, fraud, financial liabilities,
+                                                        legal dispute etc. arising in future.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="text-align: center; padding-top: 150px; padding-bottom: 205px;">
+                                                <div class="col-sm-12">
+                                                    <p>This letter is system generated and does not require signature</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;font-size:xx-small">
+                                            <p>
+                                                Village : Samaghoga Mandvi Road, Mundra Taluka, Distt. Kutch - 370415 Phone : 91-(0) 2838 240 755 - 756, 240 773 Fax : 91-(0) 2838 240 700
+                                                <br />
+                                                Corporate Office : Jindal Centre, 12 Bhikalji Cama Place, new Delhi 110066 Phone : +91(11)26188360-74 Fax : +91(11)26170691
+                                                <br />
+                                                Regd Off. : A-1, UPSIDC Indl, Area, Nandgaon Road, Kosi Kalan , Distt. Mathura (U.P.) - 281403 Website : sawpipes.com
+                                                <br />
+                                                <b>(FORMERLY SAW PIPES LTD.)</b>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

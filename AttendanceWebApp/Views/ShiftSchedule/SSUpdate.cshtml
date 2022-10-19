@@ -31,6 +31,7 @@
                         </div>
                         <div class="panel-body">
                             <button id="btnSSDownload" class="btn btn-info" ng-click="UpdateDownload()"><i class="fa fa-download"></i>&nbsp;Download Template (List of Emp.)</button>
+                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                         </div>
                         <div class="panel-footer"><span style="color: Red;">Note : Please do not remove any columns from downloaded template.</span></div>
                     </div>
@@ -73,34 +74,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>GENERAL Shift</td>
-                                            <td>GN</td>
-                                            <td>09:00 TO 18:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>GI Shift</td>
-                                            <td>GI</td>
-                                            <td>08:00 TO 17:00</td>
-                                        </tr>
-                                        <tr>
                                             <td>AA Shift</td>
                                             <td>AA</td>
                                             <td>06:00 TO 14:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>BB Shift</td>
-                                            <td>BB</td>
-                                            <td>14:00 TO 22:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CC Shift</td>
-                                            <td>CC</td>
-                                            <td>22:00 TO 06:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>DAY Shift</td>
-                                            <td>DD</td>
-                                            <td>08:00 TO 20:00</td>
                                         </tr>
                                         <tr>
                                             <td>DAY I Shift</td>
@@ -108,14 +84,39 @@
                                             <td>07:00 TO 19:00</td>
                                         </tr>
                                         <tr>
-                                            <td>NIGHT Shift</td>
-                                            <td>NN</td>
-                                            <td>20:00 TO 08:00</td>
+                                            <td>DAY Shift</td>
+                                            <td>DD</td>
+                                            <td>08:00 TO 20:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>GI Shift</td>
+                                            <td>GI</td>
+                                            <td>08:00 TO 17:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>GENERAL Shift</td>
+                                            <td>GN</td>
+                                            <td>09:00 TO 18:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>BB Shift</td>
+                                            <td>BB</td>
+                                            <td>14:00 TO 22:00</td>
                                         </tr>
                                         <tr>
                                             <td>NIGHT I Shift</td>
                                             <td>NI</td>
                                             <td>19:00 TO 07:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NIGHT Shift</td>
+                                            <td>NN</td>
+                                            <td>20:00 TO 08:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CC Shift</td>
+                                            <td>CC</td>
+                                            <td>22:00 TO 06:00</td>
                                         </tr>
                                     </tbody>
                                 </table>

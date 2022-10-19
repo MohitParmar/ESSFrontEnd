@@ -5,7 +5,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
     $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
     $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
     $scope.ResetView = function () { window.location.reload(!0) };
-    jQuery.support.cors = true; var rlsarr = []; var d = new Date(); $scope.resData;
+    jQuery.support.cors = true; var rlsarr = []; var d = new Date(); $scope.resData; $scope.exportObj;
     $scope.GetReleaseStrategy = function () {
         var rel = new XMLHttpRequest();
         rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true);
@@ -232,31 +232,31 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                         "<strong>Approved Sucesfully.. </strong></div>"; $('#MessageBox').show();
+                    //Auto Mail Sending
+                    var empcode = $('#myEmpUnqId').val();
+                    var ind = 0;
+                    var rls_final = '';
+                    if (detailarr.length > 0) {
+                        for (var rls = 0; rls < detailarr.length; rls++) {
+                            var rls_code = detailarr[rls]["releaseAuth"];
+                            rls_final = detailarr[rls]["isFinalRelease"];
+                            if (rls_code === empcode && rls_final !== true) {
+                                ind = rls + 1; break;
+                            };
+                        };
+                    };
+                    var relsauth = detailarr[ind]["releaseAuth"];
+                    var rlsmail = new XMLHttpRequest();
+                    if (rls_final !== true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=false&empUnqId=" + relsauth, true); }
+                    else if (rls_final === true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=HR&empUnqId=" + relsauth, true); }
+                    rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
+                //Auto Mail End
                 };
                 if (releaseStatusCode === 'R') {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                         "<strong>Rejected Sucesfully.. </strong></div>"; $('#MessageBox').show();
                 };
-                //Auto Mail Sending
-                var empcode = $('#myEmpUnqId').val();
-                var ind = 0;
-                var rls_final = '';
-                if (detailarr.length > 0) {
-                    for (var rls = 0; rls < detailarr.length; rls++) {
-                        var rls_code = detailarr[rls]["releaseAuth"];
-                        rls_final = detailarr[rls]["isFinalRelease"];
-                        if (rls_code === empcode && rls_final !== true) {
-                            ind = rls + 1; break;
-                        };
-                    };
-                };
-                var relsauth = detailarr[ind]["releaseAuth"];
-                var rlsmail = new XMLHttpRequest();
-                if (rls_final !== true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=false&empUnqId=" + relsauth, true); }
-                else if (rls_final === true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=HR&empUnqId=" + relsauth, true); }
-                rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
-                //Auto Mail End
                 $scope.GetExitProcessList();
             } else {
                 if (releaseStatusCode === 'F') {
@@ -346,6 +346,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
                 var json = JSON.parse(rsg.responseText);
                 $scope.rsgData = json;
+                $scope.exportObj = json;
                 $scope.$digest();
             } else if (rsg.status === 400 || rsg.status === 403 || rsg.status === 404 || rsg.status === 408 || rsg.status === 500) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
@@ -448,5 +449,30 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         }; fur.send();
     };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
+    $scope.exportAllData = function (name) {
+        setTimeout(function () {
+            $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
+            var d = new Date;
+            d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            var FileName = name + d;
+            $scope.JSONToCSVConvertor($scope.exportObj, FileName, !0), $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv")
+        }, 100)
+    };
+    $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {
+        var arrData = "object" != typeof JSONData ? JSON.parse(JSONData) : JSONData, CSV = "";
+        if (CSV += ReportTitle + "\r\n\n", ShowLabel) {
+            var row = "";
+            for (var index in arrData[0]) row += index + ",";
+            row = row.slice(0, -1), CSV += row + "\r\n"
+        } for (var i = 0; i < arrData.length; i++) {
+            var row = "";
+            for (var index in arrData[i]) row += '"' + arrData[i][index] + '",';
+            row.slice(0, row.length - 1), CSV += row + "\r\n"
+        } if ("" === CSV) return void alert("Invalid data");
+        var fileName = "";
+        fileName += ReportTitle.replace(/ /g, "_");
+        var uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a");
+        link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link)
+    };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });

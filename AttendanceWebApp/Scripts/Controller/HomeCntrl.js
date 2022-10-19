@@ -89,6 +89,17 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         }; addr.send(jsonObj);
     };
     $scope.GetPresentAddress = function () {
+        var loc = $("#myLoc").val();
+        if (loc === "IPU") {
+            document.getElementById("txtHouseNumber").disabled = true; document.getElementById("txtPoliceStation").disabled = true;
+            document.getElementById("txtSocietyName").disabled = true; document.getElementById("txtemailid").disabled = true;
+            document.getElementById("txtAreaName").disabled = true; document.getElementById("txtphoneno").disabled = true;
+            document.getElementById("txtLandMark").disabled = true; document.getElementById("txtresno").disabled = true;
+            document.getElementById("txtPreCity").disabled = true; document.getElementById("txtTehsil").disabled = true;
+            document.getElementById("txtdist").disabled = true; document.getElementById("txtstate").disabled = true;
+            document.getElementById("pincode").disabled = true; document.getElementById("btnSave").disabled = true;
+            document.getElementById("BtnCancel").disabled = true;
+        }
         var arr = new Array; preAdd = new XMLHttpRequest; preAdd.open("GET", $scope._Conpath + "EmpAddress/GetEmpAddress?empUnqId=" + $("#myEmpUnqId").val(), !0);
         preAdd.setRequestHeader("Accept", "application/json"); preAdd.onreadystatechange = function () {
             if (4 === preAdd.readyState) {

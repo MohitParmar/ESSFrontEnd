@@ -23,7 +23,8 @@
                                     <label>Trip Date:</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="date" id="tripDate" ng-model="N.tripDate" ng-change="ToValidate()" />
+                                    <input class="form-control" type="date" id="tripDate" ng-model="N.tripDate"
+                                           ng-change="ToValidate()" required />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -32,9 +33,9 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="cmbSlot" ng-model="N.slot" ng-change="GetReqOnDate()">
-                                        <option value="1">Morning</option>
-                                        <option value="2">Evening</option>
-                                        <option value="3">Night</option>
+                                        <option value="1">Morning (00:00 to 08:59)</option>
+                                        <option value="2">Day (09:00 to 17:59)</option>
+                                        <option value="3">Night (18:00 to 23:59)</option>
                                     </select>
                                 </div>
                             </div>
@@ -43,7 +44,8 @@
                                     <label>PickupTime</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="time" id="txtpickupTime" ng-model="N.pickupTime" />
+                                    <input class="form-control" type="time" id="txtpickupTime" ng-model="N.pickupTime"
+                                           ng-change="tValidate()" required />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -72,7 +74,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-3">
-                                    <label>Others</label>
+                                    <label>Mobile No.</label>
                                 </div>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="txtremarks" ng-model="N.remarks" />
@@ -88,6 +90,48 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Policy</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>24hrs before no booking is to be allowed.</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Only 90 days advance booking is allowed.</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Booking on first come first basis.</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Once one Slot is booked by one employee another will not able to book for same day and same slot.</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Three request per day allowed. i.e Morning,Evening and Night.</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Transport has right to cancel any trip before 24hrs due to unforseen conditions.(So that Employee can make alternate arrangment).</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+

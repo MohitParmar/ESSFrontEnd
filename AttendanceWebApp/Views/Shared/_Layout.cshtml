@@ -97,9 +97,7 @@
                     alert("You are not eligible to get COFF as Per Policy.");
                 } else { window.location.href = "/LeaveApp/COffApply"; };
             } else if (c === "BEL") {
-                if ((a < "009" || a === "098") || b === "True") {
-                    alert("You are not eligible to get COFF as Per Policy.");
-                } else { window.location.href = "/LeaveApp/COffApply"; };
+                window.location.href = "/LeaveApp/COffApplication";
             } else if (c === "JFL") {
                 if ((a < "040" || d === "003") || b === "True") {
                     alert("You are not eligible to get COFF as Per Policy.");
@@ -163,6 +161,7 @@
                                 <li id="mnuEmpResignation"><a href="~/ExitProcess/UserExitProcessReport">Emp. Resignation</a></li>
                                 <li id="mnuNODuesStatus"><a href="~/NoDues/NoDuesStatus">No Dues Status</a></li>
                                 <li id="mnuAddressMaster"><a href="/Master/AddressMaster">Address/Contact Details</a></li>
+                                <li id="mnuAddressProofReq"><a href="/AddressProof/AddressProofRequest">Address Proof Request</a></li>
                                 <li id="mnuuniformmaster"><a href="/Master/UniFormMaster">Uniform Details</a></li>
                                 <li id="mnuUpdateEmailAdd"><a href="/Home/UpdateEmailAdd">Email ID</a></li>
                                 <li id="mnuUserManual"><a href="~/Master/UserManual">User Manual</a></li>
@@ -188,6 +187,7 @@
                             <li id="mnuODApplication"><a href="/OD/ODApply">OD Application</a></li>
                             <li id="mnuCOffApplication"><a href="#" onclick="COFF()">COFF Application</a></li>
                             <li id="mnuOTCOffApplication"><a href="/LeaveApp/OTCOffApplication">Apply OT COFF</a></li>
+                            <li id="mnuAttdCorrection"><a href="/MissPunch/EmpAttendanceCorrection">Attd Correction</a></li>
                             <li class="dropdown-submenu" id="mnuLeaveCancellation">
                                 <a href="#" class="test" data-toggle="dropdown"><span>Leave Cancellation <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
@@ -250,6 +250,7 @@
                             <li hidden="hidden" id="mnuPayslipUpload"><a href="~/Master/SalarySlipUpload">Payslip Upload</a></li>
                             <li hidden="hidden" id="mnuTDSUpload"><a href="~/IncomeTax/Form16Upload">TDS Forms Upload</a></li>
                             <li hidden="hidden" id="mnureleasestreategymaster"><a href="/Master/CreateReleaseStreategy">Release Strategy Master</a></li>
+                            <li hidden="hidden" id="mnuRlsBulkUpload"><a href="/Master/BulkUpdateReleaseStrategies">Bulk Upload Strategies</a></li>
                             <li hidden="hidden" id="mnuITDFinance"><a href="/IncomeTax/IncomeTaxDecFin">IncomeTax Declaration Edit For Finance</a></li>
                             <li hidden="hidden" id="mnuFandFUpdate"><a href="/FandF/FandFEntry">Full and Final Entry</a></li>
                             <li hidden="hidden" id="mnuFandFReport"><a href="/FandF/FandFReport">Full and Final Report</a></li>
@@ -289,7 +290,7 @@
                             <li hidden="hidden" id="mnuIntimationReportHR"><a href="~/Mediclaim/IntimationReport">Intimation Report</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" id="mnuMedicalFitness">
+                    <li hidden="hidden" class="dropdown" id="mnuMedicalFitness">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-medkit"></i><span>Medical Fitness</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuMedicalFitnessForm"><a href="/MedicalFitness/MedicalFit">Fitness Form</a></li>
@@ -329,10 +330,10 @@
                         </ul>
                     </li>
                     <li hidden="hidden" class="dropdown" id="mnuTPA">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-id-card-o"></i><span>TPA</span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-id-card-o"></i><span>Over Time</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" class="dropdown-submenu" id="mnuPreApprovalTPA">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Pre Approve TPA <b class="fa fa-caret-right"></b></span></a>
+                                <a href="#" class="test" data-toggle="dropdown"><span>Pre Approve OT <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li hidden="hidden" id="mnuPreAssigneTPA"><a href="/TPA/AssigneTPA">Entry of Daily OT Hours</a></li>
                                     <li hidden="hidden" id="mnuPreAssigneTPADateRange"><a href="/TPA/AssignTPAinDateRange">Entry of Monthly OT Hours</a></li>
@@ -340,18 +341,18 @@
                                 </ul>
                             </li>
                             <li hidden="hidden" class="dropdown-submenu" id="mnuPostApprovalTPA">
-                                <a href="#" class="test" data-toggle="dropdown"><span>Sanction Actual TPA <b class="fa fa-caret-right"></b></span></a>
+                                <a href="#" class="test" data-toggle="dropdown"><span>Sanction Actual OT <b class="fa fa-caret-right"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li hidden="hidden" id="mnuSanctionTPA"><a href="/TPA/SanctionTPA">Entry of Actual OT Hours</a></li>
                                     <li hidden="hidden" id="mnuTPAPostApproved"><a href="/TPA/ReleaseSanctionTPA">Release Actual OT Hours</a></li>
                                 </ul>
                             </li>
-                            <li hidden="hidden" id="mnuPostHR"><a href="/TPA/ReleaseSanctionTPAHR">Release Actual TPA Hours ~ HR</a></li>
+                            <li hidden="hidden" id="mnuPostHR"><a href="/TPA/ReleaseSanctionTPAHR">Release Actual OT Hours ~ HR</a></li>
                             <li hidden="hidden" id="mnuSanctionReport"><a href="/TPA/SanctionTPAReport">Bulk Sanction Report</a></li>
-                            <li hidden="hidden" id="mnuTPAReport"><a href="/TPA/TPAReport">TPA Report</a></li>
+                            <li hidden="hidden" id="mnuTPAReport"><a href="/TPA/TPAReport">Over Time Report</a></li>
                         </ul>
                     </li>
-                    <li hidden="hidden" class="dropdown" id="mnuProgressReview">
+                    <li class="dropdown" id="mnuProgressReview" hidden="hidden">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list-alt"></i><span>Progress Review</span></a>
                         <ul class="dropdown-menu">
                             <li hidden="hidden" id="mnuReviewMaster"><a href="/ProgressReview/ReviewQuatorMaster">Review Master</a></li>
@@ -370,7 +371,6 @@
                             <li hidden="hidden" id="mnutripReleaseAdmin"><a href="/VehicleRequisition/AdminRelease">Admin Release</a></li>
                             <li id="mnuEmpVehicleRequisitions"><a href="/VehicleRequisition/EmployeeRequisitions">Vehicle Bookings Report</a></li>
                             <li hidden="hidden" id="mnuVehicleRequisitionReport"><a href="/VehicleRequisition/VehicleRequisitionReport">Vehicle Bookings Status Report</a></li>
-                            @*<li id="mnuVehicleRequisitionEvent"><a href="/VehicleRequisition/VehicleEventCalender">Vehicle Calender</a></li>*@
                         </ul>
                     </li>
                 </ul>

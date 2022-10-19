@@ -1,11 +1,16 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope.currentPage = 1; $scope.itemsPerPage = 50; $scope.alluserlist = []; $scope.jsondata; $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof _ConPath === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } } });
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope.currentPage = 1; $scope.itemsPerPage = 50;
+    $scope.alluserlist = []; $scope.jsondata; $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    $(document).ready(function () {
+        if (typeof _ConPath === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }
+    });
     $scope.jsondata; var rlsarr = [];
     $scope.GetEmpInfo = function () { var e_Code = $('#txtEmpCode').val(); if (e_Code === '') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Employee Code First.. </strong>" + "</div>"; $('#MessageBox').show(); return false; }; var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + e_Code, true); emp.setRequestHeader('Accept', 'application/json'); emp.onreadystatechange = function () { if (emp.readyState === 4) { if (emp.responseText === "" && e_Code.length === 6) { alert("Please Enter Valid Employee Code .."); document.getElementById("txtEmpCode").value = ""; return false; }; var json = JSON.parse(emp.responseText); $scope.empdata = json; $scope.$digest(); $('#lblEmpName').text($scope.empdata[0].empName); }; }; emp.send(); };
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest; rel.open("GET", $scope._Conpath + "ReleaseStrategy/GetReleaseStrategy?releaseGroup=" + $("#releaseGroupCode").val() + "&empUnqId=" + $("#myEmpUnqId").val(), !0), rel.setRequestHeader("Accept", "application/json"), rel.onreadystatechange = function () { if (4 === rel.readyState) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1, $scope.$digest() } }, rel.send() };
     $scope.Download = function (mode) {
-        if (mode !== "0") { $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv"); };
+        //if (mode !== "0") { $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv"); };
+        $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv");
         var ssd = new XMLHttpRequest(); ssd.open("GET", $scope._Conpath + "ShiftSchedule/GetSchedule?empunqid=" + $("#myEmpUnqId").val() + "&mode=" + mode, true); ssd.setRequestHeader("Accept", "application/json"); ssd.onreadystatechange = function () {
             if (ssd.readyState === 4 && ssd.status === 200) {
                 var json1 = JSON.parse(ssd.responseText); $scope.jsondata = json1; var la = new Array; la = json1; var ReportName = "";

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ReleaseSanctionTPA";
+    ViewBag.Title = "Release Sanction Over Time";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,9 +15,12 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>TPA-Sanctioned Employees List:</strong>
+                                <strong>Over Time-Sanctioned Employees List:</strong>
                             </div>
                             <div class="panel-body">
+                                <div style="text-align:center;">
+                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                </div>
                                 <div class="table-responsive" ng-init="GetSanctionList()">
                                     <table class="table table-bordered" id="tblTPAData">
                                         <thead>
@@ -63,7 +66,7 @@
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align:right;" ng-click="sort('sanctionTpa')">
-                                                    Sanction TPA
+                                                    Sanction OT
                                                     <span class="glyphicon sort-icon" ng-show="sortKey=='sanctionTpa'"
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>

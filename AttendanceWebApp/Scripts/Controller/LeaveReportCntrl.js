@@ -99,7 +99,7 @@ app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
                         myArray[cnt].toDt = leaveApplicationDetails[l].toDt.substring(0, leaveApplicationDetails[l].toDt.indexOf("T"));
                         myArray[cnt].totalDays = leaveApplicationDetails[l].totalDays;
                         myArray[cnt].halfDayFlag = leaveApplicationDetails[l].halfDayFlag;
-                        if (leaveApplicationDetails[l].leaveTypeCode === "CO" || leaveApplicationDetails[l].leaveTypeCode === "CO") {
+                        if (leaveApplicationDetails[l].leaveTypeCode === "CO" || leaveApplicationDetails[l].leaveTypeCode === "OC") {
                             myArray[cnt].coMode = leaveApplicationDetails[l].coMode;
                             var codt1 = leaveApplicationDetails[l].coDate1;
                             if (codt1 !== null && codt1 !== '') {

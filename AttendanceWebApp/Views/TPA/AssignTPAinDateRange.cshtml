@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "AssignTPAinDateRange";
+    ViewBag.Title = "Assign Over time in Date Range";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -51,13 +51,13 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>Pre Assign TPA Employees List:</strong>
+                                <strong>Pre Assign Over Time Employees List:</strong>
                             </div>
                             <div class="panel-body">
                                 <div class="form-group-sm">
                                     <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <label>Select Date Range for TPA Request:</label>
+                                            <label>Select Date Range for Over Time Request:</label>
                                         </div>
                                         <div class="col-sm-1">
                                             <label>From Date:</label>
@@ -71,11 +71,14 @@
                                         <div class="col-sm-2">
                                             <input type="date" id="toDt" class="form-control" disabled />
                                         </div>
-                                        <div class="col-sm-1">
+                                        <div class="col-sm-2">
                                             <button id="btnSearch" class="btn btn-primary form-control"
                                                     ng-click="GetPreTpa(true)">
                                                 <i class="fa fa-search"></i>
                                             </button>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                         </div>
                                     </div>
                                 </div>
@@ -87,6 +90,7 @@
                                             <tr>
                                                 <td colspan="6">
                                                     <button type="submit" id="btnOK" class="btn btn-success" ng-click="PreTpaRequest(true)"><i class="fa fa-save"></i> Save & Submit</button>
+                                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                                 </td>
                                             </tr>
                                         </tfoot>

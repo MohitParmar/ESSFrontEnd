@@ -311,15 +311,16 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
             };
         }; gar.send();
     };
-    $scope.PopulateData = function (empid, recommendation) {
+    $scope.PopulateData = function (empid, recommendation, flg) {
         if (recommendation === "N") {
             $scope.GetPrint(empid);
             $("#reviewModel").modal("show");
         } else {
             $scope.GetLetter(empid);
-            if (recommendation === "C") { $("#confirmationModel").modal("show"); };
+            if (recommendation === "C" && flg === true) { $("#confirmationModel").modal("show"); };
+            if (recommendation === "C" && flg === false) { $("#confirmModel").modal("show"); };
             if (recommendation === "E") { $("#extensionModel").modal("show"); };
-        }
+        };
     };
     //fv
     $scope.GetPrint = function (empid) {
@@ -347,6 +348,10 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                 myArray[cnt].improvements = arr[i].improvements;
                 myArray[cnt].suggestions = arr[i].suggestions;
                 myArray[cnt].rating = arr[i].rating;
+                if (arr[i].rating == "S") { myArray[cnt].ratingDesc = "Star" }
+                else if (arr[i].rating == "G") { myArray[cnt].ratingDesc = "Good"; }
+                else if (arr[i].rating == "A") { myArray[cnt].ratingDesc = "Average"; }
+                else if (arr[i].rating == "P") { myArray[cnt].ratingDesc = "Poor"; };
                 myArray[cnt].addDt = arr[i].addDt;
                 myArray[cnt].addEmpName = arr[i].addEmpName;
                 myArray[cnt].releaseDate = arr[i].releaseDate;
@@ -373,7 +378,25 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                 myArray[cnt].joinDate = arr[i].joinDate;
                 myArray[cnt].reviewDate = arr[i].reviewDate;
                 myArray[cnt].recommendation = arr[i].recommendation;
+                if (arr[i].recommendation == "C") { myArray[cnt].recommendationText = "Confirmation" }
+                else if (arr[i].recommendation == "E") { myArray[cnt].recommendationText = "Extension"; }
+                else if (arr[i].recommendation == "T") { myArray[cnt].recommendationText = "Termination"; }
                 myArray[cnt].hodRemarks = arr[i].hodRemarks;
+                myArray[cnt].periodFrom = arr[i].periodFrom;
+                myArray[cnt].periodTo = arr[i].periodTo;
+                myArray[cnt].assignments = arr[i].assignments;
+                myArray[cnt].strength = arr[i].strength;
+                myArray[cnt].improvements = arr[i].improvements;
+                myArray[cnt].suggestions = arr[i].suggestions;
+                myArray[cnt].rating = arr[i].rating;
+                if (arr[i].rating == "S") { myArray[cnt].ratingDesc = "Star" }
+                else if (arr[i].rating == "G") { myArray[cnt].ratingDesc = "Good"; }
+                else if (arr[i].rating == "A") { myArray[cnt].ratingDesc = "Average"; }
+                else if (arr[i].rating == "P") { myArray[cnt].ratingDesc = "Poor"; };
+                myArray[cnt].addDt = arr[i].addDt;
+                myArray[cnt].addEmpName = arr[i].addEmpName;
+                myArray[cnt].releaseDate = arr[i].releaseDate;
+                myArray[cnt].releaseEmpName = arr[i].releaseEmpName;
                 cnt++;
             };
         };

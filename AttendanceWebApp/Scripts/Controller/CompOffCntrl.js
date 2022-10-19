@@ -4,8 +4,14 @@
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };//Get Release Strategy
     $scope.checkCoff = function () {
         var COMODE = $("#cmbCOMode").val();
-        var cat = $("#myCatCode").val();
-        var loc = $("#myLoc").val();
+        var gradeCode = $("#myGradeCode").val(); var otFlag = $("#myOtFlag").val();
+        var cat = $("#myCatCode").val(); var loc = $("#myLoc").val();
+        if (loc === "BEL") {
+            if ((gradeCode < "009" || otFlag === "True") && COMODE === "H") {
+                alert("You are not eligible to get COFF against of Holiday.");
+                $scope.ResetView();
+            }
+        }
         if (loc === "NSK") {
             if (cat === "003" && COMODE === "H") {
                 alert("You are not eligible to get COFF against of Holiday.");
@@ -22,18 +28,17 @@
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);
         var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if (date2 < date1) {
-            document.getElementById("MessageBox").innerHTML =
-                "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                "<strong>Please Enter Valid Date..</strong></div>";
-            $('#MessageBox').show();
-            document.getElementById("CODate1").value = "";
-            document.getElementById("ToDt").value = "";
-            return false;
-        } else {
-            return true;
+        if ($scope.loc === "NSK") {
+            if (date2 < date1) {
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Please Enter Valid Date..</strong></div>";
+                $('#MessageBox').show();
+                document.getElementById("CODate1").value = "";
+                document.getElementById("ToDt").value = "";
+                return false;
+            };
         };
-
         if ($scope.loc === "IPU" || $scope.loc === "NSK") {
             if (COMODE === "H" && diff > 91) {
                 document.getElementById("MessageBox").innerHTML =
@@ -41,7 +46,7 @@
                     "<strong>Please Select Correct Date for COff Apply .. </strong></div>";
                 $('#MessageBox').show();
             }
-            else if (COMODE === "W" && diff > 4) {
+            else if (COMODE === "W" && (diff > 4 || diff === 0)) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Please Select Correct Date for COff Apply .. </strong></div>";
@@ -79,10 +84,22 @@
         var date2 = new Date(ToDate);
         var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
 
+        if ($scope.loc === "NSK") {
+            if (date2 < date1) {
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Please Enter Valid Date..</strong></div>";
+                $('#MessageBox').show();
+                document.getElementById("CODate1").value = "";
+                document.getElementById("ToDt").value = "";
+                return false;
+            };
+        };
+
         if ($scope.loc === "IPU" || $scope.loc === "NSK") {
             if (COMODE === "H" && coffdays > 91) {
                 alert("Please Select Correct Date for COff Apply .. "); return false;
-            } else if (COMODE === "W" && coffdays > 4) {
+            } else if (COMODE === "W" && (coffdays > 4 || coffdays === 0)) {
                 alert("Please Select Correct Date for COff Apply .. "); return false;
             }
         }

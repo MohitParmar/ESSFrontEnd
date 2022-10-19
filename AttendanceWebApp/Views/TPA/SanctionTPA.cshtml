@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SanctionTPA";
+    ViewBag.Title = "Sanction Over Time";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,14 +15,14 @@
                     <div class="table-responsive">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <strong>Sanction TPA Employees List:</strong>
+                                <strong>Sanction Over Time Employees List:</strong>
                             </div>
                             <div class="panel-body">
                                 <div class="form-group-sm">
                                     <div class="form-group row">
                                         <div class="col-sm-3">
                                             <label>
-                                                Select Date Range to Sanction TPA:
+                                                Select Date Range to Sanction Over Time:
                                             </label>
                                         </div>
                                         <div class="col-sm-1">
@@ -41,8 +41,11 @@
                                         <div class="col-sm-2">
                                             <input type="date" id="toDt" class="form-control" />
                                         </div>
-                                        <div class="col-sm-1">
+                                        <div class="col-sm-2">
                                             <button id="btnSearch" class="btn btn-primary form-control" ng-click="GetPostTpa()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                         </div>
                                     </div>
                                 </div>
@@ -60,8 +63,8 @@
                                                 <th style="text-align:center;">Work Hours</th>
                                                 <th style="text-align:left;">IN</th>
                                                 <th style="text-align:left;">OUT</th>
-                                                <th style="text-align:left;">Calc. TPA Hours</th>
-                                                <th style="text-align:left;">Sanction TPA</th>
+                                                <th style="text-align:left;">Calc. OT Hours</th>
+                                                <th style="text-align:left;">Sanction OT</th>
                                                 <th style="text-align:left;">Justification</th>
                                             </tr>
                                         </thead>
@@ -79,7 +82,8 @@
                                                 <td style="text-align:left;">{{d.consOut|date:'dd/MM/yyyy HH:mm'}}</td>
                                                 <td style="text-align:left;">{{d.calcOverTime}}</td>
                                                 <td style="text-align:left;">
-                                                    <input type="number" class="form-control" id="txtSanctionTPA" value="{{d.calcOverTime}}" max="24" />
+                                                    <input type="number" class="form-control" id="txtSanctionTPA" value="{{d.calcOverTime}}" max="24"
+                                                           ng-disabled="{{d.calcOverTime === 0}} && {{d.tpaShiftCode==='WO'}}" />
                                                 </td>
                                                 <td style="text-align:left;"><input type="text" class="form-control" id="txtPostJustification" maxlength="255" /></td>
                                                 <td hidden="hidden">{{d.id}}</td>
@@ -89,6 +93,7 @@
                                             <tr>
                                                 <td colspan="15">
                                                     <button type="submit" id="btnOK" class="btn btn-success" ng-click="SanctionTpa()"><i class="fa fa-save"></i> Save & Submit</button>
+                                                    <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
                                                 </td>
                                             </tr>
                                         </tfoot>

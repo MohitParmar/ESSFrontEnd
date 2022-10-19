@@ -297,7 +297,9 @@ app.controller("MCController", function ($scope, $http) {
         };
     };
     $scope.SetRelation = function (value) {
-        $("#txtRelation").val(value);
+        var sd = new Array(); sd = $scope.pData; var relation;
+        for (var i = 1; i < sd.length; i++) { var depname = sd[i].depName; if (depname === value) { relation = sd[i].relation; }; };
+        $("#txtRelation").val(relation);
     };
     $scope.CalAge = function (dateString, rel) {
         if (typeof (rel) === "undefined") {
@@ -356,7 +358,6 @@ app.controller("MCController", function ($scope, $http) {
         }
     };
     $scope.AddtoListDependentDetails = function (depData) {
-        debugger;
         var table = document.getElementById("commonTable");
         var rowCount = table.rows.length;
         if ((rowCount - 1) === 4) {
@@ -728,7 +729,7 @@ app.controller("MCController", function ($scope, $http) {
             }; $scope.GetDependentDetails('false');
         }; rdd.send(myArray);
     };
-    $scope.GetPatientDetails = function () {
+    $scope.pData; $scope.GetPatientDetails = function () {
         var empid = $("#eCode").val();
         var ds = (new Date().getFullYear()) + (new Date().getFullYear() + 1).toString().substr(-2);
         var pei = new XMLHttpRequest;

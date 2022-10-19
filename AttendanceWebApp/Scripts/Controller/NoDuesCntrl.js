@@ -21,17 +21,63 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             } else { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + "Not Submitted</strong></div>"; $("#MessageBox").show(); document.getElementById("eCode").value = ""; document.getElementById("ResignDate").value = ""; document.getElementById("RelieveDate").value = ""; };
         }; xhr.send(jsonObj);
     };
-    $scope.GetRoles = function (releasableFlag) { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var rol = new XMLHttpRequest; rol.open("GET", $scope._Conpath + "Roles/GetRoleAuth?empUnqId=" + $("#myEmpUnqId").val(), true); rol.setRequestHeader("Accept", "application/json"); rol.onreadystatechange = function () { if (rol.readyState === 4) { $scope.userRoleData = JSON.parse(rol.responseText); $scope.$digest(); var arr = $scope.userRoleData; var rflg; for (var i = 0; i < arr.length; i++) { var tmproleid = arr[i].roleId; if (tmproleid === 23 && releasableFlag === false) { rflg = false; $("#hidreleaserFlag").val(rflg); break; } if (tmproleid === 24 && releasableFlag === true) { rflg = true; $("#hidreleaserFlag").val(rflg); break; }; }; $scope.GetReleaser(rflg); }; }; rol.send(); };
+    $scope.GetRoles = function (releasableFlag) {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
+        var rol = new XMLHttpRequest;
+        rol.open("GET", $scope._Conpath + "Roles/GetRoleAuth?empUnqId=" + $("#myEmpUnqId").val(), true);
+        rol.setRequestHeader("Accept", "application/json");
+        rol.onreadystatechange = function () {
+            if (rol.readyState === 4) {
+                $scope.userRoleData = JSON.parse(rol.responseText);
+                $scope.$digest();
+                var arr = $scope.userRoleData;
+                var rflg;
+                for (var i = 0; i < arr.length; i++) {
+                    var tmproleid = arr[i].roleId;
+                    if (tmproleid === 23 && releasableFlag === false) {
+                        rflg = false;
+                        $("#hidreleaserFlag").val(rflg); break;
+                    } if (tmproleid === 24 && releasableFlag === true) {
+                        rflg = true;
+                        $("#hidreleaserFlag").val(rflg); break;
+                    };
+                }; $scope.GetReleaser(rflg);
+            };
+        }; rol.send();
+    };
     var hodRlsFLG = url.searchParams.get("flg");
     $scope.dept;
-    $scope.GetReleaser = function (reflg) { if (hodRlsFLG !== null) { $scope.GetNoDues("HOD", reflg); } else { var rel = new XMLHttpRequest; rel.open("GET", $scope._Conpath + "NoDues/GetReleaser?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + reflg, true); rel.setRequestHeader("Accept", "application/json"); rel.onreadystatechange = function () { if (rel.readyState === 4 && rel.status === 200) { const relJson = JSON.parse(rel.responseText); $scope.dept = relJson; $scope.$digest(); $("#hidDept").val($scope.dept[0]); var dept = $("#hidDept").val(); $scope.GetNoDues(dept, reflg); }; }; rel.send(); }; };
+    $scope.GetReleaser = function (reflg) {
+        if (hodRlsFLG !== null) {
+            $scope.GetNoDues("HOD", reflg);
+        } else {
+            var rel = new XMLHttpRequest;
+            rel.open("GET", $scope._Conpath + "NoDues/GetReleaser?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + reflg, true);
+            rel.setRequestHeader("Accept", "application/json");
+            rel.onreadystatechange = function () {
+                if (rel.readyState === 4 && rel.status === 200) {
+                    const relJson = JSON.parse(rel.responseText);
+                    $scope.dept = relJson;
+                    $scope.$digest();
+                    $("#hidDept").val($scope.dept[0]);
+                    var dept = $("#hidDept").val();
+                    $scope.GetNoDues(dept, reflg);
+                };
+            }; rel.send();
+        };
+    };
     $scope.SetDeptValue = function (value) { var dept = value; $("#hidDept").val(dept); var releaserFlag = $("#hidreleaserFlag").val(); $scope.GetNoDues(dept, releaserFlag); };
     $scope.noDuesData;
     $scope.GetNoDues = function (dept, relFlg) {
         var gnd = new XMLHttpRequest;
-        if (hodRlsFLG !== null) { gnd.open("GET", $scope._Conpath + "NoDues/GetNoDues?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + hodRlsFLG + "&dept=" + dept, true); }
-        else { gnd.open("GET", $scope._Conpath + "NoDues/GetNoDues?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + relFlg + "&dept=" + dept, true); }
-        gnd.setRequestHeader("Accept", "application/json"); gnd.onreadystatechange = function () {
+        if (hodRlsFLG !== null) {
+            gnd.open("GET", $scope._Conpath + "NoDues/GetNoDues?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + hodRlsFLG + "&dept=" + dept, true);
+        }
+        else {
+            gnd.open("GET", $scope._Conpath + "NoDues/GetNoDues?empUnqId=" + $("#myEmpUnqId").val() + "&releaseFlag=" + relFlg + "&dept=" + dept, true);
+        }
+        gnd.setRequestHeader("Accept", "application/json");
+        gnd.onreadystatechange = function () {
             if (gnd.readyState === 4 && gnd.status === 200) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 const gndJson = JSON.parse(gnd.responseText); $scope.noDuesData = gndJson; $scope.gndData = gndJson; $scope.$digest();
@@ -259,11 +305,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
         };
         var dept = $("#hidDept").val();
         var releaserFlag = $("#hidreleaserFlag").val();
-        var d = new Date();
-        var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
-        var jsonObj = {};
-        var jsonDepts = new Array();
-        var empUnqId;
+        var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
+        var jsonObj = {}; var jsonDepts = new Array(); var empUnqId;
         var TableData = storeTblValues();
         function storeTblValues() {
             var noDuesDeptDetails = new Array();
@@ -424,9 +467,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     }
                 }
             }
-            if (hodRlsFLG !== null || dept === "HR" || dept === "UH") {
-                jsonObj.noDuesDepts = null;
-            }
+            if (hodRlsFLG !== null || dept === "HR" || dept === "UH") { jsonObj.noDuesDepts = null; }
             else {
                 if (releaserFlag === "true") {
                     jsonDepts[0] = {
@@ -447,13 +488,15 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + hodRlsFLG + "&dept=HOD", true);
         } else {
             nds.open("PUT", $scope._Conpath + "NoDues/ChangeNoDues?releaseFlag=" + releaserFlag + "&dept=" + dept, true);
-        }; nds.setRequestHeader("Content-type", "application/json"); nds.onreadystatechange = function () {
+        };
+        nds.setRequestHeader("Content-type", "application/json"); nds.onreadystatechange = function () {
             if (nds.readyState === 4 && nds.status === 200) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Submit Successfully.. </strong></div>"; $("#MessageBox").show();
-                if (dept === "UH") { jQuery("#btnClose").click(); $scope.GetNoDuesUH(); } else {
-                    if (hodRlsFLG !== null) {
+                if (dept === "UH") { jQuery("#btnClose").click(); $scope.GetNoDuesUH(); }
+                else {
+                    if (hodRlsFLG !== null || hodRlsFLG === "true") {
                         //Auto Mail Sending
-                        if (releaserFlag === "true") {
+                        if (releaserFlag === "true" || releaserFlag === true) {
                             var rlsmail = new XMLHttpRequest();
                             rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailNoDues?releaseGroupCode=ND&empUnqId=" +
                                 empUnqId + "&dept=aam", true);
@@ -471,16 +514,12 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                             jQuery('#btnClose').click(); $("#commonTable").find("tr:not(:first)").remove();
                             document.getElementById("txtParticularsER").value = ""; document.getElementById("txtRemarksER").value = "";
                             document.getElementById("txtAmtER").value = "0";
-                            if (dept === "HR") {
-                                jQuery('#btnClose1').click();
-                            };
+                            if (dept === "HR") { jQuery('#btnClose1').click(); };
                         } else {
                             jQuery('#btnClose2').click(); $("#commonTable1").find("tr:not(:first)").remove();
                             document.getElementById("txtParticularsER1").value = ""; document.getElementById("txtRemarksER1").value = "";
                             document.getElementById("txtAmtER1").value = "0";
-                            if (dept === "HR") {
-                                jQuery('#btnClose3').click();
-                            };
+                            if (dept === "HR") { jQuery('#btnClose3').click(); };
                         };
                         $scope.GetNoDues(dept, releaserFlag);
                     };

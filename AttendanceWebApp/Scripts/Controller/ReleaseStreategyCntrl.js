@@ -148,4 +148,45 @@
                     $("#MessageBox").show(), document.getElementById("eCode").value = "", document.getElementById("Rel_Empid").value = "";
             }, xhr.send(TableData);
     };
+    $scope.UploadTemplate = function (flg) {
+        var data = new FormData();
+        if (flg) {
+            $("#loadingGP").removeClass("deactivediv"); $("#loadingGP").addClass("activediv");
+            //Upload Gate pass release strategies;
+            var filesGP = $("#filesGP").get(0).files; if (filesGP.length > 0) { for (g = 0; g < filesGP.length; g++) { data.append("UploadedFile", filesGP[g]); } };
+            $.ajax({
+                type: "POST",
+                url: $scope._Conpath + "ReleaseStrategy/uploadgprel",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (result) {
+                    $("#loadingGP").removeClass("activediv"); $("#loadingGP").addClass("deactivediv");
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>File Uploaded Successfully...</strong></div>"; $("#MessageBox").show();
+                },
+                error: function (err) {
+                    $("#loadingGP").removeClass("activediv"); $("#loadingGP").addClass("deactivediv");
+                    var errer = err.responseText.replace(/\"/g, "").replace(/\{/g, "").replace(/\}/g, "").replace(/\(/g, "").replace(/\)/g, "").replace(/\[/g, "").replace(/\]/g, "");
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong> Error :~ " + errer + "<br/>" + "</strong></div>"; $("#MessageBox").show();
+                }
+            });
+        } else if (flg === false) {
+            $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv");
+            //Upload Leave, OD, Shift Schedule, No Dues. release strategies;
+            var files = $("#files").get(0).files; if (files.length > 0) { for (f = 0; f < files.length; f++) { data.append("UploadedFile", files[f]); } };
+            $.ajax({
+                type: "POST", url: $scope._Conpath + "ReleaseStrategy/UploadRelStr", contentType: false, processData: false,
+                data: data,
+                success: function (result) {
+                    $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>File Uploaded Successfully...</strong></div>"; $("#MessageBox").show();
+                },
+                error: function (err) {
+                    $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv");
+                    var errer = err.responseText.replace(/\"/g, "").replace(/\{/g, "").replace(/\}/g, "").replace(/\(/g, "").replace(/\)/g, "").replace(/\[/g, "").replace(/\]/g, "");
+                    document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong> Error :~ " + errer + "<br/>" + "</strong></div>"; $("#MessageBox").show();
+                }
+            });
+        };
+    };
 }]);
