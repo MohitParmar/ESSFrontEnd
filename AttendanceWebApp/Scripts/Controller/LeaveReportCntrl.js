@@ -1,8 +1,19 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
     $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope.currentPage = 1, $scope.itemsPerPage = 25, $scope.alluserlist = [];
-    $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
-    $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
+    var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
+    //});
     $scope.InfoPL;
     $scope.ToValidate = function () { var chkFrom = document.getElementById("FromDt"), chkTo = document.getElementById("ToDt"), FromDate = chkFrom.value, ToDate = chkTo.value, date1 = new Date(FromDate), date2 = new Date(ToDate); return date1 > date2 ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>", $("#MessageBox").show(), !1) : !0 };
     $scope.GetLeaveInfo = function (entity) {

@@ -76,47 +76,80 @@
                             </table>
                         </div>
                         <div ng-init="GetUserGatePassInfo()">
-                            <table data-show-filter="true" class="table table-condensed table-striped" id="tbl_print">
-                                <thead>
-                                    <tr>
-                                        <th style="text-align:center;">GP Date</th>
-                                        <th style="text-align:center;">GP No</th>
-                                        <th style="text-align:center;">Out Time</th>
-                                        <th style="text-align:center;">In Time</th>
-                                        <th style="text-align:center;">Purpose</th>
-                                        <th style="text-align:center;">Mode</th>
-                                        <th style="text-align:center;">Place of Visit</th>
-                                        <th style="text-align:center;">GP Status</th>
-                                        <th style="text-align:center;">Release Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr dir-paginate="d in pUdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
-                                        <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
-                                        <td style="text-align:center;width:60px;">{{d.gatePassNo}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
-                                        <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
-                                        <td style="text-align:left;">{{d.reason}}</td>
-                                        <td style="text-align:center;width:60px;">{{d.modeName}}</td>
-                                        <td style="text-align:left;">{{d.placeOfVisit}}</td>
-                                        <td style="text-align:center;">{{d.statusName}}</td>
-                                        <td style="text-align:center;width:60px;"
-                                            ng-style="
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-condensed table-hover table-striped" id="tbl_print">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('gatePassDate')">
+                                                GP Date<span class="glyphicon sort-icon" ng-show="sortKey=='gatePassDate'"
+                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">GP No</th>
+                                            <th style="text-align:center;" ng-click="sort('gateOutDateTime')">
+                                                Gate Out Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gateOutDateTime'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('gateInDateTime')">
+                                                Gate In Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gateInDateTime'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;">Purpose</th>
+                                            <th style="text-align:center;" ng-click="sort('modeName')">
+                                                Mode
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='modeName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;">Place of Visit</th>
+                                            <th style="text-align:center;" ng-click="sort('statusName')">
+                                                GP Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                                Release Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reason" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" /></td>
+                                            <td></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in pUdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
+                                            <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.gatePassNo}}</td>
+                                            <td style="text-align:center;">{{d.gateOutDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                            <td style="text-align:center;">{{d.gateInDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                            <td style="text-align:left;">{{d.reason}}</td>
+                                            <td style="text-align:center;">{{d.modeName}}</td>
+                                            <td style="text-align:left;">{{d.placeOfVisit}}</td>
+                                            <td style="text-align:center;">{{d.statusName}}</td>
+                                            <td style="text-align:center;"
+                                                ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#4CAF50','color':'White'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f44336','color':'White'}">
-                                            {{d.releaseStatusCode}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="9">
-                                            <strong><text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                                {{d.releaseStatusCode}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9">
+                                                <strong>Note For Release Status : <text style="color:#4CAF50;"> F - Fully released</text>,<text style="color:#f44336;"> R - Release rejected</text></strong>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                            </div>
                         </div>
                     </div>
                 </div>

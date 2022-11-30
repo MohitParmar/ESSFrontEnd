@@ -245,6 +245,8 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                     myArray[cnt]["ReleaseStatus"] = $scope.mpaData[j].releaseStatusCode;
                     myArray[cnt]["EmpUnqID"] = $scope.mpaData[j].empUnqId;
                     myArray[cnt]["SanDate"] = $scope.mpaData[j].addDate.substring(0, $scope.mpaData[j].addDate.indexOf("T"));
+                    myArray[cnt]["InTime"] = "";
+                    myArray[cnt]["OutTime"] = "";
                     if (pType === "M") {
                         if (intime !== null) {
                             intime = intime.split("T"); intime = intime[1]; intime = intime.substr(0, 5);
@@ -257,6 +259,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                     }
                     if (pType === "A") {
                         if (attdTime !== null) {
+                            myArray[cnt]["SanDate"] = attdTime.substring(0, attdTime.indexOf("T"));
                             attdTime = attdTime.split("T");
                             attdTime = attdTime[1];
                             attdTime = attdTime.substr(0, 5);

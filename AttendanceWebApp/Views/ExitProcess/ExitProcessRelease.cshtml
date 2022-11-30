@@ -24,16 +24,14 @@
                                             <tr>
                                                 <th style="text-align:center;">App.Date</th>
                                                 <th style="text-align:center;">SAPID</th>
-                                                <th style="text-align:center;">Emp.Name</th>
-                                                @*<th style="text-align:center;">Station</th>
-                                                    <th style="text-align:center;">Join Date</th>*@
+                                                <th style="text-align:left;">Emp.Name</th>
                                                 <th style="text-align:center;">Mode of Apply</th>
-                                                <th style="text-align:center;">Reason</th>
-                                                <th style="text-align:center;">Other</th>
+                                                <th style="text-align:left;">Reason</th>
+                                                <th style="text-align:left;">Other</th>
                                                 <th style="text-align:center;">Relieve Date</th>
-                                                <th style="text-align:center;">Resign Text</th>
-                                                <th>Remarks</th>
-                                                <th>Action</th>
+                                                <th style="text-align:left;">Resign Text</th>
+                                                <th style="text-align:left;">Remarks</th>
+                                                <th style="text-align:center;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
@@ -41,15 +39,13 @@
                                                 <td style="text-align:center;">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;" ng-repeat="e in d.employee track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
-                                                @*<td style="text-align:left;" ng-repeat="s in d.employee track by $index" ng-if="$index==14" data-title="'statName'">{{s}}</td>
-                                                    <td style="text-align:left;" ng-repeat="j in d.employee track by $index" ng-if="$index==14" data-title="'joinDate'">{{j}}</td>*@
-                                                <td style="text-align:center;">{{d.mode}}</td>
+                                                <td style="text-align:center;">{{d.mode == 'T' ? 'Template' : 'Manual' }}</td>
                                                 <td style="text-align:left;">{{d.reason}}</td>
                                                 <td style="text-align:left;">{{d.reasonOther}}</td>
                                                 <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
                                                 <td style="text-align:left;">{{d.resignText}}</td>
                                                 <td style="padding:3px;">
-                                                    <input class="form-control" type="text" id="Remarks" placeholder="Rejection" style="width:85px;" ng-model="N.Remarks">
+                                                    <input class="form-control" type="text" id="Remarks" placeholder="Rejection" ng-model="N.Remarks">
                                                 </td>
                                                 <td style="text-align:center;padding:3px;">
                                                     <div class="btn btn-group btn-icon-only">
@@ -85,7 +81,7 @@
                             <div class="table-responsive">
                                 <div ng-init="GetFurtherRelease()">
                                     <div class="table-responsive">
-                                        <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                        <table data-show-filter="true" class="table table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th style="text-align:center;" ng-click="sort('applicationDate')">
@@ -98,12 +94,12 @@
                                                         <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
                                                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                     </th>
-                                                    <th style="text-align:center;">Employee Name</th>
+                                                    <th style="text-align:left;">Employee Name</th>
                                                     <th style="text-align:center;">Mode of Apply</th>
-                                                    <th style="text-align:center;">Reason</th>
-                                                    <th style="text-align:center;">Other</th>
+                                                    <th style="text-align:left;">Reason</th>
+                                                    <th style="text-align:left;">Other</th>
                                                     <th style="text-align:center;">Relieve Date</th>
-                                                    <th style="text-align:center;">Resign Text</th>
+                                                    <th style="text-align:left;">Resign Text</th>
                                                     <th style="text-align:center;">Action</th>
                                                 </tr>
                                             </thead>
@@ -120,7 +116,6 @@
                                                     <td style="text-align:center;">
                                                         <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.empUnqId}},'{{d.mode}}')"><i class="fa fa-info"></i></button>
                                                         <button class="btn btn-success" id="btnPost" ng-click="FurtherRelease('F',{{d.id}})"><i class="fa fa-check"></i></button>
-                                                        @*<button class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i></button>*@
                                                     </td>
                                                 </tr>
                                             </tbody>

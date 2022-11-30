@@ -1,7 +1,19 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("HomeCntrloller", function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.alluserlist = []; $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
-    $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
+    //});
     $scope.ResetView = function () { window.location.reload(!0) }; jQuery.support.cors = true;
     $scope.changePassword = function (entity) { var jsonObj = {}; jsonObj.EmpUnqId = $("#myEmpUnqId").val(), jsonObj.Pass = entity.Pass, jsonObj = JSON.stringify(jsonObj); var xhr2 = new XMLHttpRequest; xhr2.open("POST", $scope._Conpath + "Employee/ChangePassword", !0), xhr2.setRequestHeader("Content-type", "application/json"), xhr2.onreadystatechange = function () { 4 === xhr2.readyState ? window.location.href = "/Login/UserLogin/" : 400 === xhr2.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Not Updated .. </strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", document.getElementById("ePass").value = "", jQuery("#btnClose").click()) }, xhr2.send(jsonObj) };
     $scope.ResetPass = function () { var e_Code = $("#eCode").val(); if ("" === e_Code) return document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Employee Code First.. </strong></div>", $("#MessageBox").show(), !1; var jsonObj = {}; jsonObj.EmpUnqId = $("#eCode").val(), jsonObj.Pass = $("#eCode").val(), jsonObj = JSON.stringify(jsonObj); var xhr2 = new XMLHttpRequest; xhr2.open("POST", $scope._Conpath + "Employee/ChangePassword", !0), xhr2.setRequestHeader("Content-type", "application/json"), xhr2.onreadystatechange = function () { 4 === xhr2.readyState ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Changed Sucesfully..</strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", $("#tbl_empdtl").hide()) : 400 === xhr2.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Not Updated .. </strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", $("#tbl_empdtl").hide()) }, xhr2.send(jsonObj) };
@@ -89,21 +101,23 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         }; addr.send(jsonObj);
     };
     $scope.GetPresentAddress = function () {
-        var loc = $("#myLoc").val();
-        if (loc === "IPU") {
-            document.getElementById("txtHouseNumber").disabled = true; document.getElementById("txtPoliceStation").disabled = true;
-            document.getElementById("txtSocietyName").disabled = true; document.getElementById("txtemailid").disabled = true;
-            document.getElementById("txtAreaName").disabled = true; document.getElementById("txtphoneno").disabled = true;
-            document.getElementById("txtLandMark").disabled = true; document.getElementById("txtresno").disabled = true;
-            document.getElementById("txtPreCity").disabled = true; document.getElementById("txtTehsil").disabled = true;
-            document.getElementById("txtdist").disabled = true; document.getElementById("txtstate").disabled = true;
-            document.getElementById("pincode").disabled = true; document.getElementById("btnSave").disabled = true;
-            document.getElementById("BtnCancel").disabled = true;
-        }
+        var l = $("#myLoc").val();
         var arr = new Array; preAdd = new XMLHttpRequest; preAdd.open("GET", $scope._Conpath + "EmpAddress/GetEmpAddress?empUnqId=" + $("#myEmpUnqId").val(), !0);
         preAdd.setRequestHeader("Accept", "application/json"); preAdd.onreadystatechange = function () {
             if (4 === preAdd.readyState) {
+                debugger;
                 var l = $("#myLoc").val(); json = JSON.parse(preAdd.responseText); tmparr = json;
+                var counter = tmparr.counter;
+                if (l === "IPU" && counter > 0) {
+                    document.getElementById("txtHouseNumber").disabled = true; document.getElementById("txtPoliceStation").disabled = true;
+                    document.getElementById("txtSocietyName").disabled = true; document.getElementById("txtemailid").disabled = true;
+                    document.getElementById("txtAreaName").disabled = true; document.getElementById("txtphoneno").disabled = true;
+                    document.getElementById("txtLandMark").disabled = true; document.getElementById("txtresno").disabled = true;
+                    document.getElementById("txtPreCity").disabled = true; document.getElementById("txtTehsil").disabled = true;
+                    document.getElementById("txtdist").disabled = true; document.getElementById("txtstate").disabled = true;
+                    document.getElementById("pincode").disabled = true; document.getElementById("btnSave").disabled = true;
+                    document.getElementById("BtnCancel").disabled = true;
+                };
                 arr[0] = {
                     empUnqId: tmparr.empUnqId, houseNumber: tmparr.houseNumber, societyName: tmparr.societyName, areaName: tmparr.areaName, landMark: tmparr.landMark,
                     preCity: tmparr.preCity, tehsil: tmparr.tehsil, preDistrict: tmparr.preDistrict, preState: tmparr.preState, prePin: tmparr.prePin,

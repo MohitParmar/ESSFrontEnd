@@ -1,6 +1,23 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('LeavePerformanceReportController', function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    if (typeof (_ConPath) === "undefined") { return; } else {
+    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+    //        }
+    //    };
+    //});
     $scope.lPerRpt; var tmparr1;
     $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; }; };
     $scope.GetLeavePerformanceReport = function (dt) {

@@ -1,10 +1,18 @@
 ﻿angular.module("myApp.Controllers").controller("ReleaseStreategyCntrloller", ["$scope", "$http", function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(),
-        $scope.alluserlist = [], $scope._Conpath = "";
-    var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope.alluserlist = [];
+    var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
     $(document).ready(function () {
-        "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
     });
+    //$(document).ready(function () {
+    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
+    //});
     $scope.ResetView = function () {
         window.location.reload(!0);
     }; jQuery.support.cors = !0;

@@ -1,5 +1,14 @@
 ﻿angular.module('myApp.Controllers').controller('LoginController', ['$scope', '$http', function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = '';
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
+        };
+    });
     $scope.UserLogin = function (entity) {
         var jsonObj = {}; jsonObj.EmpUnqId = entity.EmpUnqId; jsonObj.Pass = entity.Pass; jsonObj = JSON.stringify(jsonObj);
         jQuery.support.cors = true;
@@ -30,7 +39,7 @@
                         if (($scope.Udata[0]["wrkGrp"] !== "COMP" || $scope.Udata[0]["wrkGrp"] !== "OUTSOURCE") && $scope.Udata[0]["roleId"] !== 2) {
                             window.location.href = "Report/PerformanceReport";
                         } else if ($scope.Udata[0]["roleId"] === 1 || $scope.Udata[0]["roleId"] === 3) {
-                            window.location.href = "Home/Index";                  
+                            window.location.href = "Home/Index";
                         };
                         if ($scope.Udata[0]["roleId"] === 2 || $scope.Udata[0]["roleId"] === 6 || $scope.Udata[0]["roleId"] === 8) {
                             window.location.href = "ReleaseLeave/LeaveRelease";

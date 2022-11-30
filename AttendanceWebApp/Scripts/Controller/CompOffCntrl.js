@@ -1,6 +1,16 @@
 ﻿angular.module('myApp.Controllers').controller('CompOffController', ['$scope', '$http', function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
-    $scope.loc = $('#myLoc').val(); $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };//Get Release Strategy
     $scope.checkCoff = function () {
         var COMODE = $("#cmbCOMode").val();
@@ -45,16 +55,19 @@
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Please Select Correct Date for COff Apply .. </strong></div>";
                 $('#MessageBox').show();
+                document.getElementById("CODate1").value = "";
+                document.getElementById("ToDt").value = "";
+                return false;
             }
             else if (COMODE === "W" && (diff > 4 || diff === 0)) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Please Select Correct Date for COff Apply .. </strong></div>";
                 $('#MessageBox').show();
+                document.getElementById("CODate1").value = "";
+                document.getElementById("ToDt").value = "";
+                return false;
             }
-            document.getElementById("CODate1").value = "";
-            document.getElementById("ToDt").value = "";
-            return false;
         };
         $('#TotalDays').text = diff;
         document.getElementById("TotalDays").value = diff;

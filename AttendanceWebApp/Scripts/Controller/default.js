@@ -1,24 +1,32 @@
 ﻿$(document).ready(function () {
     var conpath, url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
-    url_port = url.port;
+    var url_port = url.port;
     if ("undefined" != typeof _ConPath) {
-        conpath = urlhost === _URLHostName ? _ConPath : urlprotocol + "//" + urlhost + "/api/";
+        var loc = $("#myLoc").val();
+        if (loc === "NSK") { conpath = urlhost === _URLHostName ? _ConPath : urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+        else { conpath = urlhost === _URLHostName ? _ConPath : urlprotocol + "//" + urlhost + "/api/"; }
         var newArr = {};
-        var chk = $("#myUserRole").val(); var _wrkgrp = $("#myWrkGrp").val(); var loc = $("#myLoc").val();
+        var chk = $("#myUserRole").val();
+        var _wrkgrp = $("#myWrkGrp").val();
         var _memberId = $("#myEmpUnqId").val();
         jQuery.support.cors = !0;
-        var rel = new XMLHttpRequest(); rel.open("GET", conpath + "Roles/GetRoleAuth?empUnqId=" + _memberId, true);
-        rel.setRequestHeader("Accept", "application/json"); rel.onreadystatechange = function () {
+        var rel = new XMLHttpRequest();
+        rel.open("GET", conpath + "Roles/GetRoleAuth?empUnqId=" + _memberId, true);
+        rel.setRequestHeader("Accept", "application/json");
+        rel.onreadystatechange = function () {
             if (4 === rel.readyState) {
                 var jsonvar1 = JSON.parse(rel.responseText);
                 newArr = jsonvar1;
                 for (var i = 0; i < newArr.length; i++) {
-                    try { document.getElementById(newArr[i].menuId).hidden = !1; } catch { }
+                    try { document.getElementById(newArr[i].menuId).hidden = !1; }
+                    catch { }
                 };
                 if (loc === "IPU") {
                     if (_memberId === "103244" || _memberId === "112213" || _memberId === "103608" || _memberId === "104019") {
                         $("#mnuDeptLeaveReport").show();
-                    } else { $("#mnuDeptLeaveReport").hide(); }
+                    } else {
+                        $("#mnuDeptLeaveReport").hide();
+                    }
                 }
                 var ndFLG = $("#myNDFlag").val(); if (ndFLG === "True") { $("#mnuNODuesStatus").show(); } else { $("#mnuNODuesStatus").hide(); }
                 var otFLG = $("#myOtFlag").val(); if (otFLG === "True") { $("#mnuOTCOffApplication").show(); } else { $("#mnuOTCOffApplication").hide(); }
@@ -57,7 +65,8 @@
                 $("#mnuIncomeTaxDeclaration").hide(); $("#mnuTDS").hide(); $("#mnuNODuesStatus").hide();
                 $("#mnuUserManual").hide(); $("#mnuResignApplication").hide(); $("#mnuEmpResignation").hide(); $("#mnuAddressProofReq").hide();
             }
-        } else if ("NKP" === loc) {
+        }
+        else if ("NKP" === loc) {
             if (_URLHostName !== urlhost && (_wrkgrp === "COMP" || _wrkgrp === "APPRENTICE")) {
                 $("#mnuPayslip").show();
                 $("#mnuMaster").hide(); $("#mnuReport").hide(); $("#mnuGatePass").hide(); $("#mnuUitility").hide();
@@ -66,7 +75,8 @@
                 $("#mnuUserManual").hide(); $("#mnuChangePassword").hide(); $("#mnuPayslipUpload").hide();
                 $("#mnuAddressProofReq").hide();
             }
-        } else if ("BEL" === loc) {
+        }
+        else if ("BEL" === loc) {
             if (_URLHostName !== urlhost && "COMP" === _wrkgrp) {
                 $("#mnuCreateGatePass").show(); $("#mnuPayslip").show();
                 if ("2" === chk || "6" === chk || "7" === chk || "8" === chk || "11" === chk) { $("#mnuContCreateGatePass").show(); }
@@ -74,7 +84,6 @@
                 var s = $("#myEmpUnqId").val();
                 if ("105440" === s) {
                     $("#mnuReport").show(); $("#mnuLeaveReport").show();
-
                     $("#mnuReleaserEmpReport").hide(); $("#mnuITDReport").hide(); $("#mnuLeaveApplicationDetails").hide();
                     $("#mnuPostedLeaveReport").hide(); $("#mnuPostedByReport").hide(); $("#mnuLeavePerformanceReport").hide();
                     $("#mnuPendingLeavesForPostReport").hide(); $("#mnuAllGatePassReport").hide();
@@ -86,7 +95,8 @@
                 $("#mnuuniformmaster").hide(); $("#mnuUpdateEmailAdd").hide(); $("#mnuUserManual").hide();
                 $("#mnuChangePassword").hide(); $("#mnuPayslipUpload").hide(); $("#mnuAddressProofReq").hide();
             }
-        } else if ("JFL" === loc) {
+        }
+        else if ("JFL" === loc) {
             if (_URLHostName !== urlhost && "COMP" === _wrkgrp) {
                 $("#mnuUpdateEmailAdd").show(); $("#mnuPayslip").show();
                 $("#mnuMaster").hide(); $("#mnuReport").hide(); $("#mnuUitility").hide(); $("#mnuLeavePosting").hide();
@@ -95,7 +105,8 @@
                 $("#mnuuniformmaster").hide(); $("#mnuUserManual").hide(); $("#mnuChangePassword").hide();
                 $("#mnuPayslipUpload").hide(); $("#mnuAddressProofReq").hide();
             }
-        } else if ("KJSAW" === loc) {
+        }
+        else if ("KJSAW" === loc) {
             if (_URLHostName !== urlhost) {
                 $("#mnuDashboard").show(); $("#mnuChangePassword").show(); $("#mnuAddressMaster").show();
                 $("#mnuUpdateEmailAdd").show(); $("#mnuEmployeeProfile").show();
@@ -104,6 +115,14 @@
                 $("#mnuGatePassInOut").hide(); $("#mnuUserManual").hide(); $("#mnuuniformmaster").hide(); $("#mnuManageLeave").hide();
                 $("#mnuLeavePosting").hide(); $("#mnuLeaveApplicationDetails").hide(); $("#mnuManageLeave").hide();
                 $("#mnuAddressProofReq").hide();
+            }
+        }
+        else if ("NSK" === loc) {
+            if (_URLHostName !== urlhost) {
+                $("#mnuMaster").hide(), $("#mnuReport").show(), $("#mnuUitility").show(), $("#mnuLeavePosting").show(), $("#mnuCreateGatePass").show();
+                $("#mnuContCreateGatePass").show(), $("#mnuGatePassInOut").show(), $("#mnuEmployeeProfile").show(), $("#mnuIncomeTaxDeclaration").hide();
+                $("#mnuAddressMaster").show(), $("#mnuuniformmaster").show(), $("#mnuUpdateEmailAdd").show(), $("#mnuUserManual").hide();
+                $("#mnuChangePassword").hide(), $("#mnuPayslipUpload").hide(), $("#mnuPayslip").show(); 
             }
         }
     }

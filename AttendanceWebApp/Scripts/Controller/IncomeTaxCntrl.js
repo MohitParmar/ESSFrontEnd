@@ -1,6 +1,16 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('IncomeTaxController', function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 50; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); jQuery.support.cors = true;
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 50; $scope.alluserlist = [];
+    $scope._Conpath = '';
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
+        };
+    });
+    jQuery.support.cors = true;
     $('.btnNext').click(function () { $('.nav-tabs > .active').next('li').find('a').trigger('click'); });
     $('.btnPrevious').click(function () { $('.nav-tabs > .active').prev('li').find('a').trigger('click'); });
     $scope.ITDInfo; $scope.ResetView = function () { window.location.reload(true); };

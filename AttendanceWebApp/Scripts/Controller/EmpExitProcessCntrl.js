@@ -289,6 +289,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                     emp = arr[i].employee;
                     var s = arr[i].releaseStatusCode;
                     if (s !== "R") {
+                        debugger;
                         myArray.push([]);
                         myArray[cnt].id = arr[i].id;
                         myArray[cnt].empUnqId = arr[i].empUnqId;
@@ -301,6 +302,9 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                         myArray[cnt].releaseStatusCode = arr[i].releaseStatusCode;
                         myArray[cnt].releaseStatus = arr[i].releaseStatus;
                         myArray[cnt].statusHr = arr[i].statusHr;
+                        myArray[cnt].hrUser = arr[i].hrUser;
+                        myArray[cnt].hrUserName = arr[i].hrUserName;
+                        myArray[cnt].hrStatusDate = arr[i].hrStatusDate;
                         myArray[cnt].empName = emp.empName;
                         myArray[cnt].deptName = emp.deptName;
                         myArray[cnt].statName = emp.statName;
@@ -366,7 +370,10 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         rhr.onreadystatechange = function () {
             if (4 === rhr.readyState && rhr.status === 200) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
-                var json = JSON.parse(rhr.responseText); $scope.rhrData = json; $scope.$digest();
+                var json = JSON.parse(rhr.responseText); $scope.rhrData = json;
+                $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.$digest();
+            } else if (rhr.status === 400 || rhr.status === 403 || rhr.status === 404 || rhr.status === 408 || rhr.status === 500) {
+                $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
             };
         }; rhr.send();
     };

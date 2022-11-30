@@ -46,78 +46,99 @@
                         <strong>List of Pending Resignations</strong>
                     </div>
                     <div class="panel-body">
-                        <div class="table-responsive">
-                            <div ng-init="GetResignationHr()">
-                                <div class="table-responsive">
-                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align:center;">Sr. No.</th>
-                                                <th style="text-align:center;" ng-click="sort('applicationDate')">
-                                                    App. Date
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='applicationDate'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
-                                                    Release Status
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
-                                                    Employee Code
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;">Employee Name</th>
-                                                <th style="text-align:center;">Mode of Apply</th>
-                                                <th style="text-align:center;">Reason</th>
-                                                <th style="text-align:center;">Other</th>
-                                                <th style="text-align:center;">Relieve Date</th>
-                                                <th style="text-align:center;">Resign Text</th>
-                                                <th style="text-align:center;">Further Release Status</th>
-                                                <th style="text-align:center;">Further Releaser</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
-                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
-                                                <td colspan="8"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody dir-paginate="d in rhrData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
-                                            <tr>
-                                                <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td style="text-align:center;">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
-                                                <td style="text-align:center;" ng-style="
+                        <div ng-init="GetResignationHr()">
+                            <div class="table-responsive">
+                                <table data-show-filter="true" class="table table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Sr. No.</th>
+                                            <th style="text-align:center;" ng-click="sort('applicationDate')">
+                                                App. Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='applicationDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                                Release Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                Employee Code
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;">Employee Name</th>
+                                            <th style="text-align:center;" ng-click="sort('mode')">
+                                                Mode of Apply
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='mode'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;" ng-click="sort('reason')">
+                                                Reason
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='reason'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;">Other</th>
+                                            <th style="text-align:center;" ng-click="sort('relieveDate')">
+                                                Relieve Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='relieveDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:left;">Resign Text</th>
+                                            <th style="text-align:center;">Further Release Status</th>
+                                            <th style="text-align:left;">Further Releaser</th>
+                                            <th style="text-align:center;">Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.mode" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reason" />
+                                            </td>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody dir-paginate="d in rhrData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage" pagination-id="pg1">
+                                        <tr>
+                                            <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                            <td style="text-align:center;">{{d.applicationDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;" ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
                                                     d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
-                                                    {{d.releaseStatusCode}}
-                                                </td>
-                                                <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td style="text-align:left;" ng-repeat="e in d.employee track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
-                                                <td style="text-align:center;">{{d.mode}}</td>
-                                                <td style="text-align:left;">{{d.reason}}</td>
-                                                <td style="text-align:left;">{{d.reasonOther}}</td>
-                                                <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
-                                                <td style="text-align:left;">{{d.resignText}}</td>
-                                                <td style="text-align:left;" ng-style="
-                                                    d.furtherReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'}">
-                                                    {{d.furtherReleaseStatusCode}}
-                                                </td>
-                                                <td style="text-align:left;">{{d.furtherReleaserName}}</td>
-                                                <td style="text-align:center;width:130px;">
-                                                    <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.empUnqId}},'{{d.mode}}')"><i class="fa fa-info"></i></button>
-                                                    <button class="btn btn-success" id="btnPost" ng-click="HrRelease({{d.id}})"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default" id="btnAddReleaser" ng-click="ReleaserPopUp({{d.id}})"><i class="fa fa-edit"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                                </div>
+                                                {{d.releaseStatusCode}}
+                                            </td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;" ng-repeat="e in d.employee track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
+                                            <td style="text-align:center;">{{d.mode == 'T' ? 'Template' : 'Manual'}}</td>
+                                            <td style="text-align:left;">{{d.reason}}</td>
+                                            <td style="text-align:left;">{{d.reasonOther}}</td>
+                                            <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:left;">{{d.resignText}}</td>
+                                            <td style="text-align:center;" ng-style="d.furtherReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'}">
+                                                {{d.furtherReleaseStatusCode}}
+                                            </td>
+                                            <td style="text-align:left;">{{d.furtherReleaserName}}</td>
+                                            <td style="text-align:center;width:130px;">
+                                                <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.empUnqId}},'{{d.mode}}')"><i class="fa fa-info"></i></button>
+                                                <button class="btn btn-success" id="btnPost" ng-click="HrRelease({{d.id}})"><i class="fa fa-check"></i></button>
+                                                <button class="btn btn-default" id="btnAddReleaser" ng-click="ReleaserPopUp({{d.id}})"><i class="fa fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg1"></dir-pagination-controls>
                             </div>
                         </div>
                     </div>
@@ -217,7 +238,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-12">Resignation Text : <br />{{e.resignText}}</div>
+                                        <div class="col-sm-12">
+                                            Resignation Text :
+                                            <br />{{e.resignText}}
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">Reason : {{e.reason}}</div>
@@ -263,13 +287,17 @@
                                                 </tr>
                                             </tbody>
                                             <tfoot>
-                                                <tr>
+                                                <tr ng-if="e.furtherReleaseStatusCode == 'F'">
                                                     <td style="text-align:left;">{{e.furtherReleaser}}-{{e.furtherReleaserName}}</td>
                                                     <td style="text-align:center;">{{e.furtherReleaseDate | date:'dd/MM/yyyy'}}</td>
                                                     <td style="text-align:center;">{{e.furtherReleaseStatusCode}}</td>
                                                     <td style="text-align:center;"></td>
                                                 </tr>
-                                                <tr><td colspan="4" style="color:red;"><strong>Note For Release Status :I - In Release,N - Not released,P - Partially released,F - Fully released</strong></td></tr>
+                                                <tr>
+                                                    <td colspan="4" style="color:red;">
+                                                        <strong>Note For Release Status :I - In Release, N - Not released, P - Partially released, F - Fully released</strong>
+                                                    </td>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -299,10 +327,14 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>From :</label><br />
-                                            Name: {{e.empName}}<br />
-                                            Designation/Grade: {{e.desgName}} / {{e.gradeName}}<br />
-                                            Department/Station: {{e.statName}}<br />
+                                            <label>From :</label>
+                                            <br />
+                                            Name: {{e.empName}}
+                                            <br />
+                                            Designation/Grade: {{e.desgName}} / {{e.gradeName}}
+                                            <br />
+                                            Department/Station: {{e.statName}}
+                                            <br />
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -319,7 +351,8 @@
                                     </div>
                                     <div style="text-align:center;" class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Through: Section Head/HOD</label><br />
+                                            <label>Through: Section Head/HOD</label>
+                                            <br />
                                             <label>Sub: Resignation from services of the Company</label>
                                         </div>
                                     </div>
@@ -330,7 +363,9 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <b>I <u>{{e.empName}}</u></b> (SAP ID <u>{{e.empUnqId}}</u>) is working this company since <u>{{e.joinDate | date:'dd/MM/yyyy'}}</u>
+                                            <b>I <u>{{e.empName}}</u></b> (SAP ID
+                                            <u>{{e.empUnqId}}</u>) is working this company since
+                                            <u>{{e.joinDate | date:'dd/MM/yyyy'}}</u>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -345,20 +380,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            Effective from today (i.e <u>{{e.applicationDate | date:'dd/MM/yyyy'}}</u>) and request you to relieve me on {{e.relieveDate | date:'dd/MM/yyyy'}}<br />
-                                            I have taken this decision on my own with a lot of thought.<br />
+                                            Effective from today (i.e
+                                            <u>{{e.applicationDate | date:'dd/MM/yyyy'}}</u>) and request you to relieve me on {{e.relieveDate | date:'dd/MM/yyyy'}}
+                                            <br />
+                                            I have taken this decision on my own with a lot of thought.
+                                            <br />
                                             It has been a great pleasure for me to be a part of this organization and I have learned a lot during my
-                                            association with this Company.  I have genuinely enjoyed my time with this Organization.<br />
+                                            association with this Company.  I have genuinely enjoyed my time with this Organization.
+                                            <br />
                                             I would like to take the opportunity to thank you all for having me as a part of your team. I wish the Company
-                                            all the best in the future.<br />
+                                            all the best in the future.
+                                            <br />
                                             Request you to please accept my resignation and relieve me on {{e.relieveDate | date:'dd/MM/yyyy'}}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            Yours Sincerely,<br />
-                                            <b>Name <u>{{e.empName}}</u></b><br />
-                                            <b>SAP ID <u>{{e.empUnqId}}</u></b><br />
+                                            Yours Sincerely,
+                                            <br />
+                                            <b>Name <u>{{e.empName}}</u></b>
+                                            <br />
+                                            <b>SAP ID <u>{{e.empUnqId}}</u></b>
+                                            <br />
                                             <p>(As this resignation letter is self-generated by the employee personally through his secured ESS Portal, a physical signature is not required).</p>
                                         </div>
                                     </div>
@@ -383,13 +426,17 @@
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
-                                                    <tr>
+                                                    <tr ng-if="e.furtherReleaseStatusCode == 'F'">
                                                         <td style="text-align:left;">{{e.furtherReleaser}}-{{e.furtherReleaserName}}</td>
                                                         <td style="text-align:center;">{{e.furtherReleaseDate | date:'dd/MM/yyyy'}}</td>
                                                         <td style="text-align:center;">{{e.furtherReleaseStatusCode}}</td>
                                                         <td style="text-align:center;"></td>
                                                     </tr>
-                                                    <tr><td colspan="4" style="color:red;"><strong>Note For Release Status :I - In Release,N - Not released,P - Partially released,F - Fully released</strong></td></tr>
+                                                    <tr>
+                                                        <td colspan="4" style="color:red;">
+                                                            <strong>Note For Release Status :I - In Release, N - Not released, P - Partially released, F - Fully released</strong>
+                                                        </td>
+                                                    </tr>
                                                 </tfoot>
                                             </table>
                                         </div>

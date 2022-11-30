@@ -21,7 +21,7 @@
                         <div class="panel-body">
                             <div ng-init="GetEmpResignation()">
                                 <div class="table-responsive">
-                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                    <table data-show-filter="true" class="table table-condensed">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;">App.Date</th>
@@ -47,7 +47,7 @@
                                                 </td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
-                                                <td style="text-align:center;">{{d.mode}}</td>
+                                                <td style="text-align:center;">{{d.mode == 'T' ? 'Template' : 'Manual'}}</td>
                                                 <td style="text-align:left;">{{d.reason}}</td>
                                                 <td style="text-align:left;">{{d.reasonOther}}</td>
                                                 <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
@@ -64,6 +64,9 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="panel-footer">
+                            <strong>Note For Release Status: I - In release,<text style="color:#ff9800;"> P - Partially released</text>,<text style="color:#4CAF50;"> F - Fully released</text></strong>
                         </div>
                     </div>
                 </div>

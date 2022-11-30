@@ -1,6 +1,18 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]); app.controller("ODController", function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
-    $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"); });
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val();
+    var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
+    //});
     $scope.currentPage = 1, $scope.itemsPerPage = 10;
     $scope.ResetView = function () { window.location.reload(!0); };
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open("GET", $scope._Conpath + "ReleaseStrategy/GetReleaseStrategy?releaseGroup=" + $("#releaseGroupCode").val() + "&empUnqId=" + $("#myEmpUnqId").val(), !0); rel.setRequestHeader("Accept", "application/json"); rel.onreadystatechange = function () { if (4 === rel.readyState) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1, $scope.$digest(); } }; rel.send(); };

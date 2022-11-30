@@ -80,38 +80,57 @@
                                 <table data-show-filter="true" class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;">GP Date</th>
-                                            <th style="text-align:center;">Employee Code</th>
+                                            <th style="text-align:center;" ng-click="sort('gatePassDate')">
+                                                GP Date<span class="glyphicon sort-icon" ng-show="sortKey=='gatePassDate'"
+                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('empUnqID')">
+                                                Employee Code<span class="glyphicon sort-icon" ng-show="sortKey=='empUnqID'"
+                                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;" ng-click="sort('empName')">
                                                 Employee Name
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;">Gate Out Time</th>
-                                            <th style="text-align:center;">Gate In Time</th>
+                                            <th style="text-align:center;" ng-click="sort('gateOutDateTime')">
+                                                Gate Out Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gateOutDateTime'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('gateInDateTime')">
+                                                Gate In Time
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='gateInDateTime'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;">Purpose</th>
-                                            <th style="text-align:center;">Mode</th>
+                                            <th style="text-align:center;" ng-click="sort('modeName')">
+                                                Mode
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='modeName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                             <th style="text-align:center;">Place of Visit</th>
-                                            <th style="text-align:center;">Status</th>
-                                            <th style="text-align:center;">Created By</th>
+                                            <th style="text-align:center;" ng-click="sort('statusName')">
+                                                Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;" ng-click="sort('addUser')">
+                                                Created By
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='addUser'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td style="text-align:center;">
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqID" />
-                                            </td>
-                                            <td style="text-align:center;">
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
-                                            </td>
-                                            <td colspan="3"></td>
-                                            <td style="text-align:center;">
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" />
-                                            </td>
-                                            <td></td>
-                                            <td style="text-align:center;">
-                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" />
-                                            </td>
-                                            <td></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                            <td colspan="2"></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reason" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.modeName" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.placeOfVisit" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statusName" /></td>
+                                            <td style="text-align:center;"><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.addUser" /></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -119,13 +138,13 @@
                                             ng-style="d.statusName==='Out' && {'background-color':'#f2dede','color':'#b94a48','font-weight':'bold'} ||
                                                       d.statusName==='In' && {'background-color':'#dff0d8','color':'#468847'} "
                                             ng-show="d.releaseStatusCode == 'F'">
-                                            <td style="text-align:center;width:60px;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
-                                            <td style="text-align:center;width:70px;">{{d.empUnqId}}</td>
-                                            <td style="text-align:left;width:185px;">{{d.empName}}</td>
-                                            <td style="text-align:center;width:95px;">{{d.gateOutDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
-                                            <td style="text-align:center;width:95px;">{{d.gateInDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                            <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.empUnqId}}</td>
+                                            <td style="text-align:left;">{{d.empName}}</td>
+                                            <td style="text-align:center;">{{d.gateOutDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
+                                            <td style="text-align:center;">{{d.gateInDateTime| date:'dd/MM/yyyy hh:mm'}}</td>
                                             <td style="text-align:left;">{{d.reason}}</td>
-                                            <td style="text-align:center;width:60px;">{{d.modeName}}</td>
+                                            <td style="text-align:center;">{{d.modeName}}</td>
                                             <td style="text-align:left;">{{d.placeOfVisit}}</td>
                                             <td style="text-align:center;">{{d.statusName}}</td>
                                             <td style="text-align:center;">{{d.addUser}}</td>

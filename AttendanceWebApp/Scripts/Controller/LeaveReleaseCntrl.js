@@ -1,6 +1,24 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; }); $scope.RefreshTable = function () { $scope.tableParams.reload(); }; jQuery.support.cors = true; var d = new Date(); var releasearr = []; var rlsarr = [];
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    if (typeof (_ConPath) === "undefined") { return; } else {
+    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+    //        }
+    //    };
+    //});
+    $scope.RefreshTable = function () { $scope.tableParams.reload(); }; jQuery.support.cors = true; var d = new Date(); var releasearr = []; var rlsarr = [];
     $scope.GetLeaveInfo = function () { var FromDate, ToDate; var firstDay = new Date(); var lastDay = new Date(new Date().setDate(new Date().getDate() + 30)); FromDate = (firstDay.getFullYear()) + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate(); ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + (lastDay.getDate()); var req = new XMLHttpRequest(); req.open('GET', $scope._Conpath + 'LeaveReport/GetLeaves?empunqid=' + $('#myEmpUnqId').val() + '&fromDt=' + FromDate + '&toDt=' + ToDate, true); req.setRequestHeader('Accept', 'application/json'); req.onreadystatechange = function () { if (req.readyState === 4) { var json = JSON.parse(req.responseText); $scope.reqdata = json; $scope.reqdata = $filter('orderBy')($scope.reqdata, '-leaveAppId'); $scope.curPage = 0; $scope.pageSize = 10; $scope.$digest(); } }; req.send(); };//Get Leave Report Login Releaser
     $scope.GetLeaveRequestLists = function () { var xhr = new XMLHttpRequest(); xhr.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val(), true); xhr.setRequestHeader('Accept', 'application/json'); xhr.onreadystatechange = function () { if (xhr.readyState === 4) { var json = JSON.parse(xhr.responseText); rlsarr = json; $scope.data = json; $scope.data = $filter('orderBy')($scope.data, '-leaveAppId'); $scope.curPage1 = 0; $scope.pageSize1 = 10; $scope.$digest(); } }; xhr.send(); };//Get Pending Leave Applicatinons List
     $scope.PopulateData = function (LeaveAppId, empunqid) {
@@ -31,7 +49,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Approved Sucesfully.. </strong></div>";
                     ///Auto Leave Post
                     var loc = $('#myLoc').val(); var cancelled = leaveheaderarr.cancelled; var parentid = leaveheaderarr.parentId;
-                    if (rls_final === true && (loc === "IPU" || loc === "NKP")) {
+                    if (rls_final === true && (loc === "IPU" || loc === "NKP" || loc === "NSK")) {
                         var slflg = false; var TableData = storeTblValues(); var ldata = new Array();
                         TableData = JSON.stringify(TableData); function storeTblValues() {
                             var TableData = new Array(); $('#aliasTable tr').each(function (row, tr) {
@@ -42,7 +60,10 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                             }); var tbl = new Array(); tbl[0] = "test"; var count = 0; for (var i = 0; i < TableData.length - 1; i++) {
                                 var appid = TableData[i]["LeaveAppId"]; var appleavetype = TableData[i]["LeaveTypeCode"];
                                 if (appid == rlsappid) {
-                                    if (appleavetype === "SL" || appleavetype === "CO" || appleavetype === "OC" || appleavetype === "OD" || appleavetype === "LD" || parentid !== 0 || cancelled === true) {
+                                    if (loc === "IPU" && (appleavetype === "SL" || appleavetype === "CO" || appleavetype === "OC" || appleavetype === "OD" ||
+                                        parentid !== 0 || cancelled === true)) {
+                                        slflg = true; return false;
+                                    } else if (appleavetype === "SL" || appleavetype === "OD" || parentid !== 0 || cancelled === true) {
                                         slflg = true; return false;
                                     };
                                     tbl[count] = {

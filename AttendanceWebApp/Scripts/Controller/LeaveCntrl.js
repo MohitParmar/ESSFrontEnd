@@ -1,32 +1,37 @@
 ﻿angular.module('myApp.Controllers').controller('LeaveController', ['$scope', '$http', function ($scope, $http) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = []; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = [];
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    if (typeof (_ConPath) === "undefined") { return; } else {
+    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+    //        }
+    //    };
+    //});
     //var d = new Date(); var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();    //var chkTo = document.getElementById('ToDt'); var ToDate = chkTo.value;            //if (today < ToDate) {};
     $scope.ResetView = function () { window.location.reload(true); };
     $scope.SetLTListValue = function (value) {
         $scope.ToValidate();
-        var loc = $("#myLoc").val();
-        var plCheck = $("#myPlFlag").val();
+        var loc = $("#myLoc").val(); var plCheck = $("#myPlFlag").val();
         if (loc === "NSK" && plCheck == "True" && (value === "EL" || value === "PL")) {
-            var chkFrom = document.getElementById('FromDt');
-            var FromDate = chkFrom.value;
-            var date1 = new Date(FromDate);
-            var date2 = new Date();
+            var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value;
+            var date1 = new Date(FromDate); var date2 = new Date();
             var diff = ((date2 - date1) / (1000 * 60 * 60 * 24) * -1) + 1;
-            if (diff < 15) {
-                alert("Apply for " + value + " before 15 days, Please Contact to HR.");
-                $scope.ResetView();
-                return false;
-            };
+            if (diff < 15) { alert("Apply for " + value + " before 15 days, Please Contact to HR."); $scope.ResetView(); return false; };
         };
-        if (value === "SL") {
-            $('#ConformModel').modal('show');
-        };
+        if (value === "SL") { $('#ConformModel').modal('show'); };
         if (value === "OH") {
-            var chkFrom = document.getElementById('FromDt');
-            var FromDate = chkFrom.value;
-            $('#ToDt').val(FromDate);
-            $("#HalfFlag").attr("disabled", true);
-            $("#HalfFlag").attr("checked", false);
+            var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value;
+            $('#ToDt').val(FromDate); $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false);
         };
         $scope.LeaveType = value;
     };
@@ -47,7 +52,13 @@
         if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; };
     };
     //Current Year Leave Date Validate
-    $scope.YearValidate = function () { var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear(); var d = new Date(); var tyear = d.getFullYear(); if (tyear < fyear || fyear < tyear) { alert("Please Enter Valid Date of Current Month/Year.. "); document.getElementById("FromDt").value = ""; return false; } else { $('#ToDt').val(FromDate); $scope.ToValidate(); }; };
+    $scope.YearValidate = function () {
+        var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear();
+        var d = new Date(); var tyear = d.getFullYear();
+        if (tyear < fyear || fyear < tyear) {
+            alert("Please Enter Valid Date of Current Month/Year.. "); document.getElementById("FromDt").value = ""; return false;
+        } else { $('#ToDt').val(FromDate); $scope.ToValidate(); };
+    };
     var c = 0;
     //Get Applied Leave Requests For Validations
     $scope.LeaveRequestData = function (entity) {

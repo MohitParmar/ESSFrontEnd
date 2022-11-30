@@ -1,8 +1,27 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 app.controller('LeavePostingController', function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = []; $scope.popupid = ''; $scope._Conpath = ''; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { if (typeof (_ConPath) === "undefined") { return; } else { if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; } }; });
+    $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.currentPage = 1; $scope.itemsPerPage = 25; $scope.alluserlist = [];
+    $scope.popupid = '';
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    $scope._Conpath = ''; var loc = $("#myLoc").val();
+    $(document).ready(function () {
+        if (typeof (_ConPath) === "undefined") { return; } else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
+                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
+            };
+        };
+    });
+    //$(document).ready(function () {
+    //    if (typeof (_ConPath) === "undefined") { return; } else {
+    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+    //        }
+    //    };
+    //});
     var urlpara = url.search.split("="); if (urlpara[1] !== "P") { $('#btnForceFully').hide(); };
-    $scope.InfoPL; $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
+    $scope.InfoPL;
+    $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
     //Get All Checkboxes Value    //var arr = $('#myTable [name=chkbox[]]:checked').map(function () { return $(this).val(); }).get();    //Leave Posting Method with Parameteer data(Remarks for Rejection),value(Leave Application ID),value1(YearMonth),value2(IS Posted Flag)
     $scope.CostLeave = function (data, value, value1, value2) {
         var TableData = storeTblValues(); TableData = JSON.stringify(TableData);
