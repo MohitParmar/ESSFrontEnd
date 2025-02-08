@@ -53,7 +53,9 @@
                                                     <tr>
                                                         <td>
                                                             <div class="input-group form">
-                                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code"
+                                                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                                       onpaste="return false;" ondrop="return false;" autocomplete="off" />
                                                                 <span class="input-group-btn">
                                                                     <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
                                                                         <i class="fa fa-search"></i>

@@ -7,18 +7,10 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
     $(document).ready(function () {
         if (typeof (_ConPath) === "undefined") { return; } else {
             if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
         };
     });
-    //$(document).ready(function () {
-    //    if (typeof (_ConPath) === "undefined") { return; } else {
-    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
-    //        }
-    //    };
-    //});
     var urlpara = url.search.split("="); if (urlpara[1] !== "P") { $('#btnForceFully').hide(); };
     $scope.InfoPL;
     $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
@@ -38,10 +30,10 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
                     if (value2 === "R") { if ((typeof (data) === "undefined") || (typeof (data.Remarks) === "undefined")) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong>" + "</div>"; $('#MessageBox').show(); return; }; };//If Reject Leave & Remarks not enter
                     if (value2 === "R") { tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": value2, "Remarks": data.Remarks, "UserId": $('#myEmpUnqId').val() }; count++; };//R For Full Leave Rejection
                     if (value2 === "P") {
-                    tbl[count] = {
-                        "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": TableData[i]["IsPosted"],
-                        "UserId": $('#myEmpUnqId').val()
-                    }; count++;
+                        tbl[count] = {
+                            "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": TableData[i]["IsPosted"],
+                            "UserId": $('#myEmpUnqId').val()
+                        }; count++;
                     };//P For Full Leave Posting
                     if (value2 === "O" && posted === "P") {
                         tbl[count] = { "YearMonth": value1, "LeaveAppId": value, "LeaveAppItem": TableData[i]["LeaveAppItem"], "IsPosted": "O", "UserId": $('#myEmpUnqId').val() }; count++;
@@ -59,7 +51,8 @@ app.controller('LeavePostingController', function ($scope, $http, $filter) {
         }; xhr1.send(TableData);
     };
     $scope.GetPostingLeaveApplicationLists = function (data) {
-        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var hidfdt = $('#hidfromdt').val(); var hidtdt = $('#hidtodt').val(); var FromDate, ToDate;
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
+        var hidfdt = $('#hidfromdt').val(); var hidtdt = $('#hidtodt').val(); var FromDate, ToDate;
         if (hidfdt !== '' && hidtdt !== '' && (typeof (data) === "undefined")) { FromDate = hidfdt; ToDate = hidtdt; }
         else if ((typeof (data) === "undefined") || (typeof (data.FromDt) === "undefined") || (typeof (data.ToDt) === "undefined")) { var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 20); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = firstDay.getFullYear() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getDate() + ' 00:00:00'; ToDate = lastDay.getFullYear() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getDate() + ' 23:59:59'; }
         else { FromDate = data.FromDt; document.getElementById("hidfromdt").value = data.FromDt; ToDate = data.ToDt; document.getElementById("hidtodt").value = data.ToDt; };

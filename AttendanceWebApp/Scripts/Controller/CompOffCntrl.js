@@ -3,12 +3,7 @@
     var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
     $scope._Conpath = ''; var loc = $("#myLoc").val();
     $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
-        };
+        "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
     });
     $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };//Get Release Strategy
@@ -22,7 +17,7 @@
                 $scope.ResetView();
             }
         }
-        if (loc === "NSK") {
+        if (loc === "NSK" || loc === "NAG") {
             if (cat === "003" && COMODE === "H") {
                 alert("You are not eligible to get COFF against of Holiday.");
                 $scope.ResetView();
@@ -30,6 +25,7 @@
         }
     };
     $scope.ToValidate = function () {
+        $scope.loc = loc;
         var COMODE = $("#cmbCOMode").val();
         var chkFrom = document.getElementById('CODate1');
         var chkTo = document.getElementById('ToDt');
@@ -38,7 +34,7 @@
         var date1 = new Date(FromDate);
         var date2 = new Date(ToDate);
         var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
-        if ($scope.loc === "NSK") {
+        if ($scope.loc === "NSK" || $scope.loc === "NAG" || $scope.loc === "HNT") {
             if (date2 < date1) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -49,7 +45,7 @@
                 return false;
             };
         };
-        if ($scope.loc === "IPU" || $scope.loc === "NSK") {
+        if ($scope.loc === "IPU" || $scope.loc === "NSK" || $scope.loc === "NAG" || $scope.loc === "HNT") {
             if (COMODE === "H" && diff > 91) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -59,7 +55,8 @@
                 document.getElementById("ToDt").value = "";
                 return false;
             }
-            else if (COMODE === "W" && (diff > 4 || diff === 0)) {
+            else if (COMODE === "W" && diff > 4) {
+                //else if (COMODE === "W" && (diff > 4 || diff === 0)) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Please Select Correct Date for COff Apply .. </strong></div>";
@@ -75,6 +72,7 @@
     var c = 0;
     //Get Applied Comp Off Leave Requests & Validate
     $scope.LeaveRequestData = function (entity) {
+        $scope.loc = loc;
         var chk = false;
         var chktabldta = false;
         var CODate1 = entity.CODate1;
@@ -97,7 +95,7 @@
         var date2 = new Date(ToDate);
         var coffdays = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
 
-        if ($scope.loc === "NSK") {
+        if ($scope.loc === "NSK" || $scope.loc === "NAG" || $scope.loc === "HNT") {
             if (date2 < date1) {
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -109,17 +107,19 @@
             };
         };
 
-        if ($scope.loc === "IPU" || $scope.loc === "NSK") {
-            if (COMODE === "H" && coffdays > 91) {
-                alert("Please Select Correct Date for COff Apply .. "); return false;
-            } else if (COMODE === "W" && (coffdays > 4 || coffdays === 0)) {
+        if ($scope.loc === "IPU" || $scope.loc === "NSK" || $scope.loc === "NAG" || $scope.loc === "HNT") {
+            if (COMODE === "H" && (coffdays > 91 || coffdays <= 0)) {
+                alert("Please Select Correct Date for COff Apply .. ");
+
+                return false;
+            }
+            else if (COMODE === "W" && coffdays > 4) {
+                //else if (COMODE === "W" && (coffdays > 4 || coffdays === 0)) {
                 alert("Please Select Correct Date for COff Apply .. "); return false;
             }
         }
 
-        var d = new Date();
-        var year = d.getFullYear().toString();
-        var month = d.getMonth() + 1;
+        var d = new Date(); var year = d.getFullYear().toString(); var month = d.getMonth() + 1;
         var yearmonth = year + (month.toString());
 
         var jsonObj = {};
@@ -159,6 +159,7 @@
                 }
             });
             TableData.shift();
+
             jsonObj.yearMonth = yearmonth;
             jsonObj.leaveAppId = 0;
             jsonObj.empUnqId = $('#myEmpUnqId').val();

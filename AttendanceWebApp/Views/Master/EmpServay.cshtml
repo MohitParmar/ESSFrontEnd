@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "EmpServay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/EmpServayCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script>var _AttdConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["AttdConPath"]';</script>
+
+<div ng-app="myApp">
+    <div ng-controller="EmpServayCntrloller" ng-init="GetAllSurvey()">
+        <div class="container-fluid">
+            <div id="MessageBox" class="table-responsive"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <strong>Employee Survey</strong>
+                        </div>
+                        <div class="panel-body" style="overflow:auto;">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="myTable">
+                                    @*<thead>
+                                        <tr>
+                                            <th style="text-align:center;padding:3px;width:56px;" ng-click="sort('addDt')">
+                                                App.Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                        </tr>
+                                    </thead>*@
+                                    <tbody dir-paginate="d in surdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">
+                                        <tr>
+                                            <td>
+                                                {{d}}
+                                            </td>
+                                            <!--<td>
+                                                <button type="button" value="Cancel" id="btnCancel" class="btn btn-danger"
+                                                        ng-show="ld.releaseStatusCode == 'N' && (ld.cancelled == false && ld.parentId == 0)"
+                                                        ng-click="CancelLeave({{ld.yearMonth}},{{ld.leaveAppId}})">
+                                                    <i class="fa fa-remove fa-lg"></i>
+                                                </button>-->
+                                            @* && ld.releaseStatusCode == 'F'  *@
+                                            <!--<button type="button" id="btnPrintPreview" class="btn btn-primary"
+                                                        ng-show="ld.releaseGroupCode == 'OD' && (ld.cancelled == false && ld.parentId == 0)"
+                                                        ng-click="PopupPreview(ld)">
+                                                    <i class="fa fa-print fa-lg"></i>
+                                                </button>
+                                            </td>-->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

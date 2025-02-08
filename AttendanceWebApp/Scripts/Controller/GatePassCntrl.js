@@ -6,18 +6,10 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
     $(document).ready(function () {
         if (typeof (_ConPath) === "undefined") { return; } else {
             if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
         };
     });
-    //$(document).ready(function () {
-    //    if (typeof (_ConPath) === "undefined") { return; } else {
-    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
-    //        }
-    //    };
-    //});
     $scope.gpno; $scope.gpdate; $scope.GPInfo; $scope.GPWRkGRP; var d = new Date(); var rlsarr = []; $('#txtEmpCode').val($('#myEmpUnqId').val());
     $scope.ResetView = function () { window.location.reload(true); }; jQuery.support.cors = true;
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); rlsarr = jsonvar1; $scope.rlsdata = jsonvar1; $scope.$digest(); }; }; rel.send(); };
@@ -94,7 +86,19 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
             };
         }; xhr.send(TableData);
     };  //Generate List of Employees Gate Pass
-    $scope.GetGPLists = function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var gplst = new XMLHttpRequest(); gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() + '&releaseGroupCode=GP', true); gplst.setRequestHeader('Accept', 'application/json'); gplst.onreadystatechange = function () { if (gplst.readyState === 4) { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); var json = JSON.parse(gplst.responseText); rlsarr = json; $scope.relalldata = json; $scope.relalldata = $filter('orderBy')($scope.relalldata, '-id'); $scope.curPage1 = 0; $scope.pageSize1 = 10; $scope.$digest(); }; }; gplst.send(); };     //Get Pending Gate Pass List
+    $scope.GetGPLists = function () {
+        $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var gplst = new XMLHttpRequest();
+        gplst.open('GET', $scope._Conpath + 'AppRelease/GetApplReleaseStatus?empUnqId=' + $('#myEmpUnqId').val() +
+            '&releaseGroupCode=GP', true); gplst.setRequestHeader('Accept', 'application/json');
+        gplst.onreadystatechange = function () {
+            if (gplst.readyState === 4) {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
+                var json = JSON.parse(gplst.responseText); rlsarr = json; $scope.relalldata = json;
+                $scope.relalldata = $filter('orderBy')($scope.relalldata, '-id'); $scope.curPage1 = 0;
+                $scope.pageSize1 = 10; $scope.$digest();
+            };
+        }; gplst.send();
+    };     //Get Pending Gate Pass List
     $scope.UpdateGPStatus = function (releaseStatusCode, rlsgpid) {
         var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var ecode = rlsarr[r]["id"]; if (ecode === rlsgpid) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
         //Get ReleaseCode of Releaser
@@ -138,7 +142,9 @@ app.controller('GatePassCntroller', function ($scope, $http, $filter) {
                     myArray.push([]); myArray[i]["gatePassNo"] = la[i].gatePassNo; myArray[i]["gatePassDate"] = la[i].gatePassDate.substring(0, la[i].gatePassDate.indexOf("T"));
                     myArray[i]["empUnqId"] = la[i].empUnqId; myArray[i]["empName"] = la[i].empName;
                     myArray[i]["wrkGrp"] = la[i].wrkGrp; myArray[i]["catName"] = la[i].catName;
-                    myArray[i]["desgName"] = la[i].desgName; myArray[i]["statName"] = la[i].statName;
+                    myArray[i]["desgName"] = la[i].desgName;
+                    myArray[i]["deptName"] = la[i].deptName;
+                    myArray[i]["statName"] = la[i].statName;
                     var outtime = la[i].gateOutDateTime; if (outtime !== null) {
                         outtime = outtime.split("T"); outtime = outtime[1]; outtime = outtime.substr(0, 5);
                         myArray[i]["gateOutDateTime"] = outtime; myArray[i]["gateOutDateTimeORG"] = la[i].gateOutDateTime.replace("T", " ");

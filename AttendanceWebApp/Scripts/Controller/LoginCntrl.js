@@ -28,6 +28,9 @@
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
+                        if ($scope.Udata[0]["location"] == "IPU") {
+                            window.location.href = "Master/EmpServay";
+                        }
                         if ($scope.Udata[0]["location"] == "NSK" && ($scope.Udata[0]["wrkGrp"] === "CONT" || $scope.Udata[0]["wrkGrp"] === "JOBWORK")) {
                             document.getElementById("MessageBox").innerHTML =
                                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +

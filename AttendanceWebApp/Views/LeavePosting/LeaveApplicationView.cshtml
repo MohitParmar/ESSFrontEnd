@@ -19,25 +19,34 @@
 <div ng-app="myApp" ng-controller="ManageLeaveMasterController">
     <div class="container-fluid" id="mainContainer">
         <div class="row">
-            <div class="col-lg-12">
-                <strong>Leave Releasers / Day Gate Pass Releasers</strong>
-                <table class="table table-responsive">
-                    <tr>
-                        <td ng-repeat="rls in rlsdata.releaseStrategyLevels" style="text-align:center;">
-                            <b> Releaser  {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
-                        </td>
-                    </tr>
-                </table>
-                <strong>Night Gate Pass Releasers</strong>
-                <table class="table table-responsive">
-                    <tr>
-                        <td ng-repeat="gp in GPdata.gpReleaseStrategyLevels" ng-show="gp.isGpNightReleaser == true" style="text-align:center;">
-                            <b>{{gp.empName}}</b>
-                        </td>
-                    </tr>
-                </table>
+            <div class="col-sm-12">
+                @*<strong>Leave Releasers</strong>*@
+                <div class="panel panel-default panel-heading">
+                    <table class="table table-condensed table-responsive table-striped">
+                        <tbody>
+                            <tr>
+                                <th style="text-align:left;">Leave Releasers</th>
+                                <td style="text-align:left;" ng-repeat="rls in rlsdata.releaseStrategyLevels">
+                                    <b>Releaser&nbsp;{{rls.releaseStrategyLevel}}&nbsp;:&nbsp;{{rls.empName}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Day Gate Pass Releasers</th>
+                                <td style="text-align:left;" ng-repeat="gp in GPdata.gpReleaseStrategyLevels" ng-show="gp.isGpNightReleaser == false">
+                                    <b>{{gp.empName}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Night Gate Pass Releasers</th>
+                                <td style="text-align:left;" ng-repeat="gp in GPdata.gpReleaseStrategyLevels" ng-show="gp.isGpNightReleaser == true">
+                                    <b>{{gp.empName}}</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-sm-9">
                 <input type="hidden" value="LA" id="releaseGroupCode" />
                 <input type="hidden" value="GP" id="gpreleaseGroupCode" />
                 <div class="panel panel-info">
@@ -52,7 +61,8 @@
                                     <tr>
                                         <td>
                                             <div class="input-group form">
-                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code"
+                                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                                 <span class="input-group-btn">
                                                     <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
                                                         <i class="fa fa-search"></i>

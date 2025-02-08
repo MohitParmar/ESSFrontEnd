@@ -4,21 +4,14 @@ app.controller("EmpRlsStrListCntroller", function ($scope, $http, $filter) {
     var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; var url_port = url.port;
     $scope._Conpath = ""; var loc = $("#myLoc").val();
     $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
-        };
+        "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
     });
-    //$(document).ready(function () {
-    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
-    //});
     $scope.jsondata;
-    $scope.GetEmployeeReleaseStrategy = function () {
+    $scope.GetEmployeeReleaseStrategy = function (dtlObj) {
+        var wrkGrp = dtlObj.wrkGrp, releaseGroupCode = dtlObj.rlsGrpCode;
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var rls = new XMLHttpRequest;
-        rls.open("GET", $scope._Conpath + "Employee/GetEmpRelease?flag=" + !0, !0);
+        rls.open("GET", $scope._Conpath + "Employee/GetEmpRelease?flag=false&wrkGrp=" + wrkGrp + "&releaseGroupCode=" + releaseGroupCode, !0);
         rls.setRequestHeader("Accept", "application/json");
         rls.onreadystatechange = function () {
             if (4 === rls.readyState) {

@@ -9,6 +9,35 @@
     <div class="container-fluid">
         <div id="MessageBox" class="table-responsive"></div>
         <div class="row">
+            @* Popup Model *@
+            <div class="modal fade" id="RLSModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Progress Review - Release Strategy
+                                <label id="eid"></label>
+                            </h4>
+                        </div>
+                        <div class="content" style="padding: 4px 15px 15px 15px;">
+                            <div class="body_panel">
+                                <div class="table-responsive" style="overflow:auto;">
+                                    @* Release Level Wise Work Flow *@
+                                    <table class="table" style="text-align:center;">
+                                        <tr ng-repeat="rls in rlsdata.releaseStrategyLevels">
+                                            <td>
+                                                <b> Releaser {{rls.releaseStrategyLevel}}  :  {{rls.empName}} </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Main Model *@
             <div class="col-sm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -47,6 +76,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr. No.</th>
+                                        <th>Info</th>
                                         <th style="text-align:center;" ng-click="sort('empUnqId')">
                                             Emp.Code
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
@@ -99,7 +129,7 @@
                                         </th>
                                         <th style="text-align:center;" ng-click="sort('reviewDate')">
                                             Review Date<span class="glyphicon sort-icon" ng-show="sortKey=='reviewDate'"
-                                                            ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                             ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
                                         <th style="text-align:center;" ng-click="sort('addEmpName')">
                                             Add User
@@ -148,6 +178,7 @@
                                         </th>
                                     </tr>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
@@ -204,6 +235,11 @@
                                 <tbody dir-paginate="d in garData|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage">
                                     <tr>
                                         <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align:center;">
+                                            <button type="button" class="btn btn-info" id="btninfo" ng-click="PouupRLS({{d.empUnqId}})" title="Info">
+                                                <i class="fa fa-info fa-lg"></i>
+                                            </button>
+                                        </td>
                                         <td style="text-align:center;">{{d.empUnqId}}</td>
                                         <td style="text-align:left;">{{d.empName}}</td>
                                         <td style="text-align:left;">{{d.unitName}}</td>

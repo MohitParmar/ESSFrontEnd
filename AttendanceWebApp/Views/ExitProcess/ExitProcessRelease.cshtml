@@ -22,16 +22,44 @@
                                     <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center;">App.Date</th>
-                                                <th style="text-align:center;">SAPID</th>
+                                                <th style="text-align:center;" ng-click="sort('applicationDate')">
+                                                    App.Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='applicationDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                                    SAPID
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:left;">Emp.Name</th>
-                                                <th style="text-align:center;">Mode of Apply</th>
-                                                <th style="text-align:left;">Reason</th>
+                                                <th style="text-align:center;" ng-click="sort('mode')">
+                                                    Mode of Apply
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='mode'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th style="text-align:left;" ng-click="sort('reason')">
+                                                    Reason
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='reason'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:left;">Other</th>
-                                                <th style="text-align:center;">Relieve Date</th>
+                                                <th style="text-align:center;" ng-click="sort('relieveDate')">
+                                                    Relieve Date
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='relieveDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
                                                 <th style="text-align:left;">Resign Text</th>
                                                 <th style="text-align:left;">Remarks</th>
-                                                <th style="text-align:center;">Action</th>
+                                                <th style="text-align: center; width: 122px;">Action</th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.employee" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.mode" /></td>
+                                                <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reason" /></td>
+                                                <td colspan="5"></td>
                                             </tr>
                                         </thead>
                                         <tbody dir-paginate="d in data|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" pagination-id="pg_1">

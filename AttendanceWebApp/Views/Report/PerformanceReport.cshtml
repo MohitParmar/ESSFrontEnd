@@ -2,6 +2,7 @@
     ViewBag.Title = "Performance Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <div ng-app="myApp" ng-controller="LeaveReportCntrloller">
@@ -23,6 +24,7 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="btnPerf" ng-click="PerformanceAttendanceRpt('PERF')">Attendance Report</button>
                                 <button class="btn btn-info" id="btnPunch" ng-click="PerformanceAttendanceRpt('PUNCH')">Cafeteria Punch Report</button>
+                                <button class="btn btn-warning" id="btnMess" ng-click="PerformanceAttendanceRpt('MESS')">Cafeteria Deduction Report</button>
                             </span>
                             <hr />
                             <div ng-init="PerformanceAttendanceRpt('PERF')" id="rptPerformance">
@@ -104,32 +106,90 @@
                                 <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;" ng-click="sort('punchDate')">
-                                                Date Time
-                                                <span class="glyphicon sort-icon" ng-show="sortKey=='punchDate'"
+                                            <th></th>
+                                            <th colspan="4" style="text-align:center;"><h3><span>Breakfast</span></h3></th>
+                                            <th colspan="4" style="text-align:center;"><h3><span>Lunch</span></h3></th>
+                                            <th colspan="4" style="text-align:center;"><h3><span>Dinner</span></h3></th>
+                                            <th colspan="2"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('AttdDate')">
+                                                Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='AttdDate'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th style="text-align:center;">
-                                                <label>In / Out</label>
-                                            </th>
-                                            <th style="text-align:center;">
-                                                <label>Machine IP</label>
-                                            </th>
-                                            <th style="text-align:center;">
-                                                <label>Machine Desc</label>
-                                            </th>
+                                            <th style="text-align:center;"><label>BF Out</label></th>
+                                            <th style="text-align:center;"><label>BF</label></th>
+                                            <th style="text-align:center;"><label>BF In</label></th>
+                                            <th style="text-align:center;"><label>Remarks</label></th>
+                                            <th style="text-align:center;"><label>Lunch Out</label></th>
+                                            <th style="text-align:center;"><label>Lunch</label></th>
+                                            <th style="text-align:center;"><label>Lunch In</label></th>
+                                            <th style="text-align:center;"><label>Remarks</label></th>
+                                            <th style="text-align:center;"><label>Dinner Out</label></th>
+                                            <th style="text-align:center;"><label>Dinner</label></th>
+                                            <th style="text-align:center;"><label>Dinner In</label></th>
+                                            <th style="text-align:center;"><label>Remarks</label></th>
+                                            <th style="text-align:center;"><label>Leave Half</label></th>
+                                            <th style="text-align:center;"><label>Remark</label></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr dir-paginate="p in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_2">
-                                            <td style="text-align:center;">{{p.punchDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
-                                            <td style="text-align:center;">{{p.ioFlag}}</td>
-                                            <td style="text-align:center;">{{p.machineIp}}</td>
-                                            <td style="text-align:center;">{{p.machineDesc}}</td>
+                                            <td style="text-align:center;">{{p.AttdDate| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{p.BFOutTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.BFTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.BFInTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.BFRemarks}}</td>
+                                            <td style="text-align:center;">{{p.LunchOutTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.LunchTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.LunchInTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.LunchRemarks}}</td>
+                                            <td style="text-align:center;">{{p.DinnerOutTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.DinnerTime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.DinnerIntime| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.DinnerRemarks}}</td>
+                                            <td style="text-align:center;">
+                                                <input type="checkbox" ng-checked="{{p.LeaveHalf}}" disabled="disabled" />
+                                            </td>
+                                            <td style="text-align:center;">{{p.Remark}}</td>
+                                            @*<td style="text-align:center;">{{p.punchDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                                <td style="text-align:center;">{{p.ioFlag}}</td>
+                                                <td style="text-align:center;">{{p.machineIp}}</td>
+                                                <td style="text-align:center;">{{p.machineDesc}}</td>*@
                                         </tr>
                                     </tbody>
                                 </table>
                                 <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_2"></dir-pagination-controls>
+                            </div>
+                            <div id="rptMess">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('AttdDate')">
+                                                Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='AttdDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;"><label>PunchDate</label></th>
+                                            <th style="text-align:center;"><label>FoodCode</label></th>
+                                            <th style="text-align:center;"><label>FoodRate</label></th>
+                                            <th style="text-align:center;"><label>Seq</label></th>
+                                            <th style="text-align:center;"><label>Machine Ip</label></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="p in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_3">
+                                            <td style="text-align:center;">{{p.AttdDate| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{p.PunchDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{p.FoodCode}}</td>
+                                            <td style="text-align:center;">{{p.FoodRate}}</td>
+                                            <td style="text-align:center;">{{p.Seq}}</td>
+                                            <td style="text-align:center;">{{p.MachineIp}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_3"></dir-pagination-controls>
                             </div>
                         </div>
                     </div>

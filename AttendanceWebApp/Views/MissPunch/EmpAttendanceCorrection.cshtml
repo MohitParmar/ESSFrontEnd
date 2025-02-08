@@ -5,7 +5,31 @@
 
 <script src="~/Scripts/Controller/MissPunchCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
 
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
 <div ng-app="myApp" ng-controller="MissPunchController">
     <div class="container-fluid">
         <input type="hidden" value="LA" id="releaseGroupCode" />
@@ -45,11 +69,24 @@
                                 <div class="col-sm-3">
                                     <label>Select Date:</label>
                                 </div>
+
+                                
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="date" id="time" ng-model="N.time"
-                                           placeholder="Select Date" ng-change="GetTripodPunch(N)" required>
-                                    <input class="form-control" type="datetime-local" id="punchTime" ng-model="N.punchTime"
-                                           placeholder="Select Date Time" ng-change="ToValidate(N)" required>
+                                    <div class="right-inner-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        <input class="form-control" type="text" id="time" 
+                                               ng-model="N.time" 
+                                               data-date-format="yyyy/MM/dd"
+                                               ng-change="GetTripodPunch(N)"
+                                               placeholder="Select Date"
+                                               datepicker
+                                               required>
+                                    </div>
+
+                                    @*<input class="form-control" type="date" id="time" ng-model="N.time"
+                                           placeholder="Select Date" ng-change="GetTripodPunch(N)" datepicker required>*@
+                                    @*<input class="form-control" type="datetime-local" id="punchTime" ng-model="N.punchTime"
+        placeholder="Select Date Time" ng-change="ToValidate(N)" required>*@
                                 </div>
                                 <div class="col-sm-6">
                                     <table class="table table-condensed" id="tblAttd">

@@ -4,14 +4,35 @@ app.controller("VehicleGatePassCntroller", function ($scope, $http, $filter) {
     $scope.currentPage = 1, $scope.itemsPerPage = 25, $scope.alluserlist = [], $scope._Conpath = "", $scope._AttdConPath = "";
     var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
     $(document).ready(function () {
-        "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/", "undefined" != typeof _AttdConPath && (urlhost === _URLHostName ? $scope._AttdConPath = _AttdConPath : $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/"))
+        "undefined" != typeof _ConPath &&
+            (urlhost === _URLHostName ?
+                $scope._Conpath = _ConPath :
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/",
+                "undefined" != typeof _AttdConPath &&
+                (urlhost === _URLHostName ?
+                    $scope._AttdConPath = _AttdConPath :
+                    $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/")
+            )
     });
     $scope.VGPInfo, jQuery.support.cors = !0;
     $scope.LoadData = function (str) {
-        "OUT" === str && ($("#divOUT").show(), $("#divIN").hide(), $("#outinmsg").text("OUT")), "IN" === str && ($("#divOUT").hide(), $("#divIN").show(), $("#outinmsg").text("IN"))
+        "OUT" === str && ($("#divOUT").show(), $("#divIN").hide(), $("#outinmsg").text("OUT")), "IN" === str && ($("#divOUT").hide(), $("#divIN").show(),
+            $("#outinmsg").text("IN"))
     };
     $scope.VehicleNewGPInfo = function () {
-        var count = 0, out = new XMLHttpRequest; out.open("GET", $scope._AttdConPath + "Vehicle/GET?type=", !0), out.setRequestHeader("Accept", "application/json"), out.onreadystatechange = function () { if (4 === out.readyState && 200 === out.status) { var json = JSON.parse(out.responseText), vo = new Array; vo = json; for (var outArray = [], i = 0; i < vo.length; i++) { var VGPStatus = vo[i].VehicleStatus; "N" === VGPStatus && (outArray.push([]), outArray[count].LogID = vo[i].LogID, outArray[count].VehicleNo = vo[i].VehicleNo, outArray[count].StartKM = vo[i].StartKM, outArray[count].DriverName = vo[i].DriverName, outArray[count].LogDate = vo[i].LogDate, outArray[count].PlaceToVisit = vo[i].PlaceToVisit, count++) } $scope.outdata = outArray, $scope.outdata = $filter("orderBy")($scope.outdata, "-LogID"), $scope.$digest() } }, out.send()
+        var count = 0, out = new XMLHttpRequest; out.open("GET", $scope._AttdConPath + "Vehicle/GET?type=", !0);
+        out.setRequestHeader("Accept", "application/json"), out.onreadystatechange = function () {
+            if (4 === out.readyState && 200 === out.status) {
+                var json = JSON.parse(out.responseText), vo = new Array; vo = json;
+                for (var outArray = [], i = 0; i < vo.length; i++) {
+                    var VGPStatus = vo[i].VehicleStatus;
+                    "N" === VGPStatus && (outArray.push([]), outArray[count].LogID = vo[i].LogID, outArray[count].VehicleNo = vo[i].VehicleNo,
+                        outArray[count].StartKM = vo[i].StartKM, outArray[count].DriverName = vo[i].DriverName, outArray[count].LogDate = vo[i].LogDate,
+                        outArray[count].PlaceToVisit = vo[i].PlaceToVisit, count++)
+                };
+                $scope.outdata = outArray, $scope.outdata = $filter("orderBy")($scope.outdata, "-LogID"), $scope.$digest();
+            }
+        }, out.send()
     };
     $scope.VehicleOutGPInfo = function () {
         var count1 = 0, vgpin = new XMLHttpRequest; vgpin.open("GET", $scope._AttdConPath + "Vehicle/GET?type=", !0), vgpin.setRequestHeader("Accept", "application/json"), vgpin.onreadystatechange = function () { if (4 === vgpin.readyState && 200 === vgpin.status) { var json = JSON.parse(vgpin.responseText), vi = new Array; vi = json; for (var inArray = [], i = 0; i < vi.length; i++) { var VGPStatus = vi[i].VehicleStatus; "O" === VGPStatus && (inArray.push([]), inArray[count1].LogID = vi[i].LogID, inArray[count1].VehicleNo = vi[i].VehicleNo, inArray[count1].DriverName = vi[i].DriverName, inArray[count1].LogDate = vi[i].LogDate, inArray[count1].Outtime = vi[i].Outtime, inArray[count1].PlaceToVisit = vi[i].PlaceToVisit, count1++) } $scope.indata = inArray, $scope.indata = $filter("orderBy")($scope.indata, "-LogID"), $scope.$digest() } }, vgpin.send()

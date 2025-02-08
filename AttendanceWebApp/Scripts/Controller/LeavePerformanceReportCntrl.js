@@ -6,18 +6,10 @@ app.controller('LeavePerformanceReportController', function ($scope, $http) {
     $(document).ready(function () {
         if (typeof (_ConPath) === "undefined") { return; } else {
             if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
         };
     });
-    //$(document).ready(function () {
-    //    if (typeof (_ConPath) === "undefined") { return; } else {
-    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
-    //        }
-    //    };
-    //});
     $scope.lPerRpt; var tmparr1;
     $scope.ToValidate = function () { var chkFrom = document.getElementById('FromDt'); var chkTo = document.getElementById('ToDt'); var FromDate = chkFrom.value; var ToDate = chkTo.value; var date1 = new Date(FromDate); var date2 = new Date(ToDate); if (date2 < date1) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>"; $('#MessageBox').show(); return false; } else { return true; }; };
     $scope.GetLeavePerformanceReport = function (dt) {
@@ -30,6 +22,7 @@ app.controller('LeavePerformanceReportController', function ($scope, $http) {
             };
         }; Perf.send();
     };
-    function transpose(arr) { return Object.keys(arr[0]).map(function (c) { return arr.map(function (r) { return r[c]; }) }) };     //Conversion from Row to Columns For Array
+    //Conversion from Row to Columns For Array
+    function transpose(arr) { return Object.keys(arr[0]).map(function (c) { return arr.map(function (r) { return r[c]; }) }) };
     $scope.sort = function (keyname) { $scope.sortKey = keyname; $scope.reverse = !$scope.reverse; }; $scope.exportAllData = function () { setTimeout(function () { $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv"); var d = new Date(); d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = "Leave_Performance_List_" + d; $scope.JSONToCSVConvertor($scope.lPerRpt, FileName, true); $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); }, 100); }; $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData; var CSV = ''; CSV += ReportTitle + '\r\n\n'; if (ShowLabel) { var row = ""; for (var index in arrData[0]) { row += ','; } row = row.slice(0, -1); CSV += row + '\r\n'; } for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) { row += '"' + arrData[i][index] + '",'; } row.slice(0, row.length - 1); CSV += row + '\r\n'; } if (CSV === '') { alert("Invalid data"); return; } var fileName = "MyReport_"; fileName += ReportTitle.replace(/ /g, "_"); var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link); };
 }); app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }; var options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } } });

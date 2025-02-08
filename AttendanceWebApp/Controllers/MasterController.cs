@@ -76,6 +76,16 @@ namespace AttendanceWebApp.Controllers
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
+
+        public ActionResult Appraisal()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult AppraisalUpload()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
     }
 }
 

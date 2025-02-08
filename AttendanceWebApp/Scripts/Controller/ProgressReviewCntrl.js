@@ -243,7 +243,8 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
             };
         }; spr.send(jsonObj);
     };
-    $scope.garData; $scope.GetAllReviews = function (pendingFlg) {
+    $scope.garData;
+    $scope.GetAllReviews = function (pendingFlg) {
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var fromDt, toDt;
         fromDt = $("#FromDt").val();
@@ -302,6 +303,7 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                     myArray[i].hrReleaseStatusCode = arr[i].hrReleaseStatusCode;
                     myArray[i].hrRemarks = arr[i].hrRemarks;
                 };
+                debugger;
                 $scope.garData = myArray;
                 $scope.garData = $filter('orderBy')($scope.garData, 'empUnqId');
                 $scope.$digest();
@@ -311,19 +313,25 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
             };
         }; gar.send();
     };
+
+    //Get Release Strategy
+    $scope.PouupRLS = function (emp_code) { var xhr2 = new XMLHttpRequest(); xhr2.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=PR&empUnqId=' + emp_code, true); xhr2.setRequestHeader('Accept', 'application/json'); xhr2.onreadystatechange = function () { if (xhr2.readyState === 4) { var jsonvar1 = JSON.parse(xhr2.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); $("#RLSModel").modal("show"); }; }; xhr2.send(); };
+
     $scope.PopulateData = function (empid, recommendation, flg) {
         if (recommendation === "N") {
+            debugger;
             $scope.GetPrint(empid);
             $("#reviewModel").modal("show");
         } else {
             $scope.GetLetter(empid);
-            if (recommendation === "C" && flg === true) { $("#confirmationModel").modal("show"); };
-            if (recommendation === "C" && flg === false) { $("#confirmModel").modal("show"); };
-            if (recommendation === "E") { $("#extensionModel").modal("show"); };
+            if (recommendation === "C" && flg === true) { $("#confirmationModel").modal("show"); };//Confirmation Letter
+            if (recommendation === "C" && flg === false) { $("#confirmModel").modal("show"); };//Review Confirm.
+            if (recommendation === "E") { $("#extensionModel").modal("show"); };//Review Extension
         };
     };
     //fv
     $scope.GetPrint = function (empid) {
+        debugger;
         var arr = new Array();
         arr = $scope.garData;
         var cnt = 0;

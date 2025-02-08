@@ -12,10 +12,9 @@ namespace AttendanceWebApp.Controllers
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
-        public ActionResult HODRelease()
-        {
-            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
-        }
+
+        //public ActionResult HODRelease() { return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login"); }
+
         public ActionResult AdminRelease()
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");

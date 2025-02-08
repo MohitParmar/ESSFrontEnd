@@ -145,6 +145,8 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;">Resign Text</th>
+                                            <th style="text-align:center;">Hr Release Status</th>
+                                            <th style="text-align:center;">HR Release Date</th>
                                             <th style="text-align:center;">Action</th>
                                         </tr>
                                         <tr>
@@ -164,7 +166,7 @@
                                             <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.reason" />
                                             </td>
-                                            <td colspan="4"></td>
+                                            <td colspan="6"></td>
                                         </tr>
                                     </thead>
                                     <tbody dir-paginate="d in rsgData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
@@ -184,6 +186,10 @@
                                             <td style="text-align:left;">{{d.reasonOther}}</td>
                                             <td style="text-align:center;">{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:left;">{{d.resignText}}</td>
+                                            <td style="text-align:center;">
+                                                <input type="checkbox" ng-checked="{{d.statusHr}}" disabled="disabled">
+                                            </td>
+                                            <td style="text-align:center;">{{d.hrStatusDate | date:'dd/MM/yyyy'}}</td>
                                             <td>
                                                 <button class="btn btn-info" id="btnInfo" ng-click="PopulateData({{d.empUnqId}},'{{d.mode}}')"><i class="fa fa-info"></i></button>
                                             </td>
@@ -226,7 +232,7 @@
                                                 <br />
                                                 Designation/Grade: {{e.desgName}} / {{e.gradeName}}
                                                 <br />
-                                                Department/Station: {{e.statName}}
+                                                Department/Station: {{e.deptName}} / {{e.statName}}
                                             </p>
                                         </div>
                                     </div>
@@ -367,7 +373,7 @@
                                             <br />
                                             Designation/Grade: {{e.desgName}} / {{e.gradeName}}
                                             <br />
-                                            Department/Station: {{e.statName}}
+                                            Department/Station: {{e.deptName}} / {{e.statName}}
                                         </div>
                                     </div>
                                     <br />

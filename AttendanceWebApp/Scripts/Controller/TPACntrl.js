@@ -1,6 +1,8 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("TPAController", function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $scope._Conpath = ""; "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"); $scope.currentPage = 1; $scope.itemsPerPage = 10; jQuery.support.cors = true;
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $scope._Conpath = "";
+    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
+    $scope.currentPage = 1; $scope.itemsPerPage = 10; jQuery.support.cors = true;
     $scope.exportObj; $scope.bulkSanExportObj; var d = new Date(); var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
     $scope.ResetView = function () { window.location.reload(!0) };
     $scope.backDateCheck = function () { var fromDate = $("#fromDt").val(); var tpaDate = new Date(fromDate); tpaDate = tpaDate.toISOString().split('T')[0]; var now = new Date(); now = now.toISOString().split('T')[0]; if (tpaDate < now) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Back Date Entry not allowed.</strong>" + "</div>"; $('#MessageBox').show(); }; };

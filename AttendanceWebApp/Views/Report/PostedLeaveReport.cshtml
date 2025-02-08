@@ -124,6 +124,7 @@
                                                           ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                                 </th>
                                                 <th style="text-align:center;">Employee Name</th>
+                                                <th style="text-align:center;">Department</th>
                                                 <th style="text-align:center;">Station</th>
                                                 <th style="text-align:center;">Leave Reason</th>
                                                 <th style="text-align:center;">Sr No.</th>
@@ -151,6 +152,9 @@
                                                 </td>
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.empName" />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.deptName" />
                                                 </td>
                                                 <td>
                                                     <input class="form-control" style="margin:0;padding:1px;text-align:center;" type="text" ng-model="search.statName" />
@@ -181,6 +185,7 @@
                                                 <td style="text-align:center;padding:3px;" id="updDt"><label ng-show="d.isPosted === 'F' || d.isPosted === 'R'">{{d.postedDt | date:'dd/MM/yyyy'}}</label></td>
                                                 <td style="text-align:center;">{{d.empUnqId}}</td>
                                                 <td style="text-align:left;">{{d.empName}}</td>
+                                                <td style="text-align:left;">{{d.deptName}}</td>
                                                 <td style="text-align:left;">{{d.statName}}</td>
                                                 <td style="text-align:left;">{{d.remarks}} - {{d.additionalRemarks}}</td>
                                                 <td style="text-align:center;">{{d.leaveAppItem}}</td>

@@ -6,6 +6,7 @@
 <script src="~/Scripts/Controller/HomeCntrl.js"></script>
 <script src="~/Content/DirPAgination/dirPagination.js"></script>
 <script src="~/Scripts/Controller/MasterCntrl.js"></script>
+<script>var _AttdConPath = '@System.Web.Configuration.WebConfigurationManager.AppSettings["AttdConPath"]';</script>
 
 <style type="text/css">
     .ng-table-pager {
@@ -25,14 +26,15 @@
             var sEmpUnqId = "@Session["EmpUnqId"].ToString()";
             var sPass = "@Session["Pass"].ToString()";
             var sWrkgrp = "@Session["WrkGrp"]";
-            if (sEmpUnqId === sPass && (sWrkgrp === "COMP" || sWrkgrp === "OUTSOURCE" )) { $('#myModal').modal('show'); };
+            if (sEmpUnqId === sPass && (sWrkgrp === "COMP" || sWrkgrp === "OUTSOURCE")) { $('#myModal').modal('show'); };
         });
 </script>
 <script>
     function printData() { var divToPrint = document.getElementById("printTable"); newWin = window.open(""); newWin.document.write(divToPrint.outerHTML); newWin.print(); };
 </script>
 <div ng-app="myApp">
-    <div ng-controller="HomeCntrloller">
+    <div ng-controller="HomeCntrloller" ng-init="GetNewEmpInfo()">
+        @*<div ng-controller="HomeCntrloller">*@
         <div class="container-fluid">
             <div id="MessageBox" class="table-responsive"></div>
             <div class="row">
@@ -169,7 +171,7 @@
                             <strong>Leave Balance</strong>
                         </div>
                         <div class="panel-body">
-                            <div ng-app="myApp" ng-controller="MasterCntrloller" ng-init="GetLeave()">
+                            <div ng-controller="MasterCntrloller" ng-init="GetLeave()">
                                 <div class="table-responsive">
                                     <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
                                         <thead>
@@ -259,7 +261,7 @@
                 </div>
             </div>
         </div>
-        @* Print *@
+        @* Print OD Slip *@
         <div class="modal fade" id="previewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-lg" style="        width: fit-content;">
                 <div class="modal-content">
@@ -283,37 +285,66 @@
                                         </tr>
                                         <tr>
                                             <th colspan="4" style="text-align: center;height: 100px;">
-                                                <h4>OUTDOOR DUTY SLIP<br />(OFFICIAL)</h4>
+                                                <h4>
+                                                    OUTDOOR DUTY SLIP
+                                                    <br />(OFFICIAL)
+                                                </h4>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td style="height: 50px;width:200px;">NAME : </td>
-                                            <td colspan="3" style="border-bottom: solid;"><label id="lblEmpName"></label></td>
+                                            <td colspan="3" style="border-bottom: solid;">
+                                                <label id="lblEmpName"></label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td style="height: 50px;">DESIGNATION :</td>
-                                            <td style="border-bottom: solid;width:250px;"><label id="lbldesgName"></label></td>
+                                            <td style="border-bottom: solid;width:250px;">
+                                                <label id="lbldesgName"></label>
+                                            </td>
                                             <td>EMP. CODE : </td>
-                                            <td style="border-bottom: solid;width: 200px;"><label id="lblempUnqId"></label></td>
+                                            <td style="border-bottom: solid;width: 200px;">
+                                                <label id="lblempUnqId"></label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td style="height: 50px;">DATE (FROM) :</td>
-                                            <td style="border-bottom: solid;"><label id="lblFromDate"></label></td>
+                                            <td style="border-bottom: solid;">
+                                                <label id="lblFromDate"></label>
+                                            </td>
                                             <td>(TO) :</td>
-                                            <td style="border-bottom: solid;"><label id="lblToDate"></label></td>
+                                            <td style="border-bottom: solid;">
+                                                <label id="lblToDate"></label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td style="height: 50px;">PLACE OF VISIT</td>
-                                            <td colspan="3" style="border-bottom: solid;"><label id="lblPlaceOfVisit"></label></td>
+                                            <td colspan="3" style="border-bottom: solid;">
+                                                <label id="lblPlaceOfVisit"></label>
+                                            </td>
                                         </tr>
-                                        <tr><td style="height: 50px;" colspan="4">CONTACT ADDRESS / TELEPHONE NO. (IF ANY):</td></tr>
-                                        <tr><td colspan="4" style="height: 50px;border-bottom: solid;"><label id="lblContactDetails"></label></td></tr>
-                                        <tr><td colspan="4" style="height: 50px;border-bottom: solid;"></td></tr>
-                                        <tr><td colspan="4" style="height: 50px;"></td></tr>
-                                        <tr><td colspan="4" style="height: 50px;"></td></tr>
-                                        <tr><td colspan="4" style="height: 50px;"></td></tr>
+                                        <tr>
+                                            <td style="height: 50px;" colspan="4">CONTACT ADDRESS / TELEPHONE NO. (IF ANY):</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="height: 50px;border-bottom: solid;">
+                                                <label id="lblContactDetails"></label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="height: 50px;border-bottom: solid;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="height: 50px;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="height: 50px;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="height: 50px;"></td>
+                                        </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -325,6 +356,1265 @@
                                     </tfoot>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Employee Servay *@
+        @* MY FIRST IMPRESSION *@
+        <div class="modal modal-content" id="FirstImpression" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+             style="position:fixed">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose_7" hidden>&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">First Impression Employee Survey - 7 DAYS</h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="body_panel">
+                        <div class="table-responsive" id="maindiv">
+                            <table class="table table-condensed table-hover ">
+                                <tbody dir-paginate="f in newData|itemsPerPage:10">
+                                    <tr>
+                                        <th colspan="3">
+                                            <p>
+                                                This survey aims to understand your experience during the on boarding process.
+                                                Your honest feedback will help us improve and provide a welcoming first impression for future employees.
+                                                Please be assured that all responses are anonymous.
+                                                @*New Employee Feedback Form: 7-Days.Congratulations on completing your first 7 days with JSAW!We are excited to learn from your experience of these seven days at JSAW, so that we can continue to improve.Please be assured that your responses will be treated as highly confidential, and will be directly shared with the HR department. The HR department is strictly prohibited from sharing the data with anyone.Your input matters. <b>Thank you for participating!</b>*@
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr><th>Name:&nbsp;@Session["EmpName"]</th></tr>
+                                    <tr><th>SAP ID:&nbsp;@Session["EmpUnqId"]</th></tr>
+                                    <tr><th>Date of Joining:&nbsp;{{f.joinDate | date:'dd/MM/yyyy'}}</th></tr>
+                                    <tr><th>Designation:&nbsp;{{f.desgName}}</th></tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-hover table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            <b>
+                                                Pre-On boarding
+                                                @*INTERVIEW*@
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    @*<tr><td colspan="3">Please be assured that the gathered responses will be treated as highly confidential.</td></tr>*@
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            Rate your interaction with the recruiter.
+                                            @*Was the recruiter courteous and introduced himself.*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel1" class="form-control" ng-model="Q.sel1_7">
+                                                <option value="4">Excellent</option>
+                                                <option value="3">Good</option>
+                                                <option value="2">Fair</option>
+                                                <option value="1">Poor</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            How well did the job description and company information prepare you for the interview?
+                                            @*Did the recruiter shared with you the company details, location, position and the job description.*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel2" class="form-control" ng-model="Q.sel2_7">
+                                                <option value="4">Very well prepared</option>
+                                                <option value="3">Well prepared</option>
+                                                <option value="2">Somewhat well prepared</option>
+                                                <option value="1">Not well prepared</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>
+                                            During the interview, did you feel the interviewer(s) were professional and respectful?
+                                        </td>
+                                        @*<td>Did he answered your question related to the position?</td>*@
+                                        <td>
+                                            <select id="cmbsel3" class="form-control" ng-model="Q.sel3_7">
+                                                <option value="4">Strongly agree</option>
+                                                <option value="3">Agree</option>
+                                                <option value="2">Somewhat agree</option>
+                                                <option value="1">Not at all</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            <b>
+                                                Pre-Joining
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Were the instructions for the orientation meeting clear and easy to follow?</td>
+                                        @*<td>During interview whether the interviewer and  the interview panel  introduced themselves properly.</td>*@
+                                        <td>
+                                            <select id="cmbsel4" class="form-control" ng-model="Q.sel4_7">
+                                                <option value="4">Very Clear</option>
+                                                <option value="3">Clear</option>
+                                                <option value="2">Somewhat clear</option>
+                                                <option value="1">Unclear</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Did you receive all the pre-on boarding materials (forms, etc.) in a timely manner?</td>
+                                        @*<td>Were they courteous and polite during interview?</td>*@
+                                        <td>
+                                            <select id="cmbsel5" class="form-control" ng-model="Q.sel5_7">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>
+                                            How satisfied were you with the communication regarding travel and accommodation arrangements?
+                                            @*Were you given adequate time to share your key skills , experience and achievements?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel6" class="form-control" ng-model="Q.sel6_7">
+                                                <option value="4">Very satisfied</option>
+                                                <option value="3">Satisfied</option>
+                                                <option value="2">Merely satisfied</option>
+                                                <option value="1">Not satisfied</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Rate the overall efficiency of the pre-on boarding process.</td>
+                                        @*<td>Overall, how satisfied are you with the online interview process?</td>*@
+                                        <td>
+                                            <select id="cmbsel7" class="form-control" ng-model="Q.sel7_7">
+                                                <option value="4">Excellent</option>
+                                                <option value="3">Good</option>
+                                                <option value="2">Fair</option>
+                                                <option value="1">Poor</option>
+                                                @*<option value="Very">Very</option><option value="Dissatisfied">Dissatisfied</option><option value="Neutral">Neutral</option><option value="Satisfied">Satisfied</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            <b>
+                                                @*Pre-On boarding*@
+                                                First Day & On boarding
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    @*<tr><td colspan="3">Please be assured that the gathered responses will be treated as highly confidential</td></tr>*@
+                                    <tr>
+                                        <td>@*1*@8</td>
+                                        <td>
+                                            Were the security personnel informed regarding- your gate pass?
+                                            @*Were you provided with clear information regarding your orientation meeting *
+                                                (location, time, what to bring, etc.)?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel8" class="form-control" ng-model="Q.sel8_7">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                @*<option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*2*@9</td>
+                                        <td>
+                                            Did the HR team address all your questions during orientation?
+                                            @*Did you receive an email regarding pre onboarding material and the list of joining forms?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel9" class="form-control" ng-model="Q.sel9_7">
+                                                <option value="4">Thoroughly</option>
+                                                <option value="3">Partially</option>
+                                                <option value="2">Merely</option>
+                                                <option value="1">Not at all</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*3*@10</td>
+                                        <td>
+                                            How well do you understand the company's benefits and HR policies after the orientation?
+                                            @*Did HR call you to know your travel plan?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel10" class="form-control" ng-model="Q.sel10_7">
+                                                <option value="4">Very well</option>
+                                                <option value="3">Somewhat well</option>
+                                                <option value="2">Not very well</option>
+                                                <option value="1">Not well at all</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*4*@11</td>
+                                        <td>
+                                            Did your manager take the initiative to welcome and introduce you to the team?
+                                            @*Did they inform you about your travel and initial accommodation?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel11" class="form-control" ng-model="Q.sel11_7">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*5*@12</td>
+                                        <td>
+                                            @*Did they ask you of your uniform size and safety shoe size?*@
+                                            Did your manager provide a clear overview of the department, its functions, and unique practices?
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel12" class="form-control" ng-model="Q.sel12_7">
+                                                <option value="4">Very clear</option>
+                                                <option value="3">Clear</option>
+                                                <option value="2">Somewhat clear</option>
+                                                <option value="1">Unclear</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*6*@13</td>
+                                        <td>
+                                            @*Were the formalities related to gate pass smooth?*@
+                                            Rate your overall impression of your managers on-boarding process.
+                                        </td>
+                                        <td>
+                                            <select id="cmbsel13" class="form-control" ng-model="Q.sel13_7">
+                                                <option value="4">Excellent</option>
+                                                <option value="3">Good</option>
+                                                <option value="2">Fair</option>
+                                                <option value="1">Poor</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@*7*@14</td>
+                                        <td>
+                                            Are there any additional topics you believe would be helpful for new employees during on boarding?
+                                            @*How would you rate the level of communication and support provided by the *
+                                                HR department during the pre-on boarding phase?*@
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt1_7" ng-model="Q.sel14_7" />
+                                            @*<select id="cmbsel14" class="form-control" ng-model="Q.sel14_7"><option value="Poor">Poor</option><option value="Fair" ">Fair</option><option value="Good">Good</option><option value="Very Good">Very Good</option><option value="Excellent">Excellent</option></select>*@
+                                        </td>
+                                    </tr>
+                                    @*<tr><td>8</td><td>Overall, how satisfied are you with the pre-on boarding process?<br />Rating Note: 1: Not Satisfied and 5: Very Satisfied</td><td><select id="cmbsel15" class="form-control" ng-model="Q.sel15_7"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td></tr>
+                                        <tr><td>9</td><td colspan="2">Do you have any suggestion to further improve the pre joining process better?<input type="text" class="form-control" id="txt1_7" ng-model="Q.sel16_7" /></td></tr>
+                                        <tr><td colspan="3" style="background-color:yellow;text-align:center;"><b>HR Orientation</b></td></tr>
+                                        <tr><td>1</td><td>Did the HR  answer all your questions during HR orientation?</td><td><select id="cmbsel16" class="form-control" ng-model="Q.sel17_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>2</td><td>How satisfied you are with the information shared by HR on employee benefits and HR policies?</td><td><select id="cmbsel17" class="form-control" ng-model="Q.sel18_7"><option value="Very">Very</option><option value="Dissatisfied">Dissatisfied</option><option value="Neutral">Neutral</option><option value="Satisfied">Satisfied</option></select></td></tr>
+                                        <tr><td>3</td><td>Was your email id activated within 7 days of your joining?</td><td><select id="cmbsel18" class="form-control" ng-model="Q.sel19_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td colspan="3" style="background-color:yellow;text-align:center;"><b>Department On – Boarding</b></td></tr>
+                                        <tr><td>1</td><td>Did your manager met you  on your first day of work?</td><td><select id="cmbsel19" class="form-control" ng-model="Q.sel20_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>2</td><td>Did your manager introduce you to the rest of the team members?</td><td><select id="cmbsel20" class="form-control" ng-model="Q.sel21_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>3</td><td>Did your manager briefed you about its functioning, processes and unique practices?</td><td><select id="cmbsel21" class="form-control" ng-model="Q.sel22_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>4</td><td>Did your manager gave you clarity on your Roles, responsibilities, KRA & KPI?</td><td><select id="cmbsel22" class="form-control" ng-model="Q.sel23_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>5</td><td>Did your manager provided you the  necessary resources to do the work ( Departmental - SOP, Drawings, Manual)?</td><td><select id="cmbsel23" class="form-control" ng-model="Q.sel24_7"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>
+                                        <tr><td>6</td><td>What is your overall impression of your HOD in first 7 days?</td><td><select id="cmbsel24" class="form-control" ng-model="Q.sel25_7"><option value="Polite">Polite</option><option value="Impolite">Impolite</option></select></td></tr>
+                                        <tr><td>7</td><td colspan="2">Do you have suggestion to make this process more effective?<input type="text" class="form-control" id="txt2_7" ng-model="Q.sel26_7" /></td></tr>
+                                        <tr><td>8</td><td colspan="2">Are there any topics you feel would be beneficial for new employee to know about during the manager orientation that weren't covered during your orientation?<input type="text" class="form-control" id="txt3_7" ng-model="Q.sel27_7" /></td></tr>*@
+                                    <tr>
+                                        <td colspan="3" style="text-align:center;">
+                                            <input type="button" class="btn btn-success" id="btn7Days" name="Submit" value="Submit" ng-click="Survey(Q,'7')" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*30 Days Servay*@
+        <div class="modal modal-content" id="30DaysSurvay" data-keyboard="false" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true"
+             style="position:fixed">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose_30" hidden>&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">30-Day Employee Survey</h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="body_panel">
+                        <div class="table-responsive" id="maindiv">
+                            <table class="table table-condensed table-hover">
+                                <tbody dir-paginate="g in newData|itemsPerPage:10">
+                                    @*<tr><th colspan="4" style="text-align:center;"><b><u>Survey of new employee onboarding process</u></b></th></tr>*@
+                                    <tr>
+                                        <th>
+                                            <p>
+                                                This survey aims to understand your experience during your first month at JSAW.
+                                                Your honest feedback is crucial to continuously improve our on-boarding process and support system for new hires.
+                                                Please be assured that all responses are anonymous.
+                                                @*We at JSAW believe in continuous improvement in everything we do. Orientation
+                                                    and onboarding is a very important HR function and we wish to make it more effective.
+                                                    Therefore , we need your honest feedback and suggestions to make this function more useful for a new employee.
+                                                    Please be assured that your responses will be treated as highly confidential.
+                                                    Your input matters.
+                                                    <b>Thank you for participating!</b>*@
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr><th>Name:&nbsp;@Session["EmpName"]</th></tr>
+                                    <tr><th>SAP ID:&nbsp;@Session["EmpUnqId"]</th></tr>
+                                    <tr><th>Date of Joining:&nbsp;{{g.joinDate | date:'dd/MM/yyyy'}}</th></tr>
+                                    <tr><th>Designation:&nbsp;{{g.desgName}}</th></tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            <b><u>Company Integration</u></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            How well did the on-boarding process prepare you to understand the company's policies, culture, and values?
+                                            @*How effective was the on boarding process in helping you understand the company policy,	*
+                                                culture and values?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel1" class="form-control" ng-model="P.sel1_30">
+                                                <option value="4">Very well</option>
+                                                <option value="3">Well</option>
+                                                <option value="2">Somewhat well</option>
+                                                <option value="1">Not well</option>
+                                                @*<option value="Very effective">Very effective</option><option value="Somewhat effective">Somewhat effective</option><option value="Ineffective">Ineffective</option><option value="NA">Not applicable</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            Did you feel your workspace was adequately equipped and set up for your arrival?
+                                            @*Was your workstation or office ready for you upon your arrival?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel2" class="form-control" ng-model="P.sel2_30">
+                                                <option value="4">Yes, it was perfectly equipped.</option>
+                                                <option value="3">Yes, it had the basics, but could use some improvements.</option>
+                                                <option value="2">No, I needed additional equipment to function properly.</option>
+                                                <option value="1">No equipment or setup was prepared</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            <b><u>Team Integration & Support</u></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>
+                                            Did you have the opportunity to tour the facilities and gain a broader understanding of operations?
+                                            @*Did you have the opportunity to go on a plant tour?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel3" class="form-control" ng-model="P.sel3_30">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>
+                                            To what extent do you feel comfortable approaching key members in your department and other departments for collaboration?
+                                            @*Have you been introduced to all key members in your department and other departments and do you feel comfortable approaching them for their cooperation?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel4" class="form-control" ng-model="P.sel4_30">
+                                                <option value="4">Very comfortable</option>
+                                                <option value="3">Comfortable</option>
+                                                <option value="2">Somewhat comfortable</option>
+                                                <option value="1">Not comfortable</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option><option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            Role Clarity & Support
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>
+                                            How clear were your manager's initial explanations of your role, responsibilities, and expectations?
+                                            @*Were you provided with enough clarity about your role and responsibilities by your immediate supervisor?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel5" class="form-control" ng-model="P.sel5_30">
+                                                <option value="4">Very clear</option>
+                                                <option value="3">Clear</option>
+                                                <option value="2">Somewhat clear</option>
+                                                <option value="1">Unclear</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>
+                                            Did you encounter any significant challenges or obstacles during your first 30 days
+                                            @*Were there any specific challenges or obstacles you encountered during the initial 30 *
+                                                days? If YES, please describe them.*@
+                                            @*<input type="text" id="txt1_30" class="form-control" ng-model="P.sel6_30" />*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel6" class="form-control" ng-model="P.sel6_30">
+                                                <option value="4">Everything went smoothly</option>
+                                                <option value="3">No roadblocks, but had initial hurdles</option>
+                                                <option value="2">Needed some assistance to overcome</option>
+                                                <option value="1">Overcame them on my own</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>
+                                            Did you feel you received adequate support and resources to perform your assigned tasks effectively?
+                                            @*Did you receive sufficient support and resources to perform your tasks and * responsibilities?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel7" class="form-control" ng-model="P.sel7_30">
+                                                <option value="4">Fully adequate</option>
+                                                <option value="3">Adequate</option>
+                                                <option value="2">Partial adequate</option>
+                                                <option value="1">Not adequate</option>
+                                                @*<option value="Yes, more than enough">Yes, more than enough</option>
+                                                    <option value="Yes, sufficient">Yes, sufficient</option>
+                                                    <option value="No, somewhat lacking">No, somewhat lacking</option>
+                                                    <option value="No, significantly lacking">No, significantly lacking</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="background-color:yellow;text-align:center;">
+                                            New Hire Experience
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>
+                                            How would you rate your overall on-boarding experience at JSAW?
+                                            @*Did your supervisor actively listen and understand your concerns and questions ?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel8" class="form-control" ng-model="P.sel8_30">
+                                                <option value="4">Excellent</option>
+                                                <option value="3">Good</option>
+                                                <option value="2">Fair</option>
+                                                <option value="1">Poor</option>
+                                                @*<option value="Yes, consistently">Yes, consistently</option>
+                                                    <option value="Yes, occasionally">Yes, occasionally</option>
+                                                    <option value="No, rarely">No, rarely</option>
+                                                    <option value="No, not at all">No, not at all</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Have you had the opportunity to build social connections with your team members outside of work-related tasks?</td>
+                                        <td>
+                                            <select id="cmb30sel9" class="form-control" ng-model="P.sel9_30">
+                                                <option value="4">Many</option>
+                                                <option value="3">Few</option>
+                                                <option value="2">Very few</option>
+                                                <option value="1">Not any</option>
+                                            </select>
+                                            @*What improvements would you suggest to enhance the on boarding*
+                                                experience for new hires?
+                                                <input type="text" class="form-control" id="txt2_30" ng-model="P.sel9_30" />*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>
+                                            Are you regularly included in relevant departmental meetings that impact your role or the team's work?
+                                            @*Are you able to socially connect with other team members?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel10" class="form-control" ng-model="P.sel10_30">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Maybe">Maybe</option>
+                                                    <option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>
+                                            Are you receiving required department & work-related information and resources from peers and superiors?
+                                            @*Are you called in departmental meetings?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel11" class="form-control" ng-model="P.sel11_30">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>
+                                            What initial impressions or aspects of the organization did you find most welcoming and supportive when you first joined?
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel12" class="form-control" ng-model="P.sel12_30">
+                                                <option value="4">The onboarding process and support from the HR team</option>
+                                                <option value="3">The friendliness and helpfulness of colleagues</option>
+                                                <option value="2">The clarity of the company's mission and values</option>
+                                                <option value="1">The training and resources provided for your role</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>
+                                            How would you describe the dining experience in the cafeteria?
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel13" class="form-control" ng-model="P.sel13_30">
+                                                <option value="4">Exceptional</option>
+                                                <option value="3">Satisfying</option>
+                                                <option value="2">Decent</option>
+                                                <option value="1">Below expectations</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>
+                                            To what extent do you feel respected and cared for by your colleagues and superiors?
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel14" class="form-control" ng-model="P.sel14_30">
+                                                <option value="4">Very much</option>
+                                                <option value="3">Moderately</option>
+                                                <option value="2">Somewhat</option>
+                                                <option value="1">Not very</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>
+                                            What were your expectations from your role? (Please select one)
+                                            <b><text style="color:red;background:yellow;">(Ctrl + Click)</text></b>
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel15" class="form-control" ng-model="P.sel15_30" multiple="">
+                                                <option value="4">Professional growth and skill development</option>
+                                                <option value="3">Increased responsibility and leadership opportunities</option>
+                                                <option value="2">Better work-life balance</option>
+                                                <option value="1">Higher salary and financial benefits</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>
+                                            On a scale of 1 to 4, how likely are you to recommend Jindal SAW as a desirable workplace to your friends?
+                                        </td>
+                                        <td>
+                                            <select id="cmb30sel16" class="form-control" ng-model="P.sel16_30">
+                                                <option value="4">4</option>
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                                <option value="1">1</option>
+                                            </select>
+                                            @*<input type="text" class="form-control" id="txt2_30" ng-model="P.sel16_30" />*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>
+                                            What improvements or suggestions would you recommend to enhance the on-boarding experience for future new hires?
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt3_30" ng-model="P.sel17_30" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="button" class="btn btn-success" id="btn30Days" name="Submit" value="Submit" ng-click="Survey(P,'30')" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*60 Days Servay*@
+        <div class="modal modal-content" id="60DaysSurvay" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+             style="position:fixed">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose_60" hidden>&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">60 Day Employee Survey</h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="body_panel">
+                        <div class="table-responsive" id="maindiv">
+                            <table class="table table-condensed table-hover">
+                                <tbody dir-paginate="h in newData|itemsPerPage:10">
+                                    @*<tr>
+                                            <th colspan="4" style="text-align:center;">
+                                                <b><u>Survey of new employee onboarding process</u></b>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <p>
+                                                    We at JSAW believe in continuous improvement in everything we do. Orientation
+                                                    and onboarding is a very important HR function and we wish to make it more effective.
+                                                    Therefore , we need your honest feedback and suggestions to make this function more useful for a new employee.
+                                                    Please be assured that your responses will be treated as highly confidential.
+                                                    Your input matters.
+                                                    <b>Thank you for participating!</b>
+                                                </p>
+                                            </th>
+                                        </tr>*@
+                                    <tr><th>Name:&nbsp;@Session["EmpName"]</th></tr>
+                                    <tr><th>SAP ID:&nbsp;@Session["EmpUnqId"]</th></tr>
+                                    <tr><th>Date of Joining:&nbsp;{{h.joinDate | date:'dd/MM/yyyy'}}</th></tr>
+                                    <tr><th>Designation:&nbsp;{{h.desgName}}</th></tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Have you received feedback and guidance from your manager?</td>
+                                        <td>
+                                            <select id="cmb60sel1" class="form-control" ng-model="O.sel1_60">
+                                                <option value="4">Consistently</option>
+                                                <option value="3">Occasionally</option>
+                                                <option value="2">Infrequently</option>
+                                                <option value="1">Not at all</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Do you feel encouraged to share your experiences and ideas?</td>
+                                        <td>
+                                            <select id="cmb60sel2" class="form-control" ng-model="O.sel2_60">
+                                                <option value="4">Very encouraged</option>
+                                                <option value="3">Encouraged</option>
+                                                <option value="2">Merely encouraged</option>
+                                                <option value="1">Not encouraged</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>
+                                            How well has the organization supported your professional growth and development during the initial 60 days?
+                                            @*Have you had opportunities to collaborate and interact with colleagues from	*
+                                                different teams or departments?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel3" class="form-control" ng-model="O.sel3_60">
+                                                <option value="4">Very well</option>
+                                                <option value="3">Moderately well</option>
+                                                <option value="2">Not well</option>
+                                                <option value="1">Not applicable</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>
+                                            Have you had opportunities to collaborate and interact with colleagues from different teams or departments?
+                                            @*How effectively have you integrated into the company's culture and built	*
+                                                relationships with your colleagues?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel4" class="form-control" ng-model="O.sel4_60">
+                                                <option value="4">Frequently</option>
+                                                <option value="3">Occasionally</option>
+                                                <option value="2">Rarely</option>
+                                                <option value="1">Not at all</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>
+                                            How effectively have you integrated into the company's culture and built relationships with your colleagues?
+                                            @*Have you encountered any roadblocks or challenges in adapting to the work	*
+                                                processes and systems within the first 60 days? If YES, please explain.
+                                                <input type="text" id="txt1_60" class="form-control" ng-model="O.sel5_60" />*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel5" class="form-control" ng-model="O.sel5_60">
+                                                <option value="4">Very effectively</option>
+                                                <option value="3">Moderately effectively</option>
+                                                <option value="2">Ineffectively</option>
+                                                <option value="1">Not applicable</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>
+                                            Did your manager set clear expectations for your role, including responsibilities, KPIs, and resources?
+                                            @*Are you invited in departmental meetings?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel6" class="form-control" ng-model="O.sel6_60">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>
+                                            Are you receiving required information and resources from peers and superiors?
+                                            @*How would you describe the behavior of your manager in terms of being courteous?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel7" class="form-control" ng-model="O.sel7_60">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>
+                                            Have you encountered any roadblocks or challenges in adapting to the work processes and systems within the first 60 days? If yes, please explain.
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txt1_60" class="form-control" ng-model="O.sel8_60" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>
+                                            Are you invited in departmental meetings?
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel8" class="form-control" ng-model="O.sel9_60">
+                                                <option value="4">Always</option>
+                                                <option value="3">Often</option>
+                                                <option value="2">Sometimes</option>
+                                                <option value="1">Rarely</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>
+                                            How would you describe the behaviour of your manager in terms of being courteous?
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel9" class="form-control" ng-model="O.sel10_60">
+                                                <option value="4">Always courteous</option>
+                                                <option value="3">Usually courteous</option>
+                                                <option value="2">Sometimes courteous</option>
+                                                <option value="1">Rarely courteous</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>
+                                            What do you appreciate most about the work environment or culture here?
+                                            <b><text style="color:red;background:yellow;">(Ctrl + Click)</text></b>
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel10" class="form-control" ng-model="O.sel11_60" multiple="">
+                                                <option value="4">Collaborative team atmosphere</option>
+                                                <option value="3">Opportunities for professional development</option>
+                                                <option value="2">Open and transparent communication</option>
+                                                <option value="1">Emphasis on work-life balance</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>
+                                            To what extent do you feel respected and cared for by your colleagues and superiors?
+                                        </td>
+                                        <td>
+                                            <select id="cmb60sel11" class="form-control" ng-model="O.sel12_60">
+                                                <option value="4">Very much</option>
+                                                <option value="3">Moderately</option>
+                                                <option value="2">Somewhat</option>
+                                                <option value="1">Not very</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>
+                                            On a scale of 1 to 4, how likely are you to recommend Jindal SAW as a desirable workplace to your friends?
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txt1_60" class="form-control" ng-model="O.sel13_60" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="button" class="btn btn-success" id="btn90Days" name="Submit" value="Submit" ng-click="Survey(O,'60')" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*90 Days Servay*@
+        <div class="modal modal-content" id="90DaysSurvay" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+             style="position:fixed">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnClose_90" hidden>&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">90- Days Employee Survey</h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="body_panel">
+                        <div class="table-responsive" id="maindiv">
+                            <table class="table table-condensed table-hover">
+                                <tbody dir-paginate="i in newData|itemsPerPage:10">
+                                    @*<tr>
+                                            <th colspan="4" style="text-align:center;">
+                                                <b><u>Survey of new employee onboarding process</u></b>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <p>
+                                                    We at JSAW believe in continuous improvement in everything we do. Orientation
+                                                    and onboarding is a very important HR function and we wish to make it more effective.
+                                                    Therefore , we need your honest feedback and suggestions to make this function more useful for a new employee.
+                                                    Please be assured that your responses will be treated as highly confidential.
+                                                    Your input matters.
+                                                    <b>Thank you for participating!</b>
+                                                </p>
+                                            </th>
+                                        </tr>*@
+                                    <tr><th>Name:&nbsp;@Session["EmpName"]</th></tr>
+                                    <tr><th>SAP ID:&nbsp;@Session["EmpUnqId"]</th></tr>
+                                    <tr><th>Date of Joining:&nbsp;{{i.joinDate | date:'dd/MM/yyyy'}}</th></tr>
+                                    <tr><th>Designation:&nbsp;{{i.desgName}}</th></tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            What notable achievements or milestones have you reached within the first 90 days?
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt1_90" ng-model="N.sel1_90" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            Have you had opportunities to take on additional responsibilities or projects beyond *
+                                            your initial role within the first 90 days?
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel1" class="form-control" ng-model="N.sel2_90">
+                                                <option value="4">Significant additional responsibilities</option>
+                                                <option value="3">Some additional responsibilities</option>
+                                                <option value="2">Minor additional tasks</option>
+                                                <option value="1">No additional responsibilities</option>
+                                                @*<option value="Yes, multiple opportunities">Yes, multiple opportunities</option>
+                                                    <option value="Yes, a few opportunities">Yes, a few opportunities</option>
+                                                    <option value="No, limited opportunities">No, limited opportunities</option>
+                                                    <option value="No">No, none</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>
+                                            Have you received any recognition on your performance from your manager or team
+                                            during initial 90 days? (Select all that apply)
+                                            <b><text style="color:red;background:yellow;">(Ctrl + Click)</text></b>
+                                            @*How well-aligned do you feel with the organization's mission and goals?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel2" class="form-control" ng-model="N.sel3_90" multiple="">
+                                                <option value="3">Public praise</option>
+                                                <option value="2">Private feedback</option>
+                                                <option value="1">Other</option>
+                                                @*<option value="Very aligned">Very aligned</option>
+                                                    <option value="Moderately aligned">Moderately aligned</option>
+                                                    <option value="Not aligned">Not aligned</option>
+                                                    <option value="NA">Not applicable</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>
+                                            How well do the organization's mission and goals align with your own values and career aspirations?
+                                            @*Have you received recognition on your performance from your manager or team during?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel3" class="form-control" ng-model="N.sel4_90">
+                                                <option value="4">Very aligned</option>
+                                                <option value="3">Aligned</option>
+                                                <option value="2">Somewhat aligned</option>
+                                                <option value="1">Not aligned</option>
+                                                @*<option value="Yes, frequently">Yes, frequently</option>
+                                                    <option value="Yes, occasionally">Yes, occasionally</option>
+                                                    <option value="No, rarely">No, rarely</option>
+                                                    <option value="No, not at all">No, not at all</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>
+                                            Is your HOD easily accessible and approachable?
+                                            @*Do you receive feedback from  your manager ?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel4" class="form-control" ng-model="N.sel5_90">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                @*<option value="Yes, frequently">Yes, frequently</option>
+                                                    <option value="Yes, occasionally">Yes, occasionally</option>
+                                                    <option value="No, rarely">No, rarely</option>
+                                                    <option value="No, not at all">No, not at all</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>
+                                            How frequently do you receive feedback from your manager?
+                                            @*Do you feel respected and cared  for?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel5" class="form-control" ng-model="N.sel6_90">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>
+                                            How receptive was your manager in addressing the challenges you encountered during your first 90 days?
+                                            @*Do workplace issues get addressed  quickly and fairly?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel6" class="form-control" ng-model="N.sel7_90">
+                                                <option value="4">Very receptive</option>
+                                                <option value="3">Receptive</option>
+                                                <option value="2">Somewhat receptive</option>
+                                                <option value="1">Not receptive</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>
+                                            How comfortable are you expressing your ideas, even if they differ from the majority?
+                                            @*Are you encouraged to share your ideas?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel7" class="form-control" ng-model="N.sel8_90">
+                                                <option value="4">Very comfortable</option>
+                                                <option value="3">Comfortable</option>
+                                                <option value="2">Somewhat comfortable</option>
+                                                <option value="1">Not comfortable</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>
+                                            How would you rate the overall level of collaboration and support among your team members?
+                                            @*Are your team members and managers supportive and cooperative?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel8" class="form-control" ng-model="N.sel9_90">
+                                                <option value="4">Excellent</option>
+                                                <option value="3">Good</option>
+                                                <option value="2">Fair</option>
+                                                <option value="1">Poor</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>
+                                            How often do superiors and teammates share relevant information related to work or the department with you?
+                                            @*How receptive has your Manager been in addressing any challenges or issues you	*
+                                                encountered within the first 90 days?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel9" class="form-control" ng-model="N.sel10_90">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Very receptive and supportive">Very receptive and supportive</option>
+                                                    <option value="Moderately receptive and supportive">Moderately receptive and supportive</option>
+                                                    <option value="Not very receptive and supportive">Not very receptive and supportive</option>
+                                                    <option value="Not at all receptive and supportive">Not at all receptive and supportive</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>
+                                            How efficient is the interdepartmental support in regards to collaborative opportunity?
+                                            @*Do your superiors and teammates share relevant information related to work or the	*
+                                                department with you?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel10" class="form-control" ng-model="N.sel11_90">
+                                                <option value="4">Very efficient</option>
+                                                <option value="3">Efficient</option>
+                                                <option value="2">Somewhat efficient</option>
+                                                <option value="1">Not efficient</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Maybe">Maybe</option>
+                                                    <option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>
+                                            How much did you feel that Jindal SAW actively encouraged your professional growth and development in the past 90 days?
+                                            @*In the last 90 days, has someone at work talked to you about your progress?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel11" class="form-control" ng-model="N.sel12_90">
+                                                <option value="4">Very much</option>
+                                                <option value="3">Moderately</option>
+                                                <option value="2">Somewhat</option>
+                                                <option value="1">Not very</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Maybe">Maybe</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>To what extent do you feel respected and cared for by your colleagues and superiors?</td>
+                                        <td>
+                                            <select id="cmb90sel12" class="form-control" ng-model="N.sel13_90">
+                                                <option value="4">Very much</option>
+                                                <option value="3">Moderately</option>
+                                                <option value="2">Somewhat</option>
+                                                <option value="1">Not very</option>
+                                            </select>
+                                        </td>
+                                        @*<td colspan="2">
+                                                In terms of professional growth, what areas or skills would you like to focus on	*
+                                                beyond the initial 90 days?
+                                                <input type="text" id="txt2_90" class="form-control" ng-model="N.sel13_90" />
+                                            </td>*@
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>
+                                            How often do you feel pressured to prioritize work over your personal life?
+                                            @*Do you find your team members to be supportive and cooperative?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel13" class="form-control" ng-model="N.sel14_90">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>
+                                            How satisfied are you with your current working hours?
+                                            @*In the past 90 days, have you had someone at work who has been actively	*
+                                                encouraging your development?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel14" class="form-control" ng-model="N.sel15_90">
+                                                <option value="4">Very satisfied</option>
+                                                <option value="3">Satisfied</option>
+                                                <option value="2">Merely satisfied</option>
+                                                <option value="1">Not satisfied</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Maybe">Maybe</option>
+                                                    <option value="Other">Other</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>
+                                            How often do you find yourself working on your weekly rest day?
+                                            @*Would you recommend Jindal SAW to your fiends as a desirable workplace?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel15" class="form-control" ng-model="N.sel16_90">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="Maybe">Maybe</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>
+                                            On a scale of 1 to 4, how often do you pursue your hobbies or interests outside of work?
+                                            @*Are you optimistic about your future growth and success in this group?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel16" class="form-control" ng-model="N.sel17_90">
+                                                <option value="4">Always</option>
+                                                <option value="3">Frequently</option>
+                                                <option value="2">Occasionally</option>
+                                                <option value="1">Rarely</option>
+                                                @*<option value="Yes">Yes</option><option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>
+                                            What improvements or enhancements would make you feel even more engaged and committed to the company long-term?
+                                            <b><text style="color:red;background:yellow;">(Ctrl + Click)</text></b>
+                                            @*In past 90 days , did you receive any recognition?*@
+                                        </td>
+                                        <td>
+                                            <select id="cmb90sel17" class="form-control" ng-model="N.sel18_90" multiple="">
+                                                <option value="4">More opportunities for career advancement</option>
+                                                <option value="3">Additional training and development programs</option>
+                                                <option value="2">Enhanced recognition and reward systems</option>
+                                                <option value="1">Improved feedback and performance evaluation processes</option>
+                                                @*<option value="Yes">Yes</option>
+                                                    <option value="No">No</option>*@
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>
+                                            What specific resources or opportunities would you like to see available to help you develop further in your role?
+                                            @*How satisfied with your current work hours!*@
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt2_90" ng-model="N.sel19_90" />
+                                            @*<select id="cmb90sel16" class="form-control" ng-model="N.sel19_90">
+                                                    <option value="Very satisfied">Very satisfied</option>
+                                                    <option value="Not satisfied">Not satisfied</option>
+                                                </select>*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>
+                                            On a scale of 1 to 4, how likely are you to recommend Jindal SAW as a desirable workplace to your friends?
+                                            @*How often do you work on weekly rest?*@
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt3_90" ng-model="N.sel20_90" />
+                                            @*<select id="cmb90sel17" class="form-control" ng-model="N.sel20_90">
+                                                    <option value="Never">Never</option>
+                                                    <option value="Very often">Very often</option>
+                                                </select>*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td>
+                                            How can the company better support employees in maintaining a healthy work-life balance and pursuing their personal interests?
+                                            @*How often do you pursue your hobbies or interests?*@
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="txt3_90" ng-model="N.sel21_90" />
+                                            @*<select id="cmb90sel18" class="form-control" ng-model="N.sel21_90">
+                                                    <option value="Very often">Very often</option>
+                                                    <option value="Not so often">Not so often</option>
+                                                </select>*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="button" class="btn btn-success" id="btn90Days" name="Submit" value="Submit" ng-click="Survey(N,'90')" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

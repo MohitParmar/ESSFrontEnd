@@ -14,21 +14,31 @@ app.controller("TripController", function ($scope, $http, $filter) {
         debugger;
         var now = new Date(); var dtnow = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); var firstDay = now;
         if (firstDay.getMonth() + 1 < '10') {
-            if (firstDay.getDate() < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate(); }
-            else { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+            if (firstDay.getDate() < '10') {
+                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
+            }
+            else {
+                firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+            }
         } else {
-            if (firstDay.getDate() < '10') { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate(); }
-            else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+            if (firstDay.getDate() < '10') {
+                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + '0' + firstDay.getDate();
+            }
+            else {
+                firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate();
+            }
         };
         dtnow = firstDay;
-        var chkFrom = $("#tripDate").val(); var chkTo = dtnow;
+        var chkFrom = $("#tripDate").val();
+        var chkTo = dtnow;
         if (chkFrom === "") {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                 "<strong>Please select booking Date...</strong></div>"; $('#MessageBox').show();
             document.getElementById("tripDate").value = ""; return false;
         };
-        var date1 = new Date(chkFrom); var date2 = new Date(chkTo); var diff = ((date2 - date1) / (1000 * 60 * 60 * 24) * -1) + 1;
+        var date1 = new Date(chkFrom); var date2 = new Date(chkTo);
+        var diff = ((date2 - date1) / (1000 * 60 * 60 * 24) * -1) + 1;
         if (diff > 91) {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -42,12 +52,51 @@ app.controller("TripController", function ($scope, $http, $filter) {
             document.getElementById("tripDate").value = ""; return false;
         }
     };
+    //validate on selected date or slot.
+    $scope.GetReqOnDate = function () {
+        var trpdate = $("#tripDate").val(); var slot = $("#cmbSlot").val();
+        var grd = new XMLHttpRequest;
+        grd.open("GET", $scope._Conpath + "VehicleReq/GetReqOnDate?date=" + trpdate + "&slot=" + slot, true);
+        grd.setRequestHeader("Accept", "application/json");
+        grd.onreadystatechange = function () {
+            if (grd.readyState === 4 && grd.status === 200) { }
+            else {
+                if (grd.status === 400 || grd.status === 403 || grd.status === 404 || grd.status === 408 || grd.status === 500) {
+                    debugger;
+                    var str =
+                        grd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
+                    var fields = str.split(',');
+                    var er = "";
+                    for (var i = 0; i < fields.length; i++) {
+                        er = er + fields[i] + "<br/>";
+                    };
+
+                    document.getElementById("MessageBox").innerHTML =
+                        "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
+                        "</strong></div>"; $('#MessageBox').show();
+                    document.getElementById("tripDate").value = "";
+                    $("#cmbSlot option:first").attr("selected", true);
+                    document.getElementById("txtpickupTime").value = "";
+                    document.getElementById("txtpickupLocation").value = "";
+                    document.getElementById("txtdropLocation").value = "";
+                    document.getElementById("txtremarks").value = "";
+                };
+            };
+        };
+        grd.send();
+    };
     //Before 24 hours only
     $scope.tValidate = function () {
-        var bdate = $("#tripDate").val(); var ptime = $("#txtpickupTime").val(); var pickupdatetime = bdate + " " + ptime; pickupdatetime = new Date(pickupdatetime);
-        var now = new Date(); var dtnow = new Date(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-        var diff = Math.abs(dtnow - pickupdatetime) / 36e5; diff = parseInt(diff);
-        if (diff <= 24) { $scope.ResetView(); alert("Booking not allowed before 24 hours."); };
+        var bdate = $("#tripDate").val(); var ptime = $("#txtpickupTime").val();
+        var pickupdatetime = bdate + " " + ptime; pickupdatetime = new Date(pickupdatetime);
+        var now = new Date();
+        var dtnow = new Date(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+        var diff = Math.abs(dtnow - pickupdatetime) / 36e5;
+        diff = parseInt(diff);
+        if (diff <= 24) {
+            $scope.ResetView();
+            alert("Booking not allowed before 24 hours.");
+        };
         // Slot 1 : Morning (00:00 to 08:59) | Slot 2 : Day (09:00 to 17:59) | Slot 3 : Night (18:00 to 23:59)
         var slot = $("#cmbSlot").val();
         if (slot === "1" || slot === 1) {
@@ -72,38 +121,6 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 document.getElementById("txtpickupTime").value = "";
             }
         };
-    };
-    //validate on selected date or slot.
-    $scope.GetReqOnDate = function () {
-        var trpdate = $("#tripDate").val(); var slot = $("#cmbSlot").val();
-        var grd = new XMLHttpRequest;
-        grd.open("GET", $scope._Conpath + "VehicleReq/GetReqOnDate?date=" + trpdate + "&slot=" + slot, true);
-        grd.setRequestHeader("Accept", "application/json");
-        grd.onreadystatechange = function () {
-            if (grd.readyState === 4 && grd.status === 200) { }
-            else {
-                if (grd.status === 400 || grd.status === 403 || grd.status === 404 || grd.status === 408 || grd.status === 500) {
-                    debugger;
-                    var str =
-                        grd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
-                    var fields = str.split(',');
-                    var er = "";
-                    for (var i = 0; i < fields.length; i++) {
-                        er = er + fields[i] + "<br/>";
-                    };
-                    document.getElementById("MessageBox").innerHTML =
-                        "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
-                        "</strong></div>"; $('#MessageBox').show();
-                    document.getElementById("tripDate").value = "";
-                    $("#cmbSlot option:first").attr("selected", true);
-                    document.getElementById("txtpickupTime").value = "";
-                    document.getElementById("txtpickupLocation").value = "";
-                    document.getElementById("txtdropLocation").value = "";
-                    document.getElementById("txtremarks").value = "";
-                };
-            };
-        };
-        grd.send();
     };
     //Create Trip
     $scope.TripBooking = function (data) {
@@ -132,8 +149,8 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 gtd.open("POST", $scope._Conpath + "VehicleReq/CreateReq", true);
                 gtd.setRequestHeader("Content-Type", "application/json");
                 gtd.onreadystatechange = function () {
-                    debugger;
                     if (gtd.readyState === 4 && gtd.status === 200) {
+                        debugger;
                         document.getElementById("btnSubmit").disabled = false;
                         document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Submit Successfully.. </strong></div>"; $("#MessageBox").show();
                         document.getElementById("tripDate").value = "";
@@ -169,6 +186,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                             "<div class='alert alert-danger alert-dismissable'>" +
                             "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>" + er +
                             "</strong></div>"; $('#MessageBox').show();
+                        setTimeout($scope.ResetView(), 5000);
                     };
                 }; gtd.send(jsonObj);
             } else if (vhr.status === 400 || vhr.status === 403 || vhr.status === 404 || vhr.status === 408 || vhr.status === 500) {
@@ -187,6 +205,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 document.getElementById("txtpickupTime").value = "";
                 document.getElementById("txtnumberOfPass").value = "";
                 document.getElementById("btnSubmit").disabled = false;
+                setTimeout($scope.ResetView(), 5000);
             };
         }; vhr.send();
     };
@@ -251,17 +270,14 @@ app.controller("TripController", function ($scope, $http, $filter) {
         if (status === "R") {
             if ((typeof (obj) === "undefined") || (typeof (obj.Remarks) === "undefined")) {
                 document.getElementById("MessageBox").innerHTML =
-                    "<div class='alert alert-warning alert-dismissable'>" +
-                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                    "<strong>Please Enter Remarks First For Rejection</strong></div>";
-                $('#MessageBox').show();
-                return false;
+                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false;
             } else { rmks = obj.Remarks; };
         } else { if ((typeof (obj) === "undefined")) { rmks = ""; } else { rmks = obj.Remarks; }; };
         var jsonObj = {}; jsonObj.ReqId = reqId; jsonObj.EmpUnqId = empid;
         if (isAdm === true) {
             jsonObj.AdminReleaseStatusCode = status;
-            jsonObj.AdminUser = $("#myEmpUnqId").val()
+            jsonObj.AdminUser = $("#myEmpUnqId").val();
             jsonObj.AdminReleaseRemarks = rmks;
         } else {
             jsonObj.ReleaseAuth = $("#myEmpUnqId").val();
@@ -293,7 +309,6 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     }
                     var index = $scope.tripData.findIndex(function (item, i) { return item.reqId === reqId });
                     $scope.tripData.splice(index, 1); $scope.$digest();
-
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-success alert-dismissable'>" +
                         "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -348,7 +363,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     myArray[i].ReleaseAuth = arr[i].releaseAuth;
                     myArray[i].ReleaseStatusCode = arr[i].releaseStatusCode;
                     var relDt = arr[i].releaseDate;
-                    if (relDt != null || relDt !== "") { myArray[i].ReleaseDate = ''; }
+                    if (relDt == null || relDt == "") { myArray[i].ReleaseDate = ''; }
                     else { myArray[i].ReleaseDate = arr[i].releaseDate.substring(0, arr[i].releaseDate.indexOf("T")); };
                     myArray[i].ReleaseRemarks = arr[i].releaseRemarks;
                     myArray[i].AdminUser = arr[i].adminUser;

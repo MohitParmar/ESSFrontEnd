@@ -25,7 +25,9 @@
                             <div class="body_panel">
                                 <div class="table-responsive">
                                     <div class="input-group form">
-                                        <input type="text" class="form-control" placeholder="Search Releaser" id="Rel_Empid" name="Rel_Empid">
+                                        <input type="text" class="form-control" placeholder="Search Releaser" id="Rel_Empid" name="Rel_Empid"
+                                               onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                               onpaste="return false;" ondrop="return false;" autocomplete="off">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetReleaserInfo()"><i class="fa fa-search"></i></button>
                                         </span>
@@ -112,7 +114,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <label>Same For (LA/OD/SS/ND):</label>
+                                                        <label>Same For ALL (LA/OD/SS/ND):</label>
                                                     </td>
                                                     <td>
                                                         <input type="checkbox" id="chkSameForAll" ng-model="N.Same">
@@ -126,11 +128,14 @@
                                                             <option value="OD">Out Door Duty</option>
                                                             <option value="SS">Shift Schedule</option>
                                                             <option value="ND">No Dues</option>
+                                                            <option value="PR">Progress Review</option>
                                                         </select>
                                                     </td>
                                                     <td>
                                                         <div class="input-group form">
-                                                            <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode">
+                                                            <input type="text" class="form-control" placeholder="Search Employee" id="eCode" name="eCode"
+                                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                                   onpaste="return false;" ondrop="return false;" autocomplete="off">
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary" type="submit" id="btnSearch" value="Search" name="Search" ng-click="GetEmpInfo()"><i class="fa fa-search"></i></button>
                                                             </span>

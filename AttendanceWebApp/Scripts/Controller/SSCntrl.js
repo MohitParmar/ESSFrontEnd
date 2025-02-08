@@ -5,20 +5,12 @@ app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
     var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
     $scope._Conpath = ''; var loc = $("#myLoc").val();
     $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
+        if (typeof _ConPath === "undefined") { return; } else {
             if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
-        };
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+            }
+        }
     });
-    //$(document).ready(function () {
-    //    if (typeof _ConPath === "undefined") { return; } else {
-    //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-    //            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
-    //        }
-    //    }
-    //});
     $scope.jsondata; var rlsarr = [];
     $scope.GetEmpInfo = function () { var e_Code = $('#txtEmpCode').val(); if (e_Code === '') { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'>" + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong>Please Enter Employee Code First.. </strong>" + "</div>"; $('#MessageBox').show(); return false; }; var emp = new XMLHttpRequest(); emp.open('GET', $scope._Conpath + 'Employee/GetEmployee?empunqid=' + e_Code, true); emp.setRequestHeader('Accept', 'application/json'); emp.onreadystatechange = function () { if (emp.readyState === 4) { if (emp.responseText === "" && e_Code.length === 6) { alert("Please Enter Valid Employee Code .."); document.getElementById("txtEmpCode").value = ""; return false; }; var json = JSON.parse(emp.responseText); $scope.empdata = json; $scope.$digest(); $('#lblEmpName').text($scope.empdata[0].empName); }; }; emp.send(); };
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest; rel.open("GET", $scope._Conpath + "ReleaseStrategy/GetReleaseStrategy?releaseGroup=" + $("#releaseGroupCode").val() + "&empUnqId=" + $("#myEmpUnqId").val(), !0), rel.setRequestHeader("Accept", "application/json"), rel.onreadystatechange = function () { if (4 === rel.readyState) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1, $scope.$digest() } }, rel.send() };

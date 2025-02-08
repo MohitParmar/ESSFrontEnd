@@ -69,6 +69,12 @@ namespace AttendanceWebApp.Controllers
             return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
 
+        //HR - Employee Performance Report view
+        public ActionResult PerformanceReportHR()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
+
         //Common User Gatepass Report
         public ActionResult PrintGatePassReport()
         {

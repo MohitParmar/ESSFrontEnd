@@ -57,7 +57,7 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='BookingSlot'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;">Booking Status</th>
+                                        @*<th style="text-align:center;">Booking Status</th>*@
                                         <th style="text-align:center;" ng-click="sort('PickupTime')">
                                             Pickup Time
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='PickupTime'"
@@ -75,8 +75,8 @@
                                         </th>
                                         <th style="text-align:left;">No. Of Passengers</th>
                                         <th style="text-align:left;">Others</th>
-                                        <th style="text-align:center;">HOD Release Status</th>
-                                        <th style="text-align:left;">HOD Remarks</th>
+                                        @*<th style="text-align:center;">HOD Release Status</th>
+                                        <th style="text-align:left;">HOD Remarks</th>*@
                                         <th style="text-align:center;">Admin Release Status</th>
                                         <th style="text-align:left;">Admin Remarks</th>
                                     </tr>
@@ -85,7 +85,7 @@
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.BookingSlot" />
                                         </td>
-                                        <td colspan="2"></td>
+                                        <td></td>
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PickupLocation" />
                                         </td>
@@ -93,12 +93,12 @@
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.DropLocation" />
                                         </td>
                                         <td colspan="2"></td>
-                                        <td>
+                                        @*<td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" />
                                         </td>
-                                        <td></td>
+                                        <td></td>*@
                                         <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.adminReleaseRemarks" />
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.adminReleaseStatusCode" />
                                         </td>
                                         <td></td>
                                     </tr>
@@ -107,20 +107,18 @@
                                     <tr dir-paginate="d in evrData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
                                         <td style="text-align:center;">{{d.bookingDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:left;">{{d.t_bookingSlot}}</td>
-                                        <td style="text-align:center;">
-                                            <input type="checkbox" id="sts" ng-checked="{{d.bookingStatus}}" disabled />
-                                        </td>
+                                        @*<td style="text-align:center;"><input type="checkbox" id="sts" ng-checked="{{d.bookingStatus}}" disabled /></td>*@
                                         <td style="text-align:center;">{{d.pickupTime | date:'HH:mm'}}</td>
                                         <td style="text-align:left;">{{d.pickupLocation}}</td>
                                         <td style="text-align:left;">{{d.dropLocation}}</td>
                                         <td style="text-align:right;">{{d.numberOfPass}}</td>
                                         <td style="text-align:left;">{{d.remarks}}</td>
-                                        <td style="text-align:center;"
+                                        @*<td style="text-align:center;"
                                             ng-style="d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                             		  d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
                                             {{d.releaseStatusCode}}
                                         </td>
-                                        <td style="text-align:left;">{{d.releaseRemarks}}</td>
+                                        <td style="text-align:left;">{{d.releaseRemarks}}</td>*@
                                         <td style="text-align:center;"
                                             ng-style="d.adminReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                                       d.adminReleaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">

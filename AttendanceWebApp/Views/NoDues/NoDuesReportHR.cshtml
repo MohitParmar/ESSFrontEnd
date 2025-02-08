@@ -74,6 +74,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>No Dues Details</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('NoDues_Report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -119,6 +124,7 @@
                                     <th style="text-align: center;">Unit of Notice Period</th>
                                     <th style="text-align: center;">Last Date of Working</th>
                                     <th style="text-align: center;">Mode of Leaving</th>
+                                    <th style="text-align: center;">Reason for Leaving</th>
                                     <th style="text-align: center;">Exit interview</th>
                                     <th style="text-align: center;">Action</th>
                                 </tr>
@@ -129,7 +135,7 @@
                                     <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.statName" /></td>
                                     <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.catName" /></td>
                                     <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.gradeName" /></td>
-                                    <td colspan="9"></td>
+                                    <td colspan="10"></td>
                                 </tr>
                                 <tr dir-paginate="d in hrdData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
                                     <td style="text-align: center;">{{d.empUnqId}}</td>
@@ -145,6 +151,7 @@
                                     <td style="text-align: center;">{{d.noticePeriodUnit}}</td>
                                     <td style="text-align: center;">{{d.lastWorkingDate| date:'dd/MM/yyyy'}}</td>
                                     <td style="text-align: center;">{{d.modeOfLeaving}}</td>
+                                    <td style="text-align: center;">{{d.reasonForLeaving}}</td>
                                     <td style="text-align: center;"><input type="checkbox" ng-checked="{{d.exitInterviewFlag}}" disabled></td>
                                     <td><button class="btn btn-info" id="btnDetails" ng-click="PrintPreview({{d.empUnqId}})">Print Preview</button></td>
                                 </tr>
@@ -187,7 +194,7 @@
                                     <tr>
                                         <td>Designation : {{e.desgName}}</td>
                                         <td>Grade : {{e.gradeName}}</td>
-                                        <td style="text-align: right;">Dept. & Station: {{e.statName}}</td>
+                                        <td style="text-align: right;">Dept. & Station: {{e.deptName}} / {{e.statName}}</td>
                                     </tr>
                                     <tr style="height: 30px;">
                                         <td><b>Date of Joining: {{e.joinDate| date:'dd/MM/yyyy'}}</b></td>

@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "PerformanceReportHR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/LeaveReportCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<div ng-app="myApp" ng-controller="LeaveReportCntrloller">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Employee Performance Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('performance_report_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />Export to Excel
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div class="input-group form">
+                                <input class="form-control" type="text" id="eCode" placeholder="Enter Employee Code" />
+                                <span class="input-group-btn">
+                                    <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetEmpInfo()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <table class="table table-condensed" id="tbl_empdtl">
+                                <tr dir-paginate="e in empdata|itemsPerPage:5">
+                                    <td style="text-align:center;">
+                                        Emp.Name :
+                                        <label>{{e.empName}}</label>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        Station :
+                                        <label>{{e.statName}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div id="rptPerformance">
+                                <table data-show-filter="true" class="table table-hover table-bordered table-condensed table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;" ng-click="sort('AttdDate')">
+                                                Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='AttdDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Shift</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Cons Shift</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>In</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Out</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Wrking Hrs</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Over Time</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Status</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Half Day</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Leave Type</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Leave Half</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Early come</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Early Going</label>
+                                            </th>
+                                            <th style="text-align:center;">
+                                                <label>Late Come</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="d in prdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:31" pagination-id="pg_1">
+                                            <td style="text-align:center;">{{d.AttdDate| date:'dd/MM/yyyy'}}</td>
+                                            <td style="text-align:center;">{{d.ScheDuleShift}}</td>
+                                            <td style="text-align:center;">{{d.ConsShift}}</td>
+                                            <td style="text-align:center;">{{d.ConsIn| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsOut| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                            <td style="text-align:center;">{{d.ConsWrkHrs}}</td>
+                                            <td style="text-align:center;">{{d.ConsOverTime}}</td>
+                                            <td style="text-align:center;">{{d.Status}}</td>
+                                            <td style="text-align:center;" ng-style="d.HalfDay===true && {'background-color':'#DC143C'}">
+                                                <input type="checkbox" ng-checked="{{d.HalfDay}}" disabled="disabled" />
+                                            </td>
+                                            <td style="text-align:center;">{{d.LeaveType}}</td>
+                                            <td style="text-align:center;">
+                                                <input type="checkbox" ng-checked="{{d.LeaveHalf}}" disabled="disabled" />
+                                            </td>
+                                            <td style="text-align:center;">{{d.Earlycome}}</td>
+                                            <td style="text-align:center;">{{d.EarlyGoing}}</td>
+                                            <td style="text-align:center;">{{d.LateCome}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="pg_1"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

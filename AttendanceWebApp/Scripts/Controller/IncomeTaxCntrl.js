@@ -1651,7 +1651,10 @@ app.controller('IncomeTaxController', function ($scope, $http, $filter) {
                             myArray[i]["MedicalPremiumParents"] = it[i].medicalPremiumParents;
                             myArray[i]["MedicalPreventiveHealthCheckup"] = it[i].medicalPreventiveHealthCheckup;
                             myArray[i]["EduLoanInterest"] = it[i].eduLoanInterest; myArray[i]["PhysicalDisability"] = it[i].physicalDisability;
-                            myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; myArray[i]["b_3"] = "";
+                            myArray[i]["SevereDisability"] = it[i].severeDisability; myArray[i]["NPS"] = it[i].nps; 
+                            myArray[i]["DisableDependent"] = it[i].disableDependent;
+                            myArray[i]["MedicalExpenditure"] = it[i].medicalExpenditure;
+                            myArray[i]["b_3"] = "";
                             //Int on House Loan 
                             myArray[i]["SapId_3"] = it[i].empUnqId; myArray[i]["StartDate_2"] = dtStart; myArray[i]["EndDate_2"] = dtEnd;
                             myArray[i]["InterestOnLoan"] = it[i].interestOnLoan; myArray[i]["InterestPreConstruction"] = it[i].interestPreConstruction;

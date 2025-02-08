@@ -121,6 +121,7 @@
                                             <th style="text-align:center;">Work Group</th>
                                             <th style="text-align:center;">Category</th>
                                             <th style="text-align:center;">Designation</th>
+                                            <th style="text-align:center;">Department</th>
                                             <th style="text-align:center;">Station</th>
                                             <th style="text-align:center;">Out Time</th>
                                             <th style="text-align:center;">In Time</th>
@@ -155,6 +156,9 @@
                                             </td>
                                             <td colspan="2"></td>
                                             <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" />
+                                            </td>
+                                            <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
                                             </td>
                                             <td colspan="4"></td>
@@ -182,6 +186,7 @@
                                             <td style="text-align:left;">{{d.wrkGrp}}</td>
                                             <td style="text-align:left;">{{d.catName}}</td>
                                             <td style="text-align:left;">{{d.desgName}}</td>
+                                            <td style="text-align:left;">{{d.deptName}}</td>
                                             <td style="text-align:left;">{{d.statName}}</td>
                                             <td style="text-align:center;width:95px;">{{d.gateOutDateTime}}</td>
                                             <td style="text-align:center;width:95px;">{{d.gateInDateTime}}</td>

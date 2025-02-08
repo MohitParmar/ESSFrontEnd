@@ -189,7 +189,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                 var json = JSON.parse(epl.responseText);
                 rlsarr = json;
                 $scope.data = json;
-                //$scope.data = $filter('orderBy')($scope.data, '-addDt');
+                $scope.data = $filter('orderBy')($scope.data, '-applicationDate');
                 $scope.currentPage = 0;
                 $scope.itemsPerPage = 10;
                 $scope.$digest();
@@ -205,7 +205,8 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
             } else { rmks = data.Remarks; };
         } else { if ((typeof (data) === "undefined")) { rmks = ""; } else { rmks = data.Remarks; }; };
         var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-        var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var appid = rlsarr[r]["id"]; if (appid === id) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
+        var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var appid = rlsarr[r]["id"];
+        if (appid === id) { detailarr = rlsarr[r]["applReleaseStatus"]; break; }; };
         //Get ReleaseCode of Releaser
         var dataarr = []; for (i = 0; i < detailarr.length; i++) { var r_auth = detailarr[i]["releaseAuth"]; if (r_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
         var jsonObj = {};
@@ -247,8 +248,12 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                     };
                     var relsauth = detailarr[ind]["releaseAuth"];
                     var rlsmail = new XMLHttpRequest();
-                    if (rls_final !== true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=false&empUnqId=" + relsauth, true); }
-                    else if (rls_final === true) { rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=HR&empUnqId=" + relsauth, true); }
+                    if (rls_final !== true) {
+                        rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=false&empUnqId=" + relsauth, true);
+                    }
+                    else if (rls_final === true) {
+                        rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMailResignation?id=" + id + "&furtherReleaser=HR&empUnqId=" + relsauth, true);
+                    }
                     rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
                 //Auto Mail End
                 };
@@ -348,6 +353,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         rsg.onreadystatechange = function () {
             if (4 === rsg.readyState && rsg.status === 200) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+                debugger;
                 var json = JSON.parse(rsg.responseText);
                 $scope.rsgData = json;
                 $scope.exportObj = json;

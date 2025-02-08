@@ -238,6 +238,7 @@
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th style="text-align:center;padding:3px;width:120px;">Employee Name</th>
+                                            <th style="text-align:center;padding:3px;width:68px;">Department</th>
                                             <th style="text-align:center;padding:3px;width:68px;">Station</th>
                                             <th style="text-align:center;padding:3px;width:40px;">Catg.</th>
                                             <th style="padding:0px;width:334px;">
@@ -273,6 +274,9 @@
                                             </td>
                                             <td></td>
                                             <td>
+                                                <input class="form-control" type="text" ng-model="search.departments" style="margin:0;padding:1px;" />
+                                            </td>
+                                            <td>
                                                 <input class="form-control" type="text" ng-model="search.stations" style="margin:0;padding:1px;" />
                                             </td>
                                             <td>
@@ -295,6 +299,9 @@
                                             <td style="text-align:left;padding:3px;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14"
                                                 data-title="'empName'">
                                                 {{e}}
+                                            </td>
+                                            <td style="text-align:left;padding:3px;" id="" ng-repeat="dept in d.departments" ng-if="$index==1" data-title="'deptName'">
+                                                {{dept}}
                                             </td>
                                             <td style="text-align:left;padding:3px;" id="statName" ng-repeat="s in d.stations" ng-if="$index==2" data-title="'statName'">
                                                 {{s}}

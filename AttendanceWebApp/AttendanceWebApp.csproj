@@ -496,11 +496,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ColumnsResize.js" />
     <Content Include="Scripts\Controller\AddressProffCntrl.js" />
+    <Content Include="Scripts\Controller\AppraisalCntrl.js" />
     <Content Include="Scripts\Controller\CompOffCntrl.js" />
     <Content Include="Scripts\Controller\default.js" />
     <Content Include="Scripts\Controller\EmpExitProcessCntrl.js" />
     <Content Include="Scripts\Controller\EmpListCntrl.js" />
     <Content Include="Scripts\Controller\EmpRelStrCntrl.js" />
+    <Content Include="Scripts\Controller\EmpServayCntrl.js" />
     <Content Include="Scripts\Controller\FandFCntrl.js" />
     <Content Include="Scripts\Controller\Form16Cntrl.js" />
     <Content Include="Scripts\Controller\GatePassCntrl.js" />
@@ -778,9 +780,6 @@
     <Content Include="Views\OD\ODApply.cshtml" />
     <Content Include="Views\ShiftSchedule\SSUpdate.cshtml" />
     <Content Include="Views\Report\PendingLeaveReport.cshtml" />
-    <Content Include="Views\Reimbursement\Conveyance_Form.cshtml" />
-    <Content Include="Views\Reimbursement\ReimbursementRelease.cshtml" />
-    <Content Include="Views\Reimbursement\ReimbursementReport.cshtml" />
     <Content Include="Views\Mediclaim\NameAddition.cshtml" />
     <Content Include="Views\Mediclaim\DependentDetails.cshtml" />
     <Content Include="Views\MedicalFitness\MedicalFit.cshtml" />
@@ -836,7 +835,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Master\SAPIDReport.cshtml" />
     <Content Include="Views\ProgressReview\PerformanceStatusReport.cshtml" />
-    <Content Include="Views\VehicleRequisition\HODRelease.cshtml" />
     <Content Include="Views\VehicleRequisition\AdminRelease.cshtml" />
     <Content Include="Views\VehicleRequisition\CreateVehicleRequisition.cshtml" />
     <Content Include="Views\VehicleRequisition\VehicleRequisitionReport.cshtml" />
@@ -845,6 +843,9 @@
     <Content Include="Views\Master\BulkUpdateReleaseStrategies.cshtml" />
     <Content Include="Views\AddressProof\AddressProofRequest.cshtml" />
     <Content Include="Views\MissPunch\EmpAttendanceCorrection.cshtml" />
+    <Content Include="Views\Report\PerformanceReportHR.cshtml" />
+    <Content Include="Views\Master\Appraisal.cshtml" />
+    <Content Include="Views\Master\AppraisalUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

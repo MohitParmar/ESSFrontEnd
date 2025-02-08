@@ -78,7 +78,7 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='BookingSlot'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:left;">Booking Status</th>
+                                        @*<th style="text-align:left;">Booking Status</th>*@
                                         <th style="text-align:left;" ng-click="sort('PickupTime')">
                                             Pickup Time
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='PickupTime'"
@@ -96,7 +96,7 @@
                                         </th>
                                         <th style="text-align:left;">No. Of Passengers</th>
                                         <th style="text-align:left;">Others</th>
-                                        <th style="text-align:left;" ng-click="sort('ReleaseAuth')">
+                                        @*<th style="text-align:left;" ng-click="sort('ReleaseAuth')">
                                             Released by
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='ReleaseAuth'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -106,7 +106,7 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='ReleaseDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;">HOD Release Status</th>
+                                        <th style="text-align:center;">HOD Release Status</th>*@
                                         <th style="text-align:left;" ng-click="sort('AdminUser')">
                                             Admin User
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='AdminUser'"
@@ -117,7 +117,10 @@
                                             <span class="glyphicon sort-icon" ng-show="sortKey=='AdminReleaseDate'"
                                                   ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                         </th>
-                                        <th style="text-align:center;">Admin Release Status</th>
+                                        <th style="text-align:center;" ng-click="sort('AdminReleaseStatusCode')">Admin Release Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='AdminReleaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
                                         <th style="text-align:left;">Rejection Remarks</th>
                                         <th style="text-align:center;">Action</th>
                                     </tr>
@@ -133,7 +136,7 @@
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.BookingSlot" />
                                         </td>
-                                        <td></td>
+                                        @*<td></td>*@
                                         <td></td>
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PickupLocation" />
@@ -143,13 +146,9 @@
                                         </td>
                                         <td></td>
                                         <td></td>
-                                        <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseAuth" />
-                                        </td>
+                                        @*<td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseAuth"/></td>
                                         <td></td>
-                                        <td>
-                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseStatusCode" />
-                                        </td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ReleaseStatusCode"/></td>*@
                                         <td>
                                             <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.AdminUser" />
                                         </td>
@@ -168,21 +167,19 @@
                                         <td style="text-align:left;">{{d.EmpName}}</td>
                                         <td style="text-align:center;">{{d.BookingDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;">{{d.BookingSlot}}</td>
-                                        <td style="text-align:center;">
-                                            <input type="checkbox" id="sts" ng-checked="{{d.BookingStatus}}" disabled />
-                                        </td>
+                                        @*<td style="text-align:center;"><input type="checkbox" id="sts" ng-checked="{{d.BookingStatus}}" disabled /></td>*@
                                         <td style="text-align:left;">{{d.PickupTime | date:'HH:mm'}}</td>
                                         <td style="text-align:left;">{{d.PickupLocation}}</td>
                                         <td style="text-align:left;">{{d.DropLocation}}</td>
                                         <td style="text-align:left;">{{d.NumberOfPass}}</td>
                                         <td style="text-align:left;">{{d.Remarks}}</td>
-                                        <td style="text-align:left;">{{d.ReleaseAuth}}</td>
+                                        @*<td style="text-align:left;">{{d.ReleaseAuth}}</td>
                                         <td style="text-align:center;">{{d.ReleaseDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="d.ReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                             		  d.ReleaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
                                             {{d.ReleaseStatusCode}}
-                                        </td>
+                                        </td>*@
                                         <td style="text-align:left;">{{d.AdminUser}}</td>
                                         <td style="text-align:center;">{{d.AdminReleaseDate | date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;"
@@ -191,17 +188,16 @@
                                             {{d.AdminReleaseStatusCode}}
                                         </td>
                                         <td style="text-align:left;">
-                                            <input id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks"/>
+                                            <input type="text" id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks" ng-if="d.BookingStatus === true" />
                                         </td>
                                         <td style="text-align:left;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-danger"
-                                                        id="btnReject"
-                                                        ng-if="d.BookingStatus === true"
-                                                        ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',N,true)">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-                                            </div>
+                                            <button class="btn btn-danger"
+                                                    id="btnReject"
+                                                    ng-if="d.BookingStatus === true"
+                                                    ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',N,true)">
+                                                <i class="fa fa-remove"></i>
+                                            </button>
+
                                         </td>
                                     </tr>
                                 </tbody>

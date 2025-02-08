@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "AppraisalUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/AppraisalCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="AppraisalCntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Appraisal Letter Upload</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form enctype="multipart/form-data" id="formUpload">
+                                @*<div ng-init="GetForm16Link()">
+                                    <select class="form-control" id="yearMonth" ng-model="N.year" ng-options="f for f in f16data" style="width:322px;" required>
+                                        <option value="" selected>--- Select Financial Year ---</option>
+                                    </select>
+                                </div>*@
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv"><br />
+                                <div class="input-group form">
+                                    <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" id="buttonUpload" ng-click="FormUpload('2023-2024')">
+                                            <i class="fa fa-upload"></i>&nbsp;Upload Appraisal Letters
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

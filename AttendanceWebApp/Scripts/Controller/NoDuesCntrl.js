@@ -1,14 +1,20 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("NoDuesController", function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol; $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"); });
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(), $scope._Conpath = ""; var url_string = window.location.href, url = new URL(url_string), urlhost = url.hostname, urlprotocol = url.protocol;
+    $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"); });
     $scope.currentPage = 1; $scope.itemsPerPage = 10;
     $scope.ResetView = function () { window.location.reload(true); };
     $scope.GetRelesaseStratey = function (ecode) { var rel = new XMLHttpRequest(); rel.open("GET", $scope._Conpath + "ReleaseStrategy/GetReleaseStrategy?releaseGroup=" + $("#releaseGroupCode").val() + "&empUnqId=" + ecode, true); rel.setRequestHeader("Accept", "application/json"); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };
     $scope.empdata;
-    $scope.GetEmpInfo = function () { var e_Code = $("#eCode").val(), emp = new XMLHttpRequest(); emp.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + e_Code, true), emp.setRequestHeader("Accept", "application/json"), emp.onreadystatechange = function () { if (4 === emp.readyState) { var json = JSON.parse(emp.responseText); $scope.empdata = json, $scope.$digest(); $scope.GetRelesaseStratey(e_Code); } }, emp.send(); };
+    $scope.GetEmpInfo = function () {
+        debugger; var e_Code = $("#eCode").val().trim(), emp = new XMLHttpRequest(); emp.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + e_Code, true), emp.setRequestHeader("Accept", "application/json"), emp.onreadystatechange = function () { if (4 === emp.readyState) { var json = JSON.parse(emp.responseText); $scope.empdata = json, $scope.$digest(); $scope.GetRelesaseStratey(e_Code); } }, emp.send();
+    };
     //First Submit from HR
     $scope.NoDuesSubmit = function (entity) {
-        var jsonObj = {}; var empUnqId = $("#eCode").val(); jsonObj.empUnqId = $("#eCode").val(); jsonObj.joinDate = $scope.empdata[0].joinDate; jsonObj.resignDate = entity.ResignDate; jsonObj.relieveDate = entity.RelieveDate; jsonObj.noDuesStartDate = new Date(); jsonObj.addUser = $("#myEmpUnqId").val(); jsonObj.addDate = new Date(); jsonObj.closedFlag = false; jsonObj.modeofLeaving = entity.modeofLeaving; jsonObj = JSON.stringify(jsonObj);
+        var jsonObj = {}; var empUnqId = $("#eCode").val().trim(); jsonObj.empUnqId = $("#eCode").val().trim();
+        jsonObj.joinDate = $scope.empdata[0].joinDate; jsonObj.resignDate = entity.ResignDate; jsonObj.relieveDate = entity.RelieveDate;
+        jsonObj.noDuesStartDate = new Date(); jsonObj.addUser = $("#myEmpUnqId").val(); jsonObj.addDate = new Date(); jsonObj.closedFlag = false;
+        jsonObj.modeofLeaving = entity.modeofLeaving; jsonObj = JSON.stringify(jsonObj);
         var xhr = new XMLHttpRequest; xhr.open("POST", $scope._Conpath + "NoDues/CreateNoDues", true);
         xhr.setRequestHeader("Content-type", "application/json"); xhr.onreadystatechange = function () {
             if (4 === xhr.readyState && 200 === xhr.status) {
@@ -42,6 +48,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                         $("#hidreleaserFlag").val(rflg); break;
                     };
                 }; $scope.GetReleaser(rflg);
+            } else {
+                $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
             };
         }; rol.send();
     };
@@ -62,6 +70,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     $("#hidDept").val($scope.dept[0]);
                     var dept = $("#hidDept").val();
                     $scope.GetNoDues(dept, reflg);
+                } else {
+                    $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 };
             }; rel.send();
         };
@@ -297,6 +307,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
         }
     };
     $scope.ChangeNoDues = function (flg, id, direct, data) {
+        debugger;
         var rmks = "";
         if ((typeof (data) === "undefined")) {
             rmks = "";
@@ -327,7 +338,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                     }
                 });
                 noDuesDeptDetails.shift();
-            } else {
+            }
+            else {
                 if ((typeof (direct) === "undefined") && flg === false) {
                     $('#commonTable tr').each(function (row, tr) {
                         noDuesDeptDetails[row] = {
@@ -344,7 +356,8 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                             "ApprovedBy": $("#myEmpUnqId").val()
                         }
                     }); noDuesDeptDetails.shift();
-                } else if ((typeof (direct) === "undefined") && flg === true) {
+                }
+                else if ((typeof (direct) === "undefined") && flg === true) {
                     $('#commonTable1 tr').each(function (row, tr) {
                         noDuesDeptDetails[row] = {
                             "EmpUnqId": $(tr).find('td:eq(0)').text(),
@@ -436,17 +449,20 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
                 if (releaserFlag === "true") {
                     jsonObj.noticePeriod = $scope.ndData.noticePeriod; jsonObj.noticePeriodUnit = $scope.ndData.noticePeriodUnit;
                     jsonObj.lastWorkingDate = $scope.ndData.lastWorkingDate; jsonObj.modeOfLeaving = $scope.ndData.modeOfLeaving;
+                    jsonObj.reasonForLeaving = $scope.ndData.reasonForLeaving;
                     jsonObj.exitInterviewFlag = $scope.ndData.exitInterviewFlag; jsonObj.hrAddUser = $scope.ndData.hrAddUser;
                     jsonObj.hrApprovalFlag = true; jsonObj.hrApprovalDate = dt; jsonObj.hrApprovedBy = $("#myEmpUnqId").val();
                 } else {
                     jsonObj.noticePeriod = direct.noticePeriod; jsonObj.noticePeriodUnit = direct.noticePeriodUnit;
                     jsonObj.lastWorkingDate = direct.lastWorkingDate; jsonObj.modeOfLeaving = direct.modeofLeaving;
+                    jsonObj.reasonForLeaving = direct.reasonForLeaving;
                     jsonObj.exitInterviewFlag = direct.exitInterviewFlg; jsonObj.hrAddUser = $("#myEmpUnqId").val();
                     jsonObj.hrApprovalFlag = false; jsonObj.hrApprovalDate = null; jsonObj.hrApprovedBy = null;
                 }
             } else {
                 jsonObj.noticePeriod = $scope.ndData.noticePeriod; jsonObj.noticePeriodUnit = $scope.ndData.noticePeriodUnit;
                 jsonObj.lastWorkingDate = $scope.ndData.lastWorkingDate; jsonObj.modeOfLeaving = $scope.ndData.modeOfLeaving;
+                jsonObj.reasonForLeaving = $scope.ndData.reasonForLeaving;
                 jsonObj.exitInterviewFlag = $scope.ndData.exitInterviewFlag; jsonObj.hrAddUser = $scope.ndData.hrAddUser;
                 jsonObj.hrApprovalFlag = $scope.ndData.hrApprovalFlag; jsonObj.hrApprovalDate = $scope.ndData.hrApprovalDate;
                 jsonObj.hrApprovedBy = $scope.ndData.hrApprovedBy;
@@ -546,7 +562,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
         }; nds.send(TableData);
     };
     $scope.ToValidate = function () { var chkFrom = document.getElementById("FromDt"), chkTo = document.getElementById("ToDt"), FromDate = chkFrom.value, ToDate = chkTo.value, date1 = new Date(FromDate), date2 = new Date(ToDate); return date1 > date2 ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>", $("#MessageBox").show(), !1) : !0 };
-    $scope.hrdData;
+    $scope.hrdData; $scope.NDInfo;
     $scope.GetNoDuesHR = function (puser) {
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var FromDate, ToDate;
         if ("undefined" == typeof puser || "undefined" == typeof puser.FromDt || "undefined" == typeof puser.ToDt) {
@@ -559,13 +575,34 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             return document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Please Enter Valid Date Range.. </strong></div>",
                 $("#MessageBox").show(), !1;
-        var hrd = new XMLHttpRequest; hrd.open("GET", $scope._Conpath + "NoDues/GetNoDues?fromDate=" + FromDate + "&toDate=" + ToDate, true);
+        var hrd = new XMLHttpRequest;
+        hrd.open("GET", $scope._Conpath + "NoDues/GetNoDues?fromDate=" + FromDate + "&toDate=" + ToDate, true);
         hrd.setRequestHeader("Accept", "application/json"); hrd.onreadystatechange = function () {
             if (hrd.readyState === 4 && hrd.status === 200) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); const hrdJson = JSON.parse(hrd.responseText); $scope.hrdData = hrdJson;
+                var myArray = [];
                 for (var i = 0; i < $scope.hrdData.length; i++) {
                     var resigndate = $scope.hrdData[i].resignDate.substring(0, $scope.hrdData[i].resignDate.indexOf("T"));
                     if (resigndate === "0001-01-01") { $scope.hrdData[i].resignDate = ""; }
+                    //Export DS
+                    myArray.push([]);
+                    myArray[i].SAPID = $scope.hrdData[i].empUnqId;
+                    myArray[i].EMPLOYEE_NAME = $scope.hrdData[i].empName;
+                    myArray[i].DEPARTMENT = $scope.hrdData[i].deptName;
+                    myArray[i].STATION = $scope.hrdData[i].statName;
+                    myArray[i].CATEGORY = $scope.hrdData[i].catName;
+                    myArray[i].GRADE = $scope.hrdData[i].gradeName;
+                    myArray[i].DATE_OF_JOINING = $scope.hrdData[i].joinDate.substring(0, $scope.hrdData[i].joinDate.indexOf("T"));
+                    if ($scope.hrdData[i].resignDate !== "") {
+                        myArray[i].DATE_OF_RESIGN = $scope.hrdData[i].resignDate.substring(0, $scope.hrdData[i].resignDate.indexOf("T"));
+                    } else { myArray[i].DATE_OF_RESIGN = $scope.hrdData[i].resignDate; }
+                    myArray[i].DATE_OF_RELIEVE = $scope.hrdData[i].relieveDate.substring(0, $scope.hrdData[i].relieveDate.indexOf("T"));
+                    myArray[i].NOTICE_PERIOD = $scope.hrdData[i].noticePeriod;
+                    myArray[i].UNIT_OF_NOTICE_PERIOD = $scope.hrdData[i].noticePeriodUnit;
+                    myArray[i].LAST_DATE_OF_WORKING = $scope.hrdData[i].lastWorkingDate.substring(0, $scope.hrdData[i].lastWorkingDate.indexOf("T"));
+                    myArray[i].MODE_OF_LEAVING = $scope.hrdData[i].modeOfLeaving;
+                    myArray[i].REASON_FOR_LEAVING = $scope.hrdData[i].reasonForLeaving;
+                    $scope.NDInfo = myArray;
                 }; $scope.$digest();
             }
             else if (hrd.status === 400) {
@@ -642,7 +679,7 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
             if (sts.readyState === 4 && sts.status === 200) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
                 var stsJson = JSON.parse(sts.responseText); $scope.statusData = stsJson; $scope.$digest();
-                var f = new Array(); f[0] = $scope.statusData.noDuesStatus; $scope.sEmpData = f; $scope.$digest();
+                var f = new Array(); f[0] = $scope.statusData.noDuesStatus; $scope.sEmpData = f; $scope.NDInfo = f; $scope.$digest();
             } else { $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv"); };
         }; sts.send();
     };
@@ -669,5 +706,16 @@ app.controller("NoDuesController", function ($scope, $http, $filter) {
         }; IRV.send();
     };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
+    $scope.exportAllData = function (name) {
+        setTimeout(function () {
+            $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = name + d;
+            $scope.JSONToCSVConvertor($scope.NDInfo, FileName, !0), $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv")
+        }, 100)
+    };
+    $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) {
+        var arrData = "object" != typeof JSONData ? JSON.parse(JSONData) : JSONData, CSV = ""; if (CSV += ReportTitle + "\r\n\n", ShowLabel) { var row = ""; for (var index in arrData[0]) row += index + ","; row = row.slice(0, -1), CSV += row + "\r\n" } for (var i = 0; i < arrData.length; i++) {
+            var row = ""; for (var index in arrData[i]) row += '"' + arrData[i][index] + '",'; row.slice(0, row.length - 1), CSV += row + "\r\n"
+        } if ("" === CSV) return void alert("Invalid data"); var fileName = ""; fileName += ReportTitle.replace(/ /g, "_"); var uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a"); link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link)
+    };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } }; });

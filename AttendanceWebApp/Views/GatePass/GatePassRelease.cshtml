@@ -60,6 +60,7 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="text-align:center;">Department</th>
                                             <th style="text-align:center;">Station</th>
                                             <th style="text-align:center;">Purpose</th>
                                             <th style="text-align:center;">Mode</th>
@@ -73,6 +74,9 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" />
                                             </td>
                                             <td>
                                                 <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" />
@@ -90,6 +94,7 @@
                                             <td style="text-align:center;">{{d.gatePassDate | date:'dd/MM/yyyy'}}</td>
                                             <td style="text-align:center;">{{d.empUnqId}}</td>
                                             <td style="text-align:left;">{{d.empName}}</td>
+                                            <td style="text-align:left;">{{d.deptName}}</td>
                                             <td style="text-align:left;">{{d.statName}}</td>
                                             <td style="text-align:left;">{{d.reason}}</td>
                                             <td style="text-align:center;">{{d.modeName}}</td>

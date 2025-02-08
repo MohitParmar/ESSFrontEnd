@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Appraisal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/AppraisalCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<div ng-app="myApp" ng-controller="AppraisalCntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Appraisal Letter</strong>
+                    </div>
+                    <div class="panel-body">
+                        @*<div ng-init="GetAppraisalLink()">
+                            <select class="form-control" id="yearMonth" ng-model="N.assYear" ng-options="f for f in aprdata" style="width:322px;" required>
+                                <option value="" selected>--- Select Year ---</option>
+                            </select>
+                        </div><br />*@
+                        <div class="input-group-btn form">
+                            <button class="btn btn-info" type="button" id="buttonUpload1" ng-click="GetAppraisalDetails('2023-2024')">
+                                <i class="fa fa-download"></i>&nbsp;APPRAISAL LETTER
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Note: Click on the Button to Open the Appraisal Letter in the new tab window. The File is Password protected and password is your employee code. Please write your password to open it.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

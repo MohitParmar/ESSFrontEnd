@@ -141,12 +141,11 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="2">
-                                            <p>1) Old Tax Regime- Benefits of exemptions/deductions allowable as per Income Tax Act, 1961 will continue subject to conditions and tax will be deducted as per existing tax rates.</p>
-                                            <p>2) New Tax Regime- As per changes made in Union budget 2020, no benefit of exemption/deductions as per Income Tax Act, 1961 shall be allowable and tax shall be continued to be deducted as per new tax slabs.</p>
-                                            <br />
-                                            <p>You will be able to change Tax Regime (from old to new and vice versa) only before the Tax Declaration Cut-off date.</p>
-                                            @*<p>For Information Only : Click on <a href="https://www.incometaxindiaefiling.gov.in/Tax_Calculator/index.html?lang=eng" target="_blank">Income Tax Calculator</a> for Tax Calculation</p>*@
+                                        <td colspan="2" style="color:red;">
+                                            <p>1) The employee has to choose one option i.e. either New or Old Tax Regime and option once exercised cannot be changed during the financial year. However, option is allowed to be changed only at the time of return filing next year.</p>
+                                            <p>2) The New Tax Regime is going to be the default option from this financial year i.e. if declaration is not made by the employee then it shall be presumed that he is covered under New Tax Regime by default as per circular no. 04/2023 of Income Tax Department.</p>
+                                            <p>3) Old Tax Regime- Benefits of exemptions/deductions allowable as per Income Tax Act, 1961 will continue subject to conditions and tax will be deducted as per existing tax rates.</p>
+                                            <p>4) New Tax Regime- As per changes made in Union budget 2023, no benefit of exemption/deductions as per Income Tax Act, 1961 shall be allowable and tax shall be continued to be deducted as per new tax slabs.</p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -239,8 +238,11 @@
                                         @* ng-iF="t.actualFlag" *@
                                         <thead>
                                             <tr>
-                                                <th colspan="2" style="text-align:center;">
+                                                <th style="text-align:center;">
                                                     <h1>Provisional Income Tax Declaration</h1>
+                                                </th>
+                                                <th style="text-align:center;">
+                                                    <h4>Tax Regime : {{t.taxRegime == 'O' ? 'Old Tax Regime' : 'New Tax Regime' }}</h4>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -253,17 +255,19 @@
                                                 </th>
                                                 <th style="text-align:center;">
                                                     <p>
-                                                        <b>Actual Amount</b>
+                                                        <b>Provisional Amount</b>
                                                     </p>
                                                 </th>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong>
-                                                </td>
-                                                <td style="text-align:right;">
+                                                    <strong>SAPID / Employee Name : {{t.empUnqId}} / @Session["EmpName"]</strong><br />
                                                     <strong>Mobile No. : <label id="lblMono"></label></strong>
                                                 </td>
+                                                <td></td>
+                                                @*<td style="text-align:right;">
+                                                    <strong>Mobile No. : <label id="lblMono"></label></strong>
+                                                </td>*@
                                             </tr>
                                             <tr>
                                                 <td>

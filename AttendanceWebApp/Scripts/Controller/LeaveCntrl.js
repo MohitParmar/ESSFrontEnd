@@ -1,15 +1,7 @@
 ﻿angular.module('myApp.Controllers').controller('LeaveController', ['$scope', '$http', function ($scope, $http) {
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val(); $scope.alluserlist = [];
     var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
-    $scope._Conpath = ''; var loc = $("#myLoc").val();
-    $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
-        };
-    });
+    $scope._AttdConPath = ""; $scope._Conpath = ''; var loc = $("#myLoc").val();
     //$(document).ready(function () {
     //    if (typeof (_ConPath) === "undefined") { return; } else {
     //        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
@@ -17,12 +9,24 @@
     //        }
     //    };
     //});
+    $(document).ready(function () {
+        "undefined" != typeof _ConPath &&
+            (urlhost === _URLHostName ?
+                $scope._Conpath = _ConPath :
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/",
+                "undefined" != typeof _AttdConPath &&
+                (urlhost === _URLHostName ?
+                    $scope._AttdConPath = _AttdConPath :
+                    $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/")
+            )
+    });
+
     //var d = new Date(); var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();    //var chkTo = document.getElementById('ToDt'); var ToDate = chkTo.value;            //if (today < ToDate) {};
     $scope.ResetView = function () { window.location.reload(true); };
     $scope.SetLTListValue = function (value) {
         $scope.ToValidate();
         var loc = $("#myLoc").val(); var plCheck = $("#myPlFlag").val();
-        if (loc === "NSK" && plCheck == "True" && (value === "EL" || value === "PL")) {
+        if ((loc === "NSK" || loc === "NAG") && plCheck == "True" && (value === "EL" || value === "PL")) {
             var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value;
             var date1 = new Date(FromDate); var date2 = new Date();
             var diff = ((date2 - date1) / (1000 * 60 * 60 * 24) * -1) + 1;
@@ -32,6 +36,26 @@
         if (value === "OH") {
             var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value;
             $('#ToDt').val(FromDate); $("#HalfFlag").attr("disabled", true); $("#HalfFlag").attr("checked", false);
+        };
+        if (value === "EL" || value === "PL") {
+            var d = new Date(); var tyear = d.getFullYear();
+            var ser = new XMLHttpRequest;
+            ser.open("GET",
+                $scope._AttdConPath + "leavepost/leavecount?EmpUnqID=" + $("#myEmpUnqId").val() +
+                "&LeaveType=" + value + "&Location=" + loc + "&tYear=" + tyear, !0);
+            ser.setRequestHeader("Accept", "application/json");
+            ser.onreadystatechange = function () {
+                if (4 === ser.readyState) {
+                    debugger;
+                    var json = JSON.parse(ser.responseText); $scope.serData = json;
+                    var cnt = parseInt($scope.serData) || 0;
+                    if (cnt >= 4) {
+                        alert("EL can be availed maximum of 4 times in a year.");
+                        $scope.ResetView();
+                    }; $scope.$digest();
+                };
+            }; ser.send();
+            $('#ELModel').modal('show');
         };
         $scope.LeaveType = value;
     };
@@ -43,7 +67,12 @@
         if (FromDate === "") { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Select From Date First...</strong></div>"; $('#MessageBox').show(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); return false; };
         var date1 = new Date(FromDate); var date2 = new Date(ToDate);
         //YEAR VALIDATE START
-        var fyear = date2.getFullYear(); var d = new Date(); var tyear = d.getFullYear(); if (tyear < fyear) { alert("Please Enter Valid Date of Current Month/Year.. "); document.getElementById("ToDt").value = ""; return false; };
+        var fyear = date2.getFullYear(); var d = new Date(); var tyear = d.getFullYear();
+        if (tyear < fyear) {
+            alert("Please Enter Valid Date of Current Month/Year.. ");
+            document.getElementById("ToDt").value = "";
+            return false;
+        };
         //YEAR VALIDATE END
         var diff = ((date1 - date2) / (1000 * 60 * 60 * 24) * -1) + 1;
         if (diff === "NaN" || diff <= 0) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Select Proper Dates for Leave apply.</strong></div>"; $('#MessageBox').show(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); return false; };
@@ -53,10 +82,13 @@
     };
     //Current Year Leave Date Validate
     $scope.YearValidate = function () {
-        var chkFrom = document.getElementById('FromDt'); var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear();
+        var chkFrom = document.getElementById('FromDt');
+        var FromDate = chkFrom.value; var date1 = new Date(FromDate); var fyear = date1.getFullYear();
         var d = new Date(); var tyear = d.getFullYear();
         if (tyear < fyear || fyear < tyear) {
-            alert("Please Enter Valid Date of Current Month/Year.. "); document.getElementById("FromDt").value = ""; return false;
+            alert("Please Enter Valid Date of Current Month/Year.. ");
+            document.getElementById("FromDt").value = "";
+            return false;
         } else { $('#ToDt').val(FromDate); $scope.ToValidate(); };
     };
     var c = 0;
@@ -98,7 +130,12 @@
                 };
             }; var ltyp = '';
             if (TableData.length > 1) { ltyp = TableData[0]["leaveTypeCode"]; lhlf = TableData[0]["halfdayflag"]; if (ltyp === LeaveTypeCode && lhlf === false) { var tables = document.getElementById('aliasTable'); var rowCounts = tables.rows.length; tables.deleteRow(rowCounts - 1); c = c - 1; chktabldta = true; return; } };
-            jsonObj.yearMonth = yearmonth; jsonObj.leaveAppId = 0; jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.compCode = $('#myCompCode').val(); jsonObj.wrkGrp = $('#myWrkGrp').val(); jsonObj.unitCode = $('#myUnitCode').val(); jsonObj.deptCode = $('#myDeptCode').val(); jsonObj.statCode = $('#myStatCode').val(); jsonObj.catCode = $('#myCatCode').val(); jsonObj.releaseGroupCode = $('#releaseGroupCode').val(); jsonObj.releaseStrategy = ""; jsonObj.releaseStatusCode = ""; jsonObj.addDt = d; jsonObj.addUser = $('#myEmpUnqId').val(); jsonObj.updDt = d; jsonObj.updUser = null; jsonObj.remarks = null; jsonObj.leaveApplicationDetails = TableData;
+            jsonObj.yearMonth = yearmonth; jsonObj.leaveAppId = 0; jsonObj.empUnqId = $('#myEmpUnqId').val(); jsonObj.compCode = $('#myCompCode').val();
+            jsonObj.wrkGrp = $('#myWrkGrp').val(); jsonObj.unitCode = $('#myUnitCode').val(); jsonObj.deptCode = $('#myDeptCode').val();
+            jsonObj.statCode = $('#myStatCode').val(); jsonObj.catCode = $('#myCatCode').val(); jsonObj.releaseGroupCode = $('#releaseGroupCode').val();
+            jsonObj.releaseStrategy = ""; jsonObj.releaseStatusCode = ""; jsonObj.addDt = d; jsonObj.addUser = $('#myEmpUnqId').val(); jsonObj.updDt = d;
+            jsonObj.updUser = null; jsonObj.remarks = null; jsonObj.leaveApplicationDetails = TableData;
+            debugger;
             return jsonObj;
         };
         if (chkohsl === true) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>OH & SL can not be clubbed as per HR Policy..</strong></div>"; $('#MessageBox').show(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true); chktabldta = false; return; };
@@ -161,6 +198,7 @@
             if (xhr.readyState === 4 && xhr.status === 201) {
                 document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Created Sucesfully.. </strong></div>"; $('#MessageBox').show();
                 //Auto Mail Sending
+                debugger;
                 var json = JSON.parse(xhr.responseText); var maildata = []; maildata = json; var relsdata = []; relsdata = maildata["applReleaseStatus"]; var relsauth = relsdata[0]["releaseAuth"]; var rlsmail = new XMLHttpRequest(); rlsmail.open('GET', $scope._Conpath + 'AutoMail/SendMail?releaseGroupCode=' + maildata["releaseGroupCode"] + '&id=' + maildata["leaveAppId"] + '&releaseAuth=' + relsauth, true); rlsmail.setRequestHeader("Content-type", "application/json"); rlsmail.send();
                 //Auto Mail End
                 $("#aliasTable").find("tr:not(:first)").remove(); document.getElementById("FromDt").value = ""; document.getElementById("ToDt").value = ""; document.getElementById("TotalDays").value = ""; document.getElementById("Remarks").value = ""; $('#HalfFlag').prop('checked', false); $("#LeaveType option:first").attr("selected", true);

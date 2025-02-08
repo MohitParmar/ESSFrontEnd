@@ -1,9 +1,11 @@
 ﻿var app = angular.module("myApp", ["angularUtils.directives.dirPagination"]);
 app.controller("MissPunchController", function ($scope, $http, $filter) {
-    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
+    $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope._Conpath = ""; var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol;
+    $(document).ready(function () { "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/") });
     $scope.ResetView = function () { window.location.reload(!0) }; $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.exportObj;
     jQuery.support.cors = true; var d = new Date(); var rlsarr = [];
     $scope.GetRelesaseStrategy = function () {
+        
         var rel = new XMLHttpRequest();
         rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() +
             '&empUnqId=' + $('#myEmpUnqId').val(), true);
@@ -15,6 +17,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; rel.send();
     };
     $scope.GetEmpInfo = function () {
+        
         $("#MessageBox").hide();
         $("#tbl_empdtl").show();
         var e_Code = $("#eCode").val();
@@ -42,6 +45,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     };
     //Get Employee Block Information
     $scope.GetEmpBlock = function (empcode) {
+        
         var blk = new XMLHttpRequest;
         blk.open("GET", $scope._Conpath + "MedicalFitness/GetEmpBlock?empUnqId=" + empcode, !0);
         blk.setRequestHeader("Accept", "application/json");
@@ -57,6 +61,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     };
     //Creation of punch entry.
     $scope.CreateMissPunch = function (entity, hrflg) {
+        
         if (hrflg && (typeof (entity.IO) === "undefined")) {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
@@ -78,22 +83,37 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                     "<strong>Please Enter Remarks</strong></div>";
                 $('#MessageBox').show();
                 return false;
-            } else { rmks = entity.Remarks; };
-        } else { rmks = entity.Remarks; };
+            } else {
+                rmks = entity.Remarks;
+            };
+        } else {
+            rmks = entity.Remarks;
+        };
         var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var e_Code = $("#eCode").val();
         var IO = ""; if ((typeof (entity.IO) !== "undefined")) { IO = entity.IO; } else { IO = ""; };
-        jsonObj = {}; jsonObj.Id = 0; jsonObj.AddDate = now; jsonObj.EmpUnqId = e_Code; jsonObj.Reason = entity.Reason;
+        jsonObj = {}; jsonObj.Id = 0; jsonObj.AddDate = now; jsonObj.EmpUnqId = e_Code;
+        jsonObj.Reason = entity.Reason;
         jsonObj.Remarks = rmks; jsonObj.ReleaseStrategy = e_Code; jsonObj.ReleaseStatusCode = "N";
-        var tm = ""; if (typeof (entity.time) === "undefined") { tm = now; } else { tm = entity.time; };
+        var tm = "";
+        if (typeof (entity.time) === "undefined") {
+            tm = now;
+        } else {
+            tm = entity.time;
+        };
         if (IO !== "") {
             if (IO === "I") {
-                jsonObj.InTime = tm; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null;
+                jsonObj.InTime = tm; jsonObj.InTimeUser = $("#myEmpUnqId").val();
+                jsonObj.OutTime = null; jsonObj.OutTimeUser = null;
             } else if (IO === "O") {
-                jsonObj.InTime = null; jsonObj.InTimeUser = null; jsonObj.OutTime = tm; jsonObj.OutTimeUser = $("#myEmpUnqId").val();
+                jsonObj.InTime = null; jsonObj.InTimeUser = null;
+                jsonObj.OutTime = tm; jsonObj.OutTimeUser = $("#myEmpUnqId").val();
             }
         } else {
-            jsonObj.InTime = tm; jsonObj.InTimeUser = $("#myEmpUnqId").val(); jsonObj.OutTime = null; jsonObj.OutTimeUser = null;
+            jsonObj.InTime = tm;
+            jsonObj.InTimeUser = $("#myEmpUnqId").val();
+            jsonObj.OutTime = null;
+            jsonObj.OutTimeUser = null;
         };
         jsonObj.PunchType = "M"; jsonObj.InOutFlag = IO; jsonObj.AttdPunchTime = null;
         jsonObj.PostingFlag = false; jsonObj.MissedPunchReleaseStatus = null; jsonObj = JSON.stringify(jsonObj);
@@ -101,10 +121,15 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("time").value = ""; document.getElementById("txtRemarks").value = "";
-                document.getElementById("eCode").value = ""; $("#tbl_empdtl").find("tr:not(:first)").remove();
+                
+                document.getElementById("time").value = "";
+                document.getElementById("txtRemarks").value = "";
+                document.getElementById("eCode").value = "";
+                $("#tbl_empdtl").find("tr:not(:first)").remove();
                 $("#cmbReason option:first").attr("selected", true);
-                if (IO !== "") { $("#cmbIOflag option:first").attr("selected", true); };
+                if (IO !== "") {
+                    $("#cmbIOflag option:first").attr("selected", true);
+                };
                 document.getElementById("MessageBox").innerHTML =
                     "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                     "<strong>Miss Punch Application Created.. </strong></div>";
@@ -119,17 +144,18 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     };
     //get pending for release by hod.
     $scope.GetPendingRelease = function () {
+        debugger;
         $('#loading').removeClass("deactivediv"); $('#loading').addClass("activediv");
         var mpr = new XMLHttpRequest; mpr.open("GET", $scope._Conpath + "MissedPunch/GetApplReleaseStatus?empUnqId=" + $("#myEmpUnqId").val(), true);
         mpr.setRequestHeader("Accept", "application/json");
         mpr.onreadystatechange = function () {
             if (mpr.readyState === 4) {
                 $('#loading').removeClass("activediv"); $('#loading').addClass("deactivediv");
-
                 var json = JSON.parse(mpr.responseText); rlsarr = json; $scope.msData = json;
                 for (var i = 0; i < $scope.msData.length; i++) {
                     var emp = $scope.msData[i].employee.empName; $scope.msData[i]["empName"] = emp;
-                    var yCount = $scope.msData[i].employee.yearlyCount | 0; $scope.msData[i]["yearlyCount"] = yCount;
+                    var yCount = $scope.msData[i].employee.yearlyCount | 0;
+                    $scope.msData[i]["yearlyCount"] = yCount;
                 }
                 $scope.$digest();
             };
@@ -137,6 +163,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     };
     //released by hod
     $scope.ReleaseMissPunch = function (releaseStatusCode, appId, data) {
+        debugger;
         var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var rmks = '';
         if (releaseStatusCode === "R") {
@@ -151,10 +178,16 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         // Get Releaser Details From AppReleaseStatus Table
         var detailarr = []; for (var r = 0; r <= rlsarr.length; r++) { var id = rlsarr[r]["id"]; if (id == appId) { detailarr = rlsarr[r]["missedPunchReleaseStatus"]; break; }; };
         //Get ReleaseCode of Releaser
-        var dataarr = []; for (i = 0; i < detailarr.length; i++) { var release_auth = detailarr[i]["releaseAuth"]; if (release_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; }; };
-        var jsonObj = {}; jsonObj.ApplicationId = appId; jsonObj.ReleaseStrategy = dataarr.releaseStrategy; jsonObj.ReleaseStrategyLevel = dataarr.releaseStrategyLevel;
-        jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = dataarr.releaseStatusCode; jsonObj.ReleaseDate = now; jsonObj.ReleaseAuth = dataarr.releaseAuth;
-        jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = rmks; jsonObj = JSON.stringify(jsonObj);
+        var dataarr = []; for (i = 0; i < detailarr.length; i++) {
+            var release_auth = detailarr[i]["releaseAuth"];
+            if (release_auth === $('#myEmpUnqId').val()) { dataarr = detailarr[i]; break; };
+        };
+        var jsonObj = {}; jsonObj.ApplicationId = appId; jsonObj.ReleaseStrategy = dataarr.releaseStrategy;
+        jsonObj.ReleaseStrategyLevel = dataarr.releaseStrategyLevel;
+        jsonObj.ReleaseCode = dataarr.releaseCode; jsonObj.ReleaseStatusCode = dataarr.releaseStatusCode;
+        jsonObj.ReleaseDate = now; jsonObj.ReleaseAuth = dataarr.releaseAuth;
+        jsonObj.IsFinalRelease = dataarr.isFinalRelease; jsonObj.Remarks = rmks;
+        jsonObj = JSON.stringify(jsonObj);
         var xhr2 = new XMLHttpRequest();
         xhr2.open('POST', $scope._Conpath + 'MissedPunch/AppRelease?empUnqId=' + $('#myEmpUnqId').val() + '&releaseStatusCode=' + releaseStatusCode, true);
         xhr2.setRequestHeader("Content-type", "application/json");
@@ -189,6 +222,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; xhr2.send(jsonObj);
     };
     $scope.GetMissedPunch = function (data) {
+        
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var FromDate, ToDate;
         if ("undefined" == typeof data || "undefined" == typeof data.FromDt || "undefined" == typeof data.ToDt) {
@@ -196,7 +230,9 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
             firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1); lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
             FromDate = firstDay.getFullYear() + "/" + (firstDay.getMonth() + 1) + "/" + firstDay.getDate();
             ToDate = lastDay.getFullYear() + "/" + (lastDay.getMonth() + 1) + "/" + lastDay.getDate();
-        } else { FromDate = data.FromDt, ToDate = data.ToDt; };
+        } else {
+            FromDate = data.FromDt, ToDate = data.ToDt;
+        };
         var date1 = new Date(FromDate), date2 = new Date(ToDate);
         if (date1 > date2) {
             document.getElementById("MessageBox").innerHTML =
@@ -274,6 +310,10 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                     myArray[cnt]["ShiftCode"] = "";
                     myArray[cnt]["TPAHours"] = "";
                     myArray[cnt]["Reason"] = $scope.mpaData[j].reason.toUpperCase();
+                    myArray[cnt]["AppDate"] = $scope.mpaData[j].addDate.substring(0, $scope.mpaData[j].addDate.indexOf("T"));
+                    myArray[cnt]["Remarks"] = $scope.mpaData[j].remarks;
+                    myArray[cnt]["InTimeUser"] = $scope.mpaData[j].inTimeUser;
+                    myArray[cnt]["OutTimeUser"] = $scope.mpaData[j].outTimeUser;
                     cnt++;
                 };
                 $scope.exportObj = myArray;
@@ -282,6 +322,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; xhr4.send();
     };
     $scope.GetEmployeeMissedPunch = function (data) {
+        
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var FromDate, ToDate;
         if ("undefined" == typeof data || "undefined" == typeof data.FromDt || "undefined" == typeof data.ToDt) {
@@ -311,13 +352,15 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; xhr5.send();
     };
     $scope.MissPunchInfo = function () {
+        
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var prev = new Date(); var FromDate = new Date(prev); FromDate.setDate(prev.getDate() - 1);
         var dd = FromDate.getDate(); var mm = FromDate.getMonth() + 1; var yyyy = FromDate.getFullYear();
         if (dd < 10) { dd = '0' + dd; } if (mm < 10) { mm = '0' + mm; };
         FromDate = yyyy + '/' + mm + '/' + dd;
         var today = new Date(); var ToDate = new Date(today); ToDate.setDate(today.getDate());
-        var dd2 = ToDate.getDate(); var mm2 = ToDate.getMonth() + 1; var yyyy2 = ToDate.getFullYear(); var h = ToDate.getHours(); var m = ToDate.getMinutes(); var s = ToDate.getSeconds();
+        var dd2 = ToDate.getDate(); var mm2 = ToDate.getMonth() + 1; var yyyy2 = ToDate.getFullYear();
+        var h = ToDate.getHours(); var m = ToDate.getMinutes(); var s = ToDate.getSeconds();
         if (dd2 < 10) { dd2 = '0' + dd2; } if (mm2 < 10) { mm2 = '0' + mm2; };
         ToDate = yyyy2 + '/' + mm2 + '/' + dd2 + ' ' + h + ':' + m + ':' + s;
         var xhr6 = new XMLHttpRequest();
@@ -351,6 +394,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     }
     //Miss Punch Out
     $scope.MissPunchOut = function (id, io) {
+        
         var now = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
         var out = new XMLHttpRequest();
         out.open('PUT', $scope._Conpath + 'MissedPunch/UpdateTime?id=' + id + "&inOut=" + io + "&empUnqId=" + $('#myEmpUnqId').val() + "&punchTime=" + now, true);
@@ -363,6 +407,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; out.send();
     };
     $scope.MissedPunchReportReleaser = function (data) {
+        
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var FromDate, ToDate;
         if ("undefined" == typeof data || "undefined" == typeof data.FromDt || "undefined" == typeof data.ToDt) {
@@ -398,10 +443,11 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
     /*-----ATTENDANCE CORRECTION-----*/
     var loc = $("#myLoc").val();
     $scope.initload = function () {
+        
         if (loc === "IPU") {
             $("#divPunchTbl").show();
             $("#time").show();
-            $("#punchTime").hide();
+            //$("#punchTime").hide();
         }
         else {
             $("#divPunchTbl").hide();
@@ -410,6 +456,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         };
     };
     $scope.ToValidate = function (valid) {
+        
         if ((typeof (valid.IO) === "undefined")) {
             document.getElementById("punchTime").value = "";
             document.getElementById("MessageBox").innerHTML =
@@ -445,6 +492,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         };
     };
     $scope.GetTripodPunch = function (gt) {
+        
         document.getElementById("cmbIOflag").disabled = true;
         document.getElementById("time").disabled = true;
         if ((typeof (gt.IO) === "undefined")) {
@@ -492,14 +540,19 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         }; GTP.send();
     };
     $scope.PerformanceAttendanceRpt = function (str) {
+        
         var pDate = str; var pr = new XMLHttpRequest;
         pr.open("GET", $scope._Conpath + "Employee/PerfAttd?empunqid=" + $("#myEmpUnqId").val() + "&flag=PERF&fromdate=" +
             pDate + "&todate=" + pDate, !0);
         pr.setRequestHeader("Accept", "application/json"); pr.onreadystatechange = function () {
-            if (4 === pr.readyState) { var json = JSON.parse(pr.responseText); $scope.prdata = json; $scope.$digest(); };
+            if (4 === pr.readyState) {
+                var json = JSON.parse(pr.responseText); $scope.prdata = json; $scope.$digest();
+            };
         }; pr.send();
     };
-    $scope.pTime; $scope.SelectPunchTime = function (pTime, ioflg) {
+    $scope.pTime;
+    $scope.SelectPunchTime = function (pTime, ioflg) {
+        
         var startdate = new Date(pTime); var durationInMinutes = 5;
         if (ioflg === "I") { startdate.setMinutes(startdate.getMinutes() + durationInMinutes); }
         else if (ioflg === "O") { startdate.setMinutes(startdate.getMinutes() - durationInMinutes); }
@@ -513,7 +566,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
                     + " " + startdate.getHours() + ":" + startdate.getMinutes() + ":" + startdate.getSeconds();
             }
         } else {
-            if (firstDay.getDate() < '10') {
+            if (startdate.getDate() < '10') {
                 pdate = (startdate.getFullYear()) + '-' + (startdate.getMonth() + 1) + '-' + '0' + startdate.getDate()
                     + " " + startdate.getHours() + ":" + startdate.getMinutes() + ":" + startdate.getSeconds();
             } else {
@@ -526,6 +579,7 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         $("#divPunchTbl *").attr("disabled", "disabled").off("click");
     };
     $scope.CreateAttdCorrEntry = function (data) {
+        
         document.getElementById("btnSubmit").disabled = true;
         if ((typeof (data) === "undefined") || (typeof (data.Reason) === "undefined") || (typeof (data.IO) === "undefined")) {
             document.getElementById("MessageBox").innerHTML =
@@ -543,7 +597,8 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
             $('#MessageBox').show();
             document.getElementById("btnSubmit").disabled = false;
             return false;
-        } else if (loc !== "IPU" && (typeof (data.punchTime) === "undefined")) {
+        }
+        else if (loc !== "IPU" && (typeof (data.punchTime) === "undefined")) {
             document.getElementById("MessageBox").innerHTML =
                 "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                 "<strong>Please Select Punch Date Time</strong></div>";
@@ -624,4 +679,4 @@ app.controller("MissPunchController", function ($scope, $http, $filter) {
         } if ("" === CSV) return void alert("Invalid data"); var fileName = ""; fileName += ReportTitle.replace(/ /g, "_"); var uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a"); link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link)
     };
 });
-app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });
+app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText); }); }; var options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText); } }; elem.datepicker(options); } } });

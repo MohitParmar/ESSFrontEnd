@@ -2,19 +2,23 @@
 app.controller("HomeCntrloller", function ($scope, $http, $filter) {
     $http.defaults.headers.common.Authorization = "Basic " + $("#myEmpUnqId").val(); $scope.currentPage = 1; $scope.itemsPerPage = 10; $scope.alluserlist = [];
     var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
-    $scope._Conpath = ''; var loc = $("#myLoc").val();
-    $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                if (loc === "NSK") { $scope._Conpath = urlprotocol + "//" + urlhost + ":" + url_port + "/api/"; }
-                else { $scope._Conpath = urlprotocol + "//" + urlhost + "/api/"; };
-            };
-        };
-    });
+    $scope._Conpath = ''; $scope._AttdConPath = ""; var loc = $("#myLoc").val(); var wrkgrp = $("#myWrkGrp").val();
     //$(document).ready(function () {
-    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/")
+    //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
     //});
-    $scope.ResetView = function () { window.location.reload(!0) }; jQuery.support.cors = true;
+    $(document).ready(function () {
+        "undefined" != typeof _ConPath &&
+            (urlhost === _URLHostName ?
+                $scope._Conpath = _ConPath :
+                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/",
+                "undefined" != typeof _AttdConPath &&
+                (urlhost === _URLHostName ?
+                    $scope._AttdConPath = _AttdConPath :
+                    $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/")
+            )
+    });
+
+    jQuery.support.cors = true; $scope.ResetView = function () { window.location.reload(!0) };
     $scope.changePassword = function (entity) { var jsonObj = {}; jsonObj.EmpUnqId = $("#myEmpUnqId").val(), jsonObj.Pass = entity.Pass, jsonObj = JSON.stringify(jsonObj); var xhr2 = new XMLHttpRequest; xhr2.open("POST", $scope._Conpath + "Employee/ChangePassword", !0), xhr2.setRequestHeader("Content-type", "application/json"), xhr2.onreadystatechange = function () { 4 === xhr2.readyState ? window.location.href = "/Login/UserLogin/" : 400 === xhr2.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Not Updated .. </strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", document.getElementById("ePass").value = "", jQuery("#btnClose").click()) }, xhr2.send(jsonObj) };
     $scope.ResetPass = function () { var e_Code = $("#eCode").val(); if ("" === e_Code) return document.getElementById("MessageBox").innerHTML = "<div class='alert alert-info alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Employee Code First.. </strong></div>", $("#MessageBox").show(), !1; var jsonObj = {}; jsonObj.EmpUnqId = $("#eCode").val(), jsonObj.Pass = $("#eCode").val(), jsonObj = JSON.stringify(jsonObj); var xhr2 = new XMLHttpRequest; xhr2.open("POST", $scope._Conpath + "Employee/ChangePassword", !0), xhr2.setRequestHeader("Content-type", "application/json"), xhr2.onreadystatechange = function () { 4 === xhr2.readyState ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Changed Sucesfully..</strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", $("#tbl_empdtl").hide()) : 400 === xhr2.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Not Updated .. </strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", $("#tbl_empdtl").hide()) }, xhr2.send(jsonObj) };
     $scope.EmpeMail = function (data) { var xhr3 = new XMLHttpRequest; xhr3.open("POST", $scope._Conpath + "Employee/updateemail?empunqid=" + $("#myEmpUnqId").val() + "&email=" + data.eMailID, !0), xhr3.setRequestHeader("Content-type", "application/json"), xhr3.onreadystatechange = function () { 4 === xhr3.readyState && 200 === xhr3.status ? (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Email ID Saved Sucesfully..</strong></div>", $("#MessageBox").show(), document.getElementById("eMailID").value = "", $("#tbl_empdtl").hide(), $scope.GetUserInfo()) : (400 === xhr3.status || 500 === xhr3.status) && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Emails ID Not Saved..</strong></div>", $("#MessageBox").show(), document.getElementById("eMailID").value = "", $("#tbl_empdtl").hide()) }, xhr3.send() };
@@ -24,6 +28,7 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
             xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + e_Code, !0) :
             xhr.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0), xhr.setRequestHeader("Accept", "application/json"), xhr.onreadystatechange = function () {
                 if (4 === xhr.readyState) {
+
                     var json = JSON.parse(xhr.responseText);
                     $scope.Udata = json, $scope.$digest(), "" !== e_Code && "undefined" != typeof e_Code && ($scope.GetUserPerasonalInfo(), $scope.GetUserFamInfo())
                 }
@@ -105,7 +110,7 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         var arr = new Array; preAdd = new XMLHttpRequest; preAdd.open("GET", $scope._Conpath + "EmpAddress/GetEmpAddress?empUnqId=" + $("#myEmpUnqId").val(), !0);
         preAdd.setRequestHeader("Accept", "application/json"); preAdd.onreadystatechange = function () {
             if (4 === preAdd.readyState) {
-                debugger;
+
                 var l = $("#myLoc").val(); json = JSON.parse(preAdd.responseText); tmparr = json;
                 var counter = tmparr.counter;
                 if (l === "IPU" && counter > 0) {
@@ -136,7 +141,24 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         }, preAdd.send()
     };
     $scope.GetSalarySlip = function () { var slp = new XMLHttpRequest; slp.open("GET", $scope._Conpath + "SalarySlip/GetLinks?empUnqId=" + $("#myEmpUnqId").val(), !0), slp.setRequestHeader("Accept", "application/json"), slp.onreadystatechange = function () { if (4 === slp.readyState) { var json = JSON.parse(slp.responseText); $scope.slpdata = json, $scope.$digest() } }, slp.send() };
-    $scope.GetSalarySlipDetails = function (yearMonth) { var jsonobj = {}; jsonobj.EmpUnqId = " 00" + $("#myEmpUnqId").val() + " ", jsonobj.yearMonth = yearMonth, jsonobj = JSON.stringify(jsonobj); var slpdls = new XMLHttpRequest; slpdls.open("POST", $scope._Conpath + "SalarySlip/GetSalarySlip", !0), slpdls.setRequestHeader("Content-type", "application/json"), slpdls.responseType = "arraybuffer", slpdls.onload = function () { if (200 == slpdls.status) { var blob = new Blob([slpdls.response], { type: "application/pdf" }), objectUrl = URL.createObjectURL(blob); window.open(objectUrl) } else document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> File Not Found...</strong></div>", $("#MessageBox").show() }, slpdls.send(jsonobj) };
+    $scope.GetSalarySlipDetails = function (yearMonth) {
+        var jsonobj = {};
+        jsonobj.EmpUnqId = " 00" + $("#myEmpUnqId").val() + " ";
+        jsonobj.yearMonth = yearMonth;
+        jsonobj = JSON.stringify(jsonobj);
+        var slpdls = new XMLHttpRequest;
+        slpdls.open("POST", $scope._Conpath + "SalarySlip/GetSalarySlip", !0);
+        slpdls.setRequestHeader("Content-type", "application/json");
+        slpdls.responseType = "arraybuffer";
+        slpdls.onload = function () {
+            if (200 == slpdls.status) {
+                var blob = new Blob([slpdls.response], { type: "application/pdf" }), objectUrl = URL.createObjectURL(blob); window.open(objectUrl)
+            } else {
+                document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong> File Not Found...</strong></div>", $("#MessageBox").show()
+            };
+        };
+        slpdls.send(jsonobj);
+    };
     $scope.FolderUpload = function (syearMonth) {
         $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv"); var data = new FormData(); var files = $("#files").get(0).files;
         if (files.length > 0) { for (f = 0; f < files.length; f++) { data.append("UploadedImage", files[f]); } }
@@ -154,6 +176,200 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
         var tdateval, tdate = new Date(oddtl.toDt); tdateval = tdate.getMonth() + 1 < "10" ? tdate.getDate() < "10" ? "0" + tdate.getDate() + "/0" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() + "/0" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() < "10" ? "0" + tdate.getDate() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes() : tdate.getDate() + "/" + (tdate.getMonth() + 1) + "/" + tdate.getFullYear() + " " + tdate.getHours() + ":" + tdate.getMinutes();
         $("#lblFromDate").text(fdateval), $("#lblToDate").text(tdateval), $("#lblPlaceOfVisit").text(oddtl.placeOfVisit), $("#lblContactDetails").text(oddtl.contactAddress), $('#previewModel').modal("show");
     };
+    $scope.PopupConsent = function () { $scope.GetUserInfo(); $('#ConsentModel').modal("show"); };
+    /*--Use below method only for new joining Employee Servay--*/
+    $scope.newData;
+    $scope.GetNewEmpInfo = function () {
+        var cat = $("#myCatCode").val();
+        if (loc === "IPU" && wrkgrp === "COMP" && (cat === "001" || cat === "002")) {
+            var eml = new XMLHttpRequest;
+            eml.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0);
+            eml.setRequestHeader("Accept", "application/json");
+            eml.onreadystatechange = function () {
+                if (4 === eml.readyState) {
+                    var json = JSON.parse(eml.responseText); $scope.newData = json; $scope.$digest();
+                    var joindt = $scope.newData[0].joinDate; var da = new Date(joindt); var dtnow = new Date();
+                    var diff = ((da - dtnow) / (1000 * 60 * 60 * 24) * -1) + 1;
+                    var ser = new XMLHttpRequest;
+                    ser.open("GET", $scope._AttdConPath + "Survey/GetEmpHeaders?EmpUnqID=" + $("#myEmpUnqId").val(), !0);
+                    ser.setRequestHeader("Accept", "application/json");
+                    ser.onreadystatechange = function () {
+                        if (4 === ser.readyState) {
+                            var json = JSON.parse(ser.responseText); $scope.serData = json;
+                            var stDate = new Date("2023-08-01");
+                            if (da >= stDate) {
+                                if ($scope.serData.length <= 0 && diff >= 8) {
+                                    debugger;
+                                    $('#FirstImpression').modal("show");
+                                    jQuery(document).keyup(function (e) {
+                                        if (e.keyCode == 27 && popupStatus == 1) {
+                                            // alert('not allowed !!!');
+                                            // or any other code
+                                            return false;
+                                        }
+                                    });
+                                }
+                                else if ($scope.serData.length >= 0) {
+                                    var serd, serdt; for (var i = 0; i < $scope.serData.length; i++) {
+                                        serd = $scope.serData[i].SurveyID; serdt = $scope.serData[i].SubmitDate;
+                                        if (serd === 30 && !serdt && diff >= 31) { $('#30DaysSurvay').modal("show"); break; }
+                                        else if (serd === 60 && !serdt && diff >= 61) { $('#60DaysSurvay').modal("show"); break; }
+                                        else if (serd === 90 && !serdt && diff >= 91) { $('#90DaysSurvay').modal("show"); break; };
+                                    };
+                                }; $scope.$digest();
+                            };
+                        };
+                    }; ser.send();
+                };
+            }; eml.send();
+        }
+        //else {
+        //    $("#p_amountofinterest").attr("disabled", true);
+        //    document.getElementById("btn7Days").disabled = true;
+        //    document.getElementById("btn30Days").disabled = true;
+        //    document.getElementById("btn60Days").disabled = true;
+        //    document.getElementById("btn90Days").disabled = true;
+        //}
+    };
+    $scope.Survey = function (surData, daysData) {
+        if ((typeof (surData) === "undefined")) { alert("Please Fill All Required Details"); return false; }
+        var s = 0;
+        var d = new Date();
+        var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        var QID = 68;
+        if (daysData === "7") { s = 14; }
+        else if (daysData === "30") { s = 17; QID = 81 + 1; }
+        else if (daysData === "60") { s = 13; QID = 98 + 1; }
+        else if (daysData === "90") { s = 21; QID = 111 + 1; };
+        var HeaderArr = {};
+        HeaderArr.EmpUnqID = $("#myEmpUnqId").val();
+        HeaderArr.SurveyID = daysData;
+        HeaderArr.JoinDate = $scope.newData[0].joinDate;
+        HeaderArr.DueDate = dt;
+        HeaderArr.SubmitDate = dt;
+        HeaderArr.Score = "0";
+        HeaderArr.Remarks = "";
+        var tmpArr = new Array();
+        tmpArr.push([]);
+        tmpArr[0] = surData;
+        var dtlArr = new Array();
+        for (var i = 1; i <= s; i++) {
+            var si = "sel" + i + "_" + daysData;
+            dtlArr.push({});
+            dtlArr[i - 1].EmpUnqID = $("#myEmpUnqId").val();
+            dtlArr[i - 1].SurveyID = daysData;
+            dtlArr[i - 1].QuestionID = QID;
+            dtlArr[i - 1].QuestionTypeID = 3;
+            dtlArr[i - 1].QuestionAns = tmpArr[0][si];
+            dtlArr[i - 1].SubmitDt = new Date();
+            QID++;
+        };
+
+        /*GET MULTIPLE SELECTION VALUES START*/
+        if (daysData === "30") {
+            var s30_15 = new Array();
+            s30_15 = $("#cmb30sel15").val();
+            var sel15 = "";
+            if ((typeof (s30_15) !== "undefined")) {
+                for (var p = 0; p < s30_15.length; p++) {
+                    var s3015 = s30_15[p];
+                    if (s3015 === "4") { sel15 = "4," };
+                    if (s3015 === "3") { sel15 += "3," };
+                    if (s3015 === "2") { sel15 += "2," };
+                    if (s3015 === "1") { sel15 += "1," };
+                }
+            }
+            sel15 = sel15.substring(0, sel15.length - 1);
+            dtlArr[14].QuestionAns = sel15;
+        }
+
+        if (daysData === "60") {
+            var s60_11 = new Array();
+            s60_11 = $("#cmb60sel10").val();
+            var sel11 = "";
+            if ((typeof (s60_11) !== "undefined")) {
+                for (var p = 0; p < s60_11.length; p++) {
+                    var s6011 = s60_11[p];
+                    if (s6011 === "4") { sel11 = "4," };
+                    if (s6011 === "3") { sel11 += "3," };
+                    if (s6011 === "2") { sel11 += "2," };
+                    if (s6011 === "1") { sel11 += "1," };
+                }
+            }
+            sel11 = sel11.substring(0, sel11.length - 1);
+            dtlArr[10].QuestionAns = sel11;
+        }
+
+        if (daysData === "90") {
+            var s90_3 = new Array();
+            s90_3 = $("#cmb90sel2").val();
+            var sel3 = "";
+            if ((typeof (s90_3) !== "undefined")) {
+                for (var p = 0; p < s90_3.length; p++) {
+                    var s903 = s90_3[p];
+                    if (s903 === "3") { sel3 += "3," };
+                    if (s903 === "2") { sel3 += "2," };
+                    if (s903 === "1") { sel3 += "1," };
+                }
+            }
+            sel3 = sel3.substring(0, sel3.length - 1);
+            dtlArr[2].QuestionAns = sel3;
+
+            var s90_18 = new Array();
+            s90_18 = $("#cmb90sel17").val();
+            var sel18 = "";
+            if ((typeof (s90_18) !== "undefined")) {
+                for (var p = 0; p < s90_18.length; p++) {
+                    var s9018 = s90_18[p];
+                    if (s9018 === "4") { sel18 = "4," };
+                    if (s9018 === "3") { sel18 += "3," };
+                    if (s9018 === "2") { sel18 += "2," };
+                    if (s9018 === "1") { sel18 += "1," };
+                }
+            }
+            sel18 = sel18.substring(0, sel18.length - 1);
+            dtlArr[17].QuestionAns = sel18;
+        }
+        /*SET MULTIPLE SELECTION VALUES END*/
+
+        var jsonObj = {};
+        jsonObj.header = HeaderArr;
+        jsonObj.details = dtlArr;
+        jsonObj = JSON.stringify(jsonObj);
+        var ESR = new XMLHttpRequest();
+        ESR.open("POST", $scope._AttdConPath + "Survey/PostEmpSurvey", true);
+        ESR.setRequestHeader("Content-type", "application/json");
+        ESR.onreadystatechange = function () {
+            if (ESR.readyState === 4 && ESR.status === 200) {
+                if (daysData === "7") { jQuery("#btnClose_7").click(); }
+                else if (daysData === "30") { jQuery("#btnClose_30").click(); }
+                else if (daysData === "60") { jQuery("#btnClose_60").click(); }
+                else if (daysData === "90") { jQuery("#btnClose_90").click(); };
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-success alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Submitted Successfully.</strong></div>"; $("#MessageBox").show();
+            }
+            //else if (ESR.status === 400 || ESR.status === 404) {
+            //if (daysData === "7") { jQuery("#btnClose_7").click(); }
+            //else if (daysData === "30") { jQuery("#btnClose_30").click(); }
+            //else if (daysData === "60") { jQuery("#btnClose_60").click(); }
+            //else if (daysData === "90") { jQuery("#btnClose_90").click(); };
+            //};
+            else if (ESR.status === 400 || ESR.status === 403 || ESR.status === 404 || ESR.status === 408 ||
+                ESR.status === 500) {
+                var str = ESR.responseText.replace("[", "").replace("]", "").toString();
+                var fields = str.split(","); var er = "";
+                for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
+                //document.getElementById("MessageBox").innerHTML =
+                //    "<div class='alert alert-danger alert-dismissable'>" +
+                //    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                //    "<strong>" + er + "</strong></div>"; $("#MessageBox").show();
+                alert("Please ensure that all details are completed and submitted as they are mandatory.");
+            };
+        }; ESR.send(jsonObj);
+    };
+    /*--END--*/
     $scope.exportObj; $scope.GetSAPID = function () {
         $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
         var sap = new XMLHttpRequest;

@@ -14,6 +14,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>No Dues Status</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('NoDuesStatusReport_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive" ng-init="GetNoDuesStatus(false)">
@@ -25,6 +30,7 @@
                                     <tr>
                                         <th style="text-align: center;">SAPID</th>
                                         <th style="text-align: center;">EMPLOYEE NAME</th>
+                                        <th style="text-align: center;">Date of Relieving</th>
                                         <th style="text-align: center;">Section Head/HOD</th>
                                         <th style="text-align: center;">FINANCE & ACCOUNT</th>
                                         <th style="text-align: center;">Stores</th>
@@ -48,6 +54,7 @@
                                     <tr>
                                         <td style="text-align:center;">{{s.empUnqId}}</td>
                                         <td style="text-align:left;">{{s.empName}}</td>
+                                        <td style="text-align:left;">{{s.relieveDate| date:'dd/MM/yyyy'}}</td>
                                         <td style="text-align:center;"
                                             ng-style="s.hod===true && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     s.hod===false && {'background-color':'#f2dede','color':'#b94a48'}">
@@ -162,7 +169,7 @@
                                         <tr>
                                             <td>Designation : {{e.desgName}}</td>
                                             <td>Grade : {{e.gradeName}}</td>
-                                            <td style="text-align: right;">Dept. & Station: {{e.statName}}</td>
+                                            <td style="text-align: right;">Dept. & Station: {{e.deptName}}&nbsp;{{e.statName}}</td>
                                         </tr>
                                         <tr style="height:30px;">
                                             <td><b>Date of Joining: {{e.joinDate| date:'dd/MM/yyyy'}}</b></td>
