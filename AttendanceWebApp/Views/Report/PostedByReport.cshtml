@@ -89,97 +89,97 @@
                                 </td>
                             </tr>
                         </table>
+                        @*<div class="table-responsive">
+                            <div ng-init="GetPostedByReport()">*@
                         <div class="table-responsive">
-                            <div ng-init="GetPostedByReport()">
-                                <div class="table-responsive">
-                                    <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr. No.</th>
-                                                <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
-                                                    Employee Code
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;">Employee Name</th>
-                                                <th style="text-align:center;">Station</th>
-                                                <th style="text-align:center;width: 149px;">Leave Reason</th>
-                                                <th style="text-align:center;width: 46px;">Sr. No.</th>
-                                                <th style="text-align:center;width: 38px;">Type</th>
-                                                <th style="text-align:center;width: 70px;">From Date</th>
-                                                <th style="text-align:center;width: 64px;">To Date</th>
-                                                <th style="text-align:center;width: 38px;">Days</th>
-                                                <th style="text-align:center;width: 61px;">Half Day</th>
-                                                <th style="text-align:center;width: 65px;">Is Posted</th>
-                                                <th style="text-align:center;width: 116px;" ng-click="sort('postedDt')">
-                                                    Posted Date
-                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='postedDt'"
-                                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                                </th>
-                                                <th style="text-align:center;width:82px;">Posted User</th>
-                                                <th style="text-align:center;width: 64px;">HL Date (CO)</th>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" />
-                                                </td>
-                                                <td colspan="9"></td>
-                                                <td>
-                                                    <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveApplicationDetails" />
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
-                                                ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
-                                                <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                                <td style="text-align:center;">{{d.empUnqId}}</td>
-                                                <td style="text-align:left;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
-                                                <td style="text-align:left;" id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">{{s}}</td>
-                                                <td colspan="10">
-                                                    <table id="aliasTable" class="table table-bordered table-hover">
-                                                        <tr ng-repeat="lrd in d.leaveApplicationDetails">
-                                                            <td ng-hide="true">{{lrd.leaveAppId}}</td>
-                                                            <td style="text-align:left;width: 140px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
-                                                            <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
-                                                            <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
-                                                            <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
-                                                            <td style="text-align:center;width:64px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
-                                                            <td style="text-align:center;width:38px;">{{lrd.totalDays}}</td>
-                                                            <td style="text-align:center;width:61px;">
-                                                                <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
-                                                            </td>
-                                                            <td style="text-align:center;width:65px;"
-                                                                ng-style="
+                            <table data-show-filter="true" class="table table-hover table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th style="text-align:center;width: 80px;" ng-click="sort('empUnqId')">
+                                            Employee Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;">Employee Name</th>
+                                        <th style="text-align:center;">Station</th>
+                                        <th style="text-align:center;width: 149px;">Leave Reason</th>
+                                        <th style="text-align:center;width: 46px;">Sr. No.</th>
+                                        <th style="text-align:center;width: 38px;">Type</th>
+                                        <th style="text-align:center;width: 70px;">From Date</th>
+                                        <th style="text-align:center;width: 64px;">To Date</th>
+                                        <th style="text-align:center;width: 38px;">Days</th>
+                                        <th style="text-align:center;width: 61px;">Half Day</th>
+                                        <th style="text-align:center;width: 65px;">Is Posted</th>
+                                        <th style="text-align:center;width: 116px;" ng-click="sort('postedDt')">
+                                            Posted Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='postedDt'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;width:82px;">Posted User</th>
+                                        <th style="text-align:center;width: 64px;">HL Date (CO)</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.stations" />
+                                        </td>
+                                        <td colspan="9"></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.leaveApplicationDetails" />
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in pbydata|orderBy:sortKey:reverse|filter:search|itemsPerPage:25" current-page="currentPage"
+                                        ng-style="d.cancelled === true && {'background-color':'#F8EFBA','color':'black'}">
+                                        <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align:center;">{{d.empUnqId}}</td>
+                                        <td style="text-align:left;" id="empName" ng-repeat="e in d.employee  track by $index" ng-if="$index==14" data-title="'empName'">{{e}}</td>
+                                        <td style="text-align:left;" id="statName" ng-repeat="s in d.stations track by $index" ng-if="$index==2" data-title="'statName'">{{s}}</td>
+                                        <td colspan="10">
+                                            <table id="aliasTable" class="table table-bordered table-hover">
+                                                <tr ng-repeat="lrd in d.leaveApplicationDetails">
+                                                    <td ng-hide="true">{{lrd.leaveAppId}}</td>
+                                                    <td style="text-align:left;width: 140px;">{{(d.releaseGroupCode == 'LA') ? lrd.remarks : lrd.placeOfVisit}} - {{lrd.additionalRemarks}}</td>
+                                                    <td style="text-align:center;width:46px;">{{lrd.leaveAppItem}}</td>
+                                                    <td style="text-align:center;width:38px;">{{lrd.leaveTypeCode}}</td>
+                                                    <td style="text-align:center;width:70px;">{{lrd.fromDt | date:'dd/MM/yy'}}</td>
+                                                    <td style="text-align:center;width:64px;">{{lrd.toDt | date:'dd/MM/yy'}}</td>
+                                                    <td style="text-align:center;width:38px;">{{lrd.totalDays}}</td>
+                                                    <td style="text-align:center;width:61px;">
+                                                        <input type="checkbox" ng-checked="{{lrd.halfDayFlag}}" disabled="disabled">
+                                                    </td>
+                                                    <td style="text-align:center;width:65px;"
+                                                        ng-style="
                                                                 lrd.isPosted==='F' && {'background-color':'#dff0d8','color':'#468847','font-weight':'bold'} ||
                                                                 lrd.isPosted==='P' && {'background-color':'#fcf8e3','color':'#8a6d3b','font-weight':'bold'}">
-                                                                {{lrd.isPosted}}
-                                                            </td>
-                                                            <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
-                                                            <td style="text-align:center;width:77px;">{{lrd.postUser}}</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style="text-align:center;padding:2px;">
-                                                    <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
-                                                        <tr ng-repeat="m in d.leaveApplicationDetails">
-                                                            <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                                </div>
-                            </div>
+                                                        {{lrd.isPosted}}
+                                                    </td>
+                                                    <td style="text-align:center;width:114px;">{{lrd.postedDt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                                                    <td style="text-align:center;width:77px;">{{lrd.postUser}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="text-align:center;padding:2px;">
+                                            <table class="table table-hover" style="text-align:center;padding:2px;margin-bottom:0px;">
+                                                <tr ng-repeat="m in d.leaveApplicationDetails">
+                                                    <td style="text-align:center;padding:3px;" ng-show="m.leaveTypeCode == 'CO'">{{m.coDate1| date:'dd/MM/yy'}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                         </div>
+                        @*</div>
+                            </div>*@
                     </div>
                     <div class="panel-footer">
                         <strong>Note For Is Posted : <text style="color:#ff9800;"> P - Partial Posted </text>, <text style="color:#4CAF50;">F - Fully Posted </text></strong>

@@ -45,5 +45,10 @@ namespace AttendanceWebApp.Controllers
         {
             return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
         }
+
+        public ActionResult AttendanceCorrectionOthers()
+        {
+            return Session["EmpUnqId"] != null && Session["UserRole"] != null ? View() : (ActionResult)RedirectToAction("Index", "Login");
+        }
     }
 }

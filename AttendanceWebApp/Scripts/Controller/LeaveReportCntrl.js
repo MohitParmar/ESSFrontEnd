@@ -154,7 +154,10 @@ app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
                         myArray[cnt].releaseDate = releaseDate ? releaseDate.substring(0, releaseDate.indexOf("T")) : "";
                         myArray[cnt].finalReleaser = releaseAuth || "", myArray[cnt].releaserName = releaserName;
                         myArray[cnt].releaserRemarks = releaserRemarks;
-                        "" != leaveApplicationDetails[l].postedDt && null != leaveApplicationDetails[l].postedDt ? myArray[cnt].postedDt = leaveApplicationDetails[l].postedDt.substring(0, leaveApplicationDetails[l].postedDt.indexOf("T")) : myArray[cnt].postedDt = "";
+                        "" != leaveApplicationDetails[l].postedDt &&
+                            null != leaveApplicationDetails[l].postedDt ?
+                            myArray[cnt].postedDt =
+                            leaveApplicationDetails[l].postedDt.substring(0, leaveApplicationDetails[l].postedDt.indexOf("T")) : myArray[cnt].postedDt = "";
                         myArray[cnt].empUnqId = la[i].empUnqId;
                         myArray[cnt].empName = empName;
                         myArray[cnt].deptName = deptName;
@@ -254,7 +257,69 @@ app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
             };
         }; xhr1.send(jsonObj);
     };
-    $scope.PostLeaveReject = function (data, value, value1) { function storeTblValues() { var TableData = new Array; $("#aliasTable tr").each(function (row, tr) { TableData[row] = { LeaveAppId: $(tr).find("td:eq(1)").text(), LeaveAppItem: $(tr).find("td:eq(11)").text() } }); var tbl = new Array; tbl[0] = "test"; for (var count = 0, i = 0; i < TableData.length; i++) { var appid = TableData[i].LeaveAppId; if (appid == value) { if ("undefined" == typeof data || "undefined" == typeof data.Remarks) return document.getElementById("MessageBox").innerHTML = "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Please Enter Remarks First For Rejection</strong></div>", void $("#MessageBox").show(); tbl[count] = { YearMonth: value1, LeaveAppId: value, LeaveAppItem: TableData[i].LeaveAppItem, IsPosted: "R", Remarks: data.Remarks, UserId: $("#myEmpUnqId").val() }, count++ } } return tbl } var TableData = storeTblValues(); TableData = JSON.stringify(TableData); var xhr1 = new XMLHttpRequest; xhr1.open("POST", $scope._Conpath + "LeavePosting/PostLeaves", !0), xhr1.setRequestHeader("Content-type", "application/json"), xhr1.onreadystatechange = function () { if (4 === xhr1.readyState && 200 === xhr1.status) { var rlsmail = new XMLHttpRequest; rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMail?releaseGroupCode=LA&id=" + value, !0), rlsmail.setRequestHeader("Content-type", "application/json"), rlsmail.send(), document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Rejected Sucesfully.. </strong></div>", $("#MessageBox").show() } else document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Not Rejected Please Try again.. </strong></div>", $("#MessageBox").show(); $scope.GetPostedLeaveInfo() }, xhr1.send(TableData) };
+    $scope.PostLeaveReject = function (data, value, value1) {
+        
+        function storeTblValues() {
+            var TableData = new Array;
+            $("#aliasTable tr").each(function (row, tr) {
+                TableData[row] = {
+                    LeaveAppId: $(tr).find("td:eq(1)").text(),
+                    LeaveAppItem: $(tr).find("td:eq(12)").text()
+                }
+            });
+            var tbl = new Array;
+            tbl[0] = "test";
+            for (var count = 0, i = 0; i < TableData.length; i++) {
+                var appid = TableData[i].LeaveAppId;
+                if (appid == value) {
+                    if ("undefined" == typeof data || "undefined" == typeof data.Remarks)
+                        return document.getElementById("MessageBox").innerHTML =
+                            "<div class='alert alert-warning alert-dismissable'>" +
+                            "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                            "<strong>Please Enter Remarks First For Rejection</strong></div>",
+                            void $("#MessageBox").show();
+                    tbl[count] = {
+                        YearMonth: value1,
+                        LeaveAppId: value,
+                        LeaveAppItem: TableData[i].LeaveAppItem,
+                        IsPosted: "R",
+                        Remarks: data.Remarks,
+                        UserId: $("#myEmpUnqId").val()
+                    },
+                        count++
+                }
+            } return tbl
+        }
+
+        var TableData = storeTblValues();
+        TableData = JSON.stringify(TableData);
+        
+        var xhr1 = new XMLHttpRequest;
+        xhr1.open("POST", $scope._Conpath + "LeavePosting/PostLeaves", !0);
+        xhr1.setRequestHeader("Content-type", "application/json");
+        xhr1.onreadystatechange = function () {
+            if (4 === xhr1.readyState && 200 === xhr1.status) {
+                var rlsmail = new XMLHttpRequest;
+                rlsmail.open("GET", $scope._Conpath + "AutoMail/SendMail?releaseGroupCode=LA&id=" + value, !0);
+                rlsmail.setRequestHeader("Content-type", "application/json");
+                rlsmail.send();
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-success alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Rejected Sucesfully.. </strong></div>",
+                    $("#MessageBox").show()
+            }
+            else {
+                document.getElementById("MessageBox").innerHTML =
+                    "<div class='alert alert-danger alert-dismissable'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    "<strong>Not Rejected Please Try again.. </strong></div>";
+                $("#MessageBox").show();
+            }
+            $scope.GetPostedLeaveInfo()
+        };
+        xhr1.send(TableData)
+    };
     $scope.PerformanceAttendanceRpt = function (str) {
         var date = new Date;
         firstDay = new Date(date.getFullYear(), date.getMonth() - 2, 25);
@@ -355,7 +420,7 @@ app.controller("LeaveReportCntrloller", function ($scope, $http, $filter) {
                     $scope.prdata = $filter("orderBy")($scope.prdata, "-AttdDate");
                 }
                 else if ("MESS" === str) {
-                    debugger;
+                    
                     for (var newarr = $scope.prdata, cnt1 = 0, myAttdArray2 = [], i = 0; i < newarr.length; i++) {
                         myAttdArray2.push([]);
                         myAttdArray2[cnt1].EmpUnqId = newarr[i].empUnqID;

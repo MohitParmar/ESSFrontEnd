@@ -9,8 +9,10 @@
     $scope.GetRelesaseStratey = function () { var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + $('#releaseGroupCode').val() + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send(); };//Get Release Strategy
     $scope.checkCoff = function () {
         var COMODE = $("#cmbCOMode").val();
-        var gradeCode = $("#myGradeCode").val(); var otFlag = $("#myOtFlag").val();
-        var cat = $("#myCatCode").val(); var loc = $("#myLoc").val();
+        var gradeCode = $("#myGradeCode").val();
+        var otFlag = $("#myOtFlag").val();
+        var cat = $("#myCatCode").val();
+        var loc = $("#myLoc").val();
         if (loc === "BEL") {
             if ((gradeCode < "009" || otFlag === "True") && COMODE === "H") {
                 alert("You are not eligible to get COFF against of Holiday.");
@@ -210,7 +212,8 @@
                 document.getElementById("txtLeaveTypeCode").value = "CO";
                 document.getElementById("Remarks").value = "";
                 document.getElementById("BtnSave").disabled = true;
-            } else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
+            }
+            else if (xhr1.status === 400 || xhr1.status === 403 || xhr1.status === 404 || xhr1.status === 408 || xhr1.status === 500) {
                 if (chk === false) {
                     var tables = document.getElementById('aliasTable');
                     var rowCounts = tables.rows.length;

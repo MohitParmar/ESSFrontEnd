@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "NoDuesRelieveDateUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<style type="text/css">
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <input type="hidden" value="ND" id="releaseGroupCode" />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>No Dues Releive Date Update</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div class="input-group form">
+                                <input type="text" class="form-control"
+                                       placeholder="Enter Employee Code" id="eCode" name="eCode"
+                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                       onpaste="return false;" ondrop="return false;" autocomplete="off">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit" id="btnSearch" value="Search"
+                                            name="Search" ng-click="GetNoDuesEmployee()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-condensed table-striped"
+                                   dir-paginate="d in endData|itemsPerPage:1">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="8" style="text-align: center;">
+                                            <h4>
+                                                <strong>Employee Details ({{d.empUnqId}})</strong>
+                                            </h4>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Employee Name</label>
+                                        </td>
+                                        <td>{{d.empName}}</td>
+                                        <td>
+                                            <label>Unit Name</label>
+                                        </td>
+                                        <td>{{d.unitName}}</td>
+                                        <td>
+                                            <label>Department Name</label>
+                                        </td>
+                                        <td>{{d.deptName}}</td>
+                                        <td>
+                                            <label>Station Name</label>
+                                        </td>
+                                        <td>{{d.statName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Join Date</label>
+                                        </td>
+                                        <td>{{d.joinDate | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <label>Resignation Date</label>
+                                        </td>
+                                        <td>{{d.resignDate | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <label>Releive Date</label>
+                                        </td>
+                                        <td>{{d.relieveDate | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <label>Mode of Leaving</label>
+                                        </td>
+                                        <td>{{d.modeOfLeaving}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                Relieve Date:
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="right-inner-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                <input class="form-control" type="text" id="dtRelieveDate" ng-model="New.RelieveDate" datepicker required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button id="btnSubmnit" class="btn btn-success"
+                                                    ng-click="UpdateRelieveDate(New)">
+                                                <i class="fa fa-save"></i>&nbsp;Submit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

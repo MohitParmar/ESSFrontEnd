@@ -39,7 +39,7 @@ app.controller('EventController', function ($scope, $log, uiCalendarConfig, $tim
         "allDay": false
     }];
     $scope.renderCalender = function (calendar) {
-        debugger;
+        
         console.log($scope.events);
         uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', $scope.events);
     };

@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Pending Shift Change Release";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/ShiftChangeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<div ng-app="myApp" ng-controller="ShiftChangeCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="SS" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>Pending Shift Change Requests</strong></div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped" ng-init="GetPendingSCRequests()">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">App.Date</th>
+                                    <th style="text-align:left;">Requested by</th>
+                                    <th style="text-align:center;">EmpUnqId</th>
+                                    <th style="text-align:left;">EmpName</th>
+                                    <th style="text-align:left;">Department</th>
+                                    <th style="text-align:left;">Station</th>
+                                    <th style="text-align:center;">Shift Date</th>
+                                    <th style="text-align:center;">Shift Code</th>
+                                    <th style="text-align:left;">Reason</th>
+                                    <th style="text-align:left;">Remarks</th>
+                                    <th style="text-align:center;">Action</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.addUserName" /></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empUnqId" /></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.empName" /></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.deptName" /></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.statName" /></td>
+                                    <td></td>
+                                    <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.shiftCode" /></td>
+                                    <td colspan="3"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="e in pscreqdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
+                                    current-page="currentPage">
+                                    <td style="text-align:center;">{{e.addDt | date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align:left;">{{e.addUserName}}</td>
+                                    <td style="text-align:center;">{{e.empUnqId}}</td>
+                                    <td style="text-align:left;">{{e.empName}}</td>
+                                    <td style="text-align:left;">{{e.deptName}}</td>
+                                    <td style="text-align:left;">{{e.statName}}</td>
+                                    <td style="text-align:center;">{{e.shiftDate | date:'dd/MM/yyyy'}}</td>
+                                    <td style="text-align:center;">{{e.shiftCode}}</td>
+                                    <td style="text-align:left;">{{e.reason}}</td>
+                                    <td>
+                                        <input class="form-control" type="text" id="Remarks"
+                                               style="width:85px;" placeholder="Rejection" 
+                                               ng-model="N.Remarks">
+                                    </td>
+                                    <td>
+                                        <span class="input-group-btn">
+                                            <button id="btnSave" type="button" class="btn btn-success btn-custom"
+                                                    value="Submit" name="Save"
+                                                    ng-click="SCRelease(N,'F',{{e.applicationId}})">
+                                                <i class="fa fa-check fa-lg"></i>
+                                            </button>
+                                            <button id="btnCancel" type="button" class="btn btn-danger btn-custom"
+                                                    value="Reject" name="Reject"
+                                                    ng-click="SCRelease(N,'R',{{e.applicationId}})">
+                                                <i class="fa fa-remove fa-lg"></i>
+                                            </button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

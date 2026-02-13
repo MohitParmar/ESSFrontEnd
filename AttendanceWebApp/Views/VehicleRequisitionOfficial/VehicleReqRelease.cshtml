@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "HOD Vehicle Requisition Approval";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/VehicleReqOfficial.js"></script>
+
+<div ng-app="myApp" ng-controller="VehicleReqOfficialController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Pending For Release</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" ng-init="GetReqForRel(false)">
+                            <table data-show-filter="true"
+                                   class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;" ng-click="sort('EmpUnqId')">
+                                            SAPID
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;" ng-click="sort('EmpName')">
+                                            Employee Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='EmpName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('BookingDate')">
+                                            Booking Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='BookingDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:left;">Place of Boarding</th>
+                                        <th style="text-align:center;">Pickup Time</th>
+                                        <th style="text-align:left;">Place of Visit</th>
+                                        <th style="text-align:center;">Booking From Date</th>
+                                        <th style="text-align:center;">Booking To Date</th>
+                                        <th style="text-align:center;">No.Of Passengers</th>
+                                        <th style="text-align:left;">Visitor Name</th>
+                                        <th style="text-align:left;">Visitor Designation</th>
+                                        <th style="text-align:left;">Contact No.</th>
+                                        <th style="text-align:left;">Others</th>
+                                        <th style="text-align:left;">Remarks</th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpUnqId" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.EmpName" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PlaceOfBoarding" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.PlaceOfVisit" /></td>
+                                        <td colspan="3"></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VisitorName" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.VisitorDesg" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.ContactNo" /></td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in tripData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10"
+                                        current-page="currentPage">
+                                        <td style="text-align:center;">{{d.EmpUnqId}}</td>
+                                        <td style="text-align:left;">{{d.EmpName}}</td>
+                                        <td style="text-align:center;">{{d.BookingDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.PlaceOfBoarding}}</td>
+                                        <td style="text-align:left;">{{d.PickupTime | date:'HH:mm'}}</td>
+                                        <td style="text-align:left;">{{d.PlaceOfVisit}}</td>
+                                        <th style="text-align:center;">{{d.TripStartDate | date:'dd/MM/yyyy'}}</th>
+                                        <th style="text-align:center;">{{d.TripEndDate | date:'dd/MM/yyyy'}}</th>
+                                        <td style="text-align:left;">{{d.NumberOfPass}}</td>
+                                        <td style="text-align:left;">{{d.VisitorName}}</td>
+                                        <td style="text-align:left;">{{d.VisitorDesg}}</td>
+                                        <td style="text-align:left;">{{d.ContactNo}}</td>
+                                        <td style="text-align:left;">{{d.Remarks}}</td>
+                                        <td style="text-align:left;">
+                                            <input id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks" />
+                                        </td>
+                                        <td style="text-align:left;">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-success" id="btnApprove"
+                                                        ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},false,'F',N,false)">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                                <button class="btn btn-danger" id="btnReject"
+                                                        ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},false,'R',N,false)">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

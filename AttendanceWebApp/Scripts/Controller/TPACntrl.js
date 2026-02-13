@@ -257,6 +257,7 @@ app.controller("TPAController", function ($scope, $http, $filter) {
                     bulkSanctionArray[l]["Status"] = sanArr[l].status;
                     myArray[l]["AttdStatus"] = sanArr[l].leaveType;
                     bulkSanctionArray[l]["AttdStatus"] = sanArr[l].leaveType;
+                    bulkSanctionArray[l]["Department"] = sanArr[l].deptName;
                     bulkSanctionArray[l]["Station"] = sanArr[l].statName;
                     bulkSanctionArray[l]["Category"] = sanArr[l].catName;
                     for (var i = 0; i < appreleasearr.length; i++) {
@@ -310,7 +311,18 @@ app.controller("TPAController", function ($scope, $http, $filter) {
     };
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
     $scope.exportAllData = function (name) { setTimeout(function () { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = name + d; $scope.JSONToCSVConvertor($scope.exportObj, FileName, !0); $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); }, 100) };
-    $scope.exportBulkSanction_Upload = function (name) { setTimeout(function () { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = name + d; $scope.JSONToCSVConvertor($scope.bulkSanExportObj, FileName, !0); $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); }, 100) };
+    $scope.exportBulkSanction_Upload = function (name) {
+        setTimeout(function () {
+            $("#loading").removeClass("deactivediv"),
+                $("#loading").addClass("activediv");
+            var d = new Date;
+            d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            var FileName = name + d;
+            $scope.JSONToCSVConvertor($scope.bulkSanExportObj, FileName, !0);
+            $("#loading").removeClass("activediv"),
+                $("#loading").addClass("deactivediv");
+        }, 100)
+    };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = "object" != typeof JSONData ? JSON.parse(JSONData) : JSONData, CSV = ""; if (CSV += ReportTitle + "\r\n\n", ShowLabel) { var row = ""; for (var index in arrData[0]) row += index + ","; row = row.slice(0, -1), CSV += row + "\r\n" } for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) row += '"' + arrData[i][index] + '",'; row.slice(0, row.length - 1), CSV += row + "\r\n" } if ("" === CSV) return void alert("Invalid data"); var fileName = ""; fileName += ReportTitle.replace(/ /g, "_"); var uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a"); link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link) };
 });
 app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });

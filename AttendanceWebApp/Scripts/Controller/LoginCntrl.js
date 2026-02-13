@@ -3,8 +3,10 @@
     var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
     $scope._Conpath = '';
     $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+        if (typeof (_ConPath) === "undefined") { return; }
+        else {
+            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; }
+            else {
                 $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
             }
         };
@@ -28,43 +30,82 @@
                 reqs.setRequestHeader("Content-type", "application/json");
                 reqs.onreadystatechange = function () {
                     if (reqs.readyState === 4) {
-                        if ($scope.Udata[0]["location"] == "IPU") {
-                            window.location.href = "Master/EmpServay";
+                        
+                        if ($scope.Udata[0]["location"] == "IPU" &&
+                            $scope.Udata[0]["wrkGrp"] !== "COMP" &&
+                            $scope.Udata[0]["wrkGrp"] !== "CONSULTANT") {
+                            if (_URLHostName !== urlhost) {
+                                return false;
+                            }
                         }
-                        if ($scope.Udata[0]["location"] == "NSK" && ($scope.Udata[0]["wrkGrp"] === "CONT" || $scope.Udata[0]["wrkGrp"] === "JOBWORK")) {
+
+                        //if ($scope.Udata[0]["location"] == "IPU") {
+                        //    window.location.href = "Master/EmpServay";
+                        //}
+
+                        if ($scope.Udata[0]["location"] == "NSK" &&
+                            ($scope.Udata[0]["wrkGrp"] === "CONT" ||
+                                $scope.Udata[0]["wrkGrp"] === "JOBWORK"))
+                        {
                             document.getElementById("MessageBox").innerHTML =
                                 "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
                                 "<strong>You are not authorized to Log in.</strong></div>";
-                            document.getElementById("EmpUnqId").value = ""; document.getElementById("Pass").value = "";
+                            document.getElementById("EmpUnqId").value = "";
+                            document.getElementById("Pass").value = "";
                             $('#MessageBox').show();
                             return false;
                         };
-                        if (($scope.Udata[0]["wrkGrp"] !== "COMP" || $scope.Udata[0]["wrkGrp"] !== "OUTSOURCE") && $scope.Udata[0]["roleId"] !== 2) {
-                            window.location.href = "Report/PerformanceReport";
-                        } else if ($scope.Udata[0]["roleId"] === 1 || $scope.Udata[0]["roleId"] === 3) {
+                        if (($scope.Udata[0]["wrkGrp"] !== "COMP" ||
+                            $scope.Udata[0]["wrkGrp"] !== "OUTSOURCE") &&
+                            $scope.Udata[0]["roleId"] !== 2)
+                        {
+                            if ($scope.Udata[0]["wrkGrp"] === "APPRENTICE" ||
+                                $scope.Udata[0]["wrkGrp"] === "CONSULTANT") {
+                                window.location.href = "Report/PerformanceReport";
+                            }
+                            else {
+                                window.location.href = "#";
+                            }
+                            //window.location.href = "Report/PerformanceReport";
+                        }
+                        else if ($scope.Udata[0]["roleId"] === 1 ||
+                            $scope.Udata[0]["roleId"] === 3) {
                             window.location.href = "Home/Index";
                         };
-                        if ($scope.Udata[0]["roleId"] === 2 || $scope.Udata[0]["roleId"] === 6 || $scope.Udata[0]["roleId"] === 8) {
+                        if ($scope.Udata[0]["roleId"] === 2 ||
+                            $scope.Udata[0]["roleId"] === 6 ||
+                            $scope.Udata[0]["roleId"] === 8) {
                             window.location.href = "ReleaseLeave/LeaveRelease";
-                        } else if ($scope.Udata[0]["roleId"] === 5) {
+                        }
+                        else if ($scope.Udata[0]["roleId"] === 5) {
                             window.location.href = "GatePass/GatePassInOut";
-                        } else if ($scope.Udata[0]["roleId"] === 7) {
+                        }
+                        else if ($scope.Udata[0]["roleId"] === 7) {
                             window.location.href = "GatePass/GatePassRelease";
-                        } else if ($scope.Udata[0]["wrkGrp"] === "COMP" || $scope.Udata[0]["wrkGrp"] === "OUTSOURCE") {
+                        }
+                        else if ($scope.Udata[0]["wrkGrp"] === "COMP" ||
+                            $scope.Udata[0]["wrkGrp"] === "OUTSOURCE")
+                        {
                             //window.location.href = "Vaccination/UploadVaccinationCertificate";
                             window.location.href = "Home/Index";
                         };
                     };
                 }; reqs.send(jsonObj1);
-            } else if (xhr.status === 400 || xhr.status === 500) {
+            }
+            else if (xhr.status === 400 ||
+                xhr.status === 500) {
                 if (xhr.status === 500) {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Internal Server Error Please try after some time..</strong></div>";
-                } else {
+                }
+                else
+                {
                     document.getElementById("MessageBox").innerHTML =
                         "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong> Incorrect Password / Employee code. </strong></div>";
                 }
-                $('#MessageBox').show(); document.getElementById("EmpUnqId").value = ""; document.getElementById("Pass").value = "";
+                $('#MessageBox').show();
+                document.getElementById("EmpUnqId").value = "";
+                document.getElementById("Pass").value = "";
             };
         }; xhr.send(jsonObj);
     };

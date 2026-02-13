@@ -79,14 +79,18 @@
                                     <td style="text-align:center;" colspan="2">
                                         <div class="right-inner-addon">
                                             <i class="fa fa-calendar"></i>
-                                            <input class="form-control" type="text" id="CODate1" ng-model="New.CODate1" data-date-format="yyyy/MM/dd" placeholder="Select Date"
+                                            <input class="form-control" type="text" id="CODate1" ng-model="New.CODate1"
+                                                   data-date-format="yyyy/MM/dd"
+                                                   placeholder="Select Date"
                                                    datepicker required>
                                         </div>
                                     </td>
                                     <td style="text-align:center;">
                                         <div class="right-inner-addon">
                                             <i class="fa fa-calendar"></i>
-                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" data-date-format="yyyy/MM/dd" placeholder="Select Comp Off Date"
+                                            <input class="form-control" type="text" id="ToDt" ng-model="New.ToDt" 
+                                                   data-date-format="yyyy/MM/dd"
+                                                   placeholder="Select Comp Off Date"
                                                    ng-change="ToValidate()" datepicker required>
                                         </div>
                                     </td>
@@ -101,17 +105,20 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align:center;">
-                                        <input class="form-control" type="text" id="txtLeaveTypeCode" name="LeaveTypeCode" value="CO" disabled="disabled">
+                                        <input class="form-control" type="text" id="txtLeaveTypeCode" name="LeaveTypeCode" value="CO"
+                                               disabled="disabled">
                                     </td>
                                     <td style="text-align:center;">
                                         <input class="form-control" type="text" id="Remarks" name="Remarks" 
-                                               placeholder="Please Enter Leave Reason.." ng-model="New.Remarks"
+                                               placeholder="Please Enter Leave Reason.." 
+                                               ng-model="New.Remarks"
                                                style="text-transform:uppercase" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align:right;" colspan="4">
-                                        <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save" name="Save" ng-click="LeaveRequestData(New)">
+                                        <button id="BtnSave" type="button" class="btn btn-primary btn-custom " value="Save"
+                                                name="Save" ng-click="LeaveRequestData(New)">
                                             <i class="fa fa-plus-square"></i>Add to List
                                         </button>
                                     </td>
@@ -139,7 +146,8 @@
                     </div>
                     <div class="panel-footer" style="text-align:right;">
                         <input id="BtnCancel" type="reset" class="btn btn-default" value="Reset" ng-click="ResetView()" />
-                        <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;" value="Final Submit" name="Save"
+                        <button id="BtnCreate" type="button" class="btn btn-success btn-custom" style="text-align:right;"
+                                value="Final Submit" name="Save"
                                 ng-click="createLeave($('#aliasTable').val())">
                             <i class="fa fa-save"></i> Save
                         </button>

@@ -194,9 +194,9 @@
                                 <tbody dir-paginate="d in mpaData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
                                     <tr>
                                         <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                        <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
-                                        <td style="        text-align: center;">{{d.relDate|date:"dd/MM/yyyy"}}</td>
-                                        <td style="        text-align: center;"
+                                        <td style="text-align:center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align:center;">{{d.relDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align:center;"
                                             ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||

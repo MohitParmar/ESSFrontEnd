@@ -1,0 +1,221 @@
+﻿@{
+    ViewBag.Title = "Shift Change Report - Releaser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/ShiftChangeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+
+<script>
+    window.onload = function () {
+        var date = new Date(); var firstDay = new Date(date.getFullYear(), date.getMonth(), 1); var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (firstDay.getMonth() + 1 < '10') { firstDay = (firstDay.getFullYear()) + '-' + '0' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        else { firstDay = (firstDay.getFullYear()) + '-' + (firstDay.getMonth() + 1) + '-' + firstDay.getDate(); }
+        if (lastDay.getMonth() + 1 < '10') { lastDay = (lastDay.getFullYear()) + '-' + '0' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        else { lastDay = (lastDay.getFullYear()) + '-' + (lastDay.getMonth() + 1) + '-' + lastDay.getDate(); }
+        $('#FromDt').val(firstDay); $('#ToDt').val(lastDay);
+    }
+</script>
+
+<div ng-app="myApp" ng-controller="ShiftChangeCntroller">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>List of Shift Changes</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>Select From Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="FromDt" 
+                                                   ng-model="New.FromDt" data-date-format="yyyy/MM/dd" 
+                                                   datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>Select To Date : </label>
+                                    </td>
+                                    <td>
+                                        <div class="right-inner-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input class="form-control" type="text" id="ToDt" 
+                                                   ng-model="New.ToDt" data-date-format="yyyy/MM/dd" 
+                                                   datepicker>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" 
+                                                value="Search" name="Search"
+                                                ng-click="GetAllSCRecords(New)">
+                                            <i class="fa fa-search"></i>Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." 
+                                             class="deactivediv">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" ng-init="GetAllSCRecords()">
+                            <table class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Sr. No.</th>
+                                        <th style="text-align:center;" ng-click="sort('addDt')">
+                                            App. Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addDt'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;" ng-click="sort('addUserName')">
+                                            Requested by
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='addUserName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('releaseStatusCode')">
+                                            Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='releaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            EmpUnqId
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;" ng-click="sort('empName')">
+                                            EmpName
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;" ng-click="sort('deptName')">
+                                            Department
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='deptName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;" ng-click="sort('statName')">
+                                            Station
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='statName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('shiftDate')">
+                                            Shift Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='shiftDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('shiftCode')">
+                                            Shift Code
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='shiftCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: left;" ng-click="sort('reason')">
+                                            Reason
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='reason'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.addUserName" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.releaseStatusCode" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.empUnqId" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.empName" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.deptName" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.statName" />
+                                        </td>
+                                        <td></td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.shiftCode" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input class="form-control" style="margin:0;padding:1px;"
+                                                   type="text" ng-model="search.reason" />
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="d in scrdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                                    <tr>
+                                        <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                                        <td style="text-align: left;">{{d.addDt|date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align: left;">{{d.addUserName}}</td>
+                                        <td style="text-align: center;"
+                                            ng-style="
+                                                    d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                    d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
+                                                    d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="text-align: left;">{{d.empName}}</td>
+                                        <td style="text-align: left;">{{d.deptName}}</td>
+                                        <td style="text-align: left;">{{d.statName}}</td>
+                                        <td style="text-align: center;">{{d.shiftDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align: center;">{{d.shiftCode}}</td>
+                                        <td style="text-align: left;">{{d.reason}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

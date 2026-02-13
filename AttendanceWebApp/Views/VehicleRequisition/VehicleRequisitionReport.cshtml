@@ -188,13 +188,13 @@
                                             {{d.AdminReleaseStatusCode}}
                                         </td>
                                         <td style="text-align:left;">
-                                            <input type="text" id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="N.Remarks" ng-if="d.BookingStatus === true" />
+                                            <input type="text" id="txtRemarks" class="form-control" placeholder="Remarks" ng-model="n.Remarks" ng-if="d.BookingStatus === true" />
                                         </td>
                                         <td style="text-align:left;">
                                             <button class="btn btn-danger"
                                                     id="btnReject"
                                                     ng-if="d.BookingStatus === true"
-                                                    ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',N,true)">
+                                                    ng-click="ReleaseReq({{d.EmpUnqId}},{{d.ReqId}},true,'R',n,true)">
                                                 <i class="fa fa-remove"></i>
                                             </button>
 

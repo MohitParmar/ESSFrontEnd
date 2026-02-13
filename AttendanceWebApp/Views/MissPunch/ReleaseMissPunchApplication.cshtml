@@ -136,31 +136,32 @@
                                         <td colspan="3"></td>
                                     </tr>
                                 </thead>
-                                <tbody dir-paginate="d in msData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                <tbody dir-paginate="d in msData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" 
+                                       current-page="currentPage">
                                     <tr>
                                         <td style="text-align:center;">{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                                        <td style="        text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
-                                        <td style="        text-align: center;"
+                                        <td style="text-align: center;">{{d.addDate|date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align: center;"
                                             ng-style="
                                                     d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
                                                     d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'} ||
                                                     d.releaseStatusCode==='P' && {'background-color':'#ff9800','color':'White'} ">
                                             {{d.releaseStatusCode}}
                                         </td>
-                                        <td style="        text-align: center;">{{d.empUnqId}}</td>
-                                        <td style="        text-align: center;">{{d.empName}}</td>
-                                        <td style="        text-align: left;">{{d.reason}}</td>
-                                        <td style="        text-align: left;">{{d.remarks}}</td>
-                                        <td style="        text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
-                                        <td style="        text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
-                                        <td style="        text-align: left;">{{d.yearlyCount}}</td>
-                                        <td style="        text-align: center;">{{d.punchType === 'A' ? 'Attendance' : 'In/Out'}}</td>
-                                        <td style="        text-align: center;">{{d.inOutFlag === 'I' ? 'In' : 'Out'}}</td>
-                                        <td style="        text-align: center;">{{d.attdPunchTime|date:"dd/MM/yyyy HH:mm"}}</td>
-                                        <td style="        text-align: center;">
+                                        <td style="text-align: center;">{{d.empUnqId}}</td>
+                                        <td style="text-align: center;">{{d.empName}}</td>
+                                        <td style="text-align: left;">{{d.reason}}</td>
+                                        <td style="text-align: left;">{{d.remarks}}</td>
+                                        <td style="text-align: center;">{{d.inTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="text-align: center;">{{d.outTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="text-align: left;">{{d.yearlyCount}}</td>
+                                        <td style="text-align: center;">{{d.punchType === 'A' ? 'Attendance' : 'In/Out'}}</td>
+                                        <td style="text-align: center;">{{d.inOutFlag === 'I' ? 'In' : 'Out'}}</td>
+                                        <td style="text-align: center;">{{d.attdPunchTime|date:"dd/MM/yyyy HH:mm"}}</td>
+                                        <td style="text-align: center;">
                                             <input id="txtRemarks" type="text" class="form-control" placeholder="Remarks" ng-model="N.Remarks" />
                                         </td>
-                                        <td style="        text-align: center;">
+                                        <td style="text-align: center;">
                                             <div class="btn btn-group-sm">
                                                 <button class="btn btn-success" id="btnOK" ng-click="ReleaseMissPunch('F',{{d.id}},N)"><i class="fa fa-check"></i></button>
                                                 <button class="btn btn-danger" id="btnOK" ng-click="ReleaseMissPunch('R',{{d.id}},N)"><i class="fa fa-remove"></i></button>

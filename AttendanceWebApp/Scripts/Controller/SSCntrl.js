@@ -17,7 +17,10 @@ app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
     $scope.Download = function (mode) {
         //if (mode !== "0") { $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv"); };
         $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv");
-        var ssd = new XMLHttpRequest(); ssd.open("GET", $scope._Conpath + "ShiftSchedule/GetSchedule?empunqid=" + $("#myEmpUnqId").val() + "&mode=" + mode, true); ssd.setRequestHeader("Accept", "application/json"); ssd.onreadystatechange = function () {
+        var ssd = new XMLHttpRequest();
+        ssd.open("GET", $scope._Conpath + "ShiftSchedule/GetSchedule?empunqid=" + $("#myEmpUnqId").val() +
+            "&mode=" + mode, true); ssd.setRequestHeader("Accept", "application/json");
+        ssd.onreadystatechange = function () {
             if (ssd.readyState === 4 && ssd.status === 200) {
                 var json1 = JSON.parse(ssd.responseText); $scope.jsondata = json1; var la = new Array; la = json1; var ReportName = "";
                 if (mode === "0") { ReportName = "ShiftSchedule_"; $scope.exportAllData(ReportName); }; if (mode === "1") { ReportName = "CurrentMonthAll_"; }; if (mode === "2") { ReportName = "CurrentMonthReleased_"; }; if (mode === "3") { ReportName = "PreviousMonthAll_"; }; if (mode === "4") { ReportName = "PreviousMonthReleased_"; };
@@ -44,7 +47,8 @@ app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
                         "<strong> Shift Schedule for the month is already uploaded which is displayed below." + " Used Appropriate Option to change already uploaded shift schedule. " + "</strong ></div> ";
                 }; $("#MessageBox").show();
             };
-        }; ssd.send();
+        };
+        ssd.send();
     };
     $scope.Upload = function () {
         $("#loading").removeClass("deactivediv"); $("#loading").addClass("activediv"); var data = new FormData(); var files = $("#files").get(0).files; if (files.length > 0) { for (f = 0; f < files.length; f++) { data.append("UploadedImage", files[f]); } }
@@ -70,7 +74,22 @@ app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
             error: function (err) { $("#loading").removeClass("activediv"); $("#loading").addClass("deactivediv"); var errer = err.responseText.replace(/\"/g, "").replace(/\{/g, "").replace(/\}/g, "").replace(/\(/g, "").replace(/\)/g, "").replace(/\[/g, "").replace(/\]/g, ""); document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + "<strong> Error :~ " + errer + "<br/>" + "</strong></div>"; $("#MessageBox").show(); }
         });
     };
-    $scope.GetSSList = function () { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var ssl = new XMLHttpRequest; ssl.open("GET", $scope._Conpath + "AppRelease/GetApplReleaseStatus?empUnqId=" + $("#myEmpUnqId").val() + "&releaseGroupCode=" + $("#releaseGroupCode").val(), !0), ssl.setRequestHeader("Accept", "application/json"), ssl.onreadystatechange = function () { if (4 === ssl.readyState) { $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); var json = JSON.parse(ssl.responseText); rlsarr = json, $scope.ssdata = json, $scope.ssdata = $filter("orderBy")($scope.ssdata, "-scheduleId"), $scope.curPage1 = 0, $scope.pageSize1 = 10, $scope.$digest() } }, ssl.send() };
+    $scope.GetSSList = function () {
+        $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv");
+        var ssl = new XMLHttpRequest;
+        ssl.open("GET", $scope._Conpath + "AppRelease/GetApplReleaseStatus?empUnqId=" +
+            $("#myEmpUnqId").val() + "&releaseGroupCode=" + $("#releaseGroupCode").val(), !0),
+            ssl.setRequestHeader("Accept", "application/json"),
+            ssl.onreadystatechange = function () {
+                if (4 === ssl.readyState) {
+                    $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
+                    var json = JSON.parse(ssl.responseText); rlsarr = json, $scope.ssdata = json,
+                        $scope.ssdata = $filter("orderBy")($scope.ssdata, "-scheduleId"), $scope.curPage1 = 0,
+                        $scope.pageSize1 = 10, $scope.$digest()
+                }
+            },
+            ssl.send()
+    };
     $scope.GetSchedule = function (data) { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var FromDate, ToDate; if ("undefined" == typeof data || "undefined" == typeof data.FromDt || "undefined" == typeof data.ToDt) { $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); var date = new Date, firstDay = new Date(date.getFullYear(), date.getMonth(), 1), lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0); FromDate = firstDay.getFullYear() + "/" + (firstDay.getMonth() + 1) + "/" + firstDay.getDate(), ToDate = lastDay.getFullYear() + "/" + (lastDay.getMonth() + 1) + "/" + lastDay.getDate() } else FromDate = data.FromDt, ToDate = data.ToDt; var GSL = new XMLHttpRequest; GSL.open("GET", $scope._Conpath + "ShiftSchedule/GetSchedule?fromDate=" + FromDate + "&toDate=" + ToDate + "&OpenMonth=" + data.yearMonth, !0), GSL.setRequestHeader("Accept", "application/json"), GSL.onreadystatechange = function () { if (4 === GSL.readyState && 200 === GSL.status) { $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv"); var json = JSON.parse(GSL.responseText); $scope.GSLdata = json, $scope.GSLdata = $filter("orderBy")($scope.GSLdata, "empUnqId"), $scope.jsondata = $scope.GSLdata, $scope.curPage1 = 0, $scope.pageSize1 = 10, $scope.$digest() } }, GSL.send() };
     $scope.GetOpenMonth = function () { const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; var mon = new XMLHttpRequest; mon.open("GET", $scope._Conpath + "ShiftSchedule/GetOpenMonth", !0), mon.setRequestHeader("Content-type", "application/json"), mon.onreadystatechange = function () { if (4 === mon.readyState && 200 === mon.status) { var msg = mon.responseText, pretemp = msg.slice(1, 11), p = pretemp.split("-"), pdate = new Date(p[0], p[1] - 1, p[2]), pdate1 = monthNames[pdate.getMonth()]; document.getElementById("CurOpenMonth").innerHTML = "<div><h4>Current Open Month is : " + pdate1 + ", " + pdate.getFullYear() + "</h4></div>" } }, mon.send() };
     $scope.ChangeOpenMonth = function (openMonth) { var yearmonth, opmnth = openMonth.yearMonth; d = new Date(opmnth); yearmonth = d.getMonth() + 1 < "10" ? d.getFullYear() + "0" + (d.getMonth() + 1) : d.getFullYear().toString() + (d.getMonth() + 1); var opm = new XMLHttpRequest; opm.open("PUT", $scope._Conpath + "ShiftSchedule/ChangeOpenMonth?yearMonth=" + yearmonth, !0); opm.setRequestHeader("Content-type", "application/json"); opm.onreadystatechange = function () { if (4 === opm.readyState && 200 === opm.status) { $scope.GetOpenMonth(); document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month Changed Successfully.. </strong></div>"; $("#MessageBox").show(); document.getElementById("openMonth").value = ""; } else if (400 === opm.status) { document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Open Month not Changed.. </strong></div>"; $("#MessageBox").show(); document.getElementById("openMonth").value = ""; }; }; opm.send() };
@@ -315,4 +334,5 @@ app.controller("ShiftScheduleCntroller", function ($scope, $http, $filter) {
     $scope.sort = function (keyname) { $scope.sortKey = keyname, $scope.reverse = !$scope.reverse };
     $scope.exportAllData = function (ReportName) { setTimeout(function () { $("#loading").removeClass("deactivediv"), $("#loading").addClass("activediv"); var d = new Date; d = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(); var FileName = ReportName + d; $scope.JSONToCSVConvertor($scope.jsondata, FileName, !0), $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv") }, 100) };
     $scope.JSONToCSVConvertor = function (JSONData, ReportTitle, ShowLabel) { var arrData = "object" != typeof JSONData ? JSON.parse(JSONData) : JSONData, CSV = ""; if (ShowLabel) { var row = ""; for (var index in arrData[0]) row += index + ","; row = row.slice(0, -1), CSV += row + "\r\n" } for (var i = 0; i < arrData.length; i++) { var row = ""; for (var index in arrData[i]) { var f = arrData[i][index]; null === f && (f = ""), row += '"' + f + '",' } row.slice(0, row.length - 1), CSV += row + "\r\n" } if ("" === CSV) return void alert("Invalid data"); var fileName = ReportTitle.replace(/ /g, "_"), uri = "data:text/csv;charset=utf-8," + escape(CSV), link = document.createElement("a"); link.href = uri, link.style = "visibility:hidden", link.download = fileName + ".csv", document.body.appendChild(link), link.click(), document.body.removeChild(link) };
-}); app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });
+});
+app.directive("datepicker", function () { return { restrict: "A", require: "ngModel", link: function (scope, elem, attrs, ngModelCtrl) { var updateModel = function (dateText) { scope.$apply(function () { ngModelCtrl.$setViewValue(dateText) }) }, options = { dateFormat: "yy-mm-dd", onSelect: function (dateText) { updateModel(dateText) } }; elem.datepicker(options) } } });

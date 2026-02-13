@@ -11,7 +11,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
     var d = new Date(); var dt = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
     //To validate a booking date under 90 days or not booked in previous days.
     $scope.ToValidate = function () {
-        debugger;
+        
         var now = new Date(); var dtnow = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); var firstDay = now;
         if (firstDay.getMonth() + 1 < '10') {
             if (firstDay.getDate() < '10') {
@@ -62,7 +62,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
             if (grd.readyState === 4 && grd.status === 200) { }
             else {
                 if (grd.status === 400 || grd.status === 403 || grd.status === 404 || grd.status === 408 || grd.status === 500) {
-                    debugger;
+                    
                     var str =
                         grd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
                     var fields = str.split(',');
@@ -124,7 +124,6 @@ app.controller("TripController", function ($scope, $http, $filter) {
     };
     //Create Trip
     $scope.TripBooking = function (data) {
-        debugger;
         document.getElementById("btnSubmit").disabled = true;
         var jsonObj = {};
         jsonObj.EmpUnqId = $("#myEmpUnqId").val();
@@ -136,7 +135,6 @@ app.controller("TripController", function ($scope, $http, $filter) {
         vhr.setRequestHeader("Accept", "application/json");
         vhr.onreadystatechange = function () {
             if (vhr.readyState === 4 && vhr.status === 200) {
-                debugger;
                 jsonObj.PickupTime = data.pickupTime;
                 jsonObj.PickupLocation = data.pickupLocation;
                 jsonObj.DropLocation = data.dropLocation;
@@ -150,7 +148,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                 gtd.setRequestHeader("Content-Type", "application/json");
                 gtd.onreadystatechange = function () {
                     if (gtd.readyState === 4 && gtd.status === 200) {
-                        debugger;
+                        
                         document.getElementById("btnSubmit").disabled = false;
                         document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + " <strong>Submit Successfully.. </strong></div>"; $("#MessageBox").show();
                         document.getElementById("tripDate").value = "";
@@ -176,7 +174,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                         //rlsmail.send();
                         ////Auto Mail End
                     } else if (gtd.status === 400 || gtd.status === 403 || gtd.status === 404 || gtd.status === 408 || gtd.status === 500) {
-                        debugger;
+                        
                         var str =
                             gtd.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
                         var fields = str.split(',');
@@ -190,7 +188,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
                     };
                 }; gtd.send(jsonObj);
             } else if (vhr.status === 400 || vhr.status === 403 || vhr.status === 404 || vhr.status === 408 || vhr.status === 500) {
-                debugger;
+                
                 var str =
                     vhr.responseText.replace("[", '').replace("]", '').toString().replace("{", '').toString().replace("}", '').toString();
                 var fields = str.split(','); var er = ""; for (var i = 0; i < fields.length; i++) { er = er + fields[i] + "<br/>"; };
@@ -265,15 +263,24 @@ app.controller("TripController", function ($scope, $http, $filter) {
     };
     //Release Requisition Approve/Reject
     $scope.ReleaseReq = function (empid, reqId, isAdm, status, obj, flg) {
-        debugger;
+        
         var rmks = "";
-        if (status === "R") {
-            if ((typeof (obj) === "undefined") || (typeof (obj.Remarks) === "undefined")) {
-                document.getElementById("MessageBox").innerHTML =
-                    "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                    "<strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false;
-            } else { rmks = obj.Remarks; };
-        } else { if ((typeof (obj) === "undefined")) { rmks = ""; } else { rmks = obj.Remarks; }; };
+        rmks = $("#txtRemarks").val();
+        if (status === "R" && rmks === "") {
+            document.getElementById("MessageBox").innerHTML =
+                "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                "<strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show();
+            return false;
+        };
+
+        //if (status === "R") {
+        //    if ((typeof (obj) === "undefined") || (typeof (obj.Remarks) === "undefined")) {
+        //        document.getElementById("MessageBox").innerHTML =
+        //            "<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+        //            "<strong>Please Enter Remarks First For Rejection</strong></div>"; $('#MessageBox').show(); return false;
+        //    } else { rmks = obj.Remarks; };
+        //} else { if ((typeof (obj) === "undefined")) { rmks = ""; } else { rmks = obj.Remarks; }; };
+
         var jsonObj = {}; jsonObj.ReqId = reqId; jsonObj.EmpUnqId = empid;
         if (isAdm === true) {
             jsonObj.AdminReleaseStatusCode = status;
@@ -290,7 +297,7 @@ app.controller("TripController", function ($scope, $http, $filter) {
         rel.setRequestHeader("Content-Type", "application/json");
         rel.onreadystatechange = function () {
             if (rel.readyState === 4 && rel.status === 200) {
-                debugger;
+                
                 if (flg === true || flg === "true") {
                     var index = $scope.allData.findIndex(function (item, i) { return item.reqId === reqId });
                     $scope.allData.splice(index, 1); $scope.$digest();

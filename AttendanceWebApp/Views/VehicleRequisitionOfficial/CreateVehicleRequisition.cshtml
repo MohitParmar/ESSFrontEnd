@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Motor Vehicle Official Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/VehicleReqOfficial.js"></script>
+
+<div ng-app="myApp" ng-controller="VehicleReqOfficialController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Official Vehicle Booking</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="col-sm-4"><label>Requisition Date:</label></div>
+                                <div class="col-sm-4"><label>Place of Boarding</label></div>
+                                <div class="col-sm-4"><label>Place of Visit</label></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="date" id="tripDate" ng-model="N.tripDate"
+                                           ng-change="ToValidate()" required />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="text" id="txtpickupLocation" ng-model="N.pickupLocation" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="text" id="txtdropLocation" ng-model="N.dropLocation"
+                                           required />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4"><label>Trip Start Date</label></div>
+                                <div class="col-sm-4"><label>Pickup Time</label></div>
+                                <div class="col-sm-4"><label>Trip End Date</label></div>
+                            </div>
+                            <!-- ...existing code... -->
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="date" id="tripStartDate" ng-model="N.tripStartDate"
+                                           ng-disabled="!N.tripDate || !N.pickupLocation || !N.dropLocation" required />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="time" id="txtpickupTime" ng-model="N.pickupTime"
+                                           ng-change="ToValidateTime()"
+                                           ng-disabled="!N.tripDate || !N.pickupLocation || !N.dropLocation" required />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="date" id="tripEndDate" ng-model="N.tripEndDate"
+                                           ng-disabled="!N.tripDate || !N.pickupLocation || !N.dropLocation" required />
+                                </div>
+                            </div>
+                            <!-- ...existing code... -->
+                            @*<div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <input class="form-control" type="date" id="tripStartDate" ng-model="N.tripStartDate"
+                                               required />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" type="time" id="txtpickupTime" ng-model="N.pickupTime"
+                                               ng-change="ToValidateTime()" required />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" type="date" id="tripEndDate" ng-model="N.tripEndDate"
+                                               required />
+                                    </div>
+                                </div>*@
+                            <div class="form-group row">
+                                <div class="col-sm-4"><label>No. of passengers</label></div>
+                                <div class="col-sm-4"><label>Visitior Name</label></div>
+                                <div class="col-sm-4"><label>Visitior Designation</label></div>
+                            </div>
+                            @*<div class="form-group row">
+                                    <div class="col-sm-3">
+                                        <label>Expected Return Date & Time </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="datetime-local" id="dtexpReturnTime" ng-model="N.expReturnTime" required />
+                                    </div>
+                                </div>*@
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" id="txtnumberOfPass"
+                                           ng-model="N.numberOfPass" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="text" id="txtvisitorName" ng-model="N.visitorName" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="cmbvisitorDesg" ng-model="N.visitorDesg">
+                                        <option value="Self">Self</option>
+                                        <option value="CompanyGuest">Company Guest</option>
+                                        <option value="GovernmentClient">Government Client</option>
+                                        <option value="GovernmentTPI">Government TPI</option>
+                                        <option value="TPI">TPI</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4"><label>Contact No.</label></div>
+                                <div class="col-sm-8"><label>Remarks</label></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="text" id="txtcontactNo" ng-model="N.contactNo" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="txtremarks" ng-model="N.remarks" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12" style="text-align:center;">
+                                    <button type="submit" id="btnSubmit" ng-click="TripBooking(N)" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Submit</button>
+                                    <button type="reset" id="btnReset" ng-click="ResetView()" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp; Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

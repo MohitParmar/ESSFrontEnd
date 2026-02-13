@@ -43,7 +43,7 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                     //Auto Mail End
                     document.getElementById("Remarks").value = ""; document.getElementById("MessageBox").innerHTML = "<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <strong>Leave Application Approved Sucesfully.. </strong></div>";
                     ///Auto Leave Post
-                    debugger;
+                    
                     var loc = $('#myLoc').val(); var cancelled = leaveheaderarr.cancelled; var parentid = leaveheaderarr.parentId;
                     if (rls_final === true && (loc === "IPU" || loc === "NKP" || loc === "NSK" || loc === "NAG")) {
                         var slflg = false; var TableData = storeTblValues(); var ldata = new Array();
@@ -71,13 +71,13 @@ app.controller('LeaveReleaseCntrloller', function ($scope, $http, $filter) {
                             }; ldata = tbl; return tbl;
                         };
                         if (slflg === false) {
-                            debugger;
+                            
                             var pst = new XMLHttpRequest();
                             pst.open('POST', $scope._Conpath + 'LeavePosting/PostLeaves', true);
                             pst.setRequestHeader("Content-type", "application/json");
                             pst.onreadystatechange = function () {
-                                if (pst.readyState === 4 && pst.status === 200) { debugger; TableData = ""; }
-                                else { debugger; }
+                                if (pst.readyState === 4 && pst.status === 200) {  TableData = ""; }
+                                else {  }
                             }; pst.send(TableData);
                         };
                     };

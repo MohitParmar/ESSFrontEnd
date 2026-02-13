@@ -15,7 +15,7 @@
                 json = JSON.parse(preAdd.responseText); tmparr = json; arr[0] = {
                     empUnqId: tmparr.empUnqId, houseNumber: tmparr.houseNumber, societyName: tmparr.societyName, areaName: tmparr.areaName, landMark: tmparr.landMark, preCity: tmparr.preCity, tehsil: tmparr.tehsil, preDistrict: tmparr.preDistrict, preState: tmparr.preState, prePin: tmparr.prePin, preEmail: tmparr.preEmail, prePhone: tmparr.prePhone, preResPhone: tmparr.preResPhone, policeStation: tmparr.policeStation, hrCity: tmparr.hrCity, hrSociety: tmparr.hrSociety, counter: tmparr.counter
                 }; $("#txtHouseNumber").val(arr[0].houseNumber), $("#txtSocietyName").val(arr[0].societyName), $("#txtAreaName").val(arr[0].areaName); $("#txtLandMark").val(arr[0].landMark), $("#txtPreCity").val(arr[0].preCity), $("#txtTehsil").val(arr[0].tehsil), $("#pincode").val(arr[0].prePin); $("#txtemailid").val(arr[0].preEmail), $("#txtphoneno").val(arr[0].prePhone), $("#txtresno").val(arr[0].preResPhone); $("#txtPoliceStation").val(arr[0].policeStation); $("#txtdist").val(arr[0].preDistrict); $("#txtstate").val(arr[0].preState); $("#hrCity").val(arr[0].hrCity); $("#hrSociety").val(arr[0].hrSociety);
-                debugger;
+                
                 $("#hidCounter").val(arr[0].counter | 0);
                 $("#hidEmpid").val(arr[0].empUnqId | empid);
                 $scope.$digest();

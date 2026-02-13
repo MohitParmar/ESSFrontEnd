@@ -303,7 +303,7 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
                     myArray[i].hrReleaseStatusCode = arr[i].hrReleaseStatusCode;
                     myArray[i].hrRemarks = arr[i].hrRemarks;
                 };
-                debugger;
+                
                 $scope.garData = myArray;
                 $scope.garData = $filter('orderBy')($scope.garData, 'empUnqId');
                 $scope.$digest();
@@ -319,7 +319,7 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
 
     $scope.PopulateData = function (empid, recommendation, flg) {
         if (recommendation === "N") {
-            debugger;
+            
             $scope.GetPrint(empid);
             $("#reviewModel").modal("show");
         } else {
@@ -331,7 +331,7 @@ app.controller("ProgressReviewController", function ($scope, $http, $filter) {
     };
     //fv
     $scope.GetPrint = function (empid) {
-        debugger;
+        
         var arr = new Array();
         arr = $scope.garData;
         var cnt = 0;

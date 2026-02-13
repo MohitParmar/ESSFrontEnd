@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "ExitEmployeesReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/NoDuesCntrl.js"></script>
+
+<div ng-app="myApp" ng-controller="NoDuesController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Exit Employee Report</strong>
+                        <div style="float:right;">
+                            <a style="float: right;" href="#" ng-click="exportAllData('ExitEmployeesReport_')">
+                                <img src="~/ESS_Images/excel.ico" style="width: 30px; height: 30px;" alt="Export To Excel" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div style="text-align: center;">
+                                <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                            </div>
+                            <table class="table table-hover table-bordered table-condensed table-striped" ng-init="GetExitEmployeesReport()">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3"></th>
+                                        <th colspan="3" style="text-align:center;"><h4>Resignation Details</h4></th>
+                                        <th colspan="6" style="text-align:center;"><h4>NoDues Details</h4></th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;" ng-click="sort('empUnqId')">
+                                            SAPID
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empUnqId'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;" ng-click="sort('empName')">
+                                            Name
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='empName'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('joinDate')">
+                                            Date of Joining
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='joinDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('resignationApplicationDate')">
+                                            Date of Resign
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='resignationApplicationDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('resignationRelieveDate')">
+                                            Date of Relieve
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='resignationRelieveDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('resignationReleaseStatusCode')">
+                                            Resign Release Status
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='resignationReleaseStatusCode'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('noDuesAddDate')">
+                                            No Dues Adddate
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesAddDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('noDuesResignDate')">
+                                            No Dues ResignDate
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesResignDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('noDuesRelieveDate')">
+                                            No Dues Relieve Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesRelieveDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('noDuesLastWorkingDate')">
+                                            No Dues Last Working Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesLastWorkingDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;" ng-click="sort('noDuesModeOfLeaving')">
+                                            Mode of Leaving
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='noDuesModeOfLeaving'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align: center;">No Dues Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.empUnqId" /></td>
+                                        <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.empName" /></td>
+                                        <td></td>
+                                        <td colspan="2"></td>
+                                        <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.resignationReleaseStatusCode" /></td>
+                                        <td colspan="4"></td>
+                                        <td><input class="form-control" style="margin: 0;padding: 1px;" type="text" ng-model="search.noDuesModeOfLeaving" /></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody dir-paginate="s in extData|orderBy:sortKey:reverse|filter:search|itemsPerPage:50">
+                                    <tr>
+                                        @*resignationApplicationId*@
+                                        <td style="text-align:center;">{{s.empUnqId}}</td>
+                                        <td style="text-align:left;">{{s.empName}}</td>
+                                        <td style="text-align:left;">{{s.joinDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.resignationApplicationDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.resignationRelieveDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;">{{s.resignationReleaseStatusCode}}</td>
+                                        <td style="text-align:left;">{{s.noDuesAddDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.noDuesResignDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.noDuesRelieveDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.noDuesLastWorkingDate| date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:left;">{{s.noDuesModeOfLeaving}}</td>
+                                        <td style="text-align:center;"><input type="checkbox" ng-checked="{{s.noDuesClosedFlag}}" disabled></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

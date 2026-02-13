@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Shift Change Application";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Controller/ShiftChangeCntrl.js"></script>
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+
+<style type="text/css">
+    .ng-table-pager {
+        display: none;
+    }
+
+    .TextBoxStyle {
+        height: 25px;
+    }
+
+    .AddNew {
+        float: right;
+        position: relative;
+    }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+</style>
+<div ng-app="myApp" ng-controller="ShiftChangeCntroller">
+    <div class="container-fluid">
+        <div class="row">
+            <input type="hidden" value="SS" id="releaseGroupCode" />
+            <div class="col-sm-12">
+                <div id="MessageBox" class="table-responsive"></div>
+                <div class="col-sm-8">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Shift Change</strong></div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <div class="col-sm-3"><label>EmpUnqId:</label></div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="txtEmpCode"
+                                               ng-model="N.empUnqId"
+                                               ng-change="CheckEmpCodeInSCData()"
+                                               required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-3"><label>Shift Change Date:</label></div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="date" id="scDate"
+                                               ng-model="N.scDate" ng-change="ToValidate()" required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-3"><label>Shift Code:</label></div>
+                                    <div class="col-sm-3" ng-init="GetAllShifts()">
+                                        <select class="form-control" id="cmbShiftCode" ng-model="N.shiftCode"
+                                                ng-options="s.shiftCode as s.shiftCode for s in shiftdata"
+                                                required>
+                                            <option value="" selected>--- Select ---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-3"><label>Reason:</label></div>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="txtReason"
+                                               ng-model="N.reason" required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-3">
+                                        <span class="input-group-btn float-right">
+                                            <button id="btnSave" type="button"
+                                                    class="btn btn-success btn-custom"
+                                                    style="text-align:right;" value="Submit" name="Save"
+                                                    ng-click="SubmitShiftChange(N)">
+                                                <i class="fa fa-save"></i>&nbsp;Submit
+                                            </button>
+                                            <button id="btnCancel" type="button"
+                                                    class="btn btn-default btn-custom"
+                                                    value="Reload" name="Reload"
+                                                    ng-click="ResetView()">
+                                                <i class="fa fa-refresh"></i>&nbsp;Reload
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Right pane start *@
+                <div class="col-sm-4">
+                    @*Employee list under shift uploder*@
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Employees list under your release</strong></div>
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped" ng-init="GetSCEmpList()">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">EmpUnqId</th>
+                                        <th style="text-align:left;">Employee Name</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" style="text-align: center; margin: 0; padding: 0px;" type="text" ng-model="search.empUnqId" /></td>
+                                        <td>
+                                            <input class="form-control" style="margin:0; padding:1px; width:275px;" type="text" ng-model="search.empName" />
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="e in scempdata|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                        <td style="text-align:center;">{{e.empUnqId}}</td>
+                                        <td style="text-align:left;">{{e.empName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                    @* Shift Timings *@
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><strong>Shift Timings</strong></div>
+                        <div class="panel-body">
+                            <table id="tbl" data-show-filter="true" class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Shift Name
+                                        </th>
+                                        <th>
+                                            Shift Type
+                                        </th>
+                                        <th>
+                                            Shift Timing
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="d in shiftdata">
+                                        <td>{{d.shiftDesc}}</td>
+                                        <td>{{d.shiftCode}}</td>
+                                        <td>{{d.shiftStart}} to {{d.shiftEnd}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @* Right pane End *@
+            </div>
+        </div>
+    </div>
+</div>

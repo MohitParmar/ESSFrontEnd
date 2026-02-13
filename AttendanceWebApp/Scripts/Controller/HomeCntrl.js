@@ -6,17 +6,17 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
     //$(document).ready(function () {
     //    "undefined" != typeof _ConPath && (urlhost === _URLHostName ? $scope._Conpath = _ConPath : $scope._Conpath = urlprotocol + "//" + urlhost + "/api/");
     //});
-    $(document).ready(function () {
-        "undefined" != typeof _ConPath &&
+    /*$(document).ready(function () {*/
+    "undefined" != typeof _ConPath &&
+        (urlhost === _URLHostName ?
+            $scope._Conpath = _ConPath :
+            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/",
+            "undefined" != typeof _AttdConPath &&
             (urlhost === _URLHostName ?
-                $scope._Conpath = _ConPath :
-                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/",
-                "undefined" != typeof _AttdConPath &&
-                (urlhost === _URLHostName ?
-                    $scope._AttdConPath = _AttdConPath :
-                    $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/")
-            )
-    });
+                $scope._AttdConPath = _AttdConPath :
+                $scope._AttdConPath = urlprotocol + "//" + urlhost + "/api/")
+        );
+    /*});*/
 
     jQuery.support.cors = true; $scope.ResetView = function () { window.location.reload(!0) };
     $scope.changePassword = function (entity) { var jsonObj = {}; jsonObj.EmpUnqId = $("#myEmpUnqId").val(), jsonObj.Pass = entity.Pass, jsonObj = JSON.stringify(jsonObj); var xhr2 = new XMLHttpRequest; xhr2.open("POST", $scope._Conpath + "Employee/ChangePassword", !0), xhr2.setRequestHeader("Content-type", "application/json"), xhr2.onreadystatechange = function () { 4 === xhr2.readyState ? window.location.href = "/Login/UserLogin/" : 400 === xhr2.status && (document.getElementById("MessageBox").innerHTML = "<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Password Not Updated .. </strong></div>", $("#MessageBox").show(), document.getElementById("eCode").value = "", document.getElementById("ePass").value = "", jQuery("#btnClose").click()) }, xhr2.send(jsonObj) };
@@ -179,58 +179,58 @@ app.controller("HomeCntrloller", function ($scope, $http, $filter) {
     $scope.PopupConsent = function () { $scope.GetUserInfo(); $('#ConsentModel').modal("show"); };
     /*--Use below method only for new joining Employee Servay--*/
     $scope.newData;
-    $scope.GetNewEmpInfo = function () {
-        var cat = $("#myCatCode").val();
-        if (loc === "IPU" && wrkgrp === "COMP" && (cat === "001" || cat === "002")) {
-            var eml = new XMLHttpRequest;
-            eml.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0);
-            eml.setRequestHeader("Accept", "application/json");
-            eml.onreadystatechange = function () {
-                if (4 === eml.readyState) {
-                    var json = JSON.parse(eml.responseText); $scope.newData = json; $scope.$digest();
-                    var joindt = $scope.newData[0].joinDate; var da = new Date(joindt); var dtnow = new Date();
-                    var diff = ((da - dtnow) / (1000 * 60 * 60 * 24) * -1) + 1;
-                    var ser = new XMLHttpRequest;
-                    ser.open("GET", $scope._AttdConPath + "Survey/GetEmpHeaders?EmpUnqID=" + $("#myEmpUnqId").val(), !0);
-                    ser.setRequestHeader("Accept", "application/json");
-                    ser.onreadystatechange = function () {
-                        if (4 === ser.readyState) {
-                            var json = JSON.parse(ser.responseText); $scope.serData = json;
-                            var stDate = new Date("2023-08-01");
-                            if (da >= stDate) {
-                                if ($scope.serData.length <= 0 && diff >= 8) {
-                                    debugger;
-                                    $('#FirstImpression').modal("show");
-                                    jQuery(document).keyup(function (e) {
-                                        if (e.keyCode == 27 && popupStatus == 1) {
-                                            // alert('not allowed !!!');
-                                            // or any other code
-                                            return false;
-                                        }
-                                    });
-                                }
-                                else if ($scope.serData.length >= 0) {
-                                    var serd, serdt; for (var i = 0; i < $scope.serData.length; i++) {
-                                        serd = $scope.serData[i].SurveyID; serdt = $scope.serData[i].SubmitDate;
-                                        if (serd === 30 && !serdt && diff >= 31) { $('#30DaysSurvay').modal("show"); break; }
-                                        else if (serd === 60 && !serdt && diff >= 61) { $('#60DaysSurvay').modal("show"); break; }
-                                        else if (serd === 90 && !serdt && diff >= 91) { $('#90DaysSurvay').modal("show"); break; };
-                                    };
-                                }; $scope.$digest();
-                            };
-                        };
-                    }; ser.send();
-                };
-            }; eml.send();
-        }
-        //else {
-        //    $("#p_amountofinterest").attr("disabled", true);
-        //    document.getElementById("btn7Days").disabled = true;
-        //    document.getElementById("btn30Days").disabled = true;
-        //    document.getElementById("btn60Days").disabled = true;
-        //    document.getElementById("btn90Days").disabled = true;
-        //}
-    };
+    //$scope.GetNewEmpInfo = function () {
+    //    var cat = $("#myCatCode").val();
+    //    if (loc === "IPU" && wrkgrp === "COMP" && (cat === "001" || cat === "002")) {
+    //        var eml = new XMLHttpRequest;
+    //        eml.open("GET", $scope._Conpath + "Employee/GetEmployee?empunqid=" + $("#myEmpUnqId").val(), !0);
+    //        eml.setRequestHeader("Accept", "application/json");
+    //        eml.onreadystatechange = function () {
+    //            if (4 === eml.readyState) {
+    //                var json = JSON.parse(eml.responseText); $scope.newData = json; $scope.$digest();
+    //                var joindt = $scope.newData[0].joinDate; var da = new Date(joindt); var dtnow = new Date();
+    //                var diff = ((da - dtnow) / (1000 * 60 * 60 * 24) * -1) + 1;
+    //                var ser = new XMLHttpRequest;
+    //                ser.open("GET", $scope._AttdConPath + "Survey/GetEmpHeaders?EmpUnqID=" + $("#myEmpUnqId").val(), !0);
+    //                ser.setRequestHeader("Accept", "application/json");
+    //                ser.onreadystatechange = function () {
+    //                    if (4 === ser.readyState) {
+    //                        var json = JSON.parse(ser.responseText); $scope.serData = json;
+    //                        var stDate = new Date("2023-08-01");
+    //                        if (da >= stDate) {
+    //                            if ($scope.serData.length <= 0 && diff >= 8) {
+    //                                
+    //                                $('#FirstImpression').modal("show");
+    //                                jQuery(document).keyup(function (e) {
+    //                                    if (e.keyCode == 27 && popupStatus == 1) {
+    //                                        // alert('not allowed !!!');
+    //                                        // or any other code
+    //                                        return false;
+    //                                    }
+    //                                });
+    //                            }
+    //                            else if ($scope.serData.length >= 0) {
+    //                                var serd, serdt; for (var i = 0; i < $scope.serData.length; i++) {
+    //                                    serd = $scope.serData[i].SurveyID; serdt = $scope.serData[i].SubmitDate;
+    //                                    if (serd === 30 && !serdt && diff >= 31) { $('#30DaysSurvay').modal("show"); break; }
+    //                                    else if (serd === 60 && !serdt && diff >= 61) { $('#60DaysSurvay').modal("show"); break; }
+    //                                    else if (serd === 90 && !serdt && diff >= 91) { $('#90DaysSurvay').modal("show"); break; };
+    //                                };
+    //                            }; $scope.$digest();
+    //                        };
+    //                    };
+    //                }; ser.send();
+    //            };
+    //        }; eml.send();
+    //    }
+    //    //else {
+    //    //    $("#p_amountofinterest").attr("disabled", true);
+    //    //    document.getElementById("btn7Days").disabled = true;
+    //    //    document.getElementById("btn30Days").disabled = true;
+    //    //    document.getElementById("btn60Days").disabled = true;
+    //    //    document.getElementById("btn90Days").disabled = true;
+    //    //}
+    //};
     $scope.Survey = function (surData, daysData) {
         if ((typeof (surData) === "undefined")) { alert("Please Fill All Required Details"); return false; }
         var s = 0;

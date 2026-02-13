@@ -294,7 +294,7 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
                     emp = arr[i].employee;
                     var s = arr[i].releaseStatusCode;
                     if (s !== "R") {
-                        debugger;
+                        
                         myArray.push([]);
                         myArray[cnt].id = arr[i].id;
                         myArray[cnt].empUnqId = arr[i].empUnqId;
@@ -353,7 +353,6 @@ app.controller("EmpExitProcessController", function ($scope, $http, $filter) {
         rsg.onreadystatechange = function () {
             if (4 === rsg.readyState && rsg.status === 200) {
                 $("#loading").removeClass("activediv"), $("#loading").addClass("deactivediv");
-                debugger;
                 var json = JSON.parse(rsg.responseText);
                 $scope.rsgData = json;
                 $scope.exportObj = json;

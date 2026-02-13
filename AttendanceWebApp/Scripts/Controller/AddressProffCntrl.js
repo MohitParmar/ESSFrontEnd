@@ -32,6 +32,7 @@ app.controller("AddressProffController", function ($scope, $http, $filter) {
                 $("#station").val("");
                 $("#joinDate").val("");
                 $("#relieveDate").val("");
+                $scope.GetEmpAddProof();
             } else if (APR.status === 400) {
                 var str = APR.responseText.replace("[", '').replace("]", '').replace("{", '').replace("}", '').toString();
                 var fields = str.split(',');

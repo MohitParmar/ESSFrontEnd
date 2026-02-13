@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Employee Motor Vehicle Requisition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/DirPAgination/dirPagination.js"></script>
+<script src="~/Scripts/Controller/VehicleReqOfficial.js"></script>
+
+<div ng-app="myApp" ng-controller="VehicleReqOfficialController">
+    <div class="container-fluid">
+        <div id="MessageBox" class="table-responsive"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>Official Vehicle Requisitions</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        <label>From Date : </label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="date" id="fromDt" ng-model="New.FromDt">
+                                    <td>
+                                        <label>To Date : </label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="date" id="toDt" ng-model="New.ToDt">
+                                    </td>
+                                    <td>
+                                        <button type="submit" id="btnSearch" class="btn btn-primary" value="Search" name="Search" ng-click="GetByEmpVehicleReq()">
+                                            <i class="fa fa-search"></i>
+                                            Search
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div style="text-align:center;">
+                                            <img id="loading" src="~/ESS_Images/ajax-loader.gif" alt="Loading..." class="deactivediv">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table data-show-filter="true" class="table table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;" ng-click="sort('BookingDate')">
+                                            Booking Date
+                                            <span class="glyphicon sort-icon" ng-show="sortKey=='BookingDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                        </th>
+                                        <th style="text-align:center;">Booking Status</th>
+                                        <th style="text-align:left;">Place of Boarding</th>
+                                        <th style="text-align:center;">Pickup Time</th>
+                                        <th style="text-align:left;">Place of Visit</th>
+                                        <th style="text-align:center;">Booking From Date</th>
+                                        <th style="text-align:center;">Booking To Date</th>
+                                        <th style="text-align:center;">No.Of Passengers</th>
+                                        <th style="text-align:left;">Visitor Name</th>
+                                        <th style="text-align:left;">Visitor Designation</th>
+                                        <th style="text-align:left;">Contact No.</th>
+                                        <th style="text-align:left;">Others</th>
+                                        <th style="text-align:center;">HOD Release Status</th>
+                                        <th style="text-align:left;">HOD Remarks</th>
+                                        <th style="text-align:center;">Admin Release Status</th>
+                                        <th style="text-align:left;">Admin Remarks</th>
+                                        <th style="text-align:center;">UH Release Status</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.pickupLocation" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.dropLocation" /></td>
+                                        <td colspan="3"></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.visitorName" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.visitorDesg" /></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.contactNo" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.releaseStatusCode" /></td>
+                                        <td></td>
+                                        <td><input class="form-control" style="margin:0;padding:1px;" type="text" ng-model="search.adminReleaseStatusCode" /></td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="d in evrData|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" current-page="currentPage">
+                                        <td style="text-align:center;">{{d.bookingDate | date:'dd/MM/yyyy'}}</td>
+                                        <td style="text-align:center;"><input type="checkbox" id="sts" ng-checked="{{d.bookingStatus}}" disabled /></td>
+                                        <td style="text-align:left;">{{d.pickupLocation}}</td>
+                                        <td style="text-align:left;">{{d.pickupTime | date:'HH:mm'}}</td>
+                                        <td style="text-align:left;">{{d.dropLocation}}</td>
+                                        <td style="text-align:left;">{{d.tripStartDate | date:'dd-MM-yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.tripEndDate | date:'dd-MM-yyyy'}}</td>
+                                        <td style="text-align:left;">{{d.numberOfPass}}</td>
+                                        <td style="text-align:left;">{{d.visitorName}}</td>
+                                        <td style="text-align:left;">{{d.visitorDesg}}</td>
+                                        <td style="text-align:left;">{{d.contactNo}}</td>
+                                        <td style="text-align:left;">{{d.remarks}}</td>
+                                        <td style="text-align:center;"
+                                            ng-style="d.releaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                          d.releaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
+                                            {{d.releaseStatusCode}}
+                                        </td>
+                                        <td style="text-align:left;">{{d.releaseRemarks}}</td>
+                                        <td style="text-align:center;"
+                                            ng-style="d.adminReleaseStatusCode==='F' && {'background-color':'#dff0d8','color':'#468847'} ||
+                                                      d.adminReleaseStatusCode==='R' && {'background-color':'#f2dede','color':'#b94a48'}">
+                                            {{d.adminReleaseStatusCode}}
+                                        </td>
+                                        <td style="text-align:left;">{{d.adminReleaseRemarks}}</td>
+                                        <td style="text-align:left;">
+                                            <input type="checkbox" id="sts" ng-checked="{{d.uhApprovalFlag}}" disabled />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

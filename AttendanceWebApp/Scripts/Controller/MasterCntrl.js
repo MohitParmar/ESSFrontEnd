@@ -1,14 +1,15 @@
 ﻿var app = angular.module('myApp'); app.controller('MasterCntrloller', function ($scope, $http) {
     $http.defaults.headers.common.Authorization = 'Basic ' + $('#myEmpUnqId').val();
-    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname; var urlprotocol = url.protocol; var url_port = url.port;
+    var url_string = window.location.href; var url = new URL(url_string); var urlhost = url.hostname;
+    var urlprotocol = url.protocol; var url_port = url.port;
     $scope._Conpath = ''; var loc = $("#myLoc").val(); jQuery.support.cors = true;
-    $(document).ready(function () {
-        if (typeof (_ConPath) === "undefined") { return; } else {
-            if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
-                $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
-            }
-        };
-    });
+    //$(document).ready(function () {
+    if (typeof (_ConPath) === "undefined") { return; } else {
+        if (urlhost === _URLHostName) { $scope._Conpath = _ConPath; } else {
+            $scope._Conpath = urlprotocol + "//" + urlhost + "/api/";
+        }
+    };
+    /*});*/
     $scope.GetRelesaseStratey = function (rls) {
         var rel = new XMLHttpRequest(); rel.open('GET', $scope._Conpath + 'ReleaseStrategy/GetReleaseStrategy?releaseGroup=' + rls + '&empUnqId=' + $('#myEmpUnqId').val(), true); rel.setRequestHeader('Accept', 'application/json'); rel.onreadystatechange = function () { if (rel.readyState === 4) { var jsonvar1 = JSON.parse(rel.responseText); $scope.rlsdata = jsonvar1; $scope.$digest(); } }; rel.send();
     };

@@ -45,7 +45,8 @@
                 $("#mnuResignApplication").hide(); $("#mnuEmpResignation").hide(); $("#mnuAddressProofReq").hide();
                 $("#mnuAppraisalLetter").hide();
             }
-            if (_URLHostName !== urlhost && (_wrkgrp === "COMP" || _wrkgrp === "OUTSOURCE" || _wrkgrp === "APPRENTICE")) {
+            if (_URLHostName !== urlhost &&
+                (_wrkgrp === "COMP" || _wrkgrp === "OUTSOURCE" || _wrkgrp === "APPRENTICE")) {
                 $("#mnuPayslip").show(); $("#mnuIncomeTaxDeclaration").show(); $("#mnuAddressMaster").show();
                 $("#mnuReport").hide(); $("#mnuUitility").hide(); $("#mnuLeavePosting").hide(); $("#mnuCreateGatePass").hide();
                 $("#mnuContCreateGatePass").hide(); $("#mnuGatePassInOut").hide(); $("#mnuEmployeeProfile").hide(); $("#mnuuniformmaster").hide();
@@ -115,7 +116,7 @@
             if (_URLHostName !== urlhost) {
                 $("#mnuDashboard").show(); $("#mnuChangePassword").show(); $("#mnuAddressMaster").show();
                 $("#mnuUpdateEmailAdd").show(); $("#mnuEmployeeProfile").show();
-                $("#mnuMaster").hide(); $("#mnuReport").hide(); $("#mnuGatePass").hide(); $("#mnuUitility").hide();
+                $("#mnuMaster").hide(); $("#mnuReport").hide(); $("#mnuGatePass").show(); $("#mnuUitility").hide();
                 $("#mnuPostedLeaveReport").hide(); $("#mnuCreateGatePass").hide(); $("#mnuContCreateGatePass").hide();
                 $("#mnuGatePassInOut").hide(); $("#mnuUserManual").hide(); $("#mnuuniformmaster").hide(); $("#mnuManageLeave").hide();
                 $("#mnuLeavePosting").hide(); $("#mnuLeaveApplicationDetails").hide(); $("#mnuManageLeave").hide();
